@@ -1,0 +1,10 @@
+@import "./reset";
+@import "./variables";
+
+html {
+  font-size: 14px;
+}
+
+body {
+  background-color: $bg-principal;
+}

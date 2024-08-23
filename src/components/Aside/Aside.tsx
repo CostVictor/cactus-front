@@ -1,0 +1,111 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import useAuth from "@/hooks/useAuth";
+
+import { Icon } from "@iconify/react";
+import ItemAside from "./subcomponents/Item";
+import style from "./aside.module.scss";
+
+const Aside = () => {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const auth = useAuth();
+
+  useEffect(() => {
+    const stateAside = localStorage.getItem("stateAside");
+    setIsOpen(stateAside === "true");
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("stateAside", String(isOpen));
+    const aside = document.querySelector("aside");
+    aside?.classList.toggle(style.open, isOpen);
+  }, [isOpen]);
+
+  const toggleAside = () => {
+    const containerMenu = document.getElementById("container-menu");
+    const title = containerMenu?.querySelector("h2");
+    const iconOpen = document.getElementById("aside-open-menu");
+    const iconClose = document.getElementById("aside-close-menu");
+
+    const newValue = !isOpen;
+    title?.classList.toggle(style.inactive, isOpen);
+    iconClose?.classList.toggle(style.inactive, isOpen);
+    iconOpen?.classList.toggle(style.inactive, newValue);
+    setIsOpen(newValue);
+  };
+
+  return (
+    <aside className={style.aside}>
+      <div id="container-menu" className={style.menu}>
+        <h2 className={style.title + (isOpen ? "" : ` ${style.inactive}`)}>
+          Menu
+        </h2>
+        <Icon
+          id="aside-open-menu"
+          icon="material-symbols:menu-rounded"
+          className={style.icon_menu + (isOpen ? ` ${style.inactive}` : "")}
+          onClick={toggleAside}
+        />
+        <Icon
+          id="aside-close-menu"
+          icon="ci:close-sm"
+          className={style.icon_menu + (isOpen ? "" : ` ${style.inactive}`)}
+          onClick={toggleAside}
+        />
+      </div>
+      <ul className={style.container_items}>
+        <ItemAside
+          isOpen={isOpen}
+          item={{ name: "Perfil", icon: "lucide:user-round", url: "/profile" }}
+        />
+        <hr className={style.division} />
+        <ItemAside
+          isOpen={isOpen}
+          item={{ name: "Início", icon: "fluent:home-16-regular", url: "/" }}
+        />
+        <ItemAside
+          isOpen={isOpen}
+          item={{
+            name: "Almoço",
+            icon: "fluent:food-16-regular",
+            url: "/lunch",
+          }}
+        />
+
+        {auth.isAuthenticated && (
+          <>
+            <hr className={style.division} />
+            <ItemAside
+              isOpen={isOpen}
+              item={{
+                name: "Pedidos",
+                icon: "ep:dish-dot",
+                url: "/orders",
+              }}
+            />
+            <ItemAside
+              isOpen={isOpen}
+              item={{
+                name: "Histórico",
+                icon: "majesticons:clipboard-list-line",
+                url: "/history",
+              }}
+            />
+            <hr className={style.division} />
+            <ItemAside
+              isOpen={isOpen}
+              item={{
+                name: "Estoque",
+                icon: "tabler:folder",
+                url: "/stock",
+              }}
+            />
+          </>
+        )}
+      </ul>
+    </aside>
+  );
+};
+
+export default Aside;

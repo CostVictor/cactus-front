@@ -1,0 +1,200 @@
+@import "../../app/variables";
+@import "../../app/functions";
+
+// Tamanhos padrão para o aside
+$size-aside: 4rem;
+$size-aside-open: 11rem;
+$distance-icons: 0.5rem;
+
+// Mixin para animação de fadeIn
+@include fadeIn();
+
+.aside {
+  transition: 0.2s;
+  background-color: $bg-secondary;
+  border-right: solid 1px $division;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: $size-aside;
+
+  &.open {
+    width: $size-aside-open;
+    box-shadow: $shadow-default;
+
+    .division {
+      width: 80%;
+    }
+
+    .menu {
+      width: $size-aside-open;
+    }
+
+    .container_items {
+      .item {
+        .link {
+          justify-content: space-between;
+        }
+      }
+    }
+  }
+
+  .division {
+    width: 60%;
+    margin: $distance-icons 0;
+    border: 1px solid $division-intense;
+    transition: 0.3s;
+  }
+
+  .menu {
+    display: flex;
+    justify-content: space-evenly;
+    position: absolute;
+    transition: 0.2s;
+
+    margin-top: 1.2rem;
+    width: $size-aside;
+    top: 0;
+    left: 0;
+
+    &.inactive {
+      display: none;
+    }
+
+    .title {
+      color: $gray-principal;
+      animation: fadeIn 0.3s;
+      width: 60%;
+      text-align: end;
+      user-select: none;
+
+      &.inactive {
+        display: none;
+      }
+    }
+
+    .icon_menu {
+      font-size: 2rem;
+      color: $gray-principal;
+      animation: fadeIn 0.3s;
+      cursor: pointer;
+
+      &.inactive {
+        display: none;
+      }
+    }
+  }
+
+  .container_items {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    list-style-type: none;
+    height: 100%;
+    width: 100%;
+
+    .item {
+      display: flex;
+      align-items: center;
+      margin: $distance-icons 0;
+      width: 75%;
+      height: 2rem;
+
+      &.selected {
+        .link {
+          color: $red-primary;
+        }
+      }
+
+      .link {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        text-decoration: none;
+        font-weight: bold;
+        color: $gray-principal;
+
+        .text {
+          width: 70%;
+          text-align: center;
+          animation: fadeIn 0.3s;
+          font-size: 1.25rem;
+
+          &.inactive {
+            display: none;
+          }
+        }
+
+        .icon {
+          transition: 0.25s;
+          animation: fadeIn 0.3s;
+          font-size: 2rem;
+
+          &.min {
+            font-size: 1.5rem;
+          }
+        }
+      }
+    }
+  }
+
+  // Estilos para telas menores (mobile)
+  @media (max-width: 600px) {
+    flex-direction: row;
+    top: auto;
+    bottom: 0;
+
+    border-top: solid 1px $division;
+    border-radius: 20px 20px 0 0;
+    height: 4rem;
+    width: 100%;
+
+    &.open {
+      width: 100%;
+
+      .division {
+        width: 0;
+      }
+    }
+
+    .division {
+      width: 0;
+      height: 60%;
+      margin: 0 0.4rem;
+    }
+
+    .menu {
+      display: none;
+    }
+
+    .container_items {
+      flex-direction: row;
+
+      .item {
+        width: 10%;
+        margin: 0 $distance-icons;
+        
+        .link {
+          flex-direction: column;
+
+          .icon {
+            font-size: 1.6rem;
+          }
+
+          .text {
+            font-size: 0.45rem;
+            margin-top: 0.3rem;
+
+            &.inactive {
+              display: block;
+            }
+          }
+        }
+      }
+    }
+  }
+}
