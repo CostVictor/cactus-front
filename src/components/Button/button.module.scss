@@ -1,0 +1,39 @@
+@import "@/app/variables.scss";
+
+.button {
+  padding: 0.35rem 1rem;
+  border: 1px solid $division;
+  border-radius: 10px;
+  box-shadow: $shadow-btn;
+  
+  font-size: 1.1rem;
+  color: $red-secondary;
+  background-color: $bg-secondary;
+  font-weight: bold;
+  letter-spacing: 1px;
+
+  text-decoration: none;
+  cursor: pointer;
+  
+  &.main {
+    border-color: $red-border;
+    background-color: $red-primary;
+    color: $white-primary;
+  }
+
+  &.url,
+  &.url-target {
+    padding: 0;
+    border: none;
+    background-color: transparent;
+    box-shadow: none;
+  }
+  
+  &.url {
+    text-decoration: underline;
+  }
+
+  &.clicked {
+    box-shadow: $shadow-btn-click;
+  }
+}

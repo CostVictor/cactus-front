@@ -2,10 +2,13 @@
 
 import { useEffect, useState } from "react";
 import useAuth from "@/hooks/useAuth";
+import { Inter } from "next/font/google";
 
 import { Icon } from "@iconify/react";
 import ItemAside from "./subcomponents/Item";
 import style from "./aside.module.scss";
+
+const inter = Inter({ subsets: ["latin"] });
 
 const Aside = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -38,7 +41,11 @@ const Aside = () => {
   return (
     <aside className={style.aside}>
       <div id="container-menu" className={style.menu}>
-        <h2 className={style.title + (isOpen ? "" : ` ${style.inactive}`)}>
+        <h2
+          className={`${inter.className} ${
+            style.title + (isOpen ? "" : ` ${style.inactive}`)
+          }`}
+        >
           Menu
         </h2>
         <Icon

@@ -1,5 +1,5 @@
-@import "../../app/variables";
-@import "../../app/functions";
+@import "@/app/variables.scss";
+@import "@/app/functions.scss";
 
 // Tamanhos padrão para o aside
 $size-aside: 4rem;
@@ -122,7 +122,6 @@ $distance-icons: 0.5rem;
           width: 70%;
           animation: fadeIn 0.3s;
           font-size: 1.25rem;
-          font-family: $font-page;
 
           &.inactive {
             display: none;

@@ -1,14 +1,17 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Averia_Sans_Libre } from "next/font/google";
 import { AuthProvider } from "@/hooks/useAuth";
 import "./globals.scss";
 
-const inter = Inter({ subsets: ["latin"] });
+const averiaSansLibre = Averia_Sans_Libre({
+  weight: ["300", "400", "700"],
+  subsets: ["latin"],
+});
 
 export const metadata: Metadata = {
   title: "Cactus Comida Boa",
   description: "Site da lanchonete Cactus Comida Boa.",
-  icons: { icon: ["/favicon.png?v=4"] },
+  icons: { icon: ["/icone.png?v=4"] },
 };
 
 export default function RootLayout({
@@ -18,7 +21,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-br">
-      <body className={inter.className}>
+      <body className={averiaSansLibre.className}>
         <AuthProvider>{children}</AuthProvider>
       </body>
     </html>

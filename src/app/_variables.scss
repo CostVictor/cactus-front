@@ -1,6 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Averia+Sans+Libre:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Alatsi&family=Averia+Sans+Libre:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap');
-
 $bg-principal: #F2F2F2;
 $bg-secondary: #EBEBEB;
 $bg-new-item: #EFEFEF;
@@ -11,6 +8,8 @@ $division-intense: #C8C8C8;
 $gray-principal: #838383;
 $black-principal: #656565;
 
+$white-primary: white;
+
 $red-primary: #D43D3D;
 $red-secondary: rgba(172, 27, 27, 80);
 $red-border: #FFA6A6;
@@ -19,6 +18,3 @@ $red-gradient: linear-gradient(to right, #ED2828 0%, #AC1B1B 100%);
 $shadow-default: 0px 5px 10px rgba(0, 0, 0, 0.15);
 $shadow-btn: 1px 2px 3px rgba(0, 0, 0, 0.25);
 $shadow-btn-click: inset 2px 2px 3px rgba(0, 0, 0, 0.25);
-
-$font-page: Averia Sans Libre;
-$font-botao: Alatsi
