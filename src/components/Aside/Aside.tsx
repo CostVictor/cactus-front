@@ -2,13 +2,11 @@
 
 import { useEffect, useState } from "react";
 import useAuth from "@/hooks/useAuth";
-import { Inter } from "next/font/google";
+import { inter } from "@/styles/fonts"
 
 import { Icon } from "@iconify/react";
 import ItemAside from "./subcomponents/Item";
 import style from "./aside.module.scss";
-
-const inter = Inter({ subsets: ["latin"] });
 
 const Aside = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);

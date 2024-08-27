@@ -1,5 +1,5 @@
 import { CSSProperties, MouseEventHandler } from "react";
-import { Alatsi } from "next/font/google";
+import { alatsi } from "@/styles/fonts";
 import style from "./button.module.scss";
 import Link from "next/link";
 
@@ -12,8 +12,6 @@ interface propButton {
   onClick?: MouseEventHandler;
   url?: string;
 }
-
-const alatsi = Alatsi({ weight: ["400"], subsets: ["latin"] });
 
 const Button = ({
   text,

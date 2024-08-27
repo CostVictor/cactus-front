@@ -1,10 +1,8 @@
-import { Yeseva_One } from "next/font/google";
+import { yesevaOne } from "@/styles/fonts"; 
 import style from "./header.module.scss";
 import Image from "next/image";
 import useAuth from "@/hooks/useAuth";
 import Button from "../Button";
-
-const yesevaOne = Yeseva_One({ weight: ["400"], subsets: ["latin"] });
 
 const Header = () => {
   const auth = useAuth();
