@@ -3,10 +3,10 @@ import { alatsi } from "@/styles/fonts";
 import style from "./button.module.scss";
 import Link from "next/link";
 
-interface propButton {
+interface Button {
   text: string;
   textFont?: string;
-  btnAparence?: "normal" | "main" | "url" | "target-url";
+  aparence?: "normal" | "main" | "url" | "target-url";
   clicked?: boolean;
   cssStyle?: CSSProperties;
   onClick?: MouseEventHandler;
@@ -16,16 +16,16 @@ interface propButton {
 const Button = ({
   text,
   textFont = alatsi.className,
-  btnAparence = "normal",
+  aparence = "normal",
   clicked,
   cssStyle,
   onClick,
   url = "",
-}: propButton) => {
+}: Button) => {
   const btnClass =
     `${textFont} ${style.button}` +
     (clicked ? ` ${style.clicked}` : "") +
-    (btnAparence !== "normal" ? ` ${style[btnAparence]}` : "");
+    (aparence !== "normal" ? ` ${style[aparence]}` : "");
 
   return url ? (
     <Link style={cssStyle} className={btnClass} href={url}>

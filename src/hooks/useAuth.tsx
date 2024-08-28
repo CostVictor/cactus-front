@@ -7,14 +7,14 @@ interface User {
   role: string;
 }
 
-interface AuthContextType {
+interface AuthContext {
   isAuthenticated: boolean;
   user: User | null;
   login: (email: string, password: string) => void;
   logout: () => void;
 }
 
-const authContext = createContext<undefined | AuthContextType>(undefined);
+const authContext = createContext<undefined | AuthContext>(undefined);
 
 export const AuthProvider: React.FC<{children: ReactNode}> = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(true);

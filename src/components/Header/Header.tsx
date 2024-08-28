@@ -16,7 +16,7 @@ const Header = () => {
 
       <div className={style.container_content + ` ${style.auto_left}`}>
         <Button text="Cadastrar" url="/register" />
-        <Button text="Logar" btnAparence="main" url="/login" />
+        <Button text="Logar" aparence="main" url="/login" />
       </div>
     </header>
   );

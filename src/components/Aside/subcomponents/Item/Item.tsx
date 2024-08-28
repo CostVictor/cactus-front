@@ -6,7 +6,7 @@ import { Icon } from "@iconify/react";
 import style from "@/components/Aside/aside.module.scss";
 import Link from "next/link";
 
-interface propItemAside {
+interface ItemAside {
   isOpen: boolean;
   item: {
     name: string;
@@ -15,7 +15,7 @@ interface propItemAside {
   };
 }
 
-const ItemAside = ({ isOpen, item }: propItemAside) => {
+const ItemAside = ({ isOpen, item }: ItemAside) => {
   const pathCurrent = usePathname();
   const urlItem = item.url.toString();
   const condiction =
