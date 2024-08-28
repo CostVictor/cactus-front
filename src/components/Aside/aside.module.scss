@@ -3,7 +3,7 @@
 
 // Tamanhos padrão para o aside
 $size-aside: 4rem;
-$size-aside-open: 11rem;
+$size-aside-open: 14rem;
 $distance-icons: 0.5rem;
 
 // Mixin para animação de fadeIn
@@ -24,7 +24,7 @@ $distance-icons: 0.5rem;
     box-shadow: $shadow-default;
 
     .division {
-      width: 80%;
+      width: 75%;
     }
 
     .menu {
@@ -65,13 +65,9 @@ $distance-icons: 0.5rem;
     .title {
       color: $gray-principal;
       animation: fadeIn 0.3s;
-      width: 60%;
+      width: 55%;
       text-align: end;
       user-select: none;
-
-      &.inactive {
-        display: none;
-      }
     }
 
     .icon_menu {
@@ -79,10 +75,6 @@ $distance-icons: 0.5rem;
       color: $gray-principal;
       animation: fadeIn 0.3s;
       cursor: pointer;
-
-      &.inactive {
-        display: none;
-      }
     }
   }
 
@@ -99,7 +91,7 @@ $distance-icons: 0.5rem;
       display: flex;
       align-items: center;
       margin: $distance-icons 0;
-      width: 75%;
+      width: 60%;
       height: 2rem;
 
       &.selected {
@@ -119,9 +111,9 @@ $distance-icons: 0.5rem;
         color: $gray-principal;
 
         .text {
-          width: 70%;
+          width: 65%;
           animation: fadeIn 0.3s;
-          font-size: 1.25rem;
+          font-size: 1.3rem;
 
           &.inactive {
             display: none;
@@ -134,7 +126,7 @@ $distance-icons: 0.5rem;
           font-size: 2rem;
 
           &.min {
-            font-size: 1.5rem;
+            font-size: 1.6rem;
           }
         }
       }
