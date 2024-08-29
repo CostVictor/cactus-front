@@ -1,10 +1,21 @@
-import { yesevaOne } from "@/styles/fonts"; 
+import { averiaSansLibre, yesevaOne } from "@/styles/fonts";
+import { Icon } from "@iconify/react/dist/iconify.js";
 import style from "./header.module.scss";
-import Image from "next/image";
 import useAuth from "@/hooks/useAuth";
+import Image from "next/image";
 import Button from "../Button";
+import Link from "next/link";
 
-const Header = () => {
+interface Target {
+  text: string;
+  link: string;
+}
+
+interface Header {
+  targets?: Target[];
+}
+
+const Header = ({ targets }: Header) => {
   const auth = useAuth();
 
   return (
@@ -14,10 +25,29 @@ const Header = () => {
         <h1 className={`${yesevaOne.className} ${style.title}`}>CACTUS</h1>
       </div>
 
-      <div className={style.container_content + ` ${style.auto_left}`}>
-        <Button text="Cadastrar" url="/register" />
-        <Button text="Logar" aparence="main" url="/login" />
+      <div
+        id="header-links_targets"
+        className={style.container_content + ` ${style.auto_left}`}
+        style={{ gap: "1.8rem" }}
+      >
+        {targets?.map((target) => (
+          <Button
+            key={`link-target_${target.text}`}
+            text={target.text}
+            font={averiaSansLibre.className}
+            aparence="target-link"
+            link={target.link}
+          />
+        ))}
       </div>
+
+      {auth.isAuthenticated && (
+        <div className={style.container_content}>
+          {targets?.length && <hr className={style.division} />}
+          <Button text="Cadastrar" link="/register" />
+          <Button text="Logar" aparence="main" link="/login" />
+        </div>
+      )}
     </header>
   );
 };

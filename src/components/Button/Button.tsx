@@ -5,30 +5,30 @@ import Link from "next/link";
 
 interface Button {
   text: string;
-  textFont?: string;
-  aparence?: "normal" | "main" | "url" | "target-url";
+  font?: string;
+  aparence?: "normal" | "main" | "link" | "target-link";
   clicked?: boolean;
   cssStyle?: CSSProperties;
   onClick?: MouseEventHandler;
-  url?: string;
+  link?: string;
 }
 
 const Button = ({
   text,
-  textFont = alatsi.className,
+  font = alatsi.className,
   aparence = "normal",
   clicked,
   cssStyle,
   onClick,
-  url = "",
+  link = "",
 }: Button) => {
   const btnClass =
-    `${textFont} ${style.button}` +
+    `${font} ${style.button}` +
     (clicked ? ` ${style.clicked}` : "") +
     (aparence !== "normal" ? ` ${style[aparence]}` : "");
 
-  return url ? (
-    <Link style={cssStyle} className={btnClass} href={url}>
+  return link ? (
+    <Link style={cssStyle} className={btnClass} href={link}>
       {text}
     </Link>
   ) : (
