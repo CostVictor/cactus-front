@@ -1,36 +1,34 @@
 import { CSSProperties, MouseEventHandler } from "react";
-import { Alatsi } from "next/font/google";
+import { alatsi } from "@/styles/fonts";
 import style from "./button.module.scss";
 import Link from "next/link";
 
-interface propButton {
+interface Button {
   text: string;
-  textFont?: string;
-  btnAparence?: "normal" | "main" | "url" | "target-url";
+  font?: string;
+  aparence?: "normal" | "main" | "link" | "target-link";
   clicked?: boolean;
   cssStyle?: CSSProperties;
   onClick?: MouseEventHandler;
-  url?: string;
+  link?: string;
 }
-
-const alatsi = Alatsi({ weight: ["400"], subsets: ["latin"] });
 
 const Button = ({
   text,
-  textFont = alatsi.className,
-  btnAparence = "normal",
+  font = alatsi.className,
+  aparence = "normal",
   clicked,
   cssStyle,
   onClick,
-  url = "",
-}: propButton) => {
+  link = "",
+}: Button) => {
   const btnClass =
-    `${textFont} ${style.button}` +
+    `${font} ${style.button}` +
     (clicked ? ` ${style.clicked}` : "") +
-    (btnAparence !== "normal" ? ` ${style[btnAparence]}` : "");
+    (aparence !== "normal" ? ` ${style[aparence]}` : "");
 
-  return url ? (
-    <Link style={cssStyle} className={btnClass} href={url}>
+  return link ? (
+    <Link style={cssStyle} className={btnClass} href={link}>
       {text}
     </Link>
   ) : (

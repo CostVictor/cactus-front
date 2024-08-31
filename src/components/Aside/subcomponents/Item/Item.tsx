@@ -4,9 +4,10 @@ import { Url } from "next/dist/shared/lib/router/router";
 import { usePathname } from "next/navigation";
 import { Icon } from "@iconify/react";
 import style from "@/components/Aside/aside.module.scss";
+import useMobile from "@/hooks/useMobile";
 import Link from "next/link";
 
-interface propItemAside {
+interface ItemAside {
   isOpen: boolean;
   item: {
     name: string;
@@ -15,7 +16,8 @@ interface propItemAside {
   };
 }
 
-const ItemAside = ({ isOpen, item }: propItemAside) => {
+const ItemAside = ({ isOpen, item }: ItemAside) => {
+  const preview = useMobile();
   const pathCurrent = usePathname();
   const urlItem = item.url.toString();
   const condiction =
@@ -28,9 +30,9 @@ const ItemAside = ({ isOpen, item }: propItemAside) => {
           icon={item.icon}
           className={style.icon + (isOpen ? ` ${style.min}` : "")}
         />
-        <p className={style.text + (isOpen ? "" : ` ${style.inactive}`)}>
-          {item.name}
-        </p>
+        {(isOpen || preview.isMobile) && (
+          <p className={style.text}>{item.name}</p>
+        )}
       </Link>
     </li>
   );

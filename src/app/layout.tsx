@@ -1,12 +1,8 @@
 import type { Metadata } from "next";
-import { Averia_Sans_Libre } from "next/font/google";
+import { averiaSansLibre } from "@/styles/fonts";
 import { AuthProvider } from "@/hooks/useAuth";
-import "./globals.scss";
-
-const averiaSansLibre = Averia_Sans_Libre({
-  weight: ["300", "400", "700"],
-  subsets: ["latin"],
-});
+import { MobileProvider } from "@/hooks/useMobile";
+import "@/styles/globals.scss";
 
 export const metadata: Metadata = {
   title: "Cactus Comida Boa",
@@ -22,7 +18,9 @@ export default function RootLayout({
   return (
     <html lang="pt-br">
       <body className={averiaSansLibre.className}>
-        <AuthProvider>{children}</AuthProvider>
+        <AuthProvider>
+          <MobileProvider>{children}</MobileProvider>
+        </AuthProvider>
       </body>
     </html>
   );

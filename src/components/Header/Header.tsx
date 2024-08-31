@@ -1,13 +1,23 @@
-import { Yeseva_One } from "next/font/google";
+import { averiaSansLibre, yesevaOne } from "@/styles/fonts";
+import { Icon } from "@iconify/react/dist/iconify.js";
 import style from "./header.module.scss";
-import Image from "next/image";
+import useMobile from "@/hooks/useMobile";
 import useAuth from "@/hooks/useAuth";
+import Image from "next/image";
 import Button from "../Button";
 
-const yesevaOne = Yeseva_One({ weight: ["400"], subsets: ["latin"] });
+interface Target {
+  text: string;
+  link: string;
+}
 
-const Header = () => {
+interface Header {
+  targets?: Target[];
+}
+
+const Header = ({ targets }: Header) => {
   const auth = useAuth();
+  const preview = useMobile();
 
   return (
     <header className={style.header}>
@@ -16,10 +26,37 @@ const Header = () => {
         <h1 className={`${yesevaOne.className} ${style.title}`}>CACTUS</h1>
       </div>
 
-      <div className={style.container_content + ` ${style.auto_left}`}>
-        <Button text="Cadastrar" url="/register" />
-        <Button text="Logar" btnAparence="main" url="/login" />
-      </div>
+      {preview.isMobile ? (
+        <div className={`${style.container_content} ${style.auto_left}`}>
+          <Icon icon="material-symbols:menu-rounded" className={style.icon} />
+        </div>
+      ) : (
+        <>
+          <div
+            id="header-links_targets"
+            className={`${style.container_content} ${style.auto_left}`}
+            style={{ gap: "1.8rem" }}
+          >
+            {targets?.map((target) => (
+              <Button
+                key={`link-target_${target.text}`}
+                text={target.text}
+                font={averiaSansLibre.className}
+                aparence="target-link"
+                link={target.link}
+              />
+            ))}
+          </div>
+
+          {auth.isAuthenticated && (
+            <div className={style.container_content}>
+              {targets?.length && <hr className={style.division} />}
+              <Button text="Cadastrar" link="/register" />
+              <Button text="Logar" aparence="main" link="/login" />
+            </div>
+          )}
+        </>
+      )}
     </header>
   );
 };

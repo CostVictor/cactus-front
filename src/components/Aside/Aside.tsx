@@ -2,17 +2,17 @@
 
 import { useEffect, useState } from "react";
 import useAuth from "@/hooks/useAuth";
-import { Inter } from "next/font/google";
+import useMobile from "@/hooks/useMobile";
+import { inter } from "@/styles/fonts";
 
 import { Icon } from "@iconify/react";
 import ItemAside from "./subcomponents/Item";
 import style from "./aside.module.scss";
 
-const inter = Inter({ subsets: ["latin"] });
-
 const Aside = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const auth = useAuth();
+  const preview = useMobile();
 
   useEffect(() => {
     const stateAside = localStorage.getItem("stateAside");
@@ -26,41 +26,33 @@ const Aside = () => {
   }, [isOpen]);
 
   const toggleAside = () => {
-    const containerMenu = document.getElementById("container-menu");
-    const title = containerMenu?.querySelector("h2");
-    const iconOpen = document.getElementById("aside-open-menu");
-    const iconClose = document.getElementById("aside-close-menu");
-
-    const newValue = !isOpen;
-    title?.classList.toggle(style.inactive, isOpen);
-    iconClose?.classList.toggle(style.inactive, isOpen);
-    iconOpen?.classList.toggle(style.inactive, newValue);
-    setIsOpen(newValue);
+    setIsOpen(!isOpen);
   };
 
   return (
     <aside className={style.aside}>
-      <div id="container-menu" className={style.menu}>
-        <h2
-          className={`${inter.className} ${
-            style.title + (isOpen ? "" : ` ${style.inactive}`)
-          }`}
-        >
-          Menu
-        </h2>
-        <Icon
-          id="aside-open-menu"
-          icon="material-symbols:menu-rounded"
-          className={style.icon_menu + (isOpen ? ` ${style.inactive}` : "")}
-          onClick={toggleAside}
-        />
-        <Icon
-          id="aside-close-menu"
-          icon="ci:close-sm"
-          className={style.icon_menu + (isOpen ? "" : ` ${style.inactive}`)}
-          onClick={toggleAside}
-        />
-      </div>
+      {!preview.isMobile && (
+        <div id="container-menu" className={style.menu}>
+          {isOpen ? (
+            <>
+              <h2 className={`${inter.className} ${style.title}`}>Menu</h2>
+              <Icon
+                id="aside-close-menu"
+                icon="ci:close-sm"
+                className={style.icon_menu}
+                onClick={toggleAside}
+              />
+            </>
+          ) : (
+            <Icon
+              id="aside-open-menu"
+              icon="material-symbols:menu-rounded"
+              className={style.icon_menu}
+              onClick={toggleAside}
+            />
+          )}
+        </div>
+      )}
       <ul className={style.container_items}>
         <ItemAside
           isOpen={isOpen}

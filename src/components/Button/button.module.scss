@@ -1,4 +1,4 @@
-@import "@/app/variables.scss";
+@import "@/styles/variables.scss";
 
 .button {
   padding: 0.35rem 1rem;
@@ -9,7 +9,6 @@
   font-size: 1.1rem;
   color: $red-secondary;
   background-color: $bg-secondary;
-  font-weight: bold;
   letter-spacing: 1px;
 
   text-decoration: none;
@@ -21,9 +20,14 @@
     color: $white-primary;
   }
 
-  &.url,
-  &.url-target {
+  &.link,
+  &.target-link {
+    letter-spacing: normal;
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: $red-primary;
     padding: 0;
+
     border: none;
     background-color: transparent;
     box-shadow: none;

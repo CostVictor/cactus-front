@@ -2,7 +2,7 @@ import { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
 import { useEffect, useState } from "react";
 import cactusAPI from "@/services/axios/cactus-api";
 
-interface propUseRequest {
+interface UseRequest {
   axionInstance?: AxiosInstance;
   url: string;
   method: "GET" | "POST" | "PUT" | "DELETE";
@@ -14,7 +14,7 @@ const useRequest = ({
   url,
   method,
   config,
-}: propUseRequest) => {
+}: UseRequest) => {
   const [data, setData] = useState<AxiosResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
