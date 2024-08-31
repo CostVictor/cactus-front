@@ -58,10 +58,6 @@ $distance-icons: 0.5rem;
     top: 0;
     left: 0;
 
-    &.inactive {
-      display: none;
-    }
-
     .title {
       color: $gray-principal;
       animation: fadeIn 0.3s;
@@ -114,10 +110,6 @@ $distance-icons: 0.5rem;
           width: 65%;
           animation: fadeIn 0.3s;
           font-size: 1.3rem;
-
-          &.inactive {
-            display: none;
-          }
         }
 
         .icon {
@@ -180,10 +172,6 @@ $distance-icons: 0.5rem;
             font-size: 0.5rem;
             margin-top: 0.3rem;
             text-align: center;
-
-            &.inactive {
-              display: block;
-            }
           }
         }
       }

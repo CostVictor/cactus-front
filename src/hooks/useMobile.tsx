@@ -23,6 +23,7 @@ export const MobileProvider: React.FC<{ children: ReactNode }> = ({
     // Define se está no modo mobile ou não a partir da largura da tela do navegador.
     const handleResize = () =>
       setIsMobile(window.innerWidth <= 600 ? true : false);
+    handleResize()
 
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
