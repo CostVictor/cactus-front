@@ -5,7 +5,9 @@ import useAuth from "@/hooks/context/useAuth";
 import useMobile from "@/hooks/context/useMobile";
 import { inter } from "@/styles/fonts";
 
+import { motion } from "framer-motion";
 import { Icon } from "@iconify/react";
+import { fadeIn } from "@/styles/animations";
 import ItemAside from "./subcomponents/Item";
 import style from "./aside.module.scss";
 
@@ -35,21 +37,32 @@ const Aside = () => {
         <div id="container-menu" className={style.menu}>
           {isOpen ? (
             <>
-              <h2 className={`${inter.className} ${style.title}`}>Menu</h2>
+              <motion.h2
+                className={`${inter.className} ${style.title}`}
+                variants={fadeIn}
+                initial="hidden"
+                animate="visible"
+              >
+                Menu
+              </motion.h2>
+              <motion.div variants={fadeIn} initial="hidden" animate="visible">
+                <Icon
+                  id="aside-close-menu"
+                  icon="ci:close-sm"
+                  className={style.icon_menu}
+                  onClick={toggleAside}
+                />
+              </motion.div>
+            </>
+          ) : (
+            <motion.div variants={fadeIn} initial="hidden" animate="visible">
               <Icon
-                id="aside-close-menu"
-                icon="ci:close-sm"
+                id="aside-open-menu"
+                icon="material-symbols:menu-rounded"
                 className={style.icon_menu}
                 onClick={toggleAside}
               />
-            </>
-          ) : (
-            <Icon
-              id="aside-open-menu"
-              icon="material-symbols:menu-rounded"
-              className={style.icon_menu}
-              onClick={toggleAside}
-            />
+            </motion.div>
           )}
         </div>
       )}

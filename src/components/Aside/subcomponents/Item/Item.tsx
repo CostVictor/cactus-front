@@ -3,6 +3,8 @@
 import { Url } from "next/dist/shared/lib/router/router";
 import { usePathname } from "next/navigation";
 import { Icon } from "@iconify/react";
+import { motion } from "framer-motion";
+import { fadeIn } from "@/styles/animations";
 import style from "@/components/Aside/aside.module.scss";
 import useMobile from "@/hooks/context/useMobile";
 import Link from "next/link";
@@ -26,12 +28,26 @@ const ItemAside = ({ isOpen, item }: ItemAside) => {
   return (
     <li className={style.item + (condiction ? ` ${style.selected}` : "")}>
       <Link href={item.url} className={style.link}>
-        <Icon
-          icon={item.icon}
-          className={style.icon + (isOpen ? ` ${style.min}` : "")}
-        />
+        <motion.div
+          variants={fadeIn}
+          initial="hidden"
+          animate="visible"
+          style={{ display: "flex"}}
+        >
+          <Icon
+            icon={item.icon}
+            className={style.icon + (isOpen ? ` ${style.min}` : "")}
+          />
+        </motion.div>
         {(isOpen || preview.isMobile) && (
-          <p className={style.text}>{item.name}</p>
+          <motion.p
+            className={style.text}
+            variants={fadeIn}
+            initial="hidden"
+            animate="visible"
+          >
+            {item.name}
+          </motion.p>
         )}
       </Link>
     </li>

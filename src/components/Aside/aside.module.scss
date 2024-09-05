@@ -1,13 +1,9 @@
 @import "@/styles/variables.scss";
-@import "@/styles/functions.scss";
 
 // Tamanhos padrão para o aside
 $size-aside: 4rem;
 $size-aside-open: 14rem;
 $distance-icons: 0.5rem;
-
-// Mixin para animação de fadeIn
-@include fadeIn();
 
 .aside {
   transition: 0.2s;
@@ -60,7 +56,6 @@ $distance-icons: 0.5rem;
 
     .title {
       color: $gray-principal;
-      animation: fadeIn 0.3s;
       width: 55%;
       text-align: end;
       user-select: none;
@@ -69,7 +64,6 @@ $distance-icons: 0.5rem;
     .icon_menu {
       font-size: 2rem;
       color: $gray-principal;
-      animation: fadeIn 0.3s;
       cursor: pointer;
     }
   }
@@ -108,13 +102,11 @@ $distance-icons: 0.5rem;
 
         .text {
           width: 65%;
-          animation: fadeIn 0.3s;
           font-size: 1.3rem;
         }
 
         .icon {
           transition: 0.25s;
-          animation: fadeIn 0.3s;
           font-size: 2rem;
 
           &.min {
