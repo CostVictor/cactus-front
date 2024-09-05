@@ -126,7 +126,7 @@ $distance-icons: 0.5rem;
   }
 
   // Estilos para telas menores (mobile)
-  @media (max-width: 600px) {
+  @media (max-width: $media-mobile) {
     flex-direction: row;
     top: auto;
     bottom: 0;

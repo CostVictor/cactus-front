@@ -1,8 +1,8 @@
 import { averiaSansLibre, yesevaOne } from "@/styles/fonts";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import style from "./header.module.scss";
-import useMobile from "@/hooks/useMobile";
-import useAuth from "@/hooks/useAuth";
+import useMobile from "@/hooks/context/useMobile";
+import useAuth from "@/hooks/context/useAuth";
 import Image from "next/image";
 import Button from "../Button";
 

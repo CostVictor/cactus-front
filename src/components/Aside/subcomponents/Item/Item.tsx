@@ -4,7 +4,7 @@ import { Url } from "next/dist/shared/lib/router/router";
 import { usePathname } from "next/navigation";
 import { Icon } from "@iconify/react";
 import style from "@/components/Aside/aside.module.scss";
-import useMobile from "@/hooks/useMobile";
+import useMobile from "@/hooks/context/useMobile";
 import Link from "next/link";
 
 interface ItemAside {

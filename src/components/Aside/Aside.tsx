@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import useAuth from "@/hooks/useAuth";
-import useMobile from "@/hooks/useMobile";
+import useAuth from "@/hooks/context/useAuth";
+import useMobile from "@/hooks/context/useMobile";
 import { inter } from "@/styles/fonts";
 
 import { Icon } from "@iconify/react";

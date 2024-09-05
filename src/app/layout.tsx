@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { averiaSansLibre } from "@/styles/fonts";
-import { AuthProvider } from "@/hooks/useAuth";
-import { MobileProvider } from "@/hooks/useMobile";
+import { AuthProvider } from "@/hooks/context/useAuth";
+import { MobileProvider } from "@/hooks/context/useMobile";
 import "@/styles/globals.scss";
 
 export const metadata: Metadata = {
