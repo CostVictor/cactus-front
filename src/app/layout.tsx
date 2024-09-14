@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { averiaSansLibre } from "@/styles/fonts";
 import { AuthProvider } from "@/hooks/context/useAuth";
 import { MobileProvider } from "@/hooks/context/useMobile";
+import { ModalProvider } from "@/hooks/context/useModal";
 import "@/styles/globals.scss";
 
 export const metadata: Metadata = {
@@ -19,7 +20,9 @@ export default function RootLayout({
     <html lang="pt-br">
       <body className={averiaSansLibre.className}>
         <AuthProvider>
-          <MobileProvider>{children}</MobileProvider>
+          <MobileProvider>
+            <ModalProvider>{children}</ModalProvider>
+          </MobileProvider>
         </AuthProvider>
       </body>
     </html>

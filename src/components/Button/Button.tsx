@@ -3,7 +3,7 @@ import { alatsi } from "@/styles/fonts";
 import style from "./button.module.scss";
 import Link from "next/link";
 
-interface Button {
+export interface Button {
   text: string;
   font?: string;
   aparence?: "normal" | "main" | "link" | "target-link";

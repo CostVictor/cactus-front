@@ -8,3 +8,11 @@ html {
 body {
   background-color: $bg-principal;
 }
+
+.block_shadow {
+  position: absolute;
+  background-color: $bg-shadow;
+  width: 100%;
+  height: 100vh;
+  top: 0;
+}
