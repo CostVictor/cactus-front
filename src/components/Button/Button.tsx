@@ -22,10 +22,9 @@ const Button = ({
   onClick,
   link = "",
 }: Button) => {
-  const btnClass =
-    `${font} ${style.button}` +
-    (clicked ? ` ${style.clicked}` : "") +
-    (aparence !== "normal" ? ` ${style[aparence]}` : "");
+  const btnClass = `${font} ${style.button}${
+    clicked ? ` ${style.clicked}` : ""
+  }${aparence !== "normal" ? ` ${style[aparence]}` : ""}`;
 
   return link ? (
     <Link style={cssStyle} className={btnClass} href={link}>

@@ -1,6 +1,7 @@
 "use client";
 
 import React, { createContext, ReactNode, useContext, useState } from "react";
+import { AnimatePresence } from "framer-motion";
 
 interface AddNewModalFunction {
   (modal: ReactNode): void;
@@ -27,19 +28,13 @@ export const ModalProvider: React.FC<{ children: ReactNode }> = ({
    */
   const addNewModal: AddNewModalFunction = (modal) => {
     setListModal((prevList) => {
-      const newList = [...prevList];
-      if (!newList.includes(modal)) {
-        newList.push(modal);
-      }
-      return newList;
+      return [...prevList, modal];
     });
   };
 
   /**
    * Remove o item da lista na posição definida.
-   * São aceitos: o componente react desejado para a remoção ou valores de index (o componente react possui preferência caso os dois sejam passados).
    * Index negativos também são aceitos para contagem a partir do final.
-   * Se nenhum dos parâmetros forem passados, nada é executado.
    */
   const removeModal: RemoveModalFunction = (index) => {
     setListModal((prevList) => {
@@ -54,9 +49,11 @@ export const ModalProvider: React.FC<{ children: ReactNode }> = ({
   return (
     <modalContext.Provider value={{ addNewModal, removeModal }}>
       {children}
-      {listModal.length ? (
-        <div className="block_shadow">{listModal[listModal.length - 1]}</div>
-      ) : null}
+      <AnimatePresence>
+        {listModal.length ? (
+          <div className="block_shadow">{listModal[listModal.length - 1]}</div>
+        ) : null}
+      </AnimatePresence>
     </modalContext.Provider>
   );
 };

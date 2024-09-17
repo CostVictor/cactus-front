@@ -1,52 +1,89 @@
 "use client";
 
-import { ReactNode } from "react";
-import { motion } from "framer-motion";
-import Button, { PropsButton } from "../Button";
+import Button from "../Button";
 import style from "./modal.module.scss";
 import useModal from "@/hooks/context/useModal";
-
-type ButtonModal = Omit<PropsButton, "link"> & {
-  aparence?: "normal" | "main";
-};
-
-interface Modal {
-  title: string;
-  children: ReactNode;
-  buttons?: ButtonModal[];
-  defaultButtonText?: string;
-}
+import PropsModal from "./modal.types";
+import { fadeIn, revealGrow } from "@/styles/animations";
+import { motion } from "framer-motion";
+import Container from "../Container/Container";
 
 const Modal = ({
   title,
   children,
   buttons,
   defaultButtonText = "Fechar",
-}: Modal) => {
+}: PropsModal) => {
   const modals = useModal();
 
   return (
-    <motion.article className={style.body}>
-      <div className={style.header}>
-        <h2>{title}</h2>
-      </div>
-      <div className={style.content}>{children}</div>
-      <div className={style.footer}>
-        {buttons?.length ? (
-          buttons.map((button, index) => (
-            <Button key={index} cssStyle={{ boxShadow: "none" }} {...button} />
-          ))
-        ) : (
-          <Button
-            text={defaultButtonText}
-            aparence="main"
-            cssStyle={{ boxShadow: "none" }}
-            onClick={() => {
-              modals.removeModal(-1);
-            }}
-          />
-        )}
-      </div>
+    <motion.article
+      className={style.container}
+      variants={fadeIn}
+      initial="hidden"
+      animate="visible"
+      exit="exit"
+      transition={{
+        type: "spring",
+        stiffness: 700,
+        damping: 23,
+      }}
+    >
+      <motion.div
+        layout
+        className={style.body}
+        transition={{
+          type: "spring",
+          stiffness: 800,
+          damping: 55,
+        }}
+      >
+        <div className={style.header}>
+          <motion.h2
+            key={`title_${title}`}
+            variants={revealGrow}
+            initial="hidden"
+            animate="visible"
+            transition={{ delay: 0.1 }}
+          >
+            {title}
+          </motion.h2>
+        </div>
+
+        <Container
+          key={`content_${title}`}
+          className={style.content}
+          isObserver
+        >
+          {children}
+        </Container>
+
+        <motion.div
+          key={`footer_${title}`}
+          className={style.footer}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1, transition: { delay: 0.15, duration: 0.15 } }}
+        >
+          {buttons?.length ? (
+            buttons.map((button, index) => (
+              <Button
+                key={index}
+                cssStyle={{ boxShadow: "none" }}
+                {...button}
+              />
+            ))
+          ) : (
+            <Button
+              text={defaultButtonText}
+              aparence="main"
+              cssStyle={{ boxShadow: "none" }}
+              onClick={() => {
+                modals.removeModal(-1);
+              }}
+            />
+          )}
+        </motion.div>
+      </motion.div>
     </motion.article>
   );
 };
