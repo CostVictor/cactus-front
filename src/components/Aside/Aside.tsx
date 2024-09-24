@@ -25,8 +25,11 @@ const Aside = () => {
   }, []);
 
   const toggleAside = () => {
-    setIsOpen((prev) => !prev);
-    localStorage.setItem("stateAside", String(isOpen));
+    setIsOpen((prevValue) => {
+      const newValue = !prevValue;
+      localStorage.setItem("stateAside", String(newValue));
+      return newValue;
+    });
   };
 
   return (
