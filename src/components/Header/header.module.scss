@@ -2,19 +2,19 @@
 
 .header {
   display: flex;
-  border-bottom: 1px solid $division;
+  border-bottom: 1px solid var(--division);
 
   margin-left: 4rem;
   width: calc(100% - 4rem);
 
   .division {
     height: 100%;
-    border: 1px solid $division;
+    border: 1px solid var(--division);
   }
 
   .icon {
     font-size: 2.2rem;
-    color: $gray-principal;
+    color: var(--gray-primary);
     cursor: pointer;
   }
 
@@ -29,7 +29,7 @@
 
     .title {
       font-size: 1.5rem;
-      color: $red-primary;
+      color: var(--red-primary);
     }
   }
 

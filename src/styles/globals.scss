@@ -1,12 +1,21 @@
 @import "./reset";
-@import "./variables";
+@import "./themes";
+
+:root {
+  @include theme-white-root();
+}
+
+.theme-dark {
+  @include theme-dark();
+}
 
 html {
   font-size: 14px;
 }
 
 body {
-  background-color: $bg-principal;
+  transition: 0.2s ease-in-out;
+  background-color: var(--bg-primary);
 }
 
 .block_shadow {
@@ -14,7 +23,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: $bg-shadow;
+  background-color: var(--bg-shadow);
   width: 100%;
   height: 100vh;
   top: 0;

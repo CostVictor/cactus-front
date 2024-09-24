@@ -1,0 +1,28 @@
+@mixin theme-white-root {
+  --bg-primary: #f2f2f2;
+  --bg-secondary: #ebebeb;
+  --bg-new-item: #efefef;
+  --bg-aba: #e5e5e5;
+  --bg-shadow: rgba(0, 0, 0, 0.15);
+
+  --gray-primary: #838383;
+
+  --black-primary: #656565;
+
+  --white-primary: white;
+
+  --red-primary: #d43d3d;
+  --red-secondary: rgba(172, 27, 27, 80);
+  --red-border: #ffa6a6;
+  --red-gradient: linear-gradient(to right, #ed2828 0%, #ac1b1b 100%);
+
+  --shadow-default: 0px 5px 10px rgba(0, 0, 0, 0.15);
+  --shadow-btn: 1px 2px 3px rgba(0, 0, 0, 0.25);
+  --shadow-btn-click: inset 2px 2px 3px rgba(0, 0, 0, 0.25);
+
+  --division: rgba(206, 206, 206, 49);
+  --division-intense: #c8c8c8;
+}
+
+@mixin theme-dark {
+}

@@ -1,26 +1,24 @@
-@import "@/styles/variables.scss";
-
 .button {
   padding: 0.35rem 1rem;
-  border: 1px solid $division;
+  border: 1px solid var(--division);
   border-radius: 10px;
-  box-shadow: $shadow-btn;
-  
+  box-shadow: var(--shadow-btn);
+
   font-size: 1.1rem;
-  color: $red-secondary;
-  background-color: $bg-secondary;
+  color: var(--red-secondary);
+  background-color: var(--bg-secondary);
   letter-spacing: 1px;
 
   text-decoration: none;
   cursor: pointer;
-  
+
   &.main {
-    border-color: $red-border;
-    background-color: $red-primary;
-    color: $white-primary;
+    border-color: var(--red-border);
+    background-color: var(--red-primary);
+    color: var(--white-primary);
   }
 
   &.clicked {
-    box-shadow: $shadow-btn-click;
+    box-shadow: var(--shadow-btn-click);
   }
 }
