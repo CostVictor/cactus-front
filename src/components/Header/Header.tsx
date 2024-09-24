@@ -1,21 +1,16 @@
-import { averiaSansLibre, yesevaOne } from "@/styles/fonts";
 import { Icon } from "@iconify/react/dist/iconify.js";
-import style from "./header.module.scss";
-import useMobile from "@/hooks/useMobile";
-import useAuth from "@/hooks/useAuth";
 import Image from "next/image";
+import Link from "next/link";
+
+import { yesevaOne } from "@/styles/fonts";
+import { PropsHeader } from "./header.types";
+import style from "./header.module.scss";
+import useMobile from "@/hooks/context/useMobile";
+import useAuth from "@/hooks/context/useAuth";
+import NavLink from "../NavLink";
 import Button from "../Button";
 
-interface Target {
-  text: string;
-  link: string;
-}
-
-interface Header {
-  targets?: Target[];
-}
-
-const Header = ({ targets }: Header) => {
+const Header = ({ targets }: PropsHeader) => {
   const auth = useAuth();
   const preview = useMobile();
 
@@ -38,11 +33,9 @@ const Header = ({ targets }: Header) => {
             style={{ gap: "1.8rem" }}
           >
             {targets?.map((target) => (
-              <Button
-                key={`link-target_${target.text}`}
+              <NavLink
+                key={`link-target_${target.link}`}
                 text={target.text}
-                font={averiaSansLibre.className}
-                aparence="target-link"
                 link={target.link}
               />
             ))}
@@ -50,9 +43,13 @@ const Header = ({ targets }: Header) => {
 
           {auth.isAuthenticated && (
             <div className={style.container_content}>
-              {targets?.length && <hr className={style.division} />}
-              <Button text="Cadastrar" link="/register" />
-              <Button text="Logar" aparence="main" link="/login" />
+              {targets?.length ? <hr className={style.division} /> : null}
+              <Link href="/register">
+                <Button text="Cadastrar" />
+              </Link>
+              <Link href="/login">
+                <Button text="Logar" appearance="main" />
+              </Link>
             </div>
           )}
         </>

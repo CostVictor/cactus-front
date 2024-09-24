@@ -1,0 +1,17 @@
+@import "@/styles/variables.scss";
+
+.link {
+  letter-spacing: normal;
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: $red-primary;
+  padding: 0;
+
+  border: none;
+  background-color: transparent;
+  box-shadow: none;
+
+  &.target {
+    text-decoration: none;
+  }
+}

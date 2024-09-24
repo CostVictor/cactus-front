@@ -20,23 +20,6 @@
     color: $white-primary;
   }
 
-  &.link,
-  &.target-link {
-    letter-spacing: normal;
-    font-size: 1.3rem;
-    font-weight: bold;
-    color: $red-primary;
-    padding: 0;
-
-    border: none;
-    background-color: transparent;
-    box-shadow: none;
-  }
-  
-  &.url {
-    text-decoration: underline;
-  }
-
   &.clicked {
     box-shadow: $shadow-btn-click;
   }

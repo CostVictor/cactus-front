@@ -1,0 +1,46 @@
+@import "@/styles/variables.scss";
+
+$width-modal: 35rem;
+
+.container {
+  display: flex;
+  width: $width-modal;
+
+  .body {
+    background-color: $bg-principal;
+    box-shadow: $shadow-default;
+    border-radius: 25px;
+
+    .header {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-bottom: $division solid 1px;
+      height: 3rem;
+
+      color: $black-principal;
+    }
+
+    .content {
+      max-height: 40vh;
+      overflow-y: auto;
+      margin: 5%;
+      margin-bottom: 0;
+    }
+
+    .footer {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 2rem;
+      height: 5rem;
+    }
+  }
+  @media (max-width: $media-tablet) {
+    width: 28rem;
+  }
+
+  @media (max-width: $media-mobile) {
+    width: 90%;
+  }
+}

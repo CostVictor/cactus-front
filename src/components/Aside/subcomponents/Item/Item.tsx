@@ -1,37 +1,40 @@
 "use client";
 
-import { Url } from "next/dist/shared/lib/router/router";
-import { usePathname } from "next/navigation";
 import { Icon } from "@iconify/react";
-import style from "@/components/Aside/aside.module.scss";
-import useMobile from "@/hooks/useMobile";
+import { motion } from "framer-motion";
 import Link from "next/link";
 
-interface ItemAside {
-  isOpen: boolean;
-  item: {
-    name: string;
-    icon: string;
-    url: Url;
-  };
-}
+import { fadeIn } from "@/styles/animations";
+import { PropsItemAside } from "./item.types";
+import useMobile from "@/hooks/context/useMobile";
+import style from "@/components/Aside/aside.module.scss";
 
-const ItemAside = ({ isOpen, item }: ItemAside) => {
+const ItemAside = ({ name, icon, url, isOpen, isActive }: PropsItemAside) => {
   const preview = useMobile();
-  const pathCurrent = usePathname();
-  const urlItem = item.url.toString();
-  const condiction =
-    urlItem === "/" ? pathCurrent === urlItem : pathCurrent.includes(urlItem);
 
   return (
-    <li className={style.item + (condiction ? ` ${style.selected}` : "")}>
-      <Link href={item.url} className={style.link}>
-        <Icon
-          icon={item.icon}
-          className={style.icon + (isOpen ? ` ${style.min}` : "")}
-        />
+    <li className={`${style.item} ${isActive ? style.selected : ""}`.trim()}>
+      <Link href={url} className={style.link}>
+        <motion.div
+          variants={fadeIn}
+          initial="hidden"
+          animate="visible"
+          style={{ display: "flex" }}
+        >
+          <Icon
+            icon={icon}
+            className={`${style.icon} ${isOpen ? style.min : ""}`.trim()}
+          />
+        </motion.div>
         {(isOpen || preview.isMobile) && (
-          <p className={style.text}>{item.name}</p>
+          <motion.p
+            className={style.text}
+            variants={fadeIn}
+            initial="hidden"
+            animate="visible"
+          >
+            {name}
+          </motion.p>
         )}
       </Link>
     </li>

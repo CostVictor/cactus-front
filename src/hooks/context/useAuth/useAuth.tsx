@@ -1,24 +1,13 @@
 "use client";
 
 import React, { createContext, ReactNode, useContext, useState } from "react";
+import { PropsUser, PropsAuthContext } from "./useauth.types";
 
-interface User {
-  name: string;
-  role: string;
-}
-
-interface AuthContext {
-  isAuthenticated: boolean;
-  user: User | null;
-  login: (email: string, password: string) => void;
-  logout: () => void;
-}
-
-const authContext = createContext<undefined | AuthContext>(undefined);
+const authContext = createContext<undefined | PropsAuthContext>(undefined);
 
 export const AuthProvider: React.FC<{children: ReactNode}> = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(true);
-  const [user, setUser] = useState<null | User>(null);
+  const [user, setUser] = useState<null | PropsUser>({name: "Victor", role: "employee"});
 
   const login = (email: string, password: string) => {};
   const logout = () => {};
