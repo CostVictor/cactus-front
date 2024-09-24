@@ -1,6 +1,12 @@
 "use client";
 
-import React, { createContext, ReactNode, useContext, useState } from "react";
+import React, {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { PropsThemeContext } from "./usetheme.types";
 
 const themeContext = createContext<undefined | PropsThemeContext>(undefined);
@@ -9,7 +15,18 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const [isDark, setIsDark] = useState<boolean>(false);
-  const toggleTheme = () => setIsDark((prev) => !prev);
+
+  useEffect(() => {
+    const themeDark = localStorage.getItem("themeDark");
+    setIsDark(themeDark === "true");
+  }, []);
+
+  const toggleTheme = () =>
+    setIsDark((prevValue) => {
+      const newValue = !prevValue;
+      localStorage.setItem("themeDark", String(newValue));
+      return newValue;
+    });
 
   return (
     <themeContext.Provider value={{ isDark, toggleTheme }}>
