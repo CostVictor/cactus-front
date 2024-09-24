@@ -3,7 +3,7 @@
 import Button from "../Button";
 import style from "./modal.module.scss";
 import useModal from "@/hooks/context/useModal";
-import PropsModal from "./modal.types";
+import { PropsModal } from "./modal.types";
 import { fadeIn, revealGrow } from "@/styles/animations";
 import { motion } from "framer-motion";
 import Container from "../Container/Container";
@@ -65,18 +65,11 @@ const Modal = ({
           animate={{ opacity: 1, transition: { delay: 0.15, duration: 0.15 } }}
         >
           {buttons?.length ? (
-            buttons.map((button, index) => (
-              <Button
-                key={index}
-                cssStyle={{ boxShadow: "none" }}
-                {...button}
-              />
-            ))
+            buttons.map((button, index) => <Button key={index} {...button} />)
           ) : (
             <Button
               text={defaultButtonText}
-              aparence="main"
-              cssStyle={{ boxShadow: "none" }}
+              appearance="main"
               onClick={() => {
                 modals.removeModal(-1);
               }}

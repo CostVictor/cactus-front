@@ -1,22 +1,14 @@
 "use client";
 
+import {
+  PropsModalContext,
+  PropsAddNewModalFunction,
+  PropsRemoveModalFunction,
+} from "./usemodal.types";
 import React, { createContext, ReactNode, useContext, useState } from "react";
 import { AnimatePresence } from "framer-motion";
 
-interface AddNewModalFunction {
-  (modal: ReactNode): void;
-}
-
-interface RemoveModalFunction {
-  (index: number): void;
-}
-
-interface ModalContext {
-  addNewModal: AddNewModalFunction;
-  removeModal: RemoveModalFunction;
-}
-
-const modalContext = createContext<undefined | ModalContext>(undefined);
+const modalContext = createContext<undefined | PropsModalContext>(undefined);
 
 export const ModalProvider: React.FC<{ children: ReactNode }> = ({
   children,
@@ -26,7 +18,7 @@ export const ModalProvider: React.FC<{ children: ReactNode }> = ({
   /**
    * Adiciona um novo componente react na lista.
    */
-  const addNewModal: AddNewModalFunction = (modal) => {
+  const addNewModal: PropsAddNewModalFunction = (modal) => {
     setListModal((prevList) => {
       return [...prevList, modal];
     });
@@ -36,7 +28,7 @@ export const ModalProvider: React.FC<{ children: ReactNode }> = ({
    * Remove o item da lista na posição definida.
    * Index negativos também são aceitos para contagem a partir do final.
    */
-  const removeModal: RemoveModalFunction = (index) => {
+  const removeModal: PropsRemoveModalFunction = (index) => {
     setListModal((prevList) => {
       const newList = [...prevList];
       const newIndex = index < 0 ? newList.length + index : index;

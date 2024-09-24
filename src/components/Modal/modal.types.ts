@@ -5,7 +5,7 @@ type ButtonModal = Omit<PropsButton, "link"> & {
   aparence?: "normal" | "main";
 };
 
-export default interface PropsModal {
+export interface PropsModal {
   title: string;
   children: ReactNode;
   buttons?: ButtonModal[];

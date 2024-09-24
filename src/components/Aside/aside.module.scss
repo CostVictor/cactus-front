@@ -2,7 +2,7 @@
 
 // Tamanhos padrão para o aside
 $size-aside: 4rem;
-$size-aside-open: 14rem;
+$size-aside-open: 15rem;
 $distance-icons: 0.5rem;
 
 .aside {
@@ -101,7 +101,7 @@ $distance-icons: 0.5rem;
         color: $gray-principal;
 
         .text {
-          width: 65%;
+          width: 70%;
           font-size: 1.3rem;
         }
 
@@ -161,9 +161,10 @@ $distance-icons: 0.5rem;
           }
 
           .text {
+            display: flex;
+            justify-content: center;
             font-size: 0.5rem;
             margin-top: 0.3rem;
-            text-align: center;
           }
         }
       }

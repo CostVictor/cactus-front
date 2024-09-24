@@ -7,12 +7,9 @@ import React, {
   useEffect,
   useState,
 } from "react";
+import { PropsMobileContext } from "./usemobile.types";
 
-interface mobileContext {
-  isMobile: boolean;
-}
-
-const mobileContext = createContext<undefined | mobileContext>(undefined);
+const mobileContext = createContext<undefined | PropsMobileContext>(undefined);
 
 export const MobileProvider: React.FC<{ children: ReactNode }> = ({
   children,
