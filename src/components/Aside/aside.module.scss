@@ -1,5 +1,10 @@
 @import "@/styles/variables.scss";
 
+$size-aside: 4rem;
+$size-aside-open: 15rem;
+$distance-items: 0.5rem;
+$distance-text-icon: 70%;
+
 .aside {
   transition: 0.2s;
   background-color: var(--bg-secondary);

@@ -1,4 +1,7 @@
 @import "@/styles/variables.scss";
+@import "@/styles/functions.scss";
+
+$width-modal: 35rem;
 
 .container {
   display: flex;
@@ -21,8 +24,7 @@
     }
 
     .content {
-      max-height: 40vh;
-      overflow-y: auto;
+      @include applyOverflow(40vh);
       margin: 5%;
       margin-bottom: 0;
     }
