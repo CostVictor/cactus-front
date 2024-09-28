@@ -1,5 +1,6 @@
 import Aside from "@/components/Aside";
 import Header from "@/components/Header";
+import Section from "@/components/Section";
 
 export default function Home() {
   const targets = [
@@ -10,7 +11,18 @@ export default function Home() {
   return (
     <>
       <Header targets={targets} />
-      <main></main>
+      <main>
+        <Section
+          id="inicio"
+          description={{
+            title: "Bem vindo à lanchonete CACTUS!!",
+            text: "Onde o sabor encontra a tradição! Desde 2012, estamos dedicados a trazer para você os melhores lanches, feitos com ingredientes frescos e de qualidade.",
+            illustrationUrl: "/image-Chef.svg",
+          }}
+        >
+          <p>Conteúdo</p>
+        </Section>
+      </main>
       <Aside />
     </>
   );

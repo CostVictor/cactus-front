@@ -1,0 +1,59 @@
+@import "@/styles/variables.scss";
+
+$max-width: 65rem;
+$padding: 2rem;
+
+.container_main {
+  display: flex;
+  align-items: center;
+  position: relative;
+
+  &.space_left {
+    margin-left: $size-aside;
+  }
+
+  .body {
+    width: 100%;
+
+    .container_description {
+      display: flex;
+      max-width: $max-width;
+      padding: $padding;
+      margin: auto;
+
+      .container_text {
+        margin: auto;
+
+        .title {
+          position: relative;
+          background: var(--red-gradient);
+          background-clip: text;
+          color: transparent;
+          font-size: 2rem;
+
+          &::before {
+            content: "";
+            position: absolute;
+            background: var(--red-gradient);
+            border-radius: 50px;
+            bottom: -5px;
+            width: 16rem;
+            height: 3px;
+          }
+        }
+
+        .text {
+          margin: 2rem;
+          font-size: 1.45rem;
+          color: var(--gray-primary);
+        }
+      }
+    }
+
+    .container_content {
+      max-width: $max-width;
+      padding: $padding;
+      margin: auto;
+    }
+  }
+}
