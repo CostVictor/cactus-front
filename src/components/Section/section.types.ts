@@ -1,5 +1,10 @@
 import { ReactNode } from "react"
 
+interface PropsSectionImage {
+  background: string
+  viewImages?: string[]
+}
+
 interface PropsDescription {
   title: string
   text: string
@@ -8,7 +13,8 @@ interface PropsDescription {
 
 export interface PropsSection {
   id: string
-  image?: string | string[]
+  backgroundColor?: string
+  sectionImage?: PropsSectionImage
   description?: PropsDescription
   observeAside?: boolean
   children?: ReactNode

@@ -19,9 +19,11 @@ export default function Home() {
             text: "Onde o sabor encontra a tradição! Desde 2012, estamos dedicados a trazer para você os melhores lanches, feitos com ingredientes frescos e de qualidade.",
             illustrationUrl: "/image-Chef.svg",
           }}
-        >
-          <p>Conteúdo</p>
-        </Section>
+        />
+        <Section
+          id="salgados"
+          backgroundColor="#e9e9e9"
+        />
       </main>
       <Aside />
     </>

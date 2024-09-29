@@ -3,14 +3,16 @@
 import Image from "next/image";
 import { PropsSection } from "./section.types";
 import useMobile from "@/hooks/context/useMobile";
+import Carousel from "./subcomponents/Carousel";
 import style from "./section.module.scss";
 
 const Section = ({
   id,
-  image = "",
-  description,
-  observeAside = true,
   children,
+  description,
+  sectionImage,
+  backgroundColor,
+  observeAside = true,
 }: PropsSection) => {
   const preview = useMobile();
 
@@ -20,9 +22,26 @@ const Section = ({
       className={`${style.container_main} ${
         observeAside && !preview.isMobile ? style.space_left : ""
       }`.trim()}
+      style={{ backgroundColor: backgroundColor }}
     >
       <div className={style.body}>
-        {image ? "imagem": null}
+        {sectionImage &&
+          (sectionImage.viewImages ? (
+            <Carousel
+              images={sectionImage.viewImages}
+              background={sectionImage.background}
+            />
+          ) : (
+            <div className={style.container_img}>
+              <Image
+                src={sectionImage.background}
+                className={style.img}
+                alt="Imagem da seção."
+                fill
+              />
+            </div>
+          ))}
+
         {description && (
           <div className={style.container_description}>
             <div className={style.container_text}>
@@ -39,7 +58,7 @@ const Section = ({
           </div>
         )}
 
-        <div className={style.container_content}>{children}</div>
+        {children && <div className={style.container_content}>{children}</div>}
       </div>
     </section>
   );
