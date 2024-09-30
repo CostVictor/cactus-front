@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import { averiaSansLibre } from "@/styles/fonts";
 import { AuthProvider } from "@/hooks/context/useAuth";
+import { ThemeProvider } from "@/hooks/context/useTheme";
 import { MobileProvider } from "@/hooks/context/useMobile";
-import { ModalProvider } from "@/hooks/context/useModal";
+import Body from "@/components/Body";
 import "@/styles/globals.scss";
 
 export const metadata: Metadata = {
@@ -17,14 +17,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt-br">
-      <body className={averiaSansLibre.className}>
-        <AuthProvider>
-          <MobileProvider>
-            <ModalProvider>{children}</ModalProvider>
-          </MobileProvider>
-        </AuthProvider>
-      </body>
-    </html>
+    <AuthProvider>
+      <html lang="pt-br">
+        <MobileProvider>
+          <ThemeProvider>
+            <Body>{children}</Body>
+          </ThemeProvider>
+        </MobileProvider>
+      </html>
+    </AuthProvider>
   );
 }

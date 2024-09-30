@@ -1,4 +1,5 @@
 @import "@/styles/variables.scss";
+@import "@/styles/functions.scss";
 
 $width-modal: 35rem;
 
@@ -7,23 +8,23 @@ $width-modal: 35rem;
   width: $width-modal;
 
   .body {
-    background-color: $bg-principal;
-    box-shadow: $shadow-default;
+    background-color: var(--bg-primary);
+    box-shadow: var(--shadow-default);
+    width: 100%;
     border-radius: 25px;
 
     .header {
       display: flex;
       justify-content: center;
       align-items: center;
-      border-bottom: $division solid 1px;
+      border-bottom: var(--division) solid 1px;
       height: 3rem;
 
-      color: $black-principal;
+      color: var(--black-primary);
     }
 
     .content {
-      max-height: 40vh;
-      overflow-y: auto;
+      @include applyOverflow(40vh);
       margin: 5%;
       margin-bottom: 0;
     }

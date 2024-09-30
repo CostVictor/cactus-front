@@ -1,0 +1,9 @@
+@mixin applyOverflow($limitSize, $direction: "y") {
+  @if ($direction == "y") {
+    overflow-y: auto;
+    max-height: $limitSize;
+  } @else {
+    overflow-x: auto;
+    max-width: $limitSize;
+  }
+}

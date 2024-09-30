@@ -1,14 +1,12 @@
 @import "@/styles/variables.scss";
 
-// Tamanhos padrão para o aside
-$size-aside: 4rem;
-$size-aside-open: 15rem;
-$distance-icons: 0.5rem;
+$distance-items: 0.5rem;
+$distance-text-icon: 70%;
 
 .aside {
   transition: 0.2s;
-  background-color: $bg-secondary;
-  border-right: solid 1px $division;
+  background-color: var(--bg-secondary);
+  border-right: solid 1px var(--division);
   position: fixed;
   top: 0;
   left: 0;
@@ -17,7 +15,7 @@ $distance-icons: 0.5rem;
 
   &.open {
     width: $size-aside-open;
-    box-shadow: $shadow-default;
+    box-shadow: var(--shadow-default);
 
     .division {
       width: 75%;
@@ -38,8 +36,8 @@ $distance-icons: 0.5rem;
 
   .division {
     width: 60%;
-    margin: $distance-icons 0;
-    border: 1px solid $division-intense;
+    margin: $distance-items 0;
+    border: 1px solid var(--division-intense);
     transition: 0.3s;
   }
 
@@ -55,7 +53,7 @@ $distance-icons: 0.5rem;
     left: 0;
 
     .title {
-      color: $gray-principal;
+      color: var(--gray-primary);
       width: 55%;
       text-align: end;
       user-select: none;
@@ -63,7 +61,7 @@ $distance-icons: 0.5rem;
 
     .icon_menu {
       font-size: 2rem;
-      color: $gray-principal;
+      color: var(--gray-primary);
       cursor: pointer;
     }
   }
@@ -80,13 +78,13 @@ $distance-icons: 0.5rem;
     .item {
       display: flex;
       align-items: center;
-      margin: $distance-icons 0;
+      margin: $distance-items 0;
       width: 60%;
       height: 2rem;
 
       &.selected {
         .link {
-          color: $red-primary;
+          color: var(--red-primary);
         }
       }
 
@@ -98,10 +96,10 @@ $distance-icons: 0.5rem;
 
         text-decoration: none;
         font-weight: bold;
-        color: $gray-principal;
+        color: var(--gray-primary);
 
         .text {
-          width: 70%;
+          width: $distance-text-icon;
           font-size: 1.3rem;
         }
 
@@ -123,7 +121,7 @@ $distance-icons: 0.5rem;
     top: auto;
     bottom: 0;
 
-    border-top: solid 1px $division;
+    border-top: solid 1px var(--division);
     border-radius: 20px 20px 0 0;
     height: 4rem;
     width: 100%;
@@ -151,8 +149,8 @@ $distance-icons: 0.5rem;
 
       .item {
         width: 10%;
-        margin: 0 $distance-icons;
-        
+        margin: 0 $distance-items;
+
         .link {
           flex-direction: column;
 

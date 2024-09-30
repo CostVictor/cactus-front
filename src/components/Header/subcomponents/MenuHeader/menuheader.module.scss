@@ -1,0 +1,64 @@
+@import "@/styles/functions.scss";
+
+$padding-container-menu-title: 0.5rem 0.9rem;
+$padding-container-menu-auth: 0.8rem 0.9rem;
+$margin-container-menu-content: 1rem 0.9rem 1.5rem 0.9rem;
+$radius-menu: 25px;
+
+.menu {
+  position: absolute;
+  top: 0;
+  right: 0;
+
+  width: 17rem;
+  box-shadow: var(--shadow-default);
+  background-color: var(--bg-primary);
+  border-radius: 25px;
+
+  .header {
+    display: flex;
+    align-items: center;
+    position: relative;
+    border-bottom: 1px solid var(--division);
+    background-color: var(--bg-secondary);
+    border-radius: $radius-menu 0 0 0;
+    padding: $padding-container-menu-title;
+
+    .title {
+      position: absolute;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--red-gradient);
+      background-clip: text;
+      color: transparent;
+      font-size: 1.8rem;
+
+      transform: translate(-50%, -50%);
+      top: 45%;
+      left: 50%;
+    }
+
+    .icon {
+      color: var(--red-primary);
+      font-size: 2rem;
+    }
+  }
+
+  .container_auth {
+    display: flex;
+    justify-content: space-around;
+    padding: $padding-container-menu-auth;
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    @include applyOverflow(25vh);
+
+    border-radius: 0 0 $radius-menu $radius-menu;
+    margin: $margin-container-menu-content;
+    gap: 0.8rem;
+  }
+}
