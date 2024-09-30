@@ -55,10 +55,17 @@ const Section = ({
         ))}
 
       {description && (
-        <div className={style.container_description}>
+        <div
+          className={`${style.container_description} ${
+            description.illustrationDirection === "left"
+              ? style.steering_control
+              : ""
+          }`.trim()}
+        >
           {viewSideIcon && <SideIcon position="left" />}
           {description.illustrationDirection === "left" && (
             <Image
+              className={style.illustration}
               src={description.illustrationUrl}
               alt="Ilustração da seção."
               width={290}
@@ -73,6 +80,7 @@ const Section = ({
 
           {description.illustrationDirection !== "left" && (
             <Image
+              className={style.illustration}
               src={description.illustrationUrl}
               alt="Ilustração da seção."
               width={290}

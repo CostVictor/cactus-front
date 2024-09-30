@@ -1,7 +1,7 @@
 @import "@/styles/variables.scss";
 
 $max-width: 70rem;
-$padding: 5rem 2rem;
+$padding: 5rem 3rem;
 
 .container_main {
   min-height: 100vh;
@@ -32,6 +32,10 @@ $padding: 5rem 2rem;
     position: relative;
     margin: auto;
 
+    &.steering_control {
+      flex-direction: row;
+    }
+
     .container_text {
       margin: auto;
       padding: 0 3rem;
@@ -58,6 +62,66 @@ $padding: 5rem 2rem;
         margin: 2rem;
         font-size: 1.45rem;
         color: var(--gray-primary);
+      }
+    }
+
+    // largura mínima Desktop
+    @media (max-width: $media-pc-min) {
+      .illustration {
+        width: 30%;
+      }
+
+      .container_text {
+        .title {
+          font-size: 1.8rem;
+        }
+
+        .text {
+          font-size: 1.25rem;
+        }
+      }
+    }
+
+    // Largura Tablet
+    @media (max-width: $media-tablet) {
+      flex-direction: column;
+      align-items: center;
+
+      &.steering_control {
+        flex-direction: column-reverse;
+      }
+
+      .illustration {
+        width: auto;
+      }
+
+      .container_text {
+        padding: 0;
+
+        .title {
+          font-size: 1.9rem;
+        }
+
+        .text {
+          font-size: 1.35rem;
+        }
+      }
+    }
+
+    // Largura Mobile
+    @media (max-width: $media-mobile) {
+      .container_text {
+        .title {
+          font-size: 1.7rem;
+
+          &::before {
+            width: 12rem;
+          }
+        }
+
+        .text {
+          font-size: 1.2rem;
+        }
       }
     }
   }

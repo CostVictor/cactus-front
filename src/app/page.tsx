@@ -5,7 +5,7 @@ import Section from "@/components/Section";
 export default function Home() {
   const targets = [
     { text: "Início", link: "#inicio" },
-    { text: "Salgados", link: "#salgados" },
+    { text: "Pratos", link: "#pratos" },
   ];
 
   return (
@@ -20,11 +20,9 @@ export default function Home() {
             illustrationUrl: "/image-Chef.svg",
             illustrationDirection: "left",
           }}
-        >
-          <p>Conteúdo da seção.</p>
-        </Section>
+        />
         <Section
-          id="salgados"
+          id="pratos"
           description={{
             title: "Experimente nossos Pratos!",
             text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem eos, accusamus dicta sed dolorum iste reiciendis placeat temporibus non rerum excepturi qui libero ad tenetur numquam.",

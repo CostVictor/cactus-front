@@ -21,11 +21,7 @@ const SideIcon = ({ position }: PropsSideIcon) => {
         variants={float}
         animate="animate"
         custom={position === "left" ? 2 : -2}
-        transition={{
-          duration: 5,
-          repeat: Infinity,
-          ease: "linear",
-        }}
+        style={{ rotateY: position === "left" ? 180 : 0 }}
         className={`${style.icon} ${
           position ? style[`is_${position}`] : ""
         }`.trim()}
