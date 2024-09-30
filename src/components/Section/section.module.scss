@@ -1,72 +1,71 @@
 @import "@/styles/variables.scss";
 
-$max-width: 65rem;
-$padding: 1.5rem 2rem;
+$max-width: 70rem;
+$padding: 5rem 2rem;
 
 .container_main {
-  display: flex;
-  align-items: center;
-  position: relative;
-  padding-bottom: 5rem;
+  min-height: 100vh;
 
-  &.space_left {
+  &.spaceAside {
     margin-left: $size-aside;
   }
 
-  .body {
+  &.background_gray {
+    background-color: var(--gray-secondary);
+  }
+
+  .container_img {
+    box-shadow: var(--shadow-default);
+    position: relative;
     width: 100%;
-    min-height: 100vh;
+    height: 240px;
 
-    .container_img {
-      box-shadow: var(--shadow-default);
-      position: relative;
-      width: 100%;
-      height: 240px;
-
-      .img {
-        object-fit: cover;
-      }
+    .img {
+      object-fit: cover;
     }
+  }
 
-    .container_description {
-      display: flex;
-      max-width: $max-width;
-      padding: $padding;
+  .container_description {
+    display: flex;
+    max-width: $max-width;
+    padding: $padding;
+    position: relative;
+    margin: auto;
+
+    .container_text {
       margin: auto;
+      padding: 0 3rem;
 
-      .container_text {
-        margin: auto;
+      .title {
+        position: relative;
+        background: var(--red-gradient);
+        background-clip: text;
+        color: transparent;
+        font-size: 2rem;
 
-        .title {
-          position: relative;
+        &::before {
+          content: "";
+          position: absolute;
           background: var(--red-gradient);
-          background-clip: text;
-          color: transparent;
-          font-size: 2rem;
-
-          &::before {
-            content: "";
-            position: absolute;
-            background: var(--red-gradient);
-            border-radius: 50px;
-            bottom: -5px;
-            width: 16rem;
-            height: 3px;
-          }
-        }
-
-        .text {
-          margin: 2rem;
-          font-size: 1.45rem;
-          color: var(--gray-primary);
+          border-radius: 50px;
+          bottom: -5px;
+          width: 16rem;
+          height: 3px;
         }
       }
-    }
 
-    .container_content {
-      max-width: $max-width;
-      padding: $padding;
-      margin: auto;
+      .text {
+        margin: 2rem;
+        font-size: 1.45rem;
+        color: var(--gray-primary);
+      }
     }
+  }
+
+  .container_content {
+    position: relative;
+    max-width: $max-width;
+    padding: $padding;
+    margin: auto;
   }
 }

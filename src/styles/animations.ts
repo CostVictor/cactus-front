@@ -16,3 +16,15 @@ export const enterChild: Variants = {
   hidden: { opacity: 0, y: -5 },
   visible: { opacity: 1, y: 0 }
 }
+
+export const float: Variants = {
+  animate: (custom) => ({
+    y: [0, -13, 0],
+    rotate: [0, custom, 0],
+    transition: {
+      duration: 6,
+      repeat: Infinity,
+      ease: "easeInOut",
+    },
+  }),
+}

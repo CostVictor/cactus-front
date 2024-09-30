@@ -9,11 +9,12 @@ interface PropsDescription {
   title: string
   text: string
   illustrationUrl: string
+  illustrationDirection?: "left" | "right"
 }
 
 export interface PropsSection {
   id: string
-  backgroundColor?: string
+  isBackgroundGray?: boolean
   sectionImage?: PropsSectionImage
   description?: PropsDescription
   observeAside?: boolean

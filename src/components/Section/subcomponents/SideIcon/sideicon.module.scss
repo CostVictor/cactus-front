@@ -1,0 +1,13 @@
+.icon {
+  position: absolute;
+
+  &.is_left {
+    top: 30%;
+    left: -13rem;
+  }
+
+  &.is_right {
+    bottom: 0;
+    right: -13rem;
+  }
+}
