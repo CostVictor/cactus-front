@@ -16,6 +16,10 @@ html {
 body {
   transition: 0.2s ease-in-out;
   background-color: var(--bg-primary);
+
+  &.blocked_scroll {
+    overflow: hidden;
+  }
 }
 
 .block_shadow {

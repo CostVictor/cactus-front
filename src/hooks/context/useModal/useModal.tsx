@@ -19,6 +19,7 @@ export const ModalProvider: React.FC<{ children: ReactNode }> = ({
    * Adiciona um novo componente react na lista.
    */
   const addNewModal: PropsAddNewModalFunction = (modal) => {
+    document.body.classList.add("blocked_scroll");
     setListModal((prevList) => {
       return [...prevList, modal];
     });
@@ -28,15 +29,17 @@ export const ModalProvider: React.FC<{ children: ReactNode }> = ({
    * Remove o item da lista na posição definida.
    * Index negativos também são aceitos para contagem a partir do final.
    */
-  const removeModal: PropsRemoveModalFunction = (index) => {
+  const removeModal: PropsRemoveModalFunction = (index) =>
     setListModal((prevList) => {
       const newList = [...prevList];
       const newIndex = index < 0 ? newList.length + index : index;
 
       newList.splice(newIndex, 1);
+      if (!newList.length) {
+        document.body.classList.remove("blocked_scroll");
+      }
       return newList;
     });
-  };
 
   return (
     <modalContext.Provider value={{ addNewModal, removeModal }}>
