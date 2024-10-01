@@ -14,8 +14,9 @@ const Section = ({
   children,
   description,
   sectionImage,
-  isBackgroundGray,
-  observeAside = true,
+  backgroundGray,
+  maxWidthContent,
+  reserveAsideSpace = true,
 }: PropsSection) => {
   const [viewSideIcon, setViewSideIcon] = useState<boolean>(false);
   const preview = useMobile();
@@ -33,8 +34,10 @@ const Section = ({
     <section
       id={id}
       className={`${style.container_main} ${
-        isBackgroundGray ? style.background_gray : ""
-      } ${observeAside && !preview.isMobile ? style.spaceAside : ""}`.trim()}
+        backgroundGray ? style.background_gray : ""
+      } ${
+        reserveAsideSpace && !preview.isMobile ? style.spaceAside : ""
+      }`.trim()}
     >
       {sectionImage &&
         (sectionImage.viewImages ? (
@@ -91,8 +94,13 @@ const Section = ({
       )}
 
       {children && (
-        <div className={style.container_content}>
-          {children} {viewSideIcon && <SideIcon position="right" />}
+        <div
+          className={`${style.container_content} ${
+            !maxWidthContent ? style.limited_width : ""
+          }`.trim()}
+        >
+          {children}
+          {viewSideIcon && !maxWidthContent && <SideIcon position="right" />}
         </div>
       )}
     </section>

@@ -28,7 +28,7 @@ export default function Home() {
             text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem eos, accusamus dicta sed dolorum iste reiciendis placeat temporibus non rerum excepturi qui libero ad tenetur numquam.",
             illustrationUrl: "/image-Dish.svg",
           }}
-          isBackgroundGray
+          backgroundGray
         />
       </main>
       <Aside />

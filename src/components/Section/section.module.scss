@@ -128,8 +128,11 @@ $padding: 5rem 3rem;
 
   .container_content {
     position: relative;
-    max-width: $max-width;
     padding: $padding;
     margin: auto;
+
+    &.limited_width {
+      max-width: $max-width;
+    }
   }
 }

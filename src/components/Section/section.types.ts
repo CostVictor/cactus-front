@@ -14,9 +14,10 @@ interface PropsDescription {
 
 export interface PropsSection {
   id: string
-  isBackgroundGray?: boolean
   sectionImage?: PropsSectionImage
   description?: PropsDescription
-  observeAside?: boolean
+  backgroundGray?: boolean
+  reserveAsideSpace?: boolean
+  maxWidthContent?: boolean
   children?: ReactNode
 }
