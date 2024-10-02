@@ -1,6 +1,6 @@
 @import "@/styles/variables.scss";
 
-$max-width: 70rem;
+$max-width: 75rem;
 $padding: 5rem 3rem;
 
 .container_main {
@@ -129,7 +129,12 @@ $padding: 5rem 3rem;
   .container_content {
     position: relative;
     padding: $padding;
+    max-width: 120rem;
     margin: auto;
+
+    &.no_space_top {
+      padding-top: 0;
+    }
 
     &.limited_width {
       max-width: $max-width;

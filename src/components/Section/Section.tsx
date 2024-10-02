@@ -23,7 +23,7 @@ const Section = ({
 
   useEffect(() => {
     const handleViewSideIcon = () =>
-      setViewSideIcon(window.innerWidth >= 1450 ? true : false);
+      setViewSideIcon(window.innerWidth >= 1550 ? true : false);
     handleViewSideIcon();
 
     window.addEventListener("resize", handleViewSideIcon);
@@ -96,8 +96,8 @@ const Section = ({
       {children && (
         <div
           className={`${style.container_content} ${
-            !maxWidthContent ? style.limited_width : ""
-          }`.trim()}
+            description ? style.no_space_top : ""
+          } ${!maxWidthContent ? style.limited_width : ""}`.trim()}
         >
           {children}
           {viewSideIcon && !maxWidthContent && <SideIcon position="right" />}

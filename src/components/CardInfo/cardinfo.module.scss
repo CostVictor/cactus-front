@@ -1,0 +1,60 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+
+  border: solid 1px var(--division-intense);
+  border-radius: 20px;
+
+  margin: 2rem 1rem;
+  padding: 1.5rem;
+  gap: 1rem;
+
+  box-shadow: var(--shadow-default);
+  cursor: pointer;
+
+  &.sold_out {
+    background-color: var(--division);
+  }
+
+  .img {
+    width: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+    box-shadow: var(--shadow-btn);
+  }
+
+  .icon {
+    position: absolute;
+    color: var(--red-secondary);
+    font-size: 2rem;
+    left: 5%;
+
+    &.marker {
+      color: var(--white-primary);
+      right: -2.2rem;
+      left: auto;
+    }
+  }
+
+  .title {
+    font-size: 1.8rem;
+    max-width: 80%;
+    text-align: center;
+    color: var(--red-secondary);
+  }
+
+  .text {
+    font-size: 1.3rem;
+    color: var(--gray-primary);
+  }
+
+  .span {
+    font-size: 0.9rem;
+    color: var(--black-primary);
+    position: absolute;
+    bottom: 2%;
+  }
+}

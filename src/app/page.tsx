@@ -1,6 +1,10 @@
+"use client";
+
 import Aside from "@/components/Aside";
 import Header from "@/components/Header";
 import Section from "@/components/Section";
+import CardInfo from "@/components/CardInfo";
+import Container from "@/components/Container";
 
 export default function Home() {
   const targets = [
@@ -20,7 +24,26 @@ export default function Home() {
             illustrationUrl: "/image-Chef.svg",
             illustrationDirection: "left",
           }}
-        />
+        >
+          <Container grid>
+            <CardInfo
+              title="Card 1"
+              text="Clique em mim!"
+              imgUrl="/imgSection/img1.svg"
+            />
+            <CardInfo
+              title="Card 2"
+              text="Clique em mim!"
+              imgUrl="/imgSection/img1.svg"
+            />
+            <CardInfo
+              title="Card 3"
+              text="Clique em mim!"
+              imgUrl="/imgSection/img1.svg"
+            />
+          </Container>
+        </Section>
+
         <Section
           id="pratos"
           description={{

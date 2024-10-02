@@ -1,12 +1,16 @@
+"use client";
+
 import PropsContainer from "./container.types";
 import ChildObserver from "./subcomponents/ChildObserver";
 import { motion } from "framer-motion";
 import React, { useRef } from "react";
+import style from "./container.module.scss";
 
 const Container = ({
   children,
   className,
   variants,
+  grid,
   isObserver,
 }: PropsContainer) => {
   const childrenArray = React.Children.toArray(children);
@@ -15,7 +19,7 @@ const Container = ({
   return (
     <motion.div
       ref={containerRef}
-      className={className}
+      className={grid ? style.grid : className}
       variants={variants}
       initial="hidden"
       animate="visible"
