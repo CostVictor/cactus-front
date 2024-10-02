@@ -6,7 +6,7 @@ import {
   PropsRemoveModalFunction,
 } from "./usemodal.types";
 import React, { createContext, ReactNode, useContext, useState } from "react";
-import { AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 
 const modalContext = createContext<undefined | PropsModalContext>(undefined);
 
@@ -46,7 +46,20 @@ export const ModalProvider: React.FC<{ children: ReactNode }> = ({
       {children}
       <AnimatePresence>
         {listModal.length ? (
-          <div className="block_shadow">{listModal[listModal.length - 1]}</div>
+          <motion.div
+            className="block_shadow"
+            animate={{
+              backdropFilter: "blur(3px)",
+              backgroundColor: "var(--bg-shadow)",
+            }}
+            exit={{
+              backdropFilter: "blur(0px)",
+              backgroundColor: "transparent",
+              transition: { duration: 0.1 },
+            }}
+          >
+            {listModal[listModal.length - 1]}
+          </motion.div>
         ) : null}
       </AnimatePresence>
     </modalContext.Provider>

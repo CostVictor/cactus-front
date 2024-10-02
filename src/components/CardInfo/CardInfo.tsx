@@ -27,6 +27,7 @@ const CardInfo = ({
       initial="hidden"
       whileInView="visible"
       whileHover={{ scale: 1.04 }}
+      transition={{ delay: 0.1 }}
       viewport={{ once: true }}
     >
       {imgUrl && (
