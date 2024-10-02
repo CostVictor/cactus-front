@@ -27,6 +27,11 @@ $width-modal: 35rem;
       @include applyOverflow(40vh);
       margin: 5%;
       margin-bottom: 0;
+
+      .text {
+        font-size: 1.2rem;
+        color: var(--black-primary);
+      }
     }
 
     .footer {

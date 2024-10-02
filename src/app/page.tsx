@@ -5,8 +5,12 @@ import Header from "@/components/Header";
 import Section from "@/components/Section";
 import CardInfo from "@/components/CardInfo";
 import Container from "@/components/Container";
+import useModal from "@/hooks/context/useModal";
+import Modal from "@/components/Modal";
 
 export default function Home() {
+  const modals = useModal();
+
   const targets = [
     { text: "Início", link: "#inicio" },
     { text: "Pratos", link: "#pratos" },

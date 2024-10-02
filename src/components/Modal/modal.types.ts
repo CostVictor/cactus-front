@@ -7,7 +7,8 @@ type ButtonModal = Omit<PropsButton, "link"> & {
 
 export interface PropsModal {
   title: string;
-  children: ReactNode;
+  message?: string;
+  children?: ReactNode;
   buttons?: ButtonModal[];
   defaultButtonText?: string;
 }
