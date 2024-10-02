@@ -43,7 +43,7 @@ const MenuHeader = ({ targets }: PropsMenuHeader) => {
           </Link>
         </div>
       )}
-      <Container className={style.content} isObserver>
+      <Container className={style.content} animateChildren>
         {targets?.map((target, index) => (
           <NavLink
             key={index}
