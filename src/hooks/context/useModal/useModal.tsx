@@ -54,7 +54,6 @@ export const ModalProvider: React.FC<{ children: ReactNode }> = ({
             }}
             exit={{
               backdropFilter: "blur(0px)",
-              backgroundColor: "transparent",
               transition: { duration: 0.1 },
             }}
           >

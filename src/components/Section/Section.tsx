@@ -22,8 +22,10 @@ const Section = ({
   const preview = useMobile();
 
   useEffect(() => {
-    const handleViewSideIcon = () =>
-      setViewSideIcon(window.innerWidth >= 1550 ? true : false);
+    /**
+     * Indica se os icones laterais da página estarão visiveis com base na largura da tela.
+     */
+    const handleViewSideIcon = () => setViewSideIcon(window.innerWidth >= 1550);
     handleViewSideIcon();
 
     window.addEventListener("resize", handleViewSideIcon);

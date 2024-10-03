@@ -4,7 +4,7 @@ import React, {
   createContext,
   ReactNode,
   useContext,
-  useEffect,
+  useLayoutEffect,
   useState,
 } from "react";
 import { PropsMobileContext } from "./usemobile.types";
@@ -14,13 +14,14 @@ const mobileContext = createContext<undefined | PropsMobileContext>(undefined);
 export const MobileProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const [isMobile, setIsMobile] = useState<boolean>(false);
+  const [isMobile, setIsMobile] = useState<boolean>(true);
 
-  useEffect(() => {
-    // Define se está no modo mobile ou não a partir da largura da tela do navegador.
-    const handleResize = () =>
-      setIsMobile(window.innerWidth <= 600 ? true : false);
-    handleResize()
+  useLayoutEffect(() => {
+    /**
+     * Define se está no modo mobile ou não a partir da largura da tela do navegador.
+     */
+    const handleResize = () => setIsMobile(window.innerWidth <= 600);
+    handleResize();
 
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
