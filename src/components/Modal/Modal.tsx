@@ -10,6 +10,7 @@ import Container from "../Container/Container";
 
 const Modal = ({
   title,
+  message,
   children,
   buttons,
   defaultButtonText = "Fechar",
@@ -53,9 +54,9 @@ const Modal = ({
         <Container
           key={`content_${title}`}
           className={style.content}
-          isObserver
+          animateChildren
         >
-          {children}
+          {message ? <p className={style.text}>{message}</p> : children}
         </Container>
 
         <motion.div

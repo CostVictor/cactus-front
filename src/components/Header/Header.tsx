@@ -1,6 +1,7 @@
 "use client";
 
 import { Icon } from "@iconify/react/dist/iconify.js";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
@@ -16,12 +17,27 @@ import NavLink from "../NavLink";
 import Button from "../Button";
 
 const Header = ({ targets }: PropsHeader) => {
+  const [withShadow, setWithShadow] = useState<boolean>(false);
   const auth = useAuth();
   const preview = useMobile();
   const modals = useModal();
 
+  useEffect(() => {
+    /**
+     * Define a posição do header de acordo com a posição do scroll.
+     */
+    const handleWithShadow = () => setWithShadow(window.scrollY > 0);
+
+    window.addEventListener("scroll", handleWithShadow);
+    return () => window.removeEventListener("scroll", handleWithShadow);
+  }, []);
+
   return (
-    <header className={style.header}>
+    <header
+      className={`${style.container_main} ${
+        withShadow ? style.shadow : ""
+      }`.trim()}
+    >
       <div className={style.container_logo}>
         <Image src="/icone.png" alt="Icone do cactus." width={20} height={30} />
         <h1 className={`${yesevaOne.className} ${style.title}`}>CACTUS</h1>

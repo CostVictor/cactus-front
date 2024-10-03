@@ -1,0 +1,15 @@
+@import "@/styles/variables.scss";
+@import "@/styles/functions.scss";
+
+.grid {
+  display: grid;
+  @include applyGrid(3);
+
+  @media (max-width: $media-pc-min) {
+    @include applyGrid(2);
+  }
+
+  @media (max-width: $media-mobile) {
+    @include applyGrid(1);
+  }
+}

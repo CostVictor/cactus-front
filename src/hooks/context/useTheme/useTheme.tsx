@@ -18,13 +18,16 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
 
   useEffect(() => {
     const themeDark = localStorage.getItem("themeDark");
-    setIsDark(themeDark === "true");
+    const checkIsDark = themeDark === "true";
+    document.body.classList.toggle("theme-dark", checkIsDark);
+    setIsDark(checkIsDark);
   }, []);
 
   const toggleTheme = () =>
     setIsDark((prevValue) => {
       const newValue = !prevValue;
       localStorage.setItem("themeDark", String(newValue));
+      document.body.classList.toggle("theme-dark", newValue);
       return newValue;
     });
 

@@ -14,15 +14,18 @@ const Section = ({
   children,
   description,
   sectionImage,
-  isBackgroundGray,
-  observeAside = true,
+  backgroundGray,
+  maxWidthContent,
+  reserveAsideSpace = true,
 }: PropsSection) => {
   const [viewSideIcon, setViewSideIcon] = useState<boolean>(false);
   const preview = useMobile();
 
   useEffect(() => {
-    const handleViewSideIcon = () =>
-      setViewSideIcon(window.innerWidth >= 1450 ? true : false);
+    /**
+     * Indica se os icones laterais da página estarão visiveis com base na largura da tela.
+     */
+    const handleViewSideIcon = () => setViewSideIcon(window.innerWidth >= 1550);
     handleViewSideIcon();
 
     window.addEventListener("resize", handleViewSideIcon);
@@ -33,8 +36,10 @@ const Section = ({
     <section
       id={id}
       className={`${style.container_main} ${
-        isBackgroundGray ? style.background_gray : ""
-      } ${observeAside && !preview.isMobile ? style.spaceAside : ""}`.trim()}
+        backgroundGray ? style.background_gray : ""
+      } ${
+        reserveAsideSpace && !preview.isMobile ? style.spaceAside : ""
+      }`.trim()}
     >
       {sectionImage &&
         (sectionImage.viewImages ? (
@@ -55,10 +60,17 @@ const Section = ({
         ))}
 
       {description && (
-        <div className={style.container_description}>
+        <div
+          className={`${style.container_description} ${
+            description.illustrationDirection === "left"
+              ? style.steering_control
+              : ""
+          }`.trim()}
+        >
           {viewSideIcon && <SideIcon position="left" />}
           {description.illustrationDirection === "left" && (
             <Image
+              className={style.illustration}
               src={description.illustrationUrl}
               alt="Ilustração da seção."
               width={290}
@@ -73,6 +85,7 @@ const Section = ({
 
           {description.illustrationDirection !== "left" && (
             <Image
+              className={style.illustration}
               src={description.illustrationUrl}
               alt="Ilustração da seção."
               width={290}
@@ -83,8 +96,13 @@ const Section = ({
       )}
 
       {children && (
-        <div className={style.container_content}>
-          {children} {viewSideIcon && <SideIcon position="right" />}
+        <div
+          className={`${style.container_content} ${
+            description ? style.no_space_top : ""
+          } ${!maxWidthContent ? style.limited_width : ""}`.trim()}
+        >
+          {children}
+          {viewSideIcon && !maxWidthContent && <SideIcon position="right" />}
         </div>
       )}
     </section>

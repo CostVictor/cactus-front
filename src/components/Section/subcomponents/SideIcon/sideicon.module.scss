@@ -1,13 +1,15 @@
+$dist-content: -13rem;
+
 .icon {
   position: absolute;
 
   &.is_left {
     top: 30%;
-    left: -13rem;
+    left: $dist-content;
   }
 
   &.is_right {
-    bottom: 0;
-    right: -13rem;
+    bottom: 30%;
+    right: $dist-content;
   }
 }

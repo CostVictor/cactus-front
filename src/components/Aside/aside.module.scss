@@ -8,6 +8,7 @@ $distance-text-icon: 70%;
   background-color: var(--bg-secondary);
   border-right: solid 1px var(--division);
   position: fixed;
+  z-index: 101;
   top: 0;
   left: 0;
   height: 100vh;
