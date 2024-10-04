@@ -2,6 +2,7 @@
 
 $max-width: 75rem;
 $padding: 5rem 3rem;
+$dist-icons: -13rem;
 
 .container_main {
   min-height: 100vh;
@@ -12,6 +13,20 @@ $padding: 5rem 3rem;
 
   &.background_gray {
     background-color: var(--gray-secondary);
+  }
+
+  .icon {
+    position: absolute;
+
+    &.is_left {
+      top: 30%;
+      left: $dist-icons;
+    }
+
+    &.is_right {
+      bottom: 30%;
+      right: $dist-icons;
+    }
   }
 
   .container_img {

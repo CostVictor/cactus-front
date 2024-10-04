@@ -6,8 +6,8 @@ import Image from "next/image";
 import { PropsSection } from "./section.types";
 import useMobile from "@/hooks/context/useMobile";
 import Carousel from "./subcomponents/Carousel";
-import SideIcon from "./subcomponents/SideIcon";
 import style from "./section.module.scss";
+import SideIcon from "../SideIcon";
 
 const Section = ({
   id,
@@ -67,7 +67,12 @@ const Section = ({
               : ""
           }`.trim()}
         >
-          {viewSideIcon && <SideIcon position="left" />}
+          {viewSideIcon && (
+            <SideIcon
+              position="left"
+              className={`${style.icon} ${style.is_left}`}
+            />
+          )}
           {description.illustrationDirection === "left" && (
             <Image
               className={style.illustration}
@@ -102,7 +107,12 @@ const Section = ({
           } ${!maxWidthContent ? style.limited_width : ""}`.trim()}
         >
           {children}
-          {viewSideIcon && !maxWidthContent && <SideIcon position="right" />}
+          {viewSideIcon && !maxWidthContent && (
+            <SideIcon
+              position="right"
+              className={`${style.icon} ${style.is_right}`}
+            />
+          )}
         </div>
       )}
     </section>

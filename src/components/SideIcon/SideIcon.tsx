@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
@@ -5,9 +7,8 @@ import Image from "next/image";
 import { listIcons, lodash } from "./sideicon.variables";
 import { PropsSideIcon } from "./sideicon.types";
 import { float } from "@/styles/animations";
-import style from "./sideicon.module.scss";
 
-const SideIcon = ({ position }: PropsSideIcon) => {
+const SideIcon = ({ position, className }: PropsSideIcon) => {
   const [randomValue, setRandomValue] = useState<string>("");
 
   useEffect(() => {
@@ -22,16 +23,9 @@ const SideIcon = ({ position }: PropsSideIcon) => {
         animate="animate"
         custom={position === "left" ? 2 : -2}
         style={{ rotateY: position === "left" ? 180 : 0 }}
-        className={`${style.icon} ${
-          position ? style[`is_${position}`] : ""
-        }`.trim()}
+        className={className}
       >
-        <Image
-          src={randomValue}
-          alt="Detalhe lateral da seção."
-          width={150}
-          height={150}
-        />
+        <Image src={randomValue} alt="Icone lateral" width={150} height={150} />
       </motion.div>
     )
   );

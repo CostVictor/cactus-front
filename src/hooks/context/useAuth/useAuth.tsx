@@ -5,9 +5,14 @@ import { PropsUser, PropsAuthContext } from "./useauth.types";
 
 const authContext = createContext<undefined | PropsAuthContext>(undefined);
 
-export const AuthProvider: React.FC<{children: ReactNode}> = ({ children }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(true);
-  const [user, setUser] = useState<null | PropsUser>({name: "Victor", role: "employee"});
+export const AuthProvider: React.FC<{ children: ReactNode }> = ({
+  children,
+}) => {
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const [user, setUser] = useState<null | PropsUser>({
+    name: "Victor",
+    role: "employee",
+  });
 
   const login = (email: string, password: string) => {};
   const logout = () => {};
@@ -27,4 +32,4 @@ const useAuth = () => {
   return context;
 };
 
-export default useAuth
+export default useAuth;
