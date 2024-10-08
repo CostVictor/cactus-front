@@ -5,10 +5,14 @@ import Link from "next/link";
 
 import { title, textRedirect, textLinkRedirect } from "./authpanel.variables";
 import { PropsAuthPanel } from "./authpanel.types";
+
 import useMobile from "@/hooks/context/useMobile";
-import style from "./authpanel.module.scss";
 import SideIcon from "../SideIcon";
 import NavLink from "../NavLink";
+
+import Form from "../Form";
+import InputField from "../InputField";
+import style from "./authpanel.module.scss";
 
 const AuthPanel = ({ type }: PropsAuthPanel) => {
   const preview = useMobile();
@@ -54,6 +58,15 @@ const AuthPanel = ({ type }: PropsAuthPanel) => {
         )}
         <div className={style.content}>
           <h1 className={style.title}>{title[type]}</h1>
+
+          <Form onSubmit={(data) => console.log(data)}>
+            <InputField
+              name="name"
+              label="Nome e sobrenome"
+              config={{ type: "tel" }}
+              required
+            />
+          </Form>
 
           <div className={style.container_redirect}>
             <p className={style.text}>{textRedirect[type]}</p>
