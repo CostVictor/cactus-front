@@ -1,16 +1,18 @@
 "use client";
 
-import { usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
 import { Icon } from "@iconify/react";
 
 import { inter } from "@/styles/fonts";
 import { fadeIn } from "@/styles/animations";
+
 import useAuth from "@/hooks/context/useAuth";
 import useMobile from "@/hooks/context/useMobile";
-import ItemAside from "./subcomponents/Item";
+
 import { listAsideItems } from "./aside.variables";
+import ItemAside from "./subcomponents/Item";
 import style from "./aside.module.scss";
 
 const Aside = () => {

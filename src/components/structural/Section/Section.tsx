@@ -3,11 +3,13 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 
-import { PropsSection } from "./section.types";
 import useMobile from "@/hooks/context/useMobile";
+
 import Carousel from "./subcomponents/Carousel";
+import SideIcon from "@/components/layout/SideIcon";
+
+import { PropsSection } from "./section.types";
 import style from "./section.module.scss";
-import SideIcon from "../SideIcon";
 
 const Section = ({
   id,

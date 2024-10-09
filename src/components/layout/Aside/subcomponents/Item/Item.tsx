@@ -7,7 +7,7 @@ import Link from "next/link";
 import { fadeIn } from "@/styles/animations";
 import { PropsItemAside } from "./item.types";
 import useMobile from "@/hooks/context/useMobile";
-import style from "@/components/Aside/aside.module.scss";
+import style from "@/components/layout/Aside/aside.module.scss";
 
 const ItemAside = ({ name, icon, url, isOpen, isActive }: PropsItemAside) => {
   const preview = useMobile();

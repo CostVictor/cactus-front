@@ -1,12 +1,16 @@
 "use client";
 
-import Button from "../Button";
-import style from "./modal.module.scss";
+import { motion } from "framer-motion";
+
+import Button from "@/components/commom/Button";
+
+import Container from "@/components/structural/Container";
+
 import useModal from "@/hooks/context/useModal";
+
 import { PropsModal } from "./modal.types";
 import { fadeIn, revealGrow } from "@/styles/animations";
-import { motion } from "framer-motion";
-import Container from "../Container/Container";
+import style from "./modal.module.scss";
 
 const Modal = ({
   title,

@@ -4,11 +4,14 @@ import Link from "next/link";
 
 import { averiaSansLibre } from "@/styles/fonts";
 import { PropsMenuHeader } from "./menuheader.types";
-import useModal from "@/hooks/context/useModal";
-import Container from "@/components/Container";
+
 import useAuth from "@/hooks/context/useAuth";
-import NavLink from "@/components/NavLink";
-import Button from "@/components/Button";
+import useModal from "@/hooks/context/useModal";
+
+import Container from "@/components/structural/Container";
+import NavLink from "@/components/layout/NavLink";
+import Button from "@/components/commom/Button";
+
 import style from "./menuheader.module.scss";
 
 const MenuHeader = ({ targets }: PropsMenuHeader) => {

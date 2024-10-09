@@ -6,15 +6,17 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 
-import { yesevaOne } from "@/styles/fonts";
-import { PropsHeader } from "./header.types";
-import style from "./header.module.scss";
-import MenuHeader from "./subcomponents/MenuHeader";
 import useMobile from "@/hooks/context/useMobile";
 import useModal from "@/hooks/context/useModal";
 import useAuth from "@/hooks/context/useAuth";
+
+import Button from "@/components/commom/Button";
 import NavLink from "../NavLink";
-import Button from "../Button";
+
+import { yesevaOne } from "@/styles/fonts";
+import { PropsHeader } from "./header.types";
+import MenuHeader from "./subcomponents/MenuHeader";
+import style from "./header.module.scss";
 
 const Header = ({ targets }: PropsHeader) => {
   const [withShadow, setWithShadow] = useState<boolean>(false);

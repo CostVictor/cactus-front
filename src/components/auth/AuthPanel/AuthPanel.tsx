@@ -3,15 +3,16 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import useMobile from "@/hooks/context/useMobile";
+
+import SideIcon from "@/components/layout/SideIcon";
+import NavLink from "@/components/layout/NavLink";
+
+import Form from "@/components/forms/Form";
+import InputField from "@/components/forms/InputField";
+
 import { title, textRedirect, textLinkRedirect } from "./authpanel.variables";
 import { PropsAuthPanel } from "./authpanel.types";
-
-import useMobile from "@/hooks/context/useMobile";
-import SideIcon from "../SideIcon";
-import NavLink from "../NavLink";
-
-import Form from "../Form";
-import InputField from "../InputField";
 import style from "./authpanel.module.scss";
 
 const AuthPanel = ({ type }: PropsAuthPanel) => {

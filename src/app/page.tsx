@@ -1,12 +1,15 @@
 "use client";
 
-import Aside from "@/components/Aside";
-import Header from "@/components/Header";
-import Section from "@/components/Section";
-import CardInfo from "@/components/CardInfo";
-import Container from "@/components/Container";
+import Aside from "@/components/layout/Aside";
+import Header from "@/components/layout/Header";
+
+import Section from "@/components/structural/Section";
+import Container from "@/components/structural/Container";
+
+import CardInfo from "@/components/display/CardInfo";
+import Modal from "@/components/display/Modal";
+
 import useModal from "@/hooks/context/useModal";
-import Modal from "@/components/Modal";
 
 export default function Home() {
   const modals = useModal();
