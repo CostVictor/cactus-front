@@ -3,29 +3,11 @@
   flex-direction: column;
   align-items: center;
   position: relative;
-  width: 80%;
   margin: auto;
 
-  .span_label {
-    display: flex;
-    position: absolute;
-    font-size: 0.8rem;
-    padding: 0.2rem 0.5rem;
-    top: -0.7rem;
-    left: 0;
-    gap: 0.3rem;
-
-    z-index: 100;
-    border-radius: 8px 8px 0 0;
-
-    background-color: var(--bg-primary);
-    color: var(--gray-primary);
-
-    span {
-      color: var(--red-secondary);
-      font-weight: bolder;
-    }
-  }
+  width: 80%;
+  box-shadow: var(--shadow-default);
+  border-radius: 10px;
 
   .container_input {
     position: relative;
@@ -39,12 +21,18 @@
       background-color: var(--bg-primary);
       color: var(--black-primary);
 
-      border: solid 1px transparent;
-      box-shadow: var(--shadow-default);
+      border: none;
       border-radius: 10px;
 
       &.indent {
         text-indent: 2rem;
+      }
+
+      &.message_mode {
+        box-shadow: none;
+        border-bottom: 1px solid var(--division);
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
       }
     }
 
@@ -70,6 +58,17 @@
       &.indent {
         left: 12.5%;
       }
+    }
+
+    .span_required {
+      user-select: none;
+      pointer-events: none;
+
+      color: var(--division-intense);
+      font-size: 1rem;
+      position: absolute;
+      right: 1.5%;
+      top: 1.5%;
     }
   }
 }

@@ -11,19 +11,24 @@ interface PropsInputOptions {
   selectOptions?: string[];
 }
 
-interface PropsInputConfig {
-  type?: "text" | "number" | "email" | "tel" | "password";
-  register?: UseFormRegister<FieldValues>;
-  validation?: PropsInputValidation;
+export interface PropsInputMessage {
+  text: string
+  isError?: boolean;
 }
 
 export interface PropsInputValidation {
   custom?: PropsCustomValidation;
   minLength?: number;
   maxLength?: number;
-  notText?: boolean;
   notNumber?: boolean;
   notSymbol?: boolean;
+  capitalize?: "first" | "all";
+}
+
+export interface PropsInputConfig {
+  type?: "text" | "number" | "email" | "tel" | "password";
+  register?: UseFormRegister<FieldValues>;
+  validation?: PropsInputValidation;
 }
 
 export interface PropsInputField {
@@ -31,7 +36,8 @@ export interface PropsInputField {
   label: string;
   value?: string;
   onChange?: PropsOnChange;
-  errorMessage?: string;
+  equalTo?: string;
+  message?: PropsInputMessage;
   options?: PropsInputOptions;
   config?: PropsInputConfig;
   required?: boolean;

@@ -1,0 +1,13 @@
+.container {
+  padding: 0.7rem;
+  border-radius: 0 0 10px 10px;
+
+  .text {
+    color: var(--black-primary);
+    font-size: 1rem;
+
+    &.has_error {
+      color: var(--red-secondary);
+    }
+  }
+}

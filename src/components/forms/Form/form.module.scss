@@ -1,6 +1,13 @@
-.container {
-  display: flex;
-  flex-direction: column;
+@import "@/styles/functions.scss";
+
+.container_main {
   width: 100%;
-  gap: 1.3rem;
+
+  .container_inputs {
+    @include applyOverflow(25rem);
+    padding: 0.8rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.3rem;
+  }
 }

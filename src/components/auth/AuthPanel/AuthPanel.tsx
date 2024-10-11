@@ -50,7 +50,6 @@ const AuthPanel = ({ type }: PropsAuthPanel) => {
             <Image
               src="/logo.svg"
               alt="Logo da lanchonete Cactus Comida Boa"
-              className={style.img}
               width={400}
               height={300}
               priority
@@ -64,7 +63,42 @@ const AuthPanel = ({ type }: PropsAuthPanel) => {
             <InputField
               name="name"
               label="Nome e sobrenome"
+              config={{
+                validation: {
+                  capitalize: "all",
+                  notNumber: true,
+                  notSymbol: true,
+                },
+              }}
+              required
+            />
+            <InputField
+              name="tel"
+              label="Telefone"
               config={{ type: "tel" }}
+              required
+            />
+            <InputField
+              name="email"
+              label="E-mail"
+              config={{ type: "email" }}
+              required
+            />
+            <InputField name="city_state" label="Cidade e estado" required />
+            <InputField
+              name="password"
+              label="Senha"
+              config={{ type: "password" }}
+              message={{
+                text: "A senha deve incluir pelo menos: uma letra maiúscula, uma letra minúscula, um número e um símbolo especial.",
+              }}
+              required
+            />
+            <InputField
+              name="password_conf"
+              label="Confirmar senha"
+              config={{ type: "password" }}
+              equalTo="password"
               required
             />
           </Form>

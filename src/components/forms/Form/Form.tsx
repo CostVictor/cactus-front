@@ -4,11 +4,14 @@ import React, { isValidElement, cloneElement, Children } from "react";
 import { useForm, FieldValues, SubmitHandler } from "react-hook-form";
 
 import { PropsForm } from "./form.types";
+import { checkHasInputConfirm, getFormMessage } from "./form.utils";
+
 import InputField from "../InputField";
 import style from "./form.module.scss";
 
 const Form = ({ children, onSubmit }: PropsForm) => {
   const {
+    watch,
     register,
     handleSubmit,
     formState: { errors },
@@ -26,16 +29,29 @@ const Form = ({ children, onSubmit }: PropsForm) => {
   };
 
   return (
-    <form onSubmit={handleSubmit(submitForm)} className={style.container}>
-      {Children.map(children, (child) =>
-        isValidElement(child) && child.type === InputField
-          ? cloneElement(child, {
-              errorMessage: errors[child.props.name]?.message?.toString(),
-              value: child.props.value ?? "",
-              config: { ...child.props.config, register: register },
-            })
-          : child
-      )}
+    <form onSubmit={handleSubmit(submitForm)} className={style.container_main}>
+      <div className={style.container_inputs}>
+        {Children.map(children, (child) =>
+          isValidElement(child) && child.type === InputField
+            ? cloneElement(child, {
+                name: checkHasInputConfirm(
+                  child.props.name,
+                  child.props.equalTo ?? ""
+                ),
+                message: getFormMessage(child, errors),
+                value: child.props.value,
+                equalTo: child.props.equalTo
+                  ? watch(child.props.equalTo)
+                  : undefined,
+                config: {
+                  ...child.props.config,
+                  register,
+                },
+              })
+            : child
+        )}
+      </div>
+      <button type="submit">Tes</button>
     </form>
   );
 };
