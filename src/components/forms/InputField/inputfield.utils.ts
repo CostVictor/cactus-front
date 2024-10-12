@@ -1,4 +1,4 @@
-import { PropsInputValidation, PropsInputMessage, PropsInputConfig } from "./inputfield.types";
+import { PropsInputValidation, PropsInputMessage, PropsInputConfig, PropsInputOptions } from "./inputfield.types";
 import { notCapitalize } from "./inputfield.variables";
 
 /**
@@ -8,7 +8,7 @@ import { notCapitalize } from "./inputfield.variables";
  * @param required Opção de input obrigatório (Opcional).
  * @returns Validações de registro do input.
  */
-export const getRegisterValidation = (config?: PropsInputConfig, equalTo?: string, required?: boolean) => {
+export const getRegisterValidation = (config?: PropsInputConfig, options?: PropsInputOptions, equalTo?: string, required?: boolean) => {
   let validation = config?.validation ?? {};
 
   if (config?.type === "tel") {
@@ -66,6 +66,13 @@ export const getRegisterValidation = (config?: PropsInputConfig, equalTo?: strin
             "A senha deve conter pelo menos um símbolo especial.",
         }
         : {}),
+      ...(options?.selectOptions
+        ? {
+          checkOption: (value: string) =>
+            options.selectOptions?.includes(value) ||
+            "Por favor, selecione uma opção válida."
+        }
+        : {})
     },
   };
 }
@@ -97,8 +104,8 @@ export const changeValidation = (value: string, validation: PropsInputValidation
 
 /**
  * Define se a mensagem deve está em exibição.
- * @param message Configuração das mensagens do input.
  * @param localValue Texto atual do input.
+ * @param message Configuração das mensagens do input.
  */
 export const checkMessageVisible = (localValue?: string, message?: PropsInputMessage) => {
   if (message?.text && (message.isError || !localValue)) {

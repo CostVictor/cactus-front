@@ -14,3 +14,7 @@ export const textLinkRedirect: PropsTextLinkPanel = {
   login: { text: "Cadastre-se", link: "/register" },
   register: { text: "Ir ao login", link: "/login" }
 }
+
+export const cities = [
+  'Apodi', 'Campo Grande', 'Caraúbas', 'Felipe Guerra', 'Itaú', 'Rodolfo Fernandes', 'Severiano Melo', 'Umarizal'
+]

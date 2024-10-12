@@ -6,7 +6,7 @@ interface PropsCustomValidation {
   [key: string]: (value: string) => string | boolean;
 }
 
-interface PropsInputOptions {
+export interface PropsInputOptions {
   icon?: string;
   selectOptions?: string[];
 }

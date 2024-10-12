@@ -1,0 +1,26 @@
+@import "@/styles/functions.scss";
+
+.container {
+  width: 100%;
+  border-radius: 10px;
+  margin: 0 1rem;
+  @include applyOverflow(10rem);
+
+  border-top: 3px solid var(--division-intense);
+  background-color: var(--bg-primary);
+  z-index: 100;
+  top: 103%;
+
+  .option {
+    user-select: none;
+    cursor: pointer;
+
+    padding: 1rem;
+    font-size: 1.1rem;
+    color: var(--black-primary);
+
+    &:hover {
+      background-color: var(--gray-secondary);
+    }
+  }
+}

@@ -11,7 +11,13 @@ import NavLink from "@/components/layout/NavLink";
 import Form from "@/components/forms/Form";
 import InputField from "@/components/forms/InputField";
 
-import { title, textRedirect, textLinkRedirect } from "./authpanel.variables";
+import {
+  title,
+  textRedirect,
+  textLinkRedirect,
+  cities,
+} from "./authpanel.variables";
+
 import { PropsAuthPanel } from "./authpanel.types";
 import style from "./authpanel.module.scss";
 
@@ -84,7 +90,13 @@ const AuthPanel = ({ type }: PropsAuthPanel) => {
               config={{ type: "email" }}
               required
             />
-            <InputField name="city_state" label="Cidade e estado" required />
+            <InputField
+              name="city"
+              label="Cidade"
+              options={{ selectOptions: cities }}
+              config={{ validation: { capitalize: "all" } }}
+              required
+            />
             <InputField
               name="password"
               label="Senha"

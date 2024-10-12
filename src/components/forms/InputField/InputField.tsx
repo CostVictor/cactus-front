@@ -4,6 +4,8 @@ import { motion } from "framer-motion";
 import { Icon } from "@iconify/react";
 
 import { inter } from "@/styles/fonts";
+import SelectionPanel from "./subcomponents/SelectionPanel";
+import EyePassword from "./subcomponents/EyePassword";
 import SpanLabel from "./subcomponents/SpanLabel";
 import Message from "./subcomponents/Message";
 
@@ -29,16 +31,19 @@ const InputField = ({
   config,
   required,
 }: PropsInputField) => {
-  const [localValue, setLocalValue] = useState<string | undefined>(value ?? "");
+  const [localValue, setLocalValue] = useState<string>(value ?? "");
+  const [valueVisible, setValueVisible] = useState<boolean>(false);
   const [inFocus, setInFocus] = useState<boolean>(false);
   const typingTimer = useRef<NodeJS.Timeout>();
+
+  const isMessageVisible = checkMessageVisible(localValue, message);
 
   /**
    * Variável que armazena as configurações de validação e mensagens de erro do input.
    */
   const registerOptions: RegisterOptions = useMemo(
-    () => getRegisterValidation(config, equalTo, required),
-    [required, config, equalTo]
+    () => getRegisterValidation(config, options, equalTo, required),
+    [required, config, options, equalTo]
   );
 
   /**
@@ -73,7 +78,13 @@ const InputField = ({
       <div className={style.container_input}>
         {options?.icon && <Icon className={style.icon} icon={options.icon} />}
         {required && (
-          <span className={`${inter.className} ${style.span_required}`}>*</span>
+          <span
+            className={`${inter.className} ${style.span_required} ${
+              config?.type === "password" ? style.password_mode : ""
+            }`}
+          >
+            *
+          </span>
         )}
 
         <motion.label
@@ -102,23 +113,40 @@ const InputField = ({
             config?.register && config.register(name).onBlur(event);
           }}
           className={`${style.input} ${
-            checkMessageVisible(localValue, message) ? style.message_mode : ""
-          } ${options?.icon ? style.indent : ""}`.trim()}
+            isMessageVisible ? style.message_mode : ""
+          } ${config?.type === "password" ? style.password_mode : ""} ${
+            options?.icon ? style.indent : ""
+          }`.trim()}
           type={
-            config?.type === "tel" || options?.selectOptions
+            (config?.type === "password" && valueVisible) ||
+            config?.type === "tel" ||
+            options?.selectOptions
               ? "text"
               : config?.type
           }
           maxLength={config?.validation?.maxLength}
         />
+
+        {config?.type === "password" && (
+          <EyePassword
+            isValueVisible={valueVisible}
+            setValueVisible={setValueVisible}
+            isMessageMode={isMessageVisible}
+          />
+        )}
       </div>
 
-      <Message
-        isError={message?.isError}
-        text={
-          checkMessageVisible(localValue, message) ? message?.text ?? "" : ""
-        }
-      />
+      {isMessageVisible && (
+        <Message text={message?.text ?? ""} isError={message?.isError} />
+      )}
+
+      {options?.selectOptions && inFocus ? (
+        <SelectionPanel
+          options={options.selectOptions}
+          setLocalValue={setLocalValue}
+          localValue={localValue ?? ""}
+        />
+      ) : null}
     </div>
   );
 };

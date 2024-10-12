@@ -5,11 +5,12 @@
   position: relative;
   margin: auto;
 
-  width: 80%;
+  width: 90%;
   box-shadow: var(--shadow-default);
   border-radius: 10px;
 
   .container_input {
+    display: flex;
     position: relative;
     width: 100%;
 
@@ -29,9 +30,14 @@
       }
 
       &.message_mode {
-        box-shadow: none;
         border-bottom: 1px solid var(--division);
         border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+
+      &.password_mode {
+        border-right: 1px solid var(--division);
+        border-top-right-radius: 0;
         border-bottom-right-radius: 0;
       }
     }
@@ -69,6 +75,10 @@
       position: absolute;
       right: 1.5%;
       top: 1.5%;
+
+      &.password_mode {
+        right: 11%;
+      }
     }
   }
 }
