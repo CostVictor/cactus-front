@@ -4,16 +4,17 @@ import style from "./button.module.scss";
 
 const Button = ({
   text,
+  type,
   appearance = "normal",
   clicked,
   onClick,
 }: PropsButton) => {
-  const btnClass = `${alatsi.className} ${style.button}${
-    appearance === "main" ? ` ${style.main}` : ""
-  }${clicked ? ` ${style.clicked}` : ""}`;
+  const btnClass = `${alatsi.className} ${style.button} ${
+    appearance !== "normal" ? style[appearance] : ""
+  } ${clicked ? style.clicked : ""}`.trim();
 
   return (
-    <button className={btnClass} onClick={onClick}>
+    <button type={type} className={btnClass} onClick={onClick}>
       {text}
     </button>
   );

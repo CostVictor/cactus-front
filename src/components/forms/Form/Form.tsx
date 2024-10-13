@@ -5,11 +5,17 @@ import { useForm, FieldValues, SubmitHandler } from "react-hook-form";
 
 import { PropsForm } from "./form.types";
 import { checkHasInputConfirm, getFormMessage } from "./form.utils";
+import Button from "@/components/commom/Button";
 
 import InputField from "../InputField";
 import style from "./form.module.scss";
 
-const Form = ({ children, onSubmit }: PropsForm) => {
+const Form = ({
+  children,
+  onSubmit,
+  includeButton,
+  defaultButtonSubmitText = "Enviar",
+}: PropsForm) => {
   const {
     watch,
     register,
@@ -51,7 +57,21 @@ const Form = ({ children, onSubmit }: PropsForm) => {
             : child
         )}
       </div>
-      <button type="submit">Tes</button>
+
+      <div className={style.container_button}>
+        {includeButton && (
+          <Button
+            type="button"
+            text={includeButton.text}
+            onClick={includeButton.onClick}
+          />
+        )}
+        <Button
+          type="submit"
+          text={defaultButtonSubmitText}
+          appearance={includeButton ? "main" : "submit"}
+        />
+      </div>
     </form>
   );
 };

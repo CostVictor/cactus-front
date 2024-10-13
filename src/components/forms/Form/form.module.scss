@@ -15,4 +15,15 @@
     flex-direction: column;
     gap: 1.3rem;
   }
+
+  .container_button {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    width: 90%;
+    margin: auto;
+
+    gap: 1.5rem;
+  }
 }

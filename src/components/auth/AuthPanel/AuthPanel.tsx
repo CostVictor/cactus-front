@@ -65,7 +65,12 @@ const AuthPanel = ({ type }: PropsAuthPanel) => {
         <div className={style.content}>
           <h1 className={style.title}>{title[type]}</h1>
 
-          <Form onSubmit={(data) => console.log(data)}>
+          <Form
+            defaultButtonSubmitText={
+              type === "login" ? "Entrar" : "Criar conta"
+            }
+            onSubmit={(data) => console.log(data)}
+          >
             <InputField
               name="name"
               label="Nome e sobrenome"
