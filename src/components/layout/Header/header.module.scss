@@ -8,7 +8,7 @@
 
   border-bottom: 1px solid var(--division);
   background-color: var(--bg-primary);
-  
+
   margin-left: 4rem;
   width: calc(100% - 4rem);
 
@@ -42,6 +42,13 @@
     }
   }
 
+  .container_menu {
+    display: none;
+    align-items: center;
+    margin: 1rem;
+    margin-left: auto;
+  }
+
   .container_content {
     display: flex;
     align-items: center;
@@ -57,5 +64,13 @@
   @media (max-width: $media-mobile) {
     margin-left: 0;
     width: 100%;
+
+    .container_content {
+      display: none;
+    }
+
+    .container_menu {
+      display: flex;
+    }
   }
 }

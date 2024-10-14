@@ -7,9 +7,7 @@ import { Icon } from "@iconify/react";
 
 import { inter } from "@/styles/fonts";
 import { fadeIn } from "@/styles/animations";
-
 import useAuth from "@/hooks/context/useAuth";
-import useMobile from "@/hooks/context/useMobile";
 
 import { listAsideItems } from "./aside.variables";
 import ItemAside from "./subcomponents/Item";
@@ -18,7 +16,6 @@ import style from "./aside.module.scss";
 const Aside = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const pathCurrent = usePathname();
-  const preview = useMobile();
   const auth = useAuth();
 
   useEffect(() => {
@@ -26,49 +23,47 @@ const Aside = () => {
     setIsOpen(stateAside === "true");
   }, []);
 
-  const toggleAside = () => {
+  const toggleAside = () =>
     setIsOpen((prevValue) => {
       const newValue = !prevValue;
       localStorage.setItem("stateAside", String(newValue));
       return newValue;
     });
-  };
 
   return (
     <aside className={`${style.aside} ${isOpen ? style.open : ""}`.trim()}>
-      {!preview.isMobile && (
-        <div id="container-menu" className={style.menu}>
-          {isOpen ? (
-            <>
-              <motion.h2
-                className={`${inter.className} ${style.title}`}
-                variants={fadeIn}
-                initial="hidden"
-                animate="visible"
-              >
-                Menu
-              </motion.h2>
-              <motion.div variants={fadeIn} initial="hidden" animate="visible">
-                <Icon
-                  id="aside-close-menu"
-                  icon="ci:close-sm"
-                  className={style.icon_menu}
-                  onClick={toggleAside}
-                />
-              </motion.div>
-            </>
-          ) : (
+      <div id="container-menu" className={style.menu}>
+        {isOpen ? (
+          <>
+            <motion.h2
+              className={`${inter.className} ${style.title}`}
+              variants={fadeIn}
+              initial="hidden"
+              animate="visible"
+            >
+              Menu
+            </motion.h2>
             <motion.div variants={fadeIn} initial="hidden" animate="visible">
               <Icon
-                id="aside-open-menu"
-                icon="material-symbols:menu-rounded"
+                id="aside-close-menu"
+                icon="ci:close-sm"
                 className={style.icon_menu}
                 onClick={toggleAside}
               />
             </motion.div>
-          )}
-        </div>
-      )}
+          </>
+        ) : (
+          <motion.div variants={fadeIn} initial="hidden" animate="visible">
+            <Icon
+              id="aside-open-menu"
+              icon="material-symbols:menu-rounded"
+              className={style.icon_menu}
+              onClick={toggleAside}
+            />
+          </motion.div>
+        )}
+      </div>
+
       <ul className={style.container_items}>
         {listAsideItems.map(
           (session, index) =>

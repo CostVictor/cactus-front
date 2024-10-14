@@ -9,7 +9,7 @@ import { PropsSideIcon } from "./sideicon.types";
 import { float } from "@/styles/animations";
 
 const SideIcon = ({ position, className }: PropsSideIcon) => {
-  const [randomValue, setRandomValue] = useState<string>("");
+  const [randomValue, setRandomValue] = useState<string | null>(null);
 
   useEffect(() => {
     const iconRandom = lodash.sample(listIcons);

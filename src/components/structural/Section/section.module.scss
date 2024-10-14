@@ -7,7 +7,7 @@ $dist-icons: -13rem;
 .container_main {
   min-height: 100vh;
 
-  &.spaceAside {
+  &.space_aside {
     margin-left: $size-aside;
   }
 
@@ -16,6 +16,7 @@ $dist-icons: -13rem;
   }
 
   .icon {
+    display: none;
     position: absolute;
 
     &.is_left {
@@ -122,23 +123,6 @@ $dist-icons: -13rem;
         }
       }
     }
-
-    // Largura Mobile
-    @media (max-width: $media-mobile) {
-      .container_text {
-        .title {
-          font-size: 1.7rem;
-
-          &::before {
-            width: 12rem;
-          }
-        }
-
-        .text {
-          font-size: 1.2rem;
-        }
-      }
-    }
   }
 
   .container_content {
@@ -153,6 +137,35 @@ $dist-icons: -13rem;
 
     &.limited_width {
       max-width: $max-width;
+    }
+  }
+
+  @media (min-width: 1550px) {
+    .icon {
+      display: block;
+    }
+  }
+
+  // Largura Mobile
+  @media (max-width: $media-mobile) {
+    &.space_aside {
+      margin: 0;
+    }
+
+    .container_description {
+      .container_text {
+        .title {
+          font-size: 1.7rem;
+
+          &::before {
+            width: 12rem;
+          }
+        }
+
+        .text {
+          font-size: 1.2rem;
+        }
+      }
     }
   }
 }

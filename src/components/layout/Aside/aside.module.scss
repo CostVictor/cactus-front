@@ -102,6 +102,10 @@ $distance-text-icon: 70%;
         .text {
           width: $distance-text-icon;
           font-size: 1.3rem;
+
+          &.inactive {
+            display: none;
+          }
         }
 
         .icon {
@@ -164,6 +168,10 @@ $distance-text-icon: 70%;
             justify-content: center;
             font-size: 0.5rem;
             margin-top: 0.3rem;
+
+            &.inactive {
+              display: flex;
+            }
           }
         }
       }

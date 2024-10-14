@@ -1,9 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import Image from "next/image";
-
-import useMobile from "@/hooks/context/useMobile";
 
 import Carousel from "./subcomponents/Carousel";
 import SideIcon from "@/components/layout/SideIcon";
@@ -20,28 +17,12 @@ const Section = ({
   maxWidthContent,
   reserveAsideSpace = true,
 }: PropsSection) => {
-  const [viewSideIcon, setViewSideIcon] = useState<boolean>(false);
-  const preview = useMobile();
-
-  useEffect(() => {
-    /**
-     * Indica se os icones laterais da página estarão visiveis com base na largura da tela.
-     */
-    const handleViewSideIcon = () => setViewSideIcon(window.innerWidth >= 1550);
-    handleViewSideIcon();
-
-    window.addEventListener("resize", handleViewSideIcon);
-    return () => window.removeEventListener("resize", handleViewSideIcon);
-  }, []);
-
   return (
     <section
       id={id}
       className={`${style.container_main} ${
         backgroundGray ? style.background_gray : ""
-      } ${
-        reserveAsideSpace && !preview.isMobile ? style.spaceAside : ""
-      }`.trim()}
+      } ${reserveAsideSpace ? style.space_aside : ""}`.trim()}
     >
       {sectionImage &&
         (sectionImage.viewImages ? (
@@ -69,12 +50,11 @@ const Section = ({
               : ""
           }`.trim()}
         >
-          {viewSideIcon && (
-            <SideIcon
-              position="left"
-              className={`${style.icon} ${style.is_left}`}
-            />
-          )}
+          <SideIcon
+            position="left"
+            className={`${style.icon} ${style.is_left}`}
+          />
+
           {description.illustrationDirection === "left" && (
             <Image
               className={style.illustration}
@@ -109,7 +89,7 @@ const Section = ({
           } ${!maxWidthContent ? style.limited_width : ""}`.trim()}
         >
           {children}
-          {viewSideIcon && !maxWidthContent && (
+          {!maxWidthContent && (
             <SideIcon
               position="right"
               className={`${style.icon} ${style.is_right}`}

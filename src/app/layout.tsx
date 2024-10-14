@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { AuthProvider } from "@/hooks/context/useAuth";
 import { ThemeProvider } from "@/hooks/context/useTheme";
-import { MobileProvider } from "@/hooks/context/useMobile";
 import { ModalProvider } from "@/hooks/context/useModal";
 import { averiaSansLibre } from "@/styles/fonts";
 import "@/styles/globals.scss";
@@ -20,13 +19,11 @@ export default function RootLayout({
   return (
     <AuthProvider>
       <html lang="pt-br">
-        <MobileProvider>
-          <ThemeProvider>
-            <body className={averiaSansLibre.className}>
-              <ModalProvider>{children}</ModalProvider>
-            </body>
-          </ThemeProvider>
-        </MobileProvider>
+        <ThemeProvider>
+          <body className={averiaSansLibre.className}>
+            <ModalProvider>{children}</ModalProvider>
+          </body>
+        </ThemeProvider>
       </html>
     </AuthProvider>
   );

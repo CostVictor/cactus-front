@@ -6,12 +6,9 @@ import Link from "next/link";
 
 import { fadeIn } from "@/styles/animations";
 import { PropsItemAside } from "./item.types";
-import useMobile from "@/hooks/context/useMobile";
 import style from "@/components/layout/Aside/aside.module.scss";
 
 const ItemAside = ({ name, icon, url, isOpen, isActive }: PropsItemAside) => {
-  const preview = useMobile();
-
   return (
     <li className={`${style.item} ${isActive ? style.selected : ""}`.trim()}>
       <Link href={url} className={style.link}>
@@ -26,16 +23,15 @@ const ItemAside = ({ name, icon, url, isOpen, isActive }: PropsItemAside) => {
             className={`${style.icon} ${isOpen ? style.min : ""}`.trim()}
           />
         </motion.div>
-        {(isOpen || preview.isMobile) && (
-          <motion.p
-            className={style.text}
-            variants={fadeIn}
-            initial="hidden"
-            animate="visible"
-          >
-            {name}
-          </motion.p>
-        )}
+
+        <motion.p
+          className={`${style.text} ${!isOpen ? style.inactive : ""}`.trim()}
+          variants={fadeIn}
+          initial="hidden"
+          animate={isOpen ? "visible" : "hidden"}
+        >
+          {name}
+        </motion.p>
       </Link>
     </li>
   );
