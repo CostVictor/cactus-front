@@ -178,20 +178,7 @@
     }
 
     .icon {
-      &.pos_1 {
-        top: 15rem;
-        left: 0.5rem;
-      }
-
-      &.pos_2 {
-        bottom: 2rem;
-        left: 4rem;
-      }
-
-      &.pos_3 {
-        top: 5rem;
-        right: 3rem;
-      }
+      display: none;
     }
   }
 }
