@@ -8,6 +8,8 @@ import NavLink from "@/components/layout/NavLink";
 
 import Form from "@/components/forms/Form";
 import InputField from "@/components/forms/InputField";
+import useModal from "@/hooks/context/useModal";
+import Modal from "@/components/display/Modal";
 
 import {
   title,
@@ -20,6 +22,10 @@ import { PropsAuthPanel } from "./authpanel.types";
 import style from "./authpanel.module.scss";
 
 const AuthPanel = ({ type }: PropsAuthPanel) => {
+  const {
+    actions: { addNewModal },
+  } = useModal();
+
   return (
     <section className={style.container}>
       {Array.from({ length: 4 }).map((_, index) => (
@@ -37,8 +43,8 @@ const AuthPanel = ({ type }: PropsAuthPanel) => {
           className={`${style.img} ${
             type !== "login" ? style.inactive : ""
           }`.trim()}
-          width={200}
-          height={150}
+          width={160}
+          height={110}
           priority
         />
       </Link>
@@ -63,60 +69,93 @@ const AuthPanel = ({ type }: PropsAuthPanel) => {
         <div className={style.content}>
           <h1 className={style.title}>{title[type]}</h1>
 
-          <Form
-            defaultButtonSubmitText={
-              type === "login" ? "Entrar" : "Criar conta"
-            }
-            onSubmit={(data) => console.log(data)}
-          >
-            <InputField
-              name="name"
-              label="Nome e sobrenome"
-              config={{
-                validation: {
-                  capitalize: "all",
-                  notNumber: true,
-                  notSymbol: true,
-                },
-              }}
-              required
-            />
-            <InputField
-              name="tel"
-              label="Telefone"
-              config={{ type: "tel" }}
-              required
-            />
-            <InputField
-              name="email"
-              label="E-mail"
-              config={{ type: "email" }}
-              required
-            />
-            <InputField
-              name="city"
-              label="Cidade"
-              options={{ selectOptions: cities }}
-              config={{ validation: { capitalize: "all" } }}
-              required
-            />
-            <InputField
-              name="password"
-              label="Senha"
-              config={{ type: "password" }}
-              message={{
-                text: "A senha deve incluir pelo menos: uma letra maiúscula, uma letra minúscula, um número e um símbolo especial.",
-              }}
-              required
-            />
-            <InputField
-              name="password_conf"
-              label="Confirmar senha"
-              config={{ type: "password" }}
-              equalTo="password"
-              required
-            />
-          </Form>
+          {type === "login" ? (
+            <Form
+              defaultButtonSubmitText="Entrar"
+              onSubmit={(data) => console.log(data)}
+            >
+              <InputField
+                name="email"
+                label="E-mail"
+                config={{ type: "email" }}
+                options={{ icon: "" }}
+                required
+              />
+              <InputField
+                name="password"
+                label="Senha"
+                config={{ type: "password" }}
+                required
+              />
+              <div className={style.container_options}>
+                <NavLink
+                  text="Esqueci minha senha"
+                  link=""
+                  onClick={() =>
+                    addNewModal(
+                      <Modal
+                        title="Função indisponível"
+                        message="Esta funcionalidade ainda está em desenvolvimento."
+                      />
+                    )
+                  }
+                />
+              </div>
+            </Form>
+          ) : (
+            <Form
+              defaultButtonSubmitText="Criar conta"
+              onSubmit={(data) => console.log(data)}
+            >
+              <InputField
+                name="name"
+                label="Nome e sobrenome"
+                config={{
+                  validation: {
+                    capitalize: "all",
+                    notNumber: true,
+                    notSymbol: true,
+                  },
+                }}
+                required
+              />
+              <InputField
+                name="tel"
+                label="Telefone"
+                config={{ type: "tel" }}
+                required
+              />
+              <InputField
+                name="email"
+                label="E-mail"
+                config={{ type: "email" }}
+                required
+              />
+              <InputField
+                name="city"
+                label="Cidade"
+                options={{ selectOptions: cities }}
+                config={{ validation: { capitalize: "all" } }}
+                required
+              />
+              <InputField
+                name="password"
+                label="Senha"
+                config={{ type: "password" }}
+                message={{
+                  text: "A senha deve incluir pelo menos: uma letra maiúscula, uma letra minúscula, um número e um símbolo especial.",
+                }}
+                required
+              />
+              <InputField
+                name="password_conf"
+                label="Confirmar senha"
+                config={{ type: "password" }}
+                equalTo="password"
+                required
+              />
+            </Form>
+          )}
 
           <div className={style.container_redirect}>
             <p className={style.text}>{textRedirect[type]}</p>

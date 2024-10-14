@@ -5,7 +5,7 @@ import { create } from "zustand";
 
 const useAuth = create<PropsUseAuth>((set) => ({
   state: {
-    isAuthenticated: true,
+    isAuthenticated: false,
     user: { name: "Victor", role: "employee" },
   },
   actions: {

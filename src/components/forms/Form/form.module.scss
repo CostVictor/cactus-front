@@ -1,4 +1,5 @@
 @import "@/styles/functions.scss";
+@import "@/styles/variables.scss";
 
 .container_main {
   display: flex;
@@ -25,5 +26,9 @@
     margin: auto;
 
     gap: 1.5rem;
+  }
+
+  @media (max-width: $media-mobile) {
+    width: 100%;
   }
 }

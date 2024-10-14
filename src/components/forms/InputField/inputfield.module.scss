@@ -1,3 +1,5 @@
+@import "@/styles/variables.scss";
+
 .container_main {
   display: flex;
   flex-direction: column;
@@ -77,8 +79,11 @@
       top: 1.5%;
 
       &.password_mode {
-        right: 11%;
+        right: 2.9rem;
       }
+    }
+
+    @media (max-width: $media-mobile) {
     }
   }
 }

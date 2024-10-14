@@ -1,7 +1,9 @@
-export default function Home() {
+import AuthPanel from "@/components/auth/AuthPanel";
+
+export default function Register() {
   return (
-    <>
-      <main>Cadastro</main>
-    </>
+    <main>
+      <AuthPanel type="register" />
+    </main>
   );
 }
