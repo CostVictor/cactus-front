@@ -1,0 +1,18 @@
+.container {
+  display: flex;
+  justify-content: center;
+  background-color: var(--bg-secondary);
+
+  padding: 0.7rem;
+  border-radius: 0 0 10px 10px;
+  width: 100%;
+
+  .text {
+    color: var(--black-primary);
+    font-size: 1rem;
+
+    &.has_error {
+      color: var(--red-tertiary);
+    }
+  }
+}

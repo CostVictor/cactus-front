@@ -3,9 +3,13 @@ export interface PropsUser {
   role: "client" | "employee";
 }
 
-export interface PropsAuthContext {
-  isAuthenticated: boolean;
-  user: PropsUser | null;
-  login: (email: string, password: string) => void;
-  logout: () => void;
+export interface PropsUseAuth {
+  state: {
+    isAuthenticated: boolean;
+    user: PropsUser | null;
+  }
+  actions: {
+    login: (email: string, password: string) => void;
+    logout: () => void;
+  }
 }

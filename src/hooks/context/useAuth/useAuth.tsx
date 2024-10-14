@@ -1,30 +1,17 @@
 "use client";
 
-import React, { createContext, ReactNode, useContext, useState } from "react";
-import { PropsUser, PropsAuthContext } from "./useauth.types";
+import { PropsUseAuth } from "./useauth.types";
+import { create } from "zustand";
 
-const authContext = createContext<undefined | PropsAuthContext>(undefined);
+const useAuth = create<PropsUseAuth>((set) => ({
+  state: {
+    isAuthenticated: false,
+    user: { name: "Victor", role: "employee" },
+  },
+  actions: {
+    login: () => set((storage) => ({})),
+    logout: () => set((storage) => ({})),
+  },
+}));
 
-export const AuthProvider: React.FC<{children: ReactNode}> = ({ children }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(true);
-  const [user, setUser] = useState<null | PropsUser>({name: "Victor", role: "employee"});
-
-  const login = (email: string, password: string) => {};
-  const logout = () => {};
-
-  return (
-    <authContext.Provider value={{ isAuthenticated, user, login, logout }}>
-      {children}
-    </authContext.Provider>
-  );
-};
-
-const useAuth = () => {
-  const context = useContext(authContext);
-  if (context === undefined) {
-    throw new Error("useAuth deve estar dentro de AuthProvider.");
-  }
-  return context;
-};
-
-export default useAuth
+export default useAuth;

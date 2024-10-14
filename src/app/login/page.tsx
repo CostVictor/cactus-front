@@ -1,7 +1,9 @@
-export default function Home() {
+import AuthPanel from "@/components/auth/AuthPanel";
+
+export default function Login() {
   return (
-    <>
-      <main>Login</main>
-    </>
+    <main>
+      <AuthPanel type="login" />
+    </main>
   );
 }

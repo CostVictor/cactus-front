@@ -1,15 +1,21 @@
 "use client";
 
-import Aside from "@/components/Aside";
-import Header from "@/components/Header";
-import Section from "@/components/Section";
-import CardInfo from "@/components/CardInfo";
-import Container from "@/components/Container";
+import Aside from "@/components/layout/Aside";
+import Header from "@/components/layout/Header";
+
+import Section from "@/components/structural/Section";
+import Container from "@/components/structural/Container";
+
+import CardInfo from "@/components/display/CardInfo";
+import Modal from "@/components/display/Modal";
+
 import useModal from "@/hooks/context/useModal";
-import Modal from "@/components/Modal";
 
 export default function Home() {
-  const modals = useModal();
+  const {
+    actions: { addNewModal },
+  } = useModal();
+
   const targets = [
     { text: "Início", link: "#inicio" },
     { text: "Pratos", link: "#pratos" },
@@ -35,7 +41,7 @@ export default function Home() {
               text="Clique em mim!"
               imgUrl="/imgSection/img1.svg"
               onClick={() => {
-                modals.addNewModal(
+                addNewModal(
                   <Modal
                     title="Card 1"
                     message="Conteúdo descritivo do Card 1"
@@ -48,7 +54,7 @@ export default function Home() {
               text="Clique em mim!"
               imgUrl="/imgSection/img1.svg"
               onClick={() => {
-                modals.addNewModal(
+                addNewModal(
                   <Modal
                     title="Card 2"
                     message="Conteúdo descritivo do Card 2"
@@ -61,7 +67,7 @@ export default function Home() {
               text="Clique em mim!"
               imgUrl="/imgSection/img1.svg"
               onClick={() => {
-                modals.addNewModal(
+                addNewModal(
                   <Modal
                     title="Card 3"
                     message="Conteúdo descritivo do Card 3"

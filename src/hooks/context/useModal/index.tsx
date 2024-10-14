@@ -1,3 +1,3 @@
 import useModal from "./useModal";
-export { ModalProvider } from "./useModal";
+export { ModalManager } from "./useModal";
 export default useModal;
