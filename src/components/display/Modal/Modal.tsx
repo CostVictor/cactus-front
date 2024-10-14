@@ -19,7 +19,9 @@ const Modal = ({
   buttons,
   defaultButtonText = "Fechar",
 }: PropsModal) => {
-  const modals = useModal();
+  const {
+    actions: { removeModal },
+  } = useModal();
 
   return (
     <motion.article
@@ -76,7 +78,7 @@ const Modal = ({
               text={defaultButtonText}
               appearance="main"
               onClick={() => {
-                modals.removeModal(-1);
+                removeModal(-1);
               }}
             />
           )}

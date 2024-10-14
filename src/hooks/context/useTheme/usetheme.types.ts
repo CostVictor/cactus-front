@@ -1,4 +1,8 @@
-export interface PropsThemeContext {
-  isDark: boolean
-  toggleTheme: () => void
+export interface PropsStorageTheme {
+  state: {
+    isDark: boolean
+  }
+  actions: {
+    toggleTheme: () => void
+  }
 }

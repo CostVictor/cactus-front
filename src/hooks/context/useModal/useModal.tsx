@@ -1,76 +1,61 @@
 "use client";
 
-import {
-  PropsModalContext,
-  PropsAddNewModalFunction,
-  PropsRemoveModalFunction,
-} from "./usemodal.types";
-import React, { createContext, ReactNode, useContext, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { PropsUseModal } from "./usemodal.types";
+import { create } from "zustand";
 
-const modalContext = createContext<undefined | PropsModalContext>(undefined);
+const useModal = create<PropsUseModal>((set) => ({
+  state: { listModal: [] },
+  actions: {
+    addNewModal: (modal) => {
+      set((storage) => {
+        if (storage.state.listModal.includes(modal)) {
+          return storage;
+        }
 
-export const ModalProvider: React.FC<{ children: ReactNode }> = ({
-  children,
-}) => {
-  const [listModal, setListModal] = useState<ReactNode[]>([]);
+        document.body.classList.add("blocked_scroll");
+        return { state: { listModal: [...storage.state.listModal, modal] } };
+      });
+    },
+    removeModal: (index) =>
+      set((storage) => {
+        const newList = storage.state.listModal;
+        const newIndex = index < 0 ? newList.length + index : index;
 
-  /**
-   * Adiciona um novo componente react na lista.
-   */
-  const addNewModal: PropsAddNewModalFunction = (modal) => {
-    document.body.classList.add("blocked_scroll");
-    setListModal((prevList) => {
-      return [...prevList, modal];
-    });
-  };
+        newList.splice(newIndex, 1);
+        if (!newList.length) {
+          document.body.classList.remove("blocked_scroll");
+        }
 
-  /**
-   * Remove o item da lista na posição definida.
-   * Index negativos também são aceitos para contagem a partir do final.
-   */
-  const removeModal: PropsRemoveModalFunction = (index) =>
-    setListModal((prevList) => {
-      const newList = [...prevList];
-      const newIndex = index < 0 ? newList.length + index : index;
+        return { state: { listModal: newList } };
+      }),
+  },
+}));
 
-      newList.splice(newIndex, 1);
-      if (!newList.length) {
-        document.body.classList.remove("blocked_scroll");
-      }
-      return newList;
-    });
+export const ModalManager = () => {
+  const {
+    state: { listModal },
+  } = useModal();
 
   return (
-    <modalContext.Provider value={{ addNewModal, removeModal }}>
-      {children}
-      <AnimatePresence>
-        {listModal.length ? (
-          <motion.div
-            className="block_shadow"
-            animate={{
-              backdropFilter: "blur(3px)",
-              backgroundColor: "var(--bg-shadow)",
-            }}
-            exit={{
-              backdropFilter: "blur(0px)",
-              transition: { duration: 0.1 },
-            }}
-          >
-            {listModal[listModal.length - 1]}
-          </motion.div>
-        ) : null}
-      </AnimatePresence>
-    </modalContext.Provider>
+    <AnimatePresence>
+      {listModal.length ? (
+        <motion.div
+          className="block_shadow"
+          animate={{
+            backdropFilter: "blur(3px)",
+            backgroundColor: "var(--bg-shadow)",
+          }}
+          exit={{
+            backdropFilter: "blur(0px)",
+            transition: { duration: 0.1 },
+          }}
+        >
+          {listModal[listModal.length - 1]}
+        </motion.div>
+      ) : null}
+    </AnimatePresence>
   );
-};
-
-const useModal = () => {
-  const context = useContext(modalContext);
-  if (context === undefined) {
-    throw new Error("useModal deve estar dentro de ModalProvider.");
-  }
-  return context;
 };
 
 export default useModal;

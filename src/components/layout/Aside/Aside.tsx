@@ -14,9 +14,12 @@ import ItemAside from "./subcomponents/Item";
 import style from "./aside.module.scss";
 
 const Aside = () => {
+  const {
+    state: { isAuthenticated, user },
+  } = useAuth();
+
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const pathCurrent = usePathname();
-  const auth = useAuth();
 
   useEffect(() => {
     const stateAside = localStorage.getItem("stateAside");
@@ -67,13 +70,13 @@ const Aside = () => {
       <ul className={style.container_items}>
         {listAsideItems.map(
           (session, index) =>
-            (session.requiresAuth ? auth.isAuthenticated : true) &&
-            (session.access ? auth.user?.role === session.access : true) && (
+            (session.requiresAuth ? isAuthenticated : true) &&
+            (session.access ? user?.role === session.access : true) && (
               <React.Fragment key={index}>
                 {index ? <hr className={style.division}></hr> : null}
                 {session.items.map(
                   (item) =>
-                    (item.requiresAuth ? auth.isAuthenticated : true) && (
+                    (item.requiresAuth ? isAuthenticated : true) && (
                       <ItemAside
                         key={item.url}
                         name={item.name}

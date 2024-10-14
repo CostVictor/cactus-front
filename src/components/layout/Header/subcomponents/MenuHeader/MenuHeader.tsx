@@ -15,8 +15,13 @@ import Button from "@/components/commom/Button";
 import style from "./menuheader.module.scss";
 
 const MenuHeader = ({ targets }: PropsMenuHeader) => {
-  const modals = useModal();
-  const auth = useAuth();
+  const {
+    state: { isAuthenticated },
+  } = useAuth();
+
+  const {
+    actions: { removeModal },
+  } = useModal();
 
   return (
     <motion.nav
@@ -27,32 +32,34 @@ const MenuHeader = ({ targets }: PropsMenuHeader) => {
       <div className={style.header}>
         <Icon
           icon="ci:close-sm"
-          onClick={() => modals.removeModal(-1)}
+          onClick={() => removeModal(-1)}
           className={style.icon}
         />
         <h2 className={`${averiaSansLibre.className} ${style.title}`}>Menu</h2>
       </div>
-      {!auth.isAuthenticated && (
+      
+      {!isAuthenticated && (
         <div className={style.container_auth}>
           <Link href="/register">
-            <Button text="Cadastrar" onClick={() => modals.removeModal(-1)} />
+            <Button text="Cadastrar" onClick={() => removeModal(-1)} />
           </Link>
           <Link href="/login">
             <Button
               text="Logar"
               appearance="main"
-              onClick={() => modals.removeModal(-1)}
+              onClick={() => removeModal(-1)}
             />
           </Link>
         </div>
       )}
+
       <Container className={style.content} animateChildren>
         {targets?.map((target, index) => (
           <NavLink
             key={index}
             text={target.text}
             link={target.link}
-            onClick={() => modals.removeModal(-1)}
+            onClick={() => removeModal(-1)}
           />
         ))}
       </Container>

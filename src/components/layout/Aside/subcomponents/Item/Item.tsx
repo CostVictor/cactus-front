@@ -25,10 +25,11 @@ const ItemAside = ({ name, icon, url, isOpen, isActive }: PropsItemAside) => {
         </motion.div>
 
         <motion.p
+          key={`${url} ${String(isOpen)}`}
           className={`${style.text} ${!isOpen ? style.inactive : ""}`.trim()}
           variants={fadeIn}
           initial="hidden"
-          animate={isOpen ? "visible" : "hidden"}
+          animate="visible"
         >
           {name}
         </motion.p>

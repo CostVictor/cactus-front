@@ -19,8 +19,13 @@ import style from "./header.module.scss";
 
 const Header = ({ targets }: PropsHeader) => {
   const [withShadow, setWithShadow] = useState<boolean>(false);
-  const auth = useAuth();
-  const modals = useModal();
+  const {
+    state: { isAuthenticated },
+  } = useAuth();
+
+  const {
+    actions: { addNewModal },
+  } = useModal();
 
   useEffect(() => {
     /**
@@ -50,7 +55,7 @@ const Header = ({ targets }: PropsHeader) => {
       >
         <Icon
           icon="material-symbols:menu-rounded"
-          onClick={() => modals.addNewModal(<MenuHeader targets={targets} />)}
+          onClick={() => addNewModal(<MenuHeader targets={targets} />)}
           className={style.icon}
         />
       </motion.div>
@@ -69,7 +74,7 @@ const Header = ({ targets }: PropsHeader) => {
         ))}
       </div>
 
-      {!auth.isAuthenticated && (
+      {!isAuthenticated && (
         <div className={style.container_content}>
           {targets?.length ? <hr className={style.division} /> : null}
           <Link href="/register">
