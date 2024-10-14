@@ -131,6 +131,11 @@
     }
 
     .icon {
+      img {
+        width: 135px;
+        height: 135px;
+      }
+
       &.pos_1 {
         top: 15rem;
         left: 1rem;
@@ -178,7 +183,25 @@
     }
 
     .icon {
-      display: none;
+      img {
+        width: 120px;
+        height: 120px;
+      }
+
+      &.pos_1 {
+        top: 15rem;
+        left: 0.5rem;
+      }
+
+      &.pos_2 {
+        bottom: 2rem;
+        left: 4rem;
+      }
+
+      &.pos_3 {
+        top: 5rem;
+        right: 3rem;
+      }
     }
   }
 }
