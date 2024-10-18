@@ -1,15 +1,22 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { PropsUseModal } from "./usemodal.types";
+import ReactDOMServer from "react-dom/server";
 import { create } from "zustand";
+
+import { PropsUseModal } from "./usemodal.types";
 
 const useModal = create<PropsUseModal>((set) => ({
   state: { listModal: [] },
   actions: {
     addNewModal: (modal) => {
       set((storage) => {
-        if (storage.state.listModal.includes(modal)) {
+        const renderedModal = ReactDOMServer.renderToString(modal);
+        if (
+          storage.state.listModal.some(
+            (item) => ReactDOMServer.renderToString(item) === renderedModal
+          )
+        ) {
           return storage;
         }
 

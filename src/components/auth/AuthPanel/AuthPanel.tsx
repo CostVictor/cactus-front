@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -10,6 +11,7 @@ import Form from "@/components/forms/Form";
 import InputField from "@/components/forms/InputField";
 import useModal from "@/hooks/context/useModal";
 import Modal from "@/components/display/Modal";
+import useRequest from "@/hooks/network/useRequest";
 
 import {
   title,
@@ -23,8 +25,16 @@ import style from "./authpanel.module.scss";
 
 const AuthPanel = ({ type }: PropsAuthPanel) => {
   const {
+    state: { listModal },
     actions: { addNewModal },
   } = useModal();
+
+  const {
+    info: { isLoading },
+    actions: { fethData },
+  } = useRequest(type === "login" ? "Erro de Login" : "Erro de Cadastro");
+
+  const router = useRouter();
 
   return (
     <section className={style.container}>
@@ -71,8 +81,15 @@ const AuthPanel = ({ type }: PropsAuthPanel) => {
 
           {type === "login" ? (
             <Form
-              defaultButtonSubmitText="Entrar"
-              onSubmit={(data) => console.log(data)}
+              defaultButtonSubmitText={isLoading ? "Aguarde..." : "Entrar"}
+              onSubmit={(data) => {
+                if (!listModal.length) {
+                  fethData(
+                    { url: "login/", method: "POST", content: data },
+                    () => router.push("/")
+                  );
+                }
+              }}
             >
               <InputField
                 name="email"
@@ -104,8 +121,32 @@ const AuthPanel = ({ type }: PropsAuthPanel) => {
             </Form>
           ) : (
             <Form
-              defaultButtonSubmitText="Criar conta"
-              onSubmit={(data) => console.log(data)}
+              defaultButtonSubmitText={isLoading ? "Aguarde..." : "Criar conta"}
+              onSubmit={(data) => {
+                if (!listModal.length) {
+                  fethData(
+                    {
+                      url: "user/register/",
+                      method: "POST",
+                      content: data,
+                    },
+                    (response) =>
+                      addNewModal(
+                        <Modal
+                          title="Cadastro efetuado"
+                          buttons={[
+                            {
+                              text: "Ir ao login",
+                              aparence: "main",
+                              onClick: () => router.push("/login"),
+                            },
+                          ]}
+                          {...response}
+                        />
+                      )
+                  );
+                }
+              }}
             >
               <InputField
                 name="name"
