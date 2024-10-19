@@ -26,7 +26,7 @@ import style from "./authpanel.module.scss";
 const AuthPanel = ({ type }: PropsAuthPanel) => {
   const {
     state: { listModal },
-    actions: { addNewModal },
+    actions: { addNewModal, removeModal },
   } = useModal();
 
   const {
@@ -35,6 +35,8 @@ const AuthPanel = ({ type }: PropsAuthPanel) => {
   } = useRequest(type === "login" ? "Erro de Login" : "Erro de Cadastro");
 
   const router = useRouter();
+
+  console.log("Renderizou");
 
   return (
     <section className={style.container}>
@@ -146,11 +148,14 @@ const AuthPanel = ({ type }: PropsAuthPanel) => {
                           buttons={[
                             {
                               text: "Ir ao login",
-                              aparence: "main",
-                              onClick: () => router.push("/login"),
+                              appearance: "main",
+                              onClick: () => {
+                                router.push("/login");
+                                removeModal(-1);
+                              },
                             },
                           ]}
-                          {...response}
+                          {...response.data}
                         />
                       )
                   );

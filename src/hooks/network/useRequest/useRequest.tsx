@@ -1,7 +1,7 @@
 import { AxiosResponse } from "axios";
 import { useState } from "react";
 
-import { PropsFethDataFunction } from "./userequest.types";
+import { PropsErrorResponse, PropsFethDataFunction } from "./userequest.types";
 import cactusAPI from "@/services/axios/cactus-api";
 import useModal from "@/hooks/context/useModal";
 import Modal from "@/components/display/Modal";
@@ -35,16 +35,13 @@ const useRequest = (defaultTitleError = "Erro", axionInstance = cactusAPI) => {
         onSuccess(res);
       }
     } catch (err: any) {
-      let errorMessage = "A API do sistema não respondeu à requisição.";
-      const errorResponse = err.response;
+      let errorMessage: string | string[] =
+        "A API do sistema não respondeu à requisição.";
 
+      const errorResponse: PropsErrorResponse = err.response?.data;
       if (errorResponse) {
-        // Obtem o erro de servidor da requição.
-        const errorData = errorResponse.data.non_field_errors;
-
-        if (errorData) {
-          errorMessage = errorData[0];
-        }
+        // Obtem o(s) erro(s) da requição.
+        errorMessage = Object.values(errorResponse).flat();
       }
 
       addNewModal(<Modal title={defaultTitleError} message={errorMessage} />);

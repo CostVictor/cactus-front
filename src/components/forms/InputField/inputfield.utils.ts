@@ -54,7 +54,7 @@ export const getRegisterValidation = (config?: PropsInputConfig, options?: Props
       ...(config?.type === "email"
         ? {
           checkMail: (value: string) =>
-            (value.includes("@") && value.includes(".")) ||
+            value.includes("@") ||
             "Por favor, defina um e-mail válido."
         }
         : {}),

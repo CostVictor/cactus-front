@@ -62,7 +62,23 @@ const Modal = ({
           className={style.content}
           animateChildren
         >
-          {message ? <p className={style.text}>{message}</p> : children}
+          {message ? (
+            Array.isArray(message) ? (
+              message.map((msg, index) => (
+                <span key={index} className={style.message_span}>
+                  <h3>{">"}</h3>
+                  <p>{msg}</p>
+                </span>
+              ))
+            ) : (
+              <span className={style.message_span}>
+                <h3>{">"}</h3>
+                <p>{message}</p>
+              </span>
+            )
+          ) : (
+            children
+          )}
         </Container>
 
         <motion.div
