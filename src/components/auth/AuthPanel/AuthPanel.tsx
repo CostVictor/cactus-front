@@ -132,8 +132,6 @@ const AuthPanel = ({ type }: PropsAuthPanel) => {
                 "password",
               ]}
               onSubmit={(data) => {
-                console.log(data);
-
                 if (!listModal.length) {
                   fethData(
                     {
