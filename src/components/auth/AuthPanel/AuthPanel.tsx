@@ -36,8 +36,6 @@ const AuthPanel = ({ type }: PropsAuthPanel) => {
 
   const router = useRouter();
 
-  console.log("Renderizou");
-
   return (
     <section className={style.container}>
       {Array.from({ length: 4 }).map((_, index) => (
@@ -83,7 +81,8 @@ const AuthPanel = ({ type }: PropsAuthPanel) => {
 
           {type === "login" ? (
             <Form
-              defaultButtonSubmitText={isLoading ? "Aguarde..." : "Entrar"}
+              defaultButtonSubmitText="Entrar"
+              isLoading={isLoading}
               onSubmit={(data) => {
                 if (!listModal.length) {
                   fethData(
@@ -123,7 +122,8 @@ const AuthPanel = ({ type }: PropsAuthPanel) => {
             </Form>
           ) : (
             <Form
-              defaultButtonSubmitText={isLoading ? "Aguarde..." : "Criar conta"}
+              defaultButtonSubmitText="Criar conta"
+              isLoading={isLoading}
               formatData={[
                 {
                   name: "user_details",

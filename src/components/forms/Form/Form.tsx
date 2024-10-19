@@ -16,6 +16,7 @@ const Form = ({
   onSubmit,
   includeButton,
   formatData,
+  isLoading,
   defaultButtonSubmitText = "Enviar",
 }: PropsForm) => {
   const {
@@ -28,7 +29,9 @@ const Form = ({
   return (
     <form
       onSubmit={handleSubmit((data) =>
-        onSubmit(setFormatData(trimmerData(omitKeys(data, "remove")), formatData))
+        onSubmit(
+          setFormatData(trimmerData(omitKeys(data, "remove")), formatData)
+        )
       )}
       className={style.container_main}
     >
@@ -63,9 +66,10 @@ const Form = ({
           />
         )}
         <Button
-          type="submit"
+          type={isLoading ? "button" : "submit"}
           text={defaultButtonSubmitText}
           appearance={includeButton ? "main" : "submit"}
+          isLoading={isLoading}
         />
       </div>
     </form>

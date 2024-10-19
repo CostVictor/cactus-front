@@ -15,4 +15,5 @@ export interface PropsForm {
   includeButton?: PropsFormButton
   defaultButtonSubmitText?: string
   formatData?: PropsFormatterData
+  isLoading?: boolean
 }
