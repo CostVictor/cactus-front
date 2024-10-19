@@ -21,6 +21,11 @@ const useModal = create<PropsUseModal>((set) => ({
         }
 
         document.body.classList.add("blocked_scroll");
+        if (document.activeElement instanceof HTMLElement) {
+          // Retira o foco do input (Caso possua).
+          document.activeElement.blur();
+        }
+
         return { state: { listModal: [...storage.state.listModal, modal] } };
       });
     },

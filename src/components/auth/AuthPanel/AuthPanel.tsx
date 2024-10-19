@@ -133,34 +133,32 @@ const AuthPanel = ({ type }: PropsAuthPanel) => {
                 "email",
                 "password",
               ]}
-              onSubmit={(data) => {
-                if (!listModal.length) {
-                  fethData(
-                    {
-                      url: "user/register/",
-                      method: "POST",
-                      content: data,
-                    },
-                    (response) =>
-                      addNewModal(
-                        <Modal
-                          title="Cadastro efetuado"
-                          buttons={[
-                            {
-                              text: "Ir ao login",
-                              appearance: "main",
-                              onClick: () => {
-                                router.push("/login");
-                                removeModal(-1);
-                              },
+              onSubmit={(data) =>
+                fethData(
+                  {
+                    url: "user/register/",
+                    method: "POST",
+                    content: data,
+                  },
+                  (response) =>
+                    addNewModal(
+                      <Modal
+                        title="Cadastro efetuado"
+                        buttons={[
+                          {
+                            text: "Ir ao login",
+                            appearance: "main",
+                            onClick: () => {
+                              router.push("/login");
+                              removeModal(-1);
                             },
-                          ]}
-                          {...response.data}
-                        />
-                      )
-                  );
-                }
-              }}
+                          },
+                        ]}
+                        {...response.data}
+                      />
+                    )
+                )
+              }
             >
               <InputField
                 name="name"
