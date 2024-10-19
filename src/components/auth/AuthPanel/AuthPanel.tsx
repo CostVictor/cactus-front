@@ -122,7 +122,18 @@ const AuthPanel = ({ type }: PropsAuthPanel) => {
           ) : (
             <Form
               defaultButtonSubmitText={isLoading ? "Aguarde..." : "Criar conta"}
+              formatData={[
+                {
+                  name: "user_details",
+                  format: ["tel", "city"],
+                },
+                "name",
+                "email",
+                "password",
+              ]}
               onSubmit={(data) => {
+                console.log(data);
+
                 if (!listModal.length) {
                   fethData(
                     {

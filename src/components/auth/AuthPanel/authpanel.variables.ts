@@ -16,5 +16,5 @@ export const textLinkRedirect: PropsTextLinkPanel = {
 }
 
 export const cities = [
-  'Apodi', 'Campo Grande', 'Caraúbas', 'Felipe Guerra', 'Itaú', 'Rodolfo Fernandes', 'Severiano Melo', 'Umarizal'
-]
+  'Apodi', 'Campo Grande', 'Caraúbas', 'Felipe Guerra', 'Itaú', 'Rodolfo Fernandes', 'Severiano Melo', 'Umarizal', "Olho D'Água do Borges", "Lajes"
+].sort()

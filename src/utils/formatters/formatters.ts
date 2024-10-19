@@ -1,4 +1,4 @@
-import { PropsFormatterData } from "./formatters.types";
+import { PropsData, PropsFormatterData } from "./formatters.types";
 
 /**
  * Remove espaços em branco do início e do fim das chaves e valores de um objeto.
@@ -6,8 +6,8 @@ import { PropsFormatterData } from "./formatters.types";
  * @param data O objeto a ser formatado, que pode conter chaves com valores do tipo string ou objetos aninhados do mesmo tipo.
  * @returns O objeto formatado, onde todas as chaves e valores têm espaços em branco removidos.
  */
-export const trimmerData = (data: PropsFormatterData) => {
-  const formattedObj: PropsFormatterData = {};
+export const trimmerData = (data: PropsData) => {
+  const formattedObj: PropsData = {};
 
   Object.entries(data).forEach(([key, value]) => {
     if (typeof value === "object") {
@@ -29,8 +29,8 @@ export const trimmerData = (data: PropsFormatterData) => {
  * @param omitTo - A string a ser procurada nos nomes das chaves.
  * @returns O objeto resultante com as chaves omitidas.
  */
-export const omitKeys = (data: PropsFormatterData, omitTo: string) => {
-  const formattedObj: PropsFormatterData = {};
+export const omitKeys = (data: PropsData, omitTo: string) => {
+  const formattedObj: PropsData = {};
 
   Object.entries(data).forEach(([key, value]) => {
     // Verifica se a chave contém a string omitTo, caso verdade, não inclui em `formattedObj`.
@@ -43,6 +43,31 @@ export const omitKeys = (data: PropsFormatterData, omitTo: string) => {
       }
     }
   });
+
+  return formattedObj
+}
+
+/**
+ * Formata os dados de acordo com um formato especificado.
+ * @param data - Os dados a serem formatados. Espera-se que seja um objeto onde as chaves são strings.
+ * @param format - O formato a ser aplicado aos dados. Pode ser um array de strings ou objetos com as propriedades `name` e `format`.
+ * @returns Um novo objeto contendo os dados formatados.
+ */
+export const setFormatData = (data: PropsData, format?: PropsFormatterData) => {
+  if (!format) {
+    return data
+  }
+
+  const formattedObj: PropsData = {};
+
+  format.forEach(value => {
+    if (typeof value === "string") {
+      formattedObj[value] = data[value];
+    } else {
+      const { name, format } = value
+      formattedObj[name] = setFormatData(data, format)
+    }
+  })
 
   return formattedObj
 }

@@ -5,7 +5,7 @@ import { useForm, FieldValues } from "react-hook-form";
 
 import { PropsForm } from "./form.types";
 import { checkHasInputConfirm, getFormMessage } from "./form.utils";
-import { trimmerData, omitKeys } from "@/utils/formatters";
+import { trimmerData, omitKeys, setFormatData } from "@/utils/formatters";
 import Button from "@/components/commom/Button";
 
 import InputField from "../InputField";
@@ -15,6 +15,7 @@ const Form = ({
   children,
   onSubmit,
   includeButton,
+  formatData,
   defaultButtonSubmitText = "Enviar",
 }: PropsForm) => {
   const {
@@ -27,7 +28,7 @@ const Form = ({
   return (
     <form
       onSubmit={handleSubmit((data) =>
-        onSubmit(trimmerData(omitKeys(data, "remove")))
+        onSubmit(setFormatData(trimmerData(omitKeys(data, "remove")), formatData))
       )}
       className={style.container_main}
     >

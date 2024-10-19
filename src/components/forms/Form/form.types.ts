@@ -1,5 +1,7 @@
 import { ReactElement, MouseEventHandler } from "react"
 import { FieldValues } from "react-hook-form"
+
+import { PropsFormatterData } from "@/utils/formatters"
 import { PropsInputField } from "../InputField"
 
 interface PropsFormButton {
@@ -12,4 +14,5 @@ export interface PropsForm {
   onSubmit: (data: FieldValues) => void
   includeButton?: PropsFormButton
   defaultButtonSubmitText?: string
+  formatData?: PropsFormatterData
 }
