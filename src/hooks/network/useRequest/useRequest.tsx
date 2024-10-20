@@ -15,12 +15,23 @@ const useRequest = (defaultTitleError = "Erro", axionInstance = cactusAPI) => {
   } = useModal();
 
   /**
-   * Envia a requisição.
+   * Função assíncrona para buscar dados de uma API.
+   *
+   * @param {Object} params - Os parâmetros para a requisição.
+   * @param {string} params.url - A URL da API para a qual a requisição será feita.
+   * @param {string} params.method - O método HTTP a ser utilizado (GET, POST, etc.).
+   * @param {any} params.content - O conteúdo a ser enviado no corpo da requisição (aplicável para métodos como POST).
+   * @param {Object} [params.config] - Configurações adicionais para a requisição (opcional).
+   * @param {function} [onSuccess] - Callback a ser chamado se a requisição for bem-sucedida. Recebe a resposta da API como argumento.
+   * @param {function} [onError] - Callback a ser chamado se a requisição falhar. Recebe o erro como argumento.
+   *
+   * @returns {Promise<void>} - Retorna uma Promise que resolve quando a operação é concluída.
    */
   const fethData = async (
     { url, method, content, config }: PropsFethDataFunction,
-    onSuccess?: (data: AxiosResponse) => void
-  ) => {
+    onSuccess?: (data: AxiosResponse) => void,
+    onError?: (err: any) => void
+  ): Promise<void> => {
     setIsLoading(true);
     try {
       const res = await axionInstance.request({
@@ -35,16 +46,23 @@ const useRequest = (defaultTitleError = "Erro", axionInstance = cactusAPI) => {
         onSuccess(res);
       }
     } catch (err: any) {
-      let errorMessage: string | string[] =
-        "A API do sistema não respondeu à requisição.";
+      if (!onError) {
+        let errorMessage: string | string[] = "A API não está respondendo.";
 
-      const errorResponse: PropsErrorResponse = err.response?.data;
-      if (errorResponse) {
-        // Obtem o(s) erro(s) da requição.
-        errorMessage = Object.values(errorResponse).flat();
+        if (err.status !== 500) {
+          const errorResponse: PropsErrorResponse = err.response?.data;
+          if (errorResponse) {
+            // Obtem o(s) erro(s) da requição.
+            errorMessage = Object.values(errorResponse).flat();
+          }
+        } else {
+          errorMessage = "Ocorreu um erro interno na API.";
+        }
+
+        addNewModal(<Modal title={defaultTitleError} message={errorMessage} />);
+      } else {
+        onError(err);
       }
-
-      addNewModal(<Modal title={defaultTitleError} message={errorMessage} />);
     } finally {
       setIsLoading(false);
     }

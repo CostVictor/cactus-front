@@ -87,7 +87,10 @@ const AuthPanel = ({ type }: PropsAuthPanel) => {
                 if (!listModal.length) {
                   fethData(
                     { url: "login/", method: "POST", content: data },
-                    () => router.push("/")
+                    (response) => {
+                      console.log(response.data);
+                      router.push("/");
+                    }
                   );
                 }
               }}
@@ -96,13 +99,14 @@ const AuthPanel = ({ type }: PropsAuthPanel) => {
                 name="email"
                 label="E-mail"
                 config={{ type: "email" }}
-                options={{ icon: "" }}
+                options={{ icon: "lucide:circle-user-round" }}
                 required
               />
               <InputField
                 name="password"
                 label="Senha"
                 config={{ type: "password" }}
+                options={{ icon: "uil:lock-alt" }}
                 required
               />
               <div className={style.container_options}>
@@ -129,7 +133,7 @@ const AuthPanel = ({ type }: PropsAuthPanel) => {
                   name: "user_details",
                   format: ["tel", "city"],
                 },
-                "name",
+                "username",
                 "email",
                 "password",
               ]}
@@ -161,7 +165,7 @@ const AuthPanel = ({ type }: PropsAuthPanel) => {
               }
             >
               <InputField
-                name="name"
+                name="username"
                 label="Nome e sobrenome"
                 config={{
                   validation: {
