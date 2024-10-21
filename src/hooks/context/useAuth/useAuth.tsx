@@ -26,6 +26,7 @@ const useAuth = () => {
   } = StorageAuth();
 
   const {
+    info: { isLoading },
     actions: { fethData },
   } = useRequest();
 
@@ -74,7 +75,11 @@ const useAuth = () => {
     );
   };
 
-  return { state, actions: { login, logoutAPI, logoutLocal, refreshToken } };
+  return {
+    state,
+    network: { isLoading },
+    actions: { login, logoutAPI, logoutLocal, refreshToken },
+  };
 };
 
 export default useAuth;

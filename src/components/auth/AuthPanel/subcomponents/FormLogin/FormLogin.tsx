@@ -1,0 +1,66 @@
+import useAuth from "@/hooks/context/useAuth";
+import useModal from "@/hooks/context/useModal";
+
+import Modal from "@/components/display/Modal";
+import Form from "@/components/forms/Form";
+import InputField from "@/components/forms/InputField";
+import NavLink from "@/components/layout/NavLink";
+
+import { useSearchParams } from "next/navigation";
+import style from "./formlogin.module.scss";
+
+const FormLogin = () => {
+  const {
+    network: { isLoading },
+    actions: { login },
+  } = useAuth();
+
+  const {
+    actions: { addNewModal },
+  } = useModal();
+
+  const paramsURL = useSearchParams();
+
+  return (
+    <Form
+      defaultButtonSubmitText="Entrar"
+      isLoading={isLoading}
+      onSubmit={(data) => {
+        const redirectTo = paramsURL.get("redirectTo");
+        const { email, password } = data;
+        login(email, password, redirectTo ?? "/");
+      }}
+    >
+      <InputField
+        name="email"
+        label="E-mail"
+        config={{ type: "email" }}
+        options={{ icon: "lucide:circle-user-round" }}
+        required
+      />
+      <InputField
+        name="password"
+        label="Senha"
+        config={{ type: "password" }}
+        options={{ icon: "uil:lock-alt" }}
+        required
+      />
+      <div className={style.container_options}>
+        <NavLink
+          text="Esqueci minha senha"
+          link=""
+          onClick={() =>
+            addNewModal(
+              <Modal
+                title="Função indisponível"
+                message="Esta funcionalidade ainda está em desenvolvimento."
+              />
+            )
+          }
+        />
+      </div>
+    </Form>
+  );
+};
+
+export default FormLogin;

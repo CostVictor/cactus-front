@@ -1,48 +1,20 @@
 "use client";
 
-import { useRouter, useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
 import SideIcon from "@/components/layout/SideIcon";
 import NavLink from "@/components/layout/NavLink";
 
-import Form from "@/components/forms/Form";
-import InputField from "@/components/forms/InputField";
-import useRequest from "@/hooks/network/useRequest";
-import useAuth from "@/hooks/context/useAuth";
-import useModal from "@/hooks/context/useModal";
-import Modal from "@/components/display/Modal";
+import FormLogin from "./subcomponents/FormLogin";
+import FormRegister from "./subcomponents/FormRegister";
 
-import {
-  title,
-  textRedirect,
-  textLinkRedirect,
-  cities,
-} from "./authpanel.variables";
-
+import { title, textRedirect, textLinkRedirect } from "./authpanel.variables";
 import { PropsAuthPanel } from "./authpanel.types";
 import style from "./authpanel.module.scss";
 
 const AuthPanel = ({ type }: PropsAuthPanel) => {
-  const {
-    actions: { addNewModal, removeModal },
-  } = useModal();
-
-  const {
-    info: { isLoading },
-    actions: { fethData },
-  } = useRequest(type === "login" ? "Erro de Login" : "Erro de Cadastro");
-
-  const {
-    actions: { login },
-  } = useAuth();
-
-  console.log("Renrerizou auth");
-
-  const router = useRouter();
-  const paramsURL = useSearchParams();
-
   return (
     <section className={style.container}>
       {Array.from({ length: 4 }).map((_, index) => (
@@ -87,132 +59,17 @@ const AuthPanel = ({ type }: PropsAuthPanel) => {
           <h1 className={style.title}>{title[type]}</h1>
 
           {type === "login" ? (
-            <Form
-              defaultButtonSubmitText="Entrar"
-              isLoading={isLoading}
-              onSubmit={(data) => {
-                const redirectTo = paramsURL.get("redirectTo");
-                const { email, password } = data;
-                login(email, password, redirectTo ?? "/");
-              }}
-            >
-              <InputField
-                name="email"
-                label="E-mail"
-                config={{ type: "email" }}
-                options={{ icon: "lucide:circle-user-round" }}
-                required
-              />
-              <InputField
-                name="password"
-                label="Senha"
-                config={{ type: "password" }}
-                options={{ icon: "uil:lock-alt" }}
-                required
-              />
-              <div className={style.container_options}>
-                <NavLink
-                  text="Esqueci minha senha"
-                  link=""
-                  onClick={() =>
-                    addNewModal(
-                      <Modal
-                        title="Função indisponível"
-                        message="Esta funcionalidade ainda está em desenvolvimento."
-                      />
-                    )
-                  }
-                />
-              </div>
-            </Form>
-          ) : (
-            <Form
-              defaultButtonSubmitText="Criar conta"
-              isLoading={isLoading}
-              formatData={[
-                {
-                  name: "user_details",
-                  format: ["tel", "city"],
-                },
-                "username",
-                "email",
-                "password",
-              ]}
-              onSubmit={(data) =>
-                fethData(
-                  {
-                    url: "user/register/",
-                    method: "POST",
-                    content: data,
-                  },
-                  (response) =>
-                    addNewModal(
-                      <Modal
-                        title="Cadastro efetuado"
-                        buttons={[
-                          {
-                            text: "Ir ao login",
-                            appearance: "main",
-                            onClick: () => {
-                              router.push("/login");
-                              removeModal(-1);
-                            },
-                          },
-                        ]}
-                        {...response.data}
-                      />
-                    )
-                )
+            <Suspense
+              fallback={
+                <span style={{ color: "var(--gray-primary)" }}>
+                  Carregando formulário...
+                </span>
               }
             >
-              <InputField
-                name="username"
-                label="Nome e sobrenome"
-                config={{
-                  validation: {
-                    capitalize: "all",
-                    notNumber: true,
-                    notSymbol: true,
-                  },
-                }}
-                required
-              />
-              <InputField
-                name="tel"
-                label="Telefone"
-                config={{ type: "tel" }}
-                required
-              />
-              <InputField
-                name="email"
-                label="E-mail"
-                config={{ type: "email" }}
-                required
-              />
-              <InputField
-                name="city"
-                label="Cidade"
-                options={{ selectOptions: cities }}
-                config={{ validation: { capitalize: "all" } }}
-                required
-              />
-              <InputField
-                name="password"
-                label="Senha"
-                config={{ type: "password" }}
-                message={{
-                  text: "A senha deve incluir pelo menos: uma letra maiúscula, uma letra minúscula, um número e um símbolo especial.",
-                }}
-                required
-              />
-              <InputField
-                name="password_conf"
-                label="Confirmar senha"
-                config={{ type: "password" }}
-                equalTo="password"
-                required
-              />
-            </Form>
+              <FormLogin />
+            </Suspense>
+          ) : (
+            <FormRegister />
           )}
 
           <div className={style.container_redirect}>
