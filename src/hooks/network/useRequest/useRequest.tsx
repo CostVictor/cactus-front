@@ -29,7 +29,7 @@ const useRequest = (defaultTitleError = "Erro", axionInstance = cactusAPI) => {
    */
   const fethData = async (
     { url, method, content, config }: PropsFethDataFunction,
-    onSuccess?: (data: AxiosResponse) => void,
+    onSuccess?: (res: AxiosResponse) => void,
     onError?: (err: any) => void
   ): Promise<void> => {
     setIsLoading(true);
@@ -40,7 +40,7 @@ const useRequest = (defaultTitleError = "Erro", axionInstance = cactusAPI) => {
         data: content,
         ...config,
       });
-      setData(res);
+      setData(res.data);
 
       if (onSuccess) {
         onSuccess(res);

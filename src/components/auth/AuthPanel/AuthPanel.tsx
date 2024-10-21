@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -9,9 +9,10 @@ import NavLink from "@/components/layout/NavLink";
 
 import Form from "@/components/forms/Form";
 import InputField from "@/components/forms/InputField";
+import useRequest from "@/hooks/network/useRequest";
+import useAuth from "@/hooks/context/useAuth";
 import useModal from "@/hooks/context/useModal";
 import Modal from "@/components/display/Modal";
-import useRequest from "@/hooks/network/useRequest";
 
 import {
   title,
@@ -25,7 +26,6 @@ import style from "./authpanel.module.scss";
 
 const AuthPanel = ({ type }: PropsAuthPanel) => {
   const {
-    state: { listModal },
     actions: { addNewModal, removeModal },
   } = useModal();
 
@@ -34,7 +34,14 @@ const AuthPanel = ({ type }: PropsAuthPanel) => {
     actions: { fethData },
   } = useRequest(type === "login" ? "Erro de Login" : "Erro de Cadastro");
 
+  const {
+    actions: { login },
+  } = useAuth();
+
+  console.log("Renrerizou auth");
+
   const router = useRouter();
+  const paramsURL = useSearchParams();
 
   return (
     <section className={style.container}>
@@ -84,15 +91,9 @@ const AuthPanel = ({ type }: PropsAuthPanel) => {
               defaultButtonSubmitText="Entrar"
               isLoading={isLoading}
               onSubmit={(data) => {
-                if (!listModal.length) {
-                  fethData(
-                    { url: "login/", method: "POST", content: data },
-                    (response) => {
-                      console.log(response.data);
-                      router.push("/");
-                    }
-                  );
-                }
+                const redirectTo = paramsURL.get("redirectTo");
+                const { email, password } = data;
+                login(email, password, redirectTo ?? "/");
               }}
             >
               <InputField
