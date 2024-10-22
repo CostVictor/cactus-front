@@ -1,27 +1,35 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-
-import useRequest from "@/hooks/network/useRequest";
-import { PropsStorageAuth } from "./useauth.types";
+import { useEffect } from "react";
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import SecureLS from "secure-ls";
 
-const StorageAuth = create(
-  persist<PropsStorageAuth>(
-    (set) => ({
-      isAuthenticated: false,
-      user: null,
+import { storageName } from "./useauth.variables";
+import { PropsStorageAuth } from "./useauth.types";
+import useRequest from "@/hooks/network/useRequest";
 
-      loginInState: (user) =>
-        set(() => ({ isAuthenticated: true, user: user })),
-      logoutInState: () => set(() => ({ isAuthenticated: false, user: null })),
-    }),
-    {
-      name: "storageAuth",
-    }
-  )
-);
+// LocalStorage seguro.
+let secureLS: SecureLS;
+
+// Contexto de autenticação da aplicação.
+const StorageAuth = create<PropsStorageAuth>((set) => ({
+  state: {
+    isAuthenticated: false,
+    user: null,
+  },
+  actions: {
+    loginInState: (user) => {
+      const newState = { isAuthenticated: true, user: user };
+      secureLS?.set(storageName, newState);
+      set(() => ({ state: newState }));
+    },
+    logoutInState: () => {
+      secureLS?.remove(storageName);
+      set(() => ({ state: { isAuthenticated: false, user: null } }));
+    },
+  },
+}));
 
 const useAuth = () => {
   const {
@@ -29,8 +37,20 @@ const useAuth = () => {
     actions: { fethData },
   } = useRequest();
 
-  const { isAuthenticated, user, loginInState, logoutInState } = StorageAuth();
+  const {
+    state,
+    actions: { loginInState, logoutInState },
+  } = StorageAuth();
   const router = useRouter();
+
+  useEffect(() => {
+    // Inicia o secureLS caso seja `undefined`.
+    secureLS = secureLS ?? new SecureLS({ encodingType: "aes" });
+    const authUser = secureLS.get(storageName);
+    if (authUser) {
+      loginInState(authUser);
+    }
+  }, [loginInState]);
 
   const login = (email: string, password: string, redirectTo: string) =>
     fethData(
@@ -76,7 +96,7 @@ const useAuth = () => {
   };
 
   return {
-    state: { isAuthenticated, user },
+    state,
     network: { isLoading },
     actions: { login, logoutAPI, logoutLocal, refreshToken },
   };

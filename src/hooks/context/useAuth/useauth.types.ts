@@ -4,8 +4,12 @@ interface PropsUser {
 }
 
 export interface PropsStorageAuth {
-  isAuthenticated: boolean;
-  user: PropsUser | null;
-  loginInState: (user: PropsUser) => void;
-  logoutInState: () => void;
+  state: {
+    isAuthenticated: boolean;
+    user: PropsUser | null;
+  }
+  actions: {
+    loginInState: (user: PropsUser) => void;
+    logoutInState: () => void;
+  }
 }
