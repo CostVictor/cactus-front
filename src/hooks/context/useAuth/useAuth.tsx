@@ -5,31 +5,31 @@ import { useRouter } from "next/navigation";
 import useRequest from "@/hooks/network/useRequest";
 import { PropsStorageAuth } from "./useauth.types";
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
-const StorageAuth = create<PropsStorageAuth>((set) => ({
-  state: {
-    isAuthenticated: false,
-    user: null,
-  },
-  actions: {
-    loginInState: (user) =>
-      set(() => ({ state: { isAuthenticated: true, user: user } })),
-    logoutInState: () =>
-      set(() => ({ state: { isAuthenticated: false, user: null } })),
-  },
-}));
+const StorageAuth = create(
+  persist<PropsStorageAuth>(
+    (set) => ({
+      isAuthenticated: false,
+      user: null,
+
+      loginInState: (user) =>
+        set(() => ({ isAuthenticated: true, user: user })),
+      logoutInState: () => set(() => ({ isAuthenticated: false, user: null })),
+    }),
+    {
+      name: "storageAuth",
+    }
+  )
+);
 
 const useAuth = () => {
-  const {
-    state,
-    actions: { loginInState, logoutInState },
-  } = StorageAuth();
-
   const {
     info: { isLoading },
     actions: { fethData },
   } = useRequest();
 
+  const { isAuthenticated, user, loginInState, logoutInState } = StorageAuth();
   const router = useRouter();
 
   const login = (email: string, password: string, redirectTo: string) =>
@@ -76,7 +76,7 @@ const useAuth = () => {
   };
 
   return {
-    state,
+    state: { isAuthenticated, user },
     network: { isLoading },
     actions: { login, logoutAPI, logoutLocal, refreshToken },
   };

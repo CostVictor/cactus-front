@@ -5,24 +5,17 @@ import Link from "next/link";
 import { averiaSansLibre } from "@/styles/fonts";
 import { PropsMenuHeader } from "./menuheader.types";
 
-import useAuth from "@/hooks/context/useAuth";
-import useModal from "@/hooks/context/useModal";
-
 import Container from "@/components/structural/Container";
 import NavLink from "@/components/layout/NavLink";
 import Button from "@/components/commom/Button";
 
 import style from "./menuheader.module.scss";
 
-const MenuHeader = ({ targets }: PropsMenuHeader) => {
-  const {
-    state: { isAuthenticated },
-  } = useAuth();
-
-  const {
-    actions: { removeModal },
-  } = useModal();
-
+const MenuHeader = ({
+  targets,
+  isAuthenticated,
+  removeModal,
+}: PropsMenuHeader) => {
   return (
     <motion.nav
       layoutId="menuHeader"
@@ -37,7 +30,7 @@ const MenuHeader = ({ targets }: PropsMenuHeader) => {
         />
         <h2 className={`${averiaSansLibre.className} ${style.title}`}>Menu</h2>
       </div>
-      
+
       {!isAuthenticated && (
         <div className={style.container_auth}>
           <Link href="/register">
