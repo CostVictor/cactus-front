@@ -60,7 +60,6 @@ const useAuth = () => {
         content: { email, password },
       },
       (res) => {
-        console.log(res.data);
         loginInState(res.data);
         router.push(redirectTo);
       }
