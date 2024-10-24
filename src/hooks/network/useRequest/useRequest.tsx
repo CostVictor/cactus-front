@@ -5,6 +5,7 @@ import { PropsErrorResponse, PropsFethDataFunction } from "./userequest.types";
 import cactusAPI from "@/services/axios/cactus-api";
 import useModal from "@/hooks/context/useModal";
 import Modal from "@/components/display/Modal";
+import Cookies from "js-cookie";
 
 const useRequest = (defaultTitleError = "Erro", axionInstance = cactusAPI) => {
   const [data, setData] = useState<AxiosResponse | null>(null);
@@ -34,11 +35,16 @@ const useRequest = (defaultTitleError = "Erro", axionInstance = cactusAPI) => {
   ): Promise<void> => {
     setIsLoading(true);
     try {
+      const csrftoken = Cookies.get("csrftoken");
       const res = await axionInstance.request({
         url,
         method,
         data: content,
         ...config,
+        headers: {
+          ...config?.headers,
+          "X-CSRFToken": csrftoken,
+        },
       });
       setData(res.data);
 

@@ -52,7 +52,18 @@ const useAuth = () => {
     }
   }, [loginInState]);
 
-  const login = (email: string, password: string, redirectTo: string) =>
+  /**
+   * Faz login do usuário e redireciona para a URL especificada após o login bem-sucedido.
+   * @param {string} email - O email do usuário.
+   * @param {string} password - A senha do usuário.
+   * @param {string} redirectTo - A URL para redirecionar após o login bem-sucedido.
+   * @returns {Promise<void>}
+   */
+  const login = (
+    email: string,
+    password: string,
+    redirectTo: string
+  ): Promise<void> =>
     fethData(
       {
         url: "/session/login/",
@@ -65,7 +76,11 @@ const useAuth = () => {
       }
     );
 
-  const logoutAPI = () =>
+  /**
+   * Faz logout do usuário e redireciona para a página inicial após o logout bem-sucedido.
+   * @returns {Promise<void>}
+   */
+  const logoutAPI = (): Promise<void> =>
     fethData(
       {
         url: "/session/logout/",
@@ -77,9 +92,18 @@ const useAuth = () => {
       }
     );
 
-  const logoutLocal = () => logoutInState();
+  /**
+   * Remove o estado de autenticação do usuário armazenado com secureLS no LocalStorage.
+   * @returns {void}
+   */
+  const logoutLocal = (): void => logoutInState();
 
-  const refreshToken = (redirectTo?: string) => {
+  /**
+   * Atualiza o token de sessão do usuário. Se a atualização falhar com erro 401, redireciona para a página de login.
+   * @param {string} [redirectTo] - URL opcional para redirecionar após o login se a atualização do token falhar.
+   * @returns {Promise<void>}
+   */
+  const refreshToken = (redirectTo?: string): Promise<void> =>
     fethData(
       {
         url: "/session/refresh_token/",
@@ -92,7 +116,6 @@ const useAuth = () => {
         }
       }
     );
-  };
 
   return {
     state,
