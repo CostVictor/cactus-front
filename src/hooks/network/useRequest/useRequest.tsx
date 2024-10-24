@@ -1,5 +1,5 @@
 import { AxiosResponse } from "axios";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 import { PropsErrorResponse, PropsFethDataFunction } from "./userequest.types";
 import cactusAPI from "@/services/axios/cactus-api";
@@ -28,51 +28,56 @@ const useRequest = (defaultTitleError = "Erro", axionInstance = cactusAPI) => {
    *
    * @returns {Promise<void>} - Retorna uma Promise que resolve quando a operação é concluída.
    */
-  const fethData = async (
-    { url, method, content, config }: PropsFethDataFunction,
-    onSuccess?: (res: AxiosResponse) => void,
-    onError?: (err: any) => void
-  ): Promise<void> => {
-    setIsLoading(true);
-    try {
-      const csrftoken = Cookies.get("csrftoken");
-      const res = await axionInstance.request({
-        url,
-        method,
-        data: content,
-        ...config,
-        headers: {
-          ...config?.headers,
-          "X-CSRFToken": csrftoken,
-        },
-      });
-      setData(res.data);
+  const fethData = useCallback(
+    async (
+      { url, method, content, config }: PropsFethDataFunction,
+      onSuccess?: (res: AxiosResponse) => void,
+      onError?: (err: any) => void
+    ): Promise<void> => {
+      setIsLoading(true);
+      try {
+        const csrftoken = Cookies.get("csrftoken");
+        const res = await axionInstance.request({
+          url,
+          method,
+          data: content,
+          ...config,
+          headers: {
+            ...config?.headers,
+            "X-CSRFToken": csrftoken,
+          },
+        });
+        setData(res.data);
 
-      if (onSuccess) {
-        onSuccess(res);
-      }
-    } catch (err: any) {
-      if (!onError) {
-        let errorMessage: string | string[] = "A API não está respondendo.";
-
-        if (err.status !== 500) {
-          const errorResponse: PropsErrorResponse = err.response?.data;
-          if (errorResponse) {
-            // Obtem o(s) erro(s) da requição.
-            errorMessage = Object.values(errorResponse).flat();
-          }
-        } else {
-          errorMessage = "Ocorreu um erro interno na API.";
+        if (onSuccess) {
+          onSuccess(res);
         }
+      } catch (err: any) {
+        if (!onError) {
+          let errorMessage: string | string[] = "A API não está respondendo.";
 
-        addNewModal(<Modal title={defaultTitleError} message={errorMessage} />);
-      } else {
-        onError(err);
+          if (err.status !== 500) {
+            const errorResponse: PropsErrorResponse = err.response?.data;
+            if (errorResponse) {
+              // Obtem o(s) erro(s) da requição.
+              errorMessage = Object.values(errorResponse).flat();
+            }
+          } else {
+            errorMessage = "Ocorreu um erro interno na API.";
+          }
+
+          addNewModal(
+            <Modal title={defaultTitleError} message={errorMessage} />
+          );
+        } else {
+          onError(err);
+        }
+      } finally {
+        setIsLoading(false);
       }
-    } finally {
-      setIsLoading(false);
-    }
-  };
+    },
+    [addNewModal, axionInstance, defaultTitleError]
+  );
 
   return { info: { data, isLoading }, actions: { fethData } };
 };
