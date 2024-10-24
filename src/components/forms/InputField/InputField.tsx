@@ -120,6 +120,7 @@ const InputField = ({
           type={
             (config?.type === "password" && valueVisible) ||
             config?.type === "tel" ||
+            config?.type === "email" ||
             options?.selectOptions
               ? "text"
               : config?.type

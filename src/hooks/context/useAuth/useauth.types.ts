@@ -1,15 +1,15 @@
-export interface PropsUser {
-  name: string;
+interface PropsUser {
+  username: string;
   role: "client" | "employee";
 }
 
-export interface PropsUseAuth {
+export interface PropsStorageAuth {
   state: {
     isAuthenticated: boolean;
     user: PropsUser | null;
   }
   actions: {
-    login: (email: string, password: string) => void;
-    logout: () => void;
+    loginInState: (user: PropsUser) => void;
+    logoutInState: () => void;
   }
 }

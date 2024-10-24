@@ -71,19 +71,6 @@
         color: transparent;
       }
 
-      .container_options {
-        display: flex;
-        flex-direction: row-reverse;
-
-        width: 90%;
-        margin: 0 auto;
-
-        a {
-          font-size: 1rem;
-          text-decoration: none;
-        }
-      }
-
       .container_redirect {
         margin-top: auto;
         display: flex;
@@ -131,6 +118,11 @@
     }
 
     .icon {
+      img {
+        width: 135px;
+        height: 135px;
+      }
+
       &.pos_1 {
         top: 15rem;
         left: 1rem;
@@ -178,6 +170,11 @@
     }
 
     .icon {
+      img {
+        width: 120px;
+        height: 120px;
+      }
+
       &.pos_1 {
         top: 15rem;
         left: 0.5rem;

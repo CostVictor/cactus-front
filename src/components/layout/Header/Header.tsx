@@ -24,7 +24,7 @@ const Header = ({ targets }: PropsHeader) => {
   } = useAuth();
 
   const {
-    actions: { addNewModal },
+    actions: { addNewModal, removeModal },
   } = useModal();
 
   useEffect(() => {
@@ -55,7 +55,15 @@ const Header = ({ targets }: PropsHeader) => {
       >
         <Icon
           icon="material-symbols:menu-rounded"
-          onClick={() => addNewModal(<MenuHeader targets={targets} />)}
+          onClick={() =>
+            addNewModal(
+              <MenuHeader
+                targets={targets}
+                isAuthenticated={isAuthenticated}
+                removeModal={removeModal}
+              />
+            )
+          }
           className={style.icon}
         />
       </motion.div>

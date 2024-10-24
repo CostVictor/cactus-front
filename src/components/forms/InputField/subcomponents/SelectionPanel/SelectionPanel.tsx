@@ -7,8 +7,6 @@ const SelectionPanel = ({
   localValue,
   setLocalValue,
 }: PropsSelectionPanel) => {
-  console.log("ok SelectionPanel");
-
   return (
     <Container className={style.container} animateChildren>
       {options

@@ -6,4 +6,5 @@ export interface PropsButton {
   type?: "submit" | "button"
   clicked?: boolean
   onClick?: MouseEventHandler<HTMLButtonElement>
+  isLoading?: boolean
 }

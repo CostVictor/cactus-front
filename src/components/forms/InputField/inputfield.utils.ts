@@ -51,6 +51,13 @@ export const getRegisterValidation = (config?: PropsInputConfig, options?: Props
             "O valor informado neste campo não coincide com o esperado.",
         }
         : {}),
+      ...(config?.type === "email"
+        ? {
+          checkMail: (value: string) =>
+            value.includes("@") ||
+            "Por favor, defina um e-mail válido."
+        }
+        : {}),
       ...(config?.type === "password"
         ? {
           hasUpperCase: (value: string) =>

@@ -1,10 +1,11 @@
 "use client";
 
 import React, { isValidElement, cloneElement, Children } from "react";
-import { useForm, FieldValues, SubmitHandler } from "react-hook-form";
+import { useForm, FieldValues } from "react-hook-form";
 
 import { PropsForm } from "./form.types";
 import { checkHasInputConfirm, getFormMessage } from "./form.utils";
+import { trimmerData, omitKeys, setFormatData } from "@/utils/formatters";
 import Button from "@/components/commom/Button";
 
 import InputField from "../InputField";
@@ -14,6 +15,8 @@ const Form = ({
   children,
   onSubmit,
   includeButton,
+  formatData,
+  isLoading,
   defaultButtonSubmitText = "Enviar",
 }: PropsForm) => {
   const {
@@ -23,19 +26,15 @@ const Form = ({
     formState: { errors },
   } = useForm<FieldValues>();
 
-  /**
-   * Garante que os campos não pussuam espaços em branco antes e depois do valor.
-   * @param data Campos no estado do formulário.
-   */
-  const submitForm: SubmitHandler<FieldValues> = (data) => {
-    Object.keys(data).forEach((key) => {
-      data[key] = data[key].trim();
-    });
-    onSubmit(data);
-  };
-
   return (
-    <form onSubmit={handleSubmit(submitForm)} className={style.container_main}>
+    <form
+      onSubmit={handleSubmit((data) =>
+        onSubmit(
+          setFormatData(trimmerData(omitKeys(data, "remove")), formatData)
+        )
+      )}
+      className={style.container_main}
+    >
       <div className={style.container_inputs}>
         {Children.map(children, (child) =>
           isValidElement(child) && child.type === InputField
@@ -67,9 +66,10 @@ const Form = ({
           />
         )}
         <Button
-          type="submit"
+          type={isLoading ? "button" : "submit"}
           text={defaultButtonSubmitText}
           appearance={includeButton ? "main" : "submit"}
+          isLoading={isLoading}
         />
       </div>
     </form>

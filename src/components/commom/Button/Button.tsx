@@ -1,21 +1,30 @@
 import { alatsi } from "@/styles/fonts";
 import { PropsButton } from "./button.types";
+import { Icon } from "@iconify/react";
 import style from "./button.module.scss";
 
 const Button = ({
   text,
   type,
-  appearance = "normal",
   clicked,
   onClick,
+  isLoading,
+  appearance = "normal",
 }: PropsButton) => {
   const btnClass = `${alatsi.className} ${style.button} ${
     appearance !== "normal" ? style[appearance] : ""
-  } ${clicked ? style.clicked : ""}`.trim();
+  } ${clicked ? style.clicked : ""} ${isLoading ? style.loading : ""}`.trim();
 
   return (
-    <button type={type} className={btnClass} onClick={onClick}>
+    <button
+      type={type}
+      className={btnClass}
+      onClick={isLoading ? undefined : onClick}
+    >
       {text}
+      {isLoading && (
+        <Icon icon="svg-spinners:3-dots-move" className={style.icon} />
+      )}
     </button>
   );
 };

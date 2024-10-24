@@ -1,4 +1,4 @@
-interface PropsTarget {
+export interface PropsTarget {
   text: string;
   link: string;
 }
