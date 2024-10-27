@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect } from "react";
+
 import Aside from "@/components/layout/Aside";
 import Header from "@/components/layout/Header";
 
@@ -10,16 +12,36 @@ import CardInfo from "@/components/display/CardInfo";
 import Modal from "@/components/display/Modal";
 
 import useModal from "@/hooks/context/useModal";
+import useRequest from "@/hooks/network/useRequest";
+
+import { formatMoney } from "@/utils/formatters";
 
 export default function Home() {
   const {
     actions: { addNewModal },
   } = useModal();
 
-  const targets = [
-    { text: "Início", link: "#inicio" },
-    { text: "Pratos", link: "#pratos" },
-  ];
+  const {
+    info: { data },
+    actions: { fethData },
+  } = useRequest();
+
+  useEffect(() => {
+    fethData({
+      url: "snacks/",
+      method: "GET",
+    });
+  }, [fethData]);
+
+  const targets = [{ text: "Início", link: "#inicio" }];
+
+  // Percorre as categorias obtidas da requisição e adiciona a âncora na página.
+  if (Array.isArray(data)) {
+    data.forEach((category) => {
+      const name = category.name;
+      targets.push({ text: name, link: `#${name}` });
+    });
+  }
 
   return (
     <>
@@ -78,23 +100,39 @@ export default function Home() {
           </Container>
         </Section>
 
-        <Section
-          id="pratos"
-          description={{
-            title: "Experimente nossos Pratos!",
-            text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem eos, accusamus dicta sed dolorum iste reiciendis placeat temporibus non rerum excepturi qui libero ad tenetur numquam.",
-            illustrationUrl: "/image-Dish.svg",
-          }}
-          backgroundGray
-        >
-          <Container grid>
-            <CardInfo title="Segunda" icon="streamline:zero-hunger" />
-            <CardInfo title="Terça" icon="streamline:zero-hunger" />
-            <CardInfo title="Quarta" icon="streamline:zero-hunger" />
-            <CardInfo title="Quinta" icon="streamline:zero-hunger" />
-            <CardInfo title="Sexta" icon="streamline:zero-hunger" />
-          </Container>
-        </Section>
+        {Array.isArray(data) &&
+          data.length > 0 &&
+          data.map((category, index) => (
+            <Section
+              id={category.name}
+              key={`section_${category.name}`}
+              description={
+                category.description
+                  ? {
+                      ...category.description,
+                      illustrationUrl: category.description.illustration_url,
+                      illustrationDirection: index % 2 === 0 ? "right" : "left",
+                    }
+                  : undefined
+              }
+              backgroundGray={index % 2 === 0}
+            >
+              <Container grid>
+                {Array.isArray(category.snacks) &&
+                  category.snacks.length > 0 &&
+                  category.snacks.map(
+                    (snack: { [key: string]: string }, index: number) => (
+                      <CardInfo
+                        key={`snack_${index}-${category.name}`}
+                        title={snack.name}
+                        text={formatMoney(snack.price)}
+                        isSoldOut={!Number(snack.quantity_in_stock)}
+                      />
+                    )
+                  )}
+              </Container>
+            </Section>
+          ))}
       </main>
       <Aside />
     </>

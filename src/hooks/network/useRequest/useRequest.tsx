@@ -58,7 +58,7 @@ const useRequest = (defaultTitleError = "Erro", axionInstance = cactusAPI) => {
 
           if (err.status !== 500) {
             const errorResponse: PropsErrorResponse = err.response?.data;
-            if (errorResponse) {
+            if (errorResponse && typeof errorResponse !== "string") {
               // Obtem o(s) erro(s) da requição.
               errorMessage = Object.values(errorResponse).flat();
             }

@@ -71,3 +71,26 @@ export const setFormatData = (data: PropsData, format?: PropsFormatterData) => {
 
   return formattedObj
 }
+
+
+/**
+ * Formata um valor monetário no formato brasileiro ou extrai o valor numérico, dependendo do parâmetro `reverse`.
+ * @param {string} value - A string de entrada contendo o valor monetário a ser formatado.
+ * @param {boolean} [reverse=false] - Se true, retorna o valor numérico no formato padrão (ex.: "120.50"), sem o símbolo de moeda.
+ * @returns - O valor monetário formatado. Retorna "0.00" se nenhum número válido for encontrado.
+ */
+export const formatMoney = (value: string, reverse: boolean = false) => {
+  // Obtem os valor numérico do texto.
+  const money = value.replace(",", ".").match(/\d+(\.\d+)?/g)
+
+  if (money) {
+    const value = money[0]
+
+    if (reverse) {
+      return value
+    }
+
+    return `R$ ${value.replace(".", ",")}`
+  }
+  return "0.00"
+}
