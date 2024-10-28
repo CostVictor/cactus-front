@@ -128,15 +128,18 @@ $dist-icons: -13rem;
   .container_content {
     position: relative;
     padding: $padding;
+    padding-top: 1.5rem;
+
     max-width: 120rem;
     margin: auto;
 
-    &.no_space_top {
-      padding-top: 0;
+    &.limited_width {
+      padding: $padding;
+      max-width: $max-width;
     }
 
-    &.limited_width {
-      max-width: $max-width;
+    &.no_space_top {
+      padding-top: 0;
     }
   }
 

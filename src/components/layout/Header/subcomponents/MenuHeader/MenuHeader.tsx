@@ -6,7 +6,7 @@ import { averiaSansLibre } from "@/styles/fonts";
 import { PropsMenuHeader } from "./menuheader.types";
 
 import Container from "@/components/structural/Container";
-import NavLink from "@/components/layout/NavLink";
+import NavLink from "@/components/navigation/NavLink";
 import Button from "@/components/commom/Button";
 
 import style from "./menuheader.module.scss";

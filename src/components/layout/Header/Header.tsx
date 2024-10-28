@@ -10,7 +10,7 @@ import useModal from "@/hooks/context/useModal";
 import useAuth from "@/hooks/context/useAuth";
 
 import Button from "@/components/commom/Button";
-import NavLink from "../NavLink";
+import NavLink from "@/components/navigation/NavLink";
 
 import { yesevaOne } from "@/styles/fonts";
 import { PropsHeader } from "./header.types";

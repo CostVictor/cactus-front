@@ -20,9 +20,8 @@ const StorageAuth = create<PropsStorageAuth>((set) => ({
   },
   actions: {
     loginInState: (user) => {
-      const newState = { isAuthenticated: true, user: user };
-      secureLS?.set(storageName, newState);
-      set(() => ({ state: newState }));
+      secureLS?.set(storageName, user);
+      set(() => ({ state: { isAuthenticated: true, user: user } }));
     },
     logoutInState: () => {
       secureLS?.remove(storageName);

@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import SideIcon from "@/components/layout/SideIcon";
-import NavLink from "@/components/layout/NavLink";
+import NavLink from "@/components/navigation/NavLink";
 
 import FormLogin from "./subcomponents/FormLogin";
 import FormRegister from "./subcomponents/FormRegister";
