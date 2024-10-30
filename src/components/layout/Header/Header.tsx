@@ -1,7 +1,7 @@
 "use client";
 
 import { Icon } from "@iconify/react/dist/iconify.js";
-import { useState, useEffect, useRef, ReactNode, LegacyRef } from "react";
+import { useEffect, useRef, LegacyRef } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";

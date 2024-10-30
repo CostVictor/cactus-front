@@ -64,7 +64,7 @@
       left: 5%;
 
       &.indent {
-        left: 12%;
+        left: 3rem;
       }
     }
 
@@ -81,9 +81,6 @@
       &.password_mode {
         right: 2.9rem;
       }
-    }
-
-    @media (max-width: $media-mobile) {
     }
   }
 }

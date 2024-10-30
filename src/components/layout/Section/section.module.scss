@@ -12,7 +12,7 @@ $dist-icons: -13rem;
   }
 
   &.background_gray {
-    background-color: var(--gray-secondary);
+    background-color: var(--gray-tertiary);
   }
 
   .icon {
@@ -84,16 +84,16 @@ $dist-icons: -13rem;
     // largura mínima Desktop
     @media (max-width: $media-pc-min) {
       .illustration {
-        width: 30%;
+        width: 37%;
       }
 
       .container_text {
         .title {
-          font-size: 1.8rem;
+          font-size: 1.95rem;
         }
 
         .text {
-          font-size: 1.25rem;
+          font-size: 1.4rem;
         }
       }
     }
@@ -113,14 +113,7 @@ $dist-icons: -13rem;
 
       .container_text {
         padding: 0;
-
-        .title {
-          font-size: 1.9rem;
-        }
-
-        .text {
-          font-size: 1.35rem;
-        }
+        margin-bottom: 2rem;
       }
     }
   }
@@ -154,20 +147,28 @@ $dist-icons: -13rem;
     &.space_sidebar {
       margin: 0;
     }
+  }
 
-    .container_description {
-      .container_text {
-        .title {
-          font-size: 1.7rem;
+  @media (max-width: 500px) {
+    .container_content {
+      &.limited_width {
+        padding: 5rem 6rem;
+      }
 
-          &::before {
-            width: 12rem;
-          }
-        }
+      &.no_space_top {
+        padding-top: 0;
+      }
+    }
+  }
 
-        .text {
-          font-size: 1.2rem;
-        }
+  @media (max-width: 430px) {
+    .container_content {
+      &.limited_width {
+        padding: $padding;
+      }
+
+      &.no_space_top {
+        padding-top: 0;
       }
     }
   }
