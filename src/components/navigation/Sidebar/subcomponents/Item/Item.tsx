@@ -5,10 +5,16 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 
 import { fadeIn } from "@/styles/animations";
-import { PropsItemAside } from "./item.types";
-import style from "@/components/layout/Aside/aside.module.scss";
+import { PropsItemSidebar } from "./item.types";
+import style from "@/components/navigation/Sidebar/sidebar.module.scss";
 
-const ItemAside = ({ name, icon, url, isOpen, isActive }: PropsItemAside) => {
+const ItemSidebar = ({
+  name,
+  icon,
+  url,
+  isOpen,
+  isActive,
+}: PropsItemSidebar) => {
   return (
     <li className={`${style.item} ${isActive ? style.selected : ""}`.trim()}>
       <Link href={url} className={style.link}>
@@ -38,4 +44,4 @@ const ItemAside = ({ name, icon, url, isOpen, isActive }: PropsItemAside) => {
   );
 };
 
-export default ItemAside;
+export default ItemSidebar;

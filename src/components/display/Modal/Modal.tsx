@@ -2,9 +2,9 @@
 
 import { motion } from "framer-motion";
 
-import Button from "@/components/commom/Button";
+import Button from "@/components/forms/Button";
 
-import Container from "@/components/structural/Container";
+import Container from "@/components/layout/Container";
 
 import useModal from "@/hooks/context/useModal";
 

@@ -17,7 +17,7 @@ export interface PropsSection {
   sectionImage?: PropsSectionImage
   description?: PropsDescription
   backgroundGray?: boolean
-  reserveAsideSpace?: boolean
+  reserveSidebarSpace?: boolean
   maxWidthContent?: boolean
   children?: ReactNode
 }

@@ -5,10 +5,10 @@ interface PropsMenuItem {
   requiresAuth?: boolean
 }
 
-interface PropsAsideSession {
+interface PropsSidebarSession {
   items: PropsMenuItem[]
   requiresAuth?: boolean
   access?: "employee"
 }
 
-export type PropsListAsideItems = PropsAsideSession[]
+export type PropsListSidebarItems = PropsSidebarSession[]

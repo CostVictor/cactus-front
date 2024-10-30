@@ -1,4 +1,4 @@
-export interface PropsItemAside {
+export interface PropsItemSidebar {
   name: string;
   icon: string;
   url: string;

@@ -1,7 +1,7 @@
 import Link from "next/link";
 
-import Container from "@/components/structural/Container";
-import Button from "@/components/commom/Button";
+import Container from "@/components/layout/Container";
+import Button from "@/components/forms/Button";
 
 import { PropsNavStock } from "./navstock.types";
 import style from "./navstock.module.scss";

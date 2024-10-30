@@ -3,7 +3,7 @@
 import Image from "next/image";
 
 import Carousel from "./subcomponents/Carousel";
-import SideIcon from "@/components/layout/SideIcon";
+import SideIcon from "@/components/interface/SideIcon";
 
 import { PropsSection } from "./section.types";
 import style from "./section.module.scss";
@@ -15,14 +15,14 @@ const Section = ({
   sectionImage,
   backgroundGray,
   maxWidthContent,
-  reserveAsideSpace = true,
+  reserveSidebarSpace = true,
 }: PropsSection) => {
   return (
     <section
       id={id}
       className={`${style.container_main} ${
         backgroundGray ? style.background_gray : ""
-      } ${reserveAsideSpace ? style.space_aside : ""}`.trim()}
+      } ${reserveSidebarSpace ? style.space_sidebar : ""}`.trim()}
     >
       {sectionImage &&
         (sectionImage.viewImages ? (

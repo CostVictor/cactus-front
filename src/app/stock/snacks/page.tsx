@@ -3,8 +3,8 @@
 import { useEffect } from "react";
 
 import Header from "@/components/layout/Header";
-import Section from "@/components/structural/Section";
-import Aside from "@/components/layout/Aside";
+import Section from "@/components/layout/Section";
+import Sidebar from "@/components/navigation/Sidebar";
 import useRequest from "@/hooks/network/useRequest";
 import NavStock from "@/components/navigation/NavStock";
 
@@ -32,15 +32,12 @@ export default function StockSnacks() {
     <>
       <Header />
       <main>
-        <Section
-          id="stock_snacks"
-          maxWidthContent
-        >
+        <Section id="stock_snacks" maxWidthContent>
           <NavStock local="snacks" />
           <hr style={{ border: "1px solid var(--division)" }} />
         </Section>
       </main>
-      <Aside />
+      <Sidebar />
     </>
   );
 }

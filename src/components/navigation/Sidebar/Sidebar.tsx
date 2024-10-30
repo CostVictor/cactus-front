@@ -9,11 +9,11 @@ import { inter } from "@/styles/fonts";
 import { fadeIn } from "@/styles/animations";
 import useAuth from "@/hooks/context/useAuth";
 
-import { listAsideItems } from "./aside.variables";
-import ItemAside from "./subcomponents/Item";
-import style from "./aside.module.scss";
+import { listSidebarItems } from "./sidebar.variables";
+import ItemSidebar from "./subcomponents/Item";
+import style from "./sidebar.module.scss";
 
-const Aside = () => {
+const Sidebar = () => {
   const {
     state: { isAuthenticated, user },
   } = useAuth();
@@ -22,19 +22,19 @@ const Aside = () => {
   const pathCurrent = usePathname();
 
   useEffect(() => {
-    const stateAside = localStorage.getItem("stateAside");
-    setIsOpen(stateAside === "true");
+    const stateSidebar = localStorage.getItem("stateSidebar");
+    setIsOpen(stateSidebar === "true");
   }, []);
 
-  const toggleAside = () =>
+  const toggleSidebar = () =>
     setIsOpen((prevValue) => {
       const newValue = !prevValue;
-      localStorage.setItem("stateAside", String(newValue));
+      localStorage.setItem("stateSidebar", String(newValue));
       return newValue;
     });
 
   return (
-    <aside className={`${style.aside} ${isOpen ? style.open : ""}`.trim()}>
+    <nav className={`${style.sidebar} ${isOpen ? style.open : ""}`.trim()}>
       <div id="container-menu" className={style.menu}>
         {isOpen ? (
           <>
@@ -48,27 +48,27 @@ const Aside = () => {
             </motion.h2>
             <motion.div variants={fadeIn} initial="hidden" animate="visible">
               <Icon
-                id="aside-close-menu"
+                id="sidebar-close-menu"
                 icon="ci:close-sm"
                 className={style.icon_menu}
-                onClick={toggleAside}
+                onClick={toggleSidebar}
               />
             </motion.div>
           </>
         ) : (
           <motion.div variants={fadeIn} initial="hidden" animate="visible">
             <Icon
-              id="aside-open-menu"
+              id="sidebar-open-menu"
               icon="material-symbols:menu-rounded"
               className={style.icon_menu}
-              onClick={toggleAside}
+              onClick={toggleSidebar}
             />
           </motion.div>
         )}
       </div>
 
       <ul className={style.container_items}>
-        {listAsideItems.map(
+        {listSidebarItems.map(
           (session, index) =>
             (session.requiresAuth ? isAuthenticated : true) &&
             (session.access ? user?.role === session.access : true) && (
@@ -77,7 +77,7 @@ const Aside = () => {
                 {session.items.map(
                   (item) =>
                     (item.requiresAuth ? isAuthenticated : true) && (
-                      <ItemAside
+                      <ItemSidebar
                         key={item.url}
                         name={item.name}
                         icon={item.icon}
@@ -95,8 +95,8 @@ const Aside = () => {
             )
         )}
       </ul>
-    </aside>
+    </nav>
   );
 };
 
-export default Aside;
+export default Sidebar;

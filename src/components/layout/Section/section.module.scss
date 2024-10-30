@@ -7,8 +7,8 @@ $dist-icons: -13rem;
 .container_main {
   min-height: 100vh;
 
-  &.space_aside {
-    margin-left: $size-aside;
+  &.space_sidebar {
+    margin-left: $size-sidebar;
   }
 
   &.background_gray {
@@ -151,7 +151,7 @@ $dist-icons: -13rem;
 
   // Largura Mobile
   @media (max-width: $media-mobile) {
-    &.space_aside {
+    &.space_sidebar {
       margin: 0;
     }
 

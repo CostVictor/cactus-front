@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { PropsButton } from "@/components/commom/Button";
+import { PropsButton } from "@/components/forms/Button";
 
 type ButtonModal = Omit<PropsButton, "link"> & {
   appearance?: "normal" | "main";

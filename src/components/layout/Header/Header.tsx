@@ -1,7 +1,7 @@
 "use client";
 
 import { Icon } from "@iconify/react/dist/iconify.js";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, ReactNode, LegacyRef } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
@@ -9,7 +9,7 @@ import Link from "next/link";
 import useModal from "@/hooks/context/useModal";
 import useAuth from "@/hooks/context/useAuth";
 
-import Button from "@/components/commom/Button";
+import Button from "@/components/forms/Button";
 import NavLink from "@/components/navigation/NavLink";
 
 import { yesevaOne } from "@/styles/fonts";
@@ -18,7 +18,8 @@ import MenuHeader from "./subcomponents/MenuHeader";
 import style from "./header.module.scss";
 
 const Header = ({ targets }: PropsHeader) => {
-  const [withShadow, setWithShadow] = useState<boolean>(false);
+  const headerRef: LegacyRef<HTMLElement> | null = useRef(null);
+
   const {
     state: { isAuthenticated },
   } = useAuth();
@@ -29,20 +30,17 @@ const Header = ({ targets }: PropsHeader) => {
 
   useEffect(() => {
     /**
-     * Define a posição do header de acordo com a posição do scroll.
+     * Define a posição do header como sticky caso o scroll da página seja maior que 0.
      */
-    const handleWithShadow = () => setWithShadow(window.scrollY > 0);
+    const handlePosHeader = () =>
+      headerRef.current?.classList.toggle(style.pos_sticky, window.scrollY > 0);
 
-    window.addEventListener("scroll", handleWithShadow);
-    return () => window.removeEventListener("scroll", handleWithShadow);
+    window.addEventListener("scroll", handlePosHeader);
+    return () => window.removeEventListener("scroll", handlePosHeader);
   }, []);
 
   return (
-    <header
-      className={`${style.container_main} ${
-        withShadow ? style.shadow : ""
-      }`.trim()}
-    >
+    <header ref={headerRef} className={style.container_main}>
       <div className={style.container_logo}>
         <Image src="/icone.png" alt="Icone do cactus." width={20} height={30} />
         <h1 className={`${yesevaOne.className} ${style.title}`}>CACTUS</h1>

@@ -1,7 +1,7 @@
-import { PropsListAsideItems } from "./aside.types";
+import { PropsListSidebarItems } from "./sidebar.types";
 
 /**
- * Representa os itens e sessões do menu lateral do aside.
+ * Representa os itens e sessões do menu lateral do sidebar.
  * 
  * @typedef {Object} PropsMenuItem
  * @property {string} name - O nome exibido para o item no menu.
@@ -11,20 +11,20 @@ import { PropsListAsideItems } from "./aside.types";
  * 
  * Representa uma seção do menu lateral.
  * 
- * @typedef {Object} PropsAsideSession
+ * @typedef {Object} PropsSidebarSession
  * @property {PropsMenuItem[]} items - A lista de itens que pertencem a esta seção.
  * @property {boolean} [requiresAuth] - (Opcional) Indica se toda a seção requer autenticação.
  * @property {"employee"} [access] - (Opcional) Define o tipo de usuário que tem acesso à seção. Exemplo: "employee".
  * 
- * @type {PropsListAsideItems} listAsideItems
+ * @type {PropsListSidebarItems} listSidebarItems
  * 
  * @description
- * - `listAsideItems` é um array que contém as seções do menu lateral.
+ * - `listSidebarItems` é um array que contém as seções do menu lateral.
  * - Cada seção é representada por um objeto que possui uma lista de `items` (itens do menu), que seguem a estrutura definida por `PropsMenuItem`.
- * - A propriedade `requiresAuth`, quando presente, indica que o item ou a seção requer autenticação para estar visivel no menu lateral do aside.
+ * - A propriedade `requiresAuth`, quando presente, indica que o item ou a seção requer autenticação para estar visivel no menu lateral do sidebar.
  * - A propriedade `access` define o tipo de usuário que pode acessar essa seção, caso aplicável.
  */
-export const listAsideItems: PropsListAsideItems = [
+export const listSidebarItems: PropsListSidebarItems = [
   {
     items: [
       { name: "Perfil", icon: "lucide:user-round", url: "/profile" },

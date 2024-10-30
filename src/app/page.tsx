@@ -2,11 +2,11 @@
 
 import { useEffect } from "react";
 
-import Aside from "@/components/layout/Aside";
+import Sidebar from "@/components/navigation/Sidebar";
 import Header from "@/components/layout/Header";
 
-import Section from "@/components/structural/Section";
-import Container from "@/components/structural/Container";
+import Section from "@/components/layout/Section";
+import Container from "@/components/layout/Container";
 
 import CardInfo from "@/components/display/CardInfo";
 import Modal from "@/components/display/Modal";
@@ -134,7 +134,7 @@ export default function Home() {
             </Section>
           ))}
       </main>
-      <Aside />
+      <Sidebar />
     </>
   );
 }
