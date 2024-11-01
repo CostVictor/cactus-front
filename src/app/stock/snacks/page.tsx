@@ -7,6 +7,7 @@ import Section from "@/components/layout/Section";
 import Sidebar from "@/components/navigation/Sidebar";
 import useRequest from "@/hooks/network/useRequest";
 import NavStock from "@/components/navigation/NavStock";
+import Folder from "@/components/interface/Folder";
 
 export default function StockSnacks() {
   const {
@@ -35,6 +36,9 @@ export default function StockSnacks() {
         <Section id="stock_snacks" maxWidthContent>
           <NavStock local="snacks" />
           <hr style={{ border: "1px solid var(--division)" }} />
+          <div style={{ margin: "1rem 0" }}>
+            <Folder name="Nome da Pasta" message="Alguma mensagem." />
+          </div>
         </Section>
       </main>
       <Sidebar />
