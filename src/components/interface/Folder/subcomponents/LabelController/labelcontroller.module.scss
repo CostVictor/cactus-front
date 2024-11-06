@@ -1,0 +1,43 @@
+.container_main {
+  display: flex;
+  align-items: center;
+
+  padding: 0 0.8rem;
+  gap: 1.5rem;
+
+  border-left: 1px solid var(--division-intense);
+
+  .container_label {
+    display: flex;
+    gap: 0.3rem;
+
+    .icon {
+      font-size: 1.5rem;
+
+      &.alert {
+        color: var(--red-secondary);
+      }
+
+      &.pending {
+        color: var(--blue-primary);
+      }
+
+      &.success {
+        color: var(--green-primary);
+      }
+    }
+
+    .label {
+      font-size: 1.3rem;
+      color: var(--black-primary);
+
+      &.success {
+        color: var(--green-primary);
+      }
+
+      &.pending {
+        color: var(--blue-primary);
+      }
+    }
+  }
+}

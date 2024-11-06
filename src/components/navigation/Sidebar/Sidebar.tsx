@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import { useEffect, useState, Fragment } from "react";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
 import { Icon } from "@iconify/react";
@@ -72,7 +72,7 @@ const Sidebar = () => {
           (session, index) =>
             (session.requiresAuth ? isAuthenticated : true) &&
             (session.access ? user?.role === session.access : true) && (
-              <React.Fragment key={index}>
+              <Fragment key={index}>
                 {index ? <hr className={style.division}></hr> : null}
                 {session.items.map(
                   (item) =>
@@ -91,7 +91,7 @@ const Sidebar = () => {
                       />
                     )
                 )}
-              </React.Fragment>
+              </Fragment>
             )
         )}
       </ul>

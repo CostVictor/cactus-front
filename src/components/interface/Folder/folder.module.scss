@@ -2,9 +2,20 @@
   background-color: var(--bg-secondary);
   border-radius: 20px;
 
+  &.internal {
+    background-color: var(--bg-aba);
+  }
+
+  &.open {
+    box-shadow: var(--shadow-default);
+  }
+
   .header {
     display: flex;
+    align-items: center;
+
     padding: 1rem 1.3rem;
+    gap: 1rem;
 
     transition: border 0.2s ease-in-out;
     border-bottom: 1px solid transparent;
@@ -18,18 +29,6 @@
       background-clip: text;
       color: transparent;
       font-size: 1.8rem;
-    }
-
-    .container_options {
-      display: flex;
-      align-items: center;
-      margin-left: auto;
-
-      .icon {
-        font-size: 2rem;
-        border-radius: 20px;
-        color: var(--gray-primary);
-      }
     }
   }
 
@@ -48,7 +47,13 @@
     }
 
     .content {
-      padding: 0.7rem 1.3rem 1rem 1.3rem;
+      display: flex;
+      flex-direction: column;
+      overflow: auto;
+
+      margin: 1.3rem 0 1.5rem 0;
+      padding: 0 3rem;
+      gap: 1rem;
     }
   }
 }

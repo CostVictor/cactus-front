@@ -10,6 +10,7 @@ import { GridContainer } from "./container.styleds";
 const Container = ({
   children,
   className,
+  style,
   animateChildren,
   grid,
 }: PropsContainer) => {
@@ -34,12 +35,15 @@ const Container = ({
   return grid ? (
     <GridContainer
       className={className}
+      style={style}
       $columns={typeof grid === "boolean" ? 4 : grid}
     >
       {childs}
     </GridContainer>
   ) : (
-    <div className={className}>{childs}</div>
+    <div className={className} style={style}>
+      {childs}
+    </div>
   );
 };
 

@@ -37,7 +37,22 @@ export default function StockSnacks() {
           <NavStock local="snacks" />
           <hr style={{ border: "1px solid var(--division)" }} />
           <div style={{ margin: "1rem 0" }}>
-            <Folder name="Nome da Pasta" message="Alguma mensagem." />
+            <Folder
+              name="Alguém"
+              notification={{
+                labels: [
+                  { text: "Devendo - R$ 35,00" },
+                  { text: "Pago", type: "success" },
+                ],
+              }}
+            >
+              <p>Conteúdo</p>
+              <Folder name="Pasta Interna" internal>
+                <p>Conteúdo</p>
+                <p>Conteúdo</p>
+              </Folder>
+              <p>Conteúdo</p>
+            </Folder>
           </div>
         </Section>
       </main>

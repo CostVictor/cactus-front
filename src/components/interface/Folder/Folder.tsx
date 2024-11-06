@@ -1,8 +1,9 @@
 import { motion, AnimatePresence, useAnimation } from "framer-motion";
 import { useRef, useState } from "react";
-import { Icon } from "@iconify/react";
 
 import Container from "@/components/layout/Container";
+import LabelController from "./subcomponents/LabelController";
+import OptionsController from "./subcomponents/OptionsController";
 
 import { folderAnimate, childFolderAnimate } from "./folder.variables";
 import { PropsFolder } from "./folder.types";
@@ -10,12 +11,17 @@ import style from "./folder.module.scss";
 
 const Folder = ({
   name,
-  message,
-  isMinimized = true,
-  canMinimize = true,
+  children,
+  notification,
+  open,
+  internal,
+  folderConfig = {
+    canMinimize: true,
+    expandUntil: "20rem",
+  },
 }: PropsFolder) => {
-  const [minimized, setMinimized] = useState<boolean>(
-    canMinimize ? isMinimized : false
+  const [isOpen, setIsOpen] = useState<boolean>(
+    folderConfig.canMinimize ? open ?? false : true
   );
 
   const controlAnimateContent = useAnimation();
@@ -24,40 +30,34 @@ const Folder = ({
   /**
    * Abre ou fecha a pasta dependendo de seu estado.
    */
-  const toggleMinimizeFolder = () => {
+  const toggleOpenFolder = () => {
     if (!animating.current) {
       // Bloqueia temporariamente a capacidade de fechar/abrir.
       animating.current = true;
-      setMinimized((prevValue) => !prevValue);
+      setIsOpen((prevValue) => !prevValue);
     }
   };
 
   return (
-    <section className={style.container_main}>
+    <article
+      className={`${style.container_main} ${
+        internal ? style.internal : isOpen ? style.open : ""
+      }`.trim()}
+    >
       <div
-        className={`${style.header} ${
-          !minimized && style.division_visible
-        }`.trim()}
+        className={`${style.header} ${isOpen && style.division_visible}`.trim()}
       >
         <h2>{name}</h2>
-
-        <div className={style.container_options}>
-          {canMinimize && (
-            <Icon
-              className={style.icon}
-              onClick={toggleMinimizeFolder}
-              icon={
-                minimized
-                  ? "material-symbols:arrow-right-rounded"
-                  : "material-symbols:arrow-drop-down-rounded"
-              }
-            />
-          )}
-        </div>
+        <LabelController labels={notification?.labels ?? []} />
+        <OptionsController
+          toggleOpenFolder={toggleOpenFolder}
+          isOpen={isOpen}
+          config={folderConfig}
+        />
       </div>
 
       <AnimatePresence>
-        {!minimized && (
+        {isOpen && (
           <motion.div
             className={style.body}
             variants={folderAnimate}
@@ -76,17 +76,20 @@ const Folder = ({
               animate={controlAnimateContent}
               style={{ width: "100%" }}
             >
-              {message && <p className={style.span_message}>{message}</p>}
-              <Container className={style.content}>
-                <p>Conteúdo</p>
-                <p>Conteúdo</p>
-                <p>Conteúdo</p>
+              {notification?.message && (
+                <p className={style.span_message}>{notification.message}</p>
+              )}
+              <Container
+                className={style.content}
+                style={{ maxHeight: folderConfig.expandUntil }}
+              >
+                {children}
               </Container>
             </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
-    </section>
+    </article>
   );
 };
 
