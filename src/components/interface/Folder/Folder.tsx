@@ -1,25 +1,34 @@
 import { motion, AnimatePresence, useAnimation } from "framer-motion";
 import { useRef, useState } from "react";
+import { Icon } from "@iconify/react";
+import Image from "next/image";
 
 import Container from "@/components/layout/Container";
 import LabelController from "./subcomponents/LabelController";
 import OptionsController from "./subcomponents/OptionsController";
 
 import { folderAnimate, childFolderAnimate } from "./folder.variables";
+import { getStyleBackgroundColor } from "./folder.utils";
 import { PropsFolder } from "./folder.types";
 import style from "./folder.module.scss";
 
 const Folder = ({
   name,
   children,
-  notification,
   open,
   internal,
+  notification,
+  folderConfig,
+}: PropsFolder) => {
+  // Configuração padrão da pasta.
   folderConfig = {
+    canEdit: true,
     canMinimize: true,
     expandUntil: "20rem",
-  },
-}: PropsFolder) => {
+    ...folderConfig,
+  };
+  const folderMarker = folderConfig.marker;
+
   const [isOpen, setIsOpen] = useState<boolean>(
     folderConfig.canMinimize ? open ?? false : true
   );
@@ -40,14 +49,29 @@ const Folder = ({
 
   return (
     <article
+      style={getStyleBackgroundColor(internal)}
       className={`${style.container_main} ${
-        internal ? style.internal : isOpen ? style.open : ""
+        isOpen && !internal && style.open
       }`.trim()}
     >
       <div
         className={`${style.header} ${isOpen && style.division_visible}`.trim()}
       >
+        {folderMarker ? (
+          folderMarker.type === "icon" ? (
+            <Icon className={style.icon} icon={folderMarker.appearance} />
+          ) : (
+            <Image
+              alt={`Imagem da pasta ${name}.`}
+              src={folderMarker.appearance}
+              className={style.img}
+              width={35}
+              height={35}
+            />
+          )
+        ) : undefined}
         <h2>{name}</h2>
+
         <LabelController labels={notification?.labels ?? []} />
         <OptionsController
           toggleOpenFolder={toggleOpenFolder}

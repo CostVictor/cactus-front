@@ -1,11 +1,43 @@
-.container {
+.container_main {
   display: flex;
   align-items: center;
   margin-left: auto;
+  position: relative;
+  gap: 0.5rem;
+
+  .container_menu {
+    display: flex;
+    position: absolute;
+    right: -7px;
+    gap: 0.6rem;
+
+    background-color: var(--gray-secondary);
+    border-radius: 15px;
+    padding: 0.5rem;
+
+    .options {
+      display: flex;
+      gap: 0.6rem;
+
+      padding-right: 0.7rem;
+      border-right: 1px solid var(--gray-primary);
+    }
+  }
 
   .icon {
-    font-size: 2rem;
+    display: flex;
+    align-items: center;
+    user-select: none;
+
+    font-size: 1.8rem;
     border-radius: 20px;
     color: var(--gray-primary);
+    cursor: pointer;
+
+    &.type_option {
+      border-radius: 0;
+      padding: 0 0.4rem;
+      border-right: 1px solid var(--division-intense);
+    }
   }
 }

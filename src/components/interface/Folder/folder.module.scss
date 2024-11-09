@@ -1,21 +1,11 @@
 .container_main {
-  background-color: var(--bg-secondary);
   border-radius: 20px;
-
-  &.internal {
-    background-color: var(--bg-aba);
-  }
-
-  &.open {
-    box-shadow: var(--shadow-default);
-  }
+  box-shadow: var(--shadow-secondary);
 
   .header {
     display: flex;
     align-items: center;
-
-    padding: 1rem 1.3rem;
-    gap: 1rem;
+    padding: 0.9rem 1.3rem;
 
     transition: border 0.2s ease-in-out;
     border-bottom: 1px solid transparent;
@@ -28,7 +18,19 @@
       background: var(--red-gradient);
       background-clip: text;
       color: transparent;
+      overflow: hidden;
+      text-wrap: balance;
       font-size: 1.8rem;
+    }
+
+    .icon {
+      font-size: 2rem;
+      color: var(--red-primary);
+    }
+
+    .img {
+      border-radius: 50px;
+      object-fit: cover;
     }
   }
 

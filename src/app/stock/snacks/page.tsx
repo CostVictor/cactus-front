@@ -1,13 +1,14 @@
 "use client";
 
 import { useEffect } from "react";
-
 import Header from "@/components/layout/Header";
 import Section from "@/components/layout/Section";
 import Sidebar from "@/components/navigation/Sidebar";
 import useRequest from "@/hooks/network/useRequest";
 import NavStock from "@/components/navigation/NavStock";
 import Folder from "@/components/interface/Folder";
+
+import style from "./snacks.module.scss";
 
 export default function StockSnacks() {
   const {
@@ -16,18 +17,13 @@ export default function StockSnacks() {
   } = useRequest();
 
   useEffect(() => {
-    // fethData({
-    //   url: "snacks/",
-    //   method: "GET",
-    // });
+    fethData({
+      url: "snacks/",
+      method: "GET",
+    });
   }, [fethData]);
 
-  const categoryNames: string[] = [];
-  if (Array.isArray(data)) {
-    data.forEach((category) => {
-      categoryNames.push(category.name);
-    });
-  }
+  // // "mingcute:storage-fill"
 
   return (
     <>
@@ -35,24 +31,14 @@ export default function StockSnacks() {
       <main>
         <Section id="stock_snacks" maxWidthContent>
           <NavStock local="snacks" />
-          <hr style={{ border: "1px solid var(--division)" }} />
-          <div style={{ margin: "1rem 0" }}>
-            <Folder
-              name="Alguém"
-              notification={{
-                labels: [
-                  { text: "Devendo - R$ 35,00" },
-                  { text: "Pago", type: "success" },
-                ],
-              }}
-            >
-              <p>Conteúdo</p>
-              <Folder name="Pasta Interna" internal>
-                <p>Conteúdo</p>
-                <p>Conteúdo</p>
-              </Folder>
-              <p>Conteúdo</p>
-            </Folder>
+          <hr className="division" />
+          <div className={style.container_reorder}>
+            {Array.isArray(data) &&
+              data.map((category, index) => (
+                <Folder key={index} name={category.name}>
+                  <p>Teste</p>
+                </Folder>
+              ))}
           </div>
         </Section>
       </main>

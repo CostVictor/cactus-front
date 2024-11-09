@@ -1,8 +1,14 @@
-import { ReactNode } from "react"
+import { ReactNode, MouseEventHandler } from "react"
 
 export interface PropsLabelFolder {
   text: string
   type?: "normal" | "alert" | "success" | "pending"
+}
+
+interface PropsExtraOptionsFolder {
+  icon: string
+  color: "red" | "green" | "normal"
+  onClick?: MouseEventHandler<SVGSVGElement>
 }
 
 interface PropsNotificationFolder {
@@ -10,16 +16,23 @@ interface PropsNotificationFolder {
   labels?: PropsLabelFolder[]
 }
 
+
 export interface PropsFolderConfig {
-  canMinimize?: boolean,
+  canEdit?: boolean
+  canMinimize?: boolean
   expandUntil?: string
+  addExtraOptions?: PropsExtraOptionsFolder[]
+  marker?: {
+    appearance: string
+    type: "icon" | "image"
+  }
 }
 
 export interface PropsFolder {
   name: string
   children: ReactNode
   open?: boolean
-  internal?: boolean
+  internal?: boolean | number
   notification?: PropsNotificationFolder
   folderConfig?: PropsFolderConfig
 }
