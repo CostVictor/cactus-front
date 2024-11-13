@@ -9,22 +9,15 @@ import Section from "@/components/layout/Section";
 import Container from "@/components/layout/Container";
 
 import CardInfo from "@/components/display/CardInfo";
-import Modal from "@/components/display/Modal";
-
-import useModal from "@/hooks/context/useModal";
 import useRequest from "@/hooks/network/useRequest";
 
 import { formatMoney } from "@/utils/formatters";
 
 export default function Home() {
   const {
-    actions: { addNewModal },
-  } = useModal();
-
-  const {
     info: { data },
     actions: { fethData },
-  } = useRequest();
+  } = useRequest(true);
 
   useEffect(() => {
     fethData({
@@ -56,49 +49,7 @@ export default function Home() {
             illustrationUrl: "/image-Chef.svg",
             illustrationDirection: "left",
           }}
-        >
-          <Container grid>
-            <CardInfo
-              title="Card 1"
-              text="Clique em mim!"
-              imgUrl="/imgSection/img1.svg"
-              onClick={() => {
-                addNewModal(
-                  <Modal
-                    title="Card 1"
-                    message="Conteúdo descritivo do Card 1"
-                  />
-                );
-              }}
-            />
-            <CardInfo
-              title="Card 2"
-              text="Clique em mim!"
-              imgUrl="/imgSection/img1.svg"
-              onClick={() => {
-                addNewModal(
-                  <Modal
-                    title="Card 2"
-                    message="Conteúdo descritivo do Card 2"
-                  />
-                );
-              }}
-            />
-            <CardInfo
-              title="Card 3"
-              text="Clique em mim!"
-              imgUrl="/imgSection/img1.svg"
-              onClick={() => {
-                addNewModal(
-                  <Modal
-                    title="Card 3"
-                    message="Conteúdo descritivo do Card 3"
-                  />
-                );
-              }}
-            />
-          </Container>
-        </Section>
+        />
 
         {Array.isArray(data) &&
           data.length > 0 &&

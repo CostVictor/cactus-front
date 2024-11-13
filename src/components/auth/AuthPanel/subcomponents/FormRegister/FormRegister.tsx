@@ -12,7 +12,7 @@ const FormRegister = () => {
   const {
     info: { isLoading },
     actions: { fethData },
-  } = useRequest("Erro de Cadastro");
+  } = useRequest(true);
 
   const {
     actions: { addNewModal, removeModal },

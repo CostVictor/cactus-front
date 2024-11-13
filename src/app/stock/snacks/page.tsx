@@ -14,7 +14,7 @@ export default function StockSnacks() {
   const {
     info: { data },
     actions: { fethData },
-  } = useRequest();
+  } = useRequest(true);
 
   useEffect(() => {
     fethData({

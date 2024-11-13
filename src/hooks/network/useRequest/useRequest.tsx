@@ -1,19 +1,32 @@
-import { AxiosResponse } from "axios";
-import { useCallback, useState } from "react";
-
+import { AxiosResponse, AxiosError } from "axios";
+import { useCallback, useState, useRef, useEffect } from "react";
 import { PropsErrorResponse, PropsFethDataFunction } from "./userequest.types";
-import cactusAPI from "@/services/axios/cactus-api";
-import useModal from "@/hooks/context/useModal";
-import Modal from "@/components/display/Modal";
-import Cookies from "js-cookie";
 
-const useRequest = (defaultTitleError = "Erro", axionInstance = cactusAPI) => {
-  const [data, setData] = useState<AxiosResponse | null>(null);
+import Modal from "@/components/display/Modal";
+import useModal from "@/hooks/context/useModal";
+import cactusAPI from "@/services/axios/cactus-api";
+
+const useRequest = (
+  forceUpdate = false,
+  defaultTitleError = "Erro",
+  axionInstance = cactusAPI
+) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const dataRef = useRef<AxiosResponse | null>(null);
+  const abortControllerRef = useRef<AbortController | null>(null);
 
   const {
     actions: { addNewModal },
   } = useModal();
+
+  useEffect(() => {
+    return () => {
+      // Aborta a requisição caso alguma esteja em andamento quando o componente for destruido.
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort();
+      }
+    };
+  }, []);
 
   /**
    * Função assíncrona para buscar dados de uma API.
@@ -32,11 +45,23 @@ const useRequest = (defaultTitleError = "Erro", axionInstance = cactusAPI) => {
     async (
       { url, method, content, config }: PropsFethDataFunction,
       onSuccess?: (res: AxiosResponse) => void,
-      onError?: (err: any) => void
+      onError?: (err: AxiosError) => void
     ): Promise<void> => {
-      setIsLoading(true);
+      // Cancela a requisição anterior, se houver.
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort();
+      }
+
+      // Cria um novo AbortController para a nova requisição.
+      abortControllerRef.current = new AbortController();
+      const { signal } = abortControllerRef.current;
+
+      // Força atualização quando envia a requisição.
+      if (forceUpdate) {
+        setIsLoading(true);
+      }
+
       try {
-        const csrftoken = Cookies.get("csrftoken");
         const res = await axionInstance.request({
           url,
           method,
@@ -44,25 +69,28 @@ const useRequest = (defaultTitleError = "Erro", axionInstance = cactusAPI) => {
           ...config,
           headers: {
             ...config?.headers,
-            "X-CSRFToken": csrftoken,
           },
+          signal,
         });
-        setData(res.data);
+        dataRef.current = res;
 
         if (onSuccess) {
           onSuccess(res);
         }
       } catch (err: any) {
+        if (err.name === "CanceledError") return;
+
         if (!onError) {
+          // Extrai a mensagem de erro caso o usuário passe `onError`.
           let errorMessage: string | string[] = "A API não está respondendo.";
 
-          if (err.status !== 500) {
+          if (err.response) {
             const errorResponse: PropsErrorResponse = err.response?.data;
             if (errorResponse && typeof errorResponse !== "string") {
-              // Obtem o(s) erro(s) da requição.
+              // Obtem os erros da requisição.
               errorMessage = Object.values(errorResponse).flat();
             }
-          } else {
+          } else if (err.status === 500) {
             errorMessage = "Ocorreu um erro interno na API.";
           }
 
@@ -73,13 +101,24 @@ const useRequest = (defaultTitleError = "Erro", axionInstance = cactusAPI) => {
           onError(err);
         }
       } finally {
-        setIsLoading(false);
+        abortControllerRef.current = null;
+
+        // Força atualização quando a requisição finaliza.
+        if (forceUpdate) {
+          setIsLoading(false);
+        }
       }
     },
-    [addNewModal, axionInstance, defaultTitleError]
+    [forceUpdate, defaultTitleError, axionInstance, addNewModal]
   );
 
-  return { info: { data, isLoading }, actions: { fethData } };
+  return {
+    info: {
+      data: dataRef.current?.data,
+      isLoading,
+    },
+    actions: { fethData },
+  };
 };
 
 export default useRequest;

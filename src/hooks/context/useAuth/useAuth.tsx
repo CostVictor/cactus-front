@@ -34,7 +34,7 @@ const useAuth = () => {
   const {
     info: { isLoading },
     actions: { fethData },
-  } = useRequest();
+  } = useRequest(true);
 
   const {
     state,
