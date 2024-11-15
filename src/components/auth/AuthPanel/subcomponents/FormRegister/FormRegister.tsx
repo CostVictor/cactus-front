@@ -12,7 +12,7 @@ const FormRegister = () => {
   const {
     info: { isLoading },
     actions: { fethData },
-  } = useRequest(true);
+  } = useRequest();
 
   const {
     actions: { addNewModal, removeModal },

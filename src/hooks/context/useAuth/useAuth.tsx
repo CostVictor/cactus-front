@@ -1,18 +1,16 @@
-"use client";
-
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useCallback, useState, useRef } from "react";
+import { useRouter, usePathname } from "next/navigation";
+import { AxiosResponse, AxiosError } from "axios";
 import { create } from "zustand";
 import SecureLS from "secure-ls";
 
 import { storageName } from "./useauth.variables";
 import { PropsStorageAuth } from "./useauth.types";
+import { PropsFethDataFunction } from "@/hooks/network/useRequest/userequest.types";
 import useRequest from "@/hooks/network/useRequest";
 
-// LocalStorage seguro.
 let secureLS: SecureLS;
 
-// Contexto de autenticação da aplicação.
 const StorageAuth = create<PropsStorageAuth>((set) => ({
   state: {
     isAuthenticated: false,
@@ -21,7 +19,7 @@ const StorageAuth = create<PropsStorageAuth>((set) => ({
   actions: {
     loginInState: (user) => {
       secureLS?.set(storageName, user);
-      set(() => ({ state: { isAuthenticated: true, user: user } }));
+      set(() => ({ state: { isAuthenticated: true, user } }));
     },
     logoutInState: () => {
       secureLS?.remove(storageName);
@@ -30,39 +28,23 @@ const StorageAuth = create<PropsStorageAuth>((set) => ({
   },
 }));
 
-const useAuth = () => {
+const useAuth = (requireBe?: "client" | "employee") => {
+  const [isLoading, setIsLoading] = useState(!!requireBe);
+  const dataRef = useRef<AxiosResponse | null>(null);
+
   const {
-    info: { isLoading },
     actions: { fethData },
-  } = useRequest(true);
+  } = useRequest({ forceUpdate: false });
 
   const {
     state,
     actions: { loginInState, logoutInState },
   } = StorageAuth();
+
   const router = useRouter();
+  const pathname = usePathname();
 
-  useEffect(() => {
-    // Inicia o secureLS caso seja `undefined`.
-    secureLS = secureLS ?? new SecureLS({ encodingType: "aes" });
-    const authUser = secureLS.get(storageName);
-    if (authUser) {
-      loginInState(authUser);
-    }
-  }, [loginInState]);
-
-  /**
-   * Faz login do usuário e redireciona para a URL especificada após o login bem-sucedido.
-   * @param {string} email - O email do usuário.
-   * @param {string} password - A senha do usuário.
-   * @param {string} redirectTo - A URL para redirecionar após o login bem-sucedido.
-   * @returns {Promise<void>}
-   */
-  const login = (
-    email: string,
-    password: string,
-    redirectTo: string
-  ): Promise<void> =>
+  const login = (email: string, password: string, redirectTo: string): void => {
     fethData(
       {
         url: "/session/login/",
@@ -74,12 +56,9 @@ const useAuth = () => {
         router.push(redirectTo);
       }
     );
+  };
 
-  /**
-   * Faz logout do usuário e redireciona para a página inicial após o logout bem-sucedido.
-   * @returns {Promise<void>}
-   */
-  const logoutAPI = (): Promise<void> =>
+  const logout = () => {
     fethData(
       {
         url: "/session/logout/",
@@ -90,36 +69,83 @@ const useAuth = () => {
         router.push("/");
       }
     );
+  };
 
-  /**
-   * Remove o estado de autenticação do usuário armazenado com secureLS no LocalStorage.
-   * @returns {void}
-   */
-  const logoutLocal = (): void => logoutInState();
+  const safeFeth = useCallback(
+    async (
+      request: PropsFethDataFunction,
+      onSuccess?: (res: AxiosResponse) => void,
+      onError?: (err: AxiosError) => void
+    ): Promise<void> => {
+      setIsLoading(true);
 
-  /**
-   * Atualiza o token de sessão do usuário. Se a atualização falhar com erro 401, redireciona para a página de login.
-   * @param {string} [redirectTo] - URL opcional para redirecionar após o login se a atualização do token falhar.
-   * @returns {Promise<void>}
-   */
-  const refreshToken = (redirectTo?: string): Promise<void> =>
-    fethData(
-      {
-        url: "/session/refresh_token/",
-        method: "POST",
-      },
-      undefined,
-      (err) => {
-        if (err.status === 401) {
-          router.push(`/login?rediretTo=${redirectTo}`);
+      const saveData = (res: AxiosResponse) => {
+        if (!request.url.includes("check_auth")) {
+          dataRef.current = res.data;
         }
-      }
-    );
+      };
+
+      fethData(
+        request,
+        (res) => {
+          saveData(res);
+          setIsLoading(false);
+          onSuccess?.(res);
+        },
+        (err) => {
+          if (err.status === 401) {
+            fethData(
+              { url: "session/refresh_token/", method: "POST" },
+              () =>
+                fethData(
+                  request,
+                  (res) => {
+                    saveData(res);
+                    onSuccess?.(res);
+                  },
+                  onError,
+                  () => setIsLoading(false)
+                ),
+              (err) => {
+                if (err.status === 401) {
+                  router.push(`/login?redirectTo=${pathname}`);
+                } else {
+                  logoutInState();
+                }
+                setIsLoading(false);
+              }
+            );
+          } else {
+            logoutInState();
+            setIsLoading(false);
+          }
+        }
+      );
+    },
+    [fethData, router, pathname, logoutInState]
+  );
+
+  useEffect(() => {
+    secureLS = secureLS ?? new SecureLS({ encodingType: "aes" });
+    if (requireBe) {
+      safeFeth(
+        {
+          url: "session/check_auth/",
+          method: "POST",
+          content: { restriction: requireBe },
+        },
+        (res) => loginInState(res.data)
+      );
+    } else {
+      const authUser = secureLS.get(storageName);
+      if (authUser) loginInState(authUser);
+    }
+  }, [requireBe, safeFeth, loginInState, logoutInState]);
 
   return {
     state,
-    network: { isLoading },
-    actions: { login, logoutAPI, logoutLocal, refreshToken },
+    network: { isLoading, data: dataRef.current },
+    actions: { login, logout, safeFeth },
   };
 };
 

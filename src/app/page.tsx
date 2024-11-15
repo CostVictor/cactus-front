@@ -17,7 +17,7 @@ export default function Home() {
   const {
     info: { data },
     actions: { fethData },
-  } = useRequest(true);
+  } = useRequest({ initLoading: true });
 
   useEffect(() => {
     fethData({

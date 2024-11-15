@@ -1,5 +1,11 @@
 import { AxiosRequestConfig } from "axios";
 
+export interface PropsCustomRequest {
+  forceUpdate?: boolean
+  initLoading?: boolean
+  titleError?: string
+}
+
 export type PropsErrorResponse = { [key: string]: string[] } | undefined
 
 export interface PropsFethDataFunction {
