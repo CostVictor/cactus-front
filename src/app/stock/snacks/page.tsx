@@ -16,14 +16,16 @@ export default function StockSnacks() {
     state: { isAuthenticated },
     network: { data, isLoading },
     actions: { safeFeth },
-  } = useAuth("employee");
+  } = useAuth("employee", () => safeFeth({ url: "snacks/", method: "GET" }));
 
   // "mingcute:storage-fill"
+
+  console.log('ko')
 
   return !isLoading ? (
     isAuthenticated ? (
       <>
-        {/* <Header /> */}
+        <Header />
         <main>
           <Section id="stock_snacks" maxWidthContent>
             <NavStock local="snacks" />
@@ -38,7 +40,7 @@ export default function StockSnacks() {
             </div>
           </Section>
         </main>
-        {/* <Sidebar /> */}
+        <Sidebar />
       </>
     ) : (
       notFound()

@@ -1,6 +1,6 @@
 import { useEffect, useCallback, useState, useRef } from "react";
+import { AxiosResponse, AxiosError, AxiosInstance } from "axios";
 import { useRouter, usePathname } from "next/navigation";
-import { AxiosResponse, AxiosError } from "axios";
 import { create } from "zustand";
 import SecureLS from "secure-ls";
 
@@ -28,9 +28,15 @@ const StorageAuth = create<PropsStorageAuth>((set) => ({
   },
 }));
 
-const useAuth = (requireBe?: "client" | "employee") => {
+const useAuth = (
+  requireBe?: "client" | "employee",
+  whenAuthenticated?: () => void
+) => {
   const [isLoading, setIsLoading] = useState(!!requireBe);
-  const dataRef = useRef<AxiosResponse | null>(null);
+  const ongoingRequests = useRef(0);
+
+  const dataRef = useRef<AxiosInstance | null>(null);
+  const whenAuthenticatedRef = useRef(whenAuthenticated);
 
   const {
     actions: { fethData },
@@ -44,7 +50,14 @@ const useAuth = (requireBe?: "client" | "employee") => {
   const router = useRouter();
   const pathname = usePathname();
 
+  const updateLoading = (isIncrement: boolean) => {
+    ongoingRequests.current += isIncrement ? 1 : -1;
+    setIsLoading(ongoingRequests.current > 0);
+  };
+
   const login = (email: string, password: string, redirectTo: string): void => {
+    updateLoading(true);
+
     fethData(
       {
         url: "/session/login/",
@@ -54,11 +67,15 @@ const useAuth = (requireBe?: "client" | "employee") => {
       (res) => {
         loginInState(res.data);
         router.push(redirectTo);
-      }
+      },
+      undefined,
+      () => updateLoading(false)
     );
   };
 
   const logout = () => {
+    updateLoading(true);
+
     fethData(
       {
         url: "/session/logout/",
@@ -67,17 +84,22 @@ const useAuth = (requireBe?: "client" | "employee") => {
       () => {
         logoutInState();
         router.push("/");
-      }
+      },
+      () => {
+        return;
+      },
+      () => updateLoading(false)
     );
   };
 
   const safeFeth = useCallback(
-    async (
+    (
       request: PropsFethDataFunction,
       onSuccess?: (res: AxiosResponse) => void,
-      onError?: (err: AxiosError) => void
-    ): Promise<void> => {
-      setIsLoading(true);
+      onError?: (err: AxiosError) => void,
+      onFinally?: () => void
+    ) => {
+      updateLoading(true);
 
       const saveData = (res: AxiosResponse) => {
         if (!request.url.includes("check_auth")) {
@@ -89,8 +111,9 @@ const useAuth = (requireBe?: "client" | "employee") => {
         request,
         (res) => {
           saveData(res);
-          setIsLoading(false);
           onSuccess?.(res);
+          onFinally?.();
+          updateLoading(false);
         },
         (err) => {
           if (err.status === 401) {
@@ -104,7 +127,10 @@ const useAuth = (requireBe?: "client" | "employee") => {
                     onSuccess?.(res);
                   },
                   onError,
-                  () => setIsLoading(false)
+                  () => {
+                    onFinally?.();
+                    updateLoading(false);
+                  }
                 ),
               (err) => {
                 if (err.status === 401) {
@@ -112,12 +138,14 @@ const useAuth = (requireBe?: "client" | "employee") => {
                 } else {
                   logoutInState();
                 }
-                setIsLoading(false);
+                onFinally?.();
+                updateLoading(false);
               }
             );
           } else {
+            onFinally?.();
             logoutInState();
-            setIsLoading(false);
+            updateLoading(false);
           }
         }
       );
@@ -127,6 +155,8 @@ const useAuth = (requireBe?: "client" | "employee") => {
 
   useEffect(() => {
     secureLS = secureLS ?? new SecureLS({ encodingType: "aes" });
+    const authUser = secureLS.get(storageName);
+
     if (requireBe) {
       safeFeth(
         {
@@ -134,17 +164,20 @@ const useAuth = (requireBe?: "client" | "employee") => {
           method: "POST",
           content: { restriction: requireBe },
         },
-        (res) => loginInState(res.data)
+        (res) => {
+          loginInState(res.data);
+          whenAuthenticatedRef.current?.();
+        }
       );
     } else {
-      const authUser = secureLS.get(storageName);
       if (authUser) loginInState(authUser);
+      whenAuthenticatedRef.current?.();
     }
-  }, [requireBe, safeFeth, loginInState, logoutInState]);
+  }, [requireBe, safeFeth, loginInState]);
 
   return {
     state,
-    network: { isLoading, data: dataRef.current },
+    network: { data: dataRef.current, isLoading },
     actions: { login, logout, safeFeth },
   };
 };
