@@ -12,8 +12,8 @@ const Button = ({
   appearance = "normal",
 }: PropsButton) => {
   const btnClass = `${alatsi.className} ${style.button} ${
-    appearance !== "normal" ? style[appearance] : ""
-  } ${clicked ? style.clicked : ""} ${isLoading ? style.loading : ""}`.trim();
+    appearance !== "normal" && style[appearance]
+  } ${clicked && style.clicked} ${isLoading && style.loading}`.trim();
 
   return (
     <button

@@ -26,11 +26,17 @@
     .icon {
       font-size: 2rem;
       color: var(--red-primary);
+      margin-right: 0.7rem;
     }
 
     .img {
       border-radius: 50px;
       object-fit: cover;
+    }
+
+    .container_button {
+      display: flex;
+      margin-left: auto;
     }
   }
 

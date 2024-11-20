@@ -2,88 +2,114 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Icon } from "@iconify/react";
 import { useState } from "react";
 
+import Button from "@/components/forms/Button";
+
+import { fadeInFolder } from "./optionscontroller.variables";
 import { PropsOptionsControler } from "./optionscontroller.types";
 import style from "./optionscontroller.module.scss";
 
 const OptionsController = ({
+  isFolderOpen,
   toggleOpenFolder,
-  isOpen,
-  config,
+  folderConfig,
 }: PropsOptionsControler) => {
-  const [open, setOpen] = useState<boolean>(false);
-  const { canEdit, canMinimize, addExtraOptions } = config;
+  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
+  const { canEdit, canMinimize, addExtraOptions, button } = folderConfig;
 
   /**
    * Abre e fecha o menu da pasta.
    */
-  const toggleMenu = () => setOpen((prevValue) => !prevValue);
+  const toggleMenu = () => setIsMenuOpen((prevValue) => !prevValue);
 
   return (
-    <div className={style.container_main}>
-      {(canEdit || addExtraOptions) && (
-        <>
-          <AnimatePresence>
-            {open && (
-              <motion.div
-                className={style.container_menu}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.1 }}
-              >
-                <div className={style.options}>
-                  {addExtraOptions &&
-                    addExtraOptions.length > 0 &&
-                    addExtraOptions.map((option, index) => (
+    (canEdit || canMinimize || addExtraOptions || button) && (
+      <div className={`${style.container_main}`}>
+        <AnimatePresence>
+          {button && isFolderOpen && !isMenuOpen && (
+            <motion.div
+              className={style.container_button}
+              variants={fadeInFolder}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+            >
+              <Button
+                text={button.text}
+                onClick={button.onClick}
+                appearance="main"
+              />
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {(canEdit || addExtraOptions) && (
+          <>
+            <AnimatePresence>
+              {isMenuOpen && (
+                <motion.div
+                  className={style.container_menu}
+                  variants={fadeInFolder}
+                  initial="hidden"
+                  animate="visible"
+                  exit="exit"
+                  transition={{ duration: 0.15 }}
+                >
+                  <div className={style.options}>
+                    {addExtraOptions &&
+                      addExtraOptions.length > 0 &&
+                      addExtraOptions.map((option, index) => (
+                        <Icon
+                          key={index}
+                          className={style.icon}
+                          onClick={option.onClick}
+                          icon={option.icon}
+                          style={{
+                            color: `var(--${
+                              option.color !== "normal" ? option.color : "gray"
+                            }-primary)`,
+                          }}
+                        />
+                      ))}
+                    {canEdit && (
                       <Icon
-                        key={index}
+                        icon="majesticons:pencil-alt-line"
                         className={style.icon}
-                        onClick={option.onClick}
-                        icon={option.icon}
-                        style={{
-                          color: `var(--${
-                            option.color !== "normal" ? option.color : "gray"
-                          }-primary)`,
-                        }}
                       />
-                    ))}
-                  {canEdit && (
-                    <Icon
-                      icon="majesticons:pencil-alt-line"
-                      className={style.icon}
-                    />
-                  )}
-                </div>
-                <Icon
-                  icon="ci:close-sm"
-                  className={style.icon}
-                  onClick={toggleMenu}
-                />
+                    )}
+                  </div>
+                  <Icon
+                    icon="ci:close-sm"
+                    className={style.icon}
+                    onClick={toggleMenu}
+                  />
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            {!isMenuOpen && (
+              <motion.div
+                className={`${style.icon} ${style.type_option}`}
+                onClick={toggleMenu}
+              >
+                <Icon icon="mi:options-vertical" className={style.icon} />
               </motion.div>
             )}
-          </AnimatePresence>
+          </>
+        )}
 
-          <motion.div
-            className={`${style.icon} ${style.type_option}`}
-            onClick={toggleMenu}
-          >
-            <Icon icon="mi:options-vertical" className={style.icon} />
-          </motion.div>
-        </>
-      )}
-
-      {canMinimize && (
-        <Icon
-          className={style.icon}
-          onClick={toggleOpenFolder}
-          icon={
-            isOpen
-              ? "material-symbols:arrow-drop-down-rounded"
-              : "material-symbols:arrow-right-rounded"
-          }
-        />
-      )}
-    </div>
+        {canMinimize && !isMenuOpen && (
+          <Icon
+            className={style.icon}
+            onClick={toggleOpenFolder}
+            icon={
+              isFolderOpen
+                ? "material-symbols:arrow-drop-down-rounded"
+                : "material-symbols:arrow-right-rounded"
+            }
+          />
+        )}
+      </div>
+    )
   );
 };
 

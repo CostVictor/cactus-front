@@ -1,6 +1,7 @@
 "use client";
 
 import { notFound } from "next/navigation";
+import { Icon } from "@iconify/react";
 
 import Header from "@/components/layout/Header";
 import Section from "@/components/layout/Section";
@@ -18,10 +19,6 @@ export default function StockSnacks() {
     actions: { safeFeth },
   } = useAuth("employee", () => safeFeth({ url: "snacks/", method: "GET" }));
 
-  // "mingcute:storage-fill"
-
-  console.log('ko')
-
   return !isLoading ? (
     isAuthenticated ? (
       <>
@@ -29,14 +26,32 @@ export default function StockSnacks() {
         <main>
           <Section id="stock_snacks" maxWidthContent>
             <NavStock local="snacks" />
-            <hr className="division" />
-            <div className={style.container_reorder}>
-              {Array.isArray(data) &&
+            <hr className="division space" />
+            <div className={style.container_sessions}>
+              {Array.isArray(data) && data.length > 0 ? (
                 data.map((category, index) => (
-                  <Folder key={index} name={category.name}>
+                  <Folder
+                    key={index}
+                    name={category.name}
+                    folderConfig={{
+                      marker: {
+                        appearance: "mingcute:storage-fill",
+                        type: "icon",
+                      },
+                    }}
+                  >
                     <p>Teste</p>
                   </Folder>
-                ))}
+                ))
+              ) : (
+                <div className={style.not_categories}>
+                  <Icon icon="majesticons:information-circle-line"></Icon>
+                  <p>Nenhuma seção foi encontrada</p>
+                </div>
+              )}
+            </div>
+            <div className={style.container_add_session}>
+              <p>Adicionar nova seção</p>
             </div>
           </Section>
         </main>

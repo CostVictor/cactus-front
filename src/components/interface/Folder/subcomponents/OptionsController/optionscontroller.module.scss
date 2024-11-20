@@ -5,6 +5,11 @@
   position: relative;
   gap: 0.5rem;
 
+  .container_button {
+    border-right: 1px solid var(--division);
+    padding-right: 1rem;
+  }
+
   .container_menu {
     display: flex;
     position: absolute;

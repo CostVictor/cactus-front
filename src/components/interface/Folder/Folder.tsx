@@ -74,9 +74,9 @@ const Folder = ({
 
         <LabelController labels={notification?.labels ?? []} />
         <OptionsController
+          isFolderOpen={isOpen}
           toggleOpenFolder={toggleOpenFolder}
-          isOpen={isOpen}
-          config={folderConfig}
+          folderConfig={folderConfig}
         />
       </div>
 

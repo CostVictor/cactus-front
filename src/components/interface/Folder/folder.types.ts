@@ -22,6 +22,7 @@ export interface PropsFolderConfig {
   canMinimize?: boolean
   expandUntil?: string
   addExtraOptions?: PropsExtraOptionsFolder[]
+  button?: { text: string, onClick: MouseEventHandler<HTMLButtonElement> }
   marker?: {
     appearance: string
     type: "icon" | "image"

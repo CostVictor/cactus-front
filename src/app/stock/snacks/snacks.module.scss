@@ -1,7 +1,31 @@
-.container_reorder {
+.container_sessions {
   display: flex;
   flex-direction: column;
-
-  margin: 1.5rem 0;
   gap: 1.3rem;
+
+  .not_categories {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+
+    font-size: 1.5rem;
+    color: var(--black-primary);
+  }
+}
+
+.container_add_session {
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+
+  padding: 1rem;
+  margin: 2.5rem 0;
+  
+  border-radius: 20px;
+  border: 3px dashed var(--division-intense);
+
+  background-color: var(--bg-aba);
+  color: var(--division-intense);
+  font-size: 1.8rem;
 }

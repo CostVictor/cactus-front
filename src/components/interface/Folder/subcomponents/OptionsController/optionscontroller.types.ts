@@ -1,7 +1,7 @@
 import { PropsFolderConfig } from "../../folder.types"
 
 export interface PropsOptionsControler {
-  isOpen: boolean
-  config: PropsFolderConfig
+  isFolderOpen: boolean
+  folderConfig: PropsFolderConfig
   toggleOpenFolder: () => void
 }
