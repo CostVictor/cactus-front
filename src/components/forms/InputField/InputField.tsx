@@ -29,6 +29,7 @@ const InputField = ({
   onChange,
   options,
   config,
+  filterMode,
   required,
 }: PropsInputField) => {
   const [localValue, setLocalValue] = useState<string>(value ?? "");
@@ -72,8 +73,18 @@ const InputField = ({
   };
 
   return (
-    <div className={style.container_main}>
-      <SpanLabel text={label} isActive={localValue !== ""} inFocus={inFocus} />
+    <div
+      className={`${style.container_main} ${
+        filterMode && style.filter_mode
+      }`.trim()}
+    >
+      {!filterMode && (
+        <SpanLabel
+          text={label}
+          isActive={localValue !== ""}
+          inFocus={inFocus}
+        />
+      )}
 
       <div className={style.container_input}>
         {options?.icon && <Icon className={style.icon} icon={options.icon} />}

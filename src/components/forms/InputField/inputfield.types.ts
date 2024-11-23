@@ -40,5 +40,6 @@ export interface PropsInputField {
   message?: PropsInputMessage;
   options?: PropsInputOptions;
   config?: PropsInputConfig;
+  filterMode?: boolean;
   required?: boolean;
 }

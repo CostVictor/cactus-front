@@ -1,0 +1,60 @@
+.container_main {
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+
+  width: 175px;
+  margin: 10px auto;
+
+  background-color: var(--bg-aba);
+  border-radius: 10px;
+
+  box-shadow: var(--shadow-btn);
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 0.5rem;
+    border-bottom: 1px solid var(--division);
+
+    font-size: 0.9rem;
+    color: var(--gray-primary);
+
+    .container_info_stock {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+
+      .icon {
+        color: var(--red-secondary);
+      }
+    }
+  }
+
+  .body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    gap: 0.3rem;
+    padding: 0.5rem;
+
+    .img {
+      border-radius: 10px;
+      object-fit: cover;
+    }
+
+    .title {
+      color: var(--red-secondary);
+      font-size: 1.3rem;
+    }
+
+    .price {
+      color: var(--black-primary);
+      font-size: 0.9rem;
+    }
+  }
+}

@@ -13,19 +13,3 @@
     color: var(--black-primary);
   }
 }
-
-.container_add_session {
-  display: flex;
-  justify-content: center;
-  cursor: pointer;
-
-  padding: 1rem;
-  margin: 2.5rem 0;
-  
-  border-radius: 20px;
-  border: 3px dashed var(--division-intense);
-
-  background-color: var(--bg-aba);
-  color: var(--division-intense);
-  font-size: 1.8rem;
-}

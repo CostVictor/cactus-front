@@ -11,6 +11,25 @@
   box-shadow: var(--shadow-default);
   border-radius: 10px;
 
+  &.filter_mode {
+    margin: 0;
+    box-shadow: none;
+
+    .container_input {
+      .input {
+        background-color: var(--gray-secondary);
+        font-size: 1rem;
+        padding: 0.7rem;
+        width: 70%;
+      }
+
+      .label {
+        font-size: 1rem;
+        left: 1rem;
+      }
+    }
+  }
+
   .container_input {
     display: flex;
     position: relative;
@@ -61,7 +80,7 @@
       pointer-events: none;
       font-size: 1.2rem;
       top: 50%;
-      left: 5%;
+      left: 1.5rem;
 
       &.indent {
         left: 3rem;

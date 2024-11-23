@@ -10,6 +10,7 @@ import NavStock from "@/components/navigation/NavStock";
 import Folder from "@/components/interface/Folder";
 import useAuth from "@/hooks/context/useAuth";
 
+import SnackPanel, { SnackProps } from "@/components/interface/SnackPanel";
 import style from "./snacks.module.scss";
 
 export default function StockSnacks() {
@@ -39,19 +40,27 @@ export default function StockSnacks() {
                         type: "icon",
                       },
                     }}
+                    notification={
+                      category.snacks.filter(
+                        (snack: SnackProps) => snack.quantity_in_stock <= 5
+                      ).length
+                        ? {
+                            labels: [
+                              { text: "Produtos se esgotando", type: "alert" },
+                            ],
+                          }
+                        : undefined
+                    }
                   >
-                    <p>Teste</p>
+                    <SnackPanel nameCategory={category.name} snacks={category.snacks} />
                   </Folder>
                 ))
               ) : (
                 <div className={style.not_categories}>
                   <Icon icon="majesticons:information-circle-line"></Icon>
-                  <p>Nenhuma seção foi encontrada</p>
+                  <p>Nenhuma categoria foi encontrada</p>
                 </div>
               )}
-            </div>
-            <div className={style.container_add_session}>
-              <p>Adicionar nova seção</p>
             </div>
           </Section>
         </main>

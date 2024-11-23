@@ -24,7 +24,7 @@ const Folder = ({
   folderConfig = {
     canEdit: true,
     canMinimize: true,
-    expandUntil: "20rem",
+    expandUntil: "30rem",
     ...folderConfig,
   };
   const folderMarker = folderConfig.marker;
