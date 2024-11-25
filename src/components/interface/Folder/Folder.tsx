@@ -57,22 +57,27 @@ const Folder = ({
       <div
         className={`${style.header} ${isOpen && style.division_visible}`.trim()}
       >
-        {folderMarker ? (
-          folderMarker.type === "icon" ? (
-            <Icon className={style.icon} icon={folderMarker.appearance} />
-          ) : (
-            <Image
-              alt={`Imagem da pasta ${name}.`}
-              src={folderMarker.appearance}
-              className={style.img}
-              width={35}
-              height={35}
-            />
-          )
-        ) : undefined}
-        <h2>{name}</h2>
+        <div className={style.container_label}>
+          {folderMarker ? (
+            folderMarker.type === "icon" ? (
+              <Icon className={style.icon} icon={folderMarker.appearance} />
+            ) : (
+              <Image
+                alt={`Imagem da pasta ${name}.`}
+                src={folderMarker.appearance}
+                className={style.img}
+                width={35}
+                height={35}
+              />
+            )
+          ) : undefined}
 
-        <LabelController labels={notification?.labels ?? []} />
+          <div className={style.info_local}>
+            <h2 title={name}>{name}</h2>
+            <LabelController labels={notification?.labels ?? []} />
+          </div>
+        </div>
+
         <OptionsController
           isFolderOpen={isOpen}
           toggleOpenFolder={toggleOpenFolder}

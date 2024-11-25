@@ -9,7 +9,7 @@ const LabelController = ({ labels }: PropsLabelController) => {
     labels.length > 0 && (
       <div className={style.container_main}>
         {labels.map((label, index) => (
-          <div key={index} className={style.container_label}>
+          <div key={index} className={style.container_msg_label}>
             {label.type && label.type !== "normal" && (
               <Icon
                 icon={nameIcons[label.type]}
@@ -17,6 +17,7 @@ const LabelController = ({ labels }: PropsLabelController) => {
               />
             )}
             <p
+              title={label.text}
               className={`${style.label} ${
                 label.type === "pending" || label.type === "success"
                   ? style[label.type]

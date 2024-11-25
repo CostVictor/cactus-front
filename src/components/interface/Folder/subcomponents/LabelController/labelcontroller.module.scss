@@ -1,13 +1,16 @@
+@import "@/styles/variables.scss";
+
 .container_main {
   display: flex;
   align-items: center;
+  justify-content: start;
 
   padding: 0 0.8rem;
-  gap: 1.5rem;
+  gap: 1rem;
 
   border-left: 1px solid var(--division-intense);
 
-  .container_label {
+  .container_msg_label {
     display: flex;
     gap: 0.3rem;
 
@@ -39,5 +42,33 @@
         color: var(--blue-primary);
       }
     }
+
+    @media (max-width: 650px) {
+      .icon {
+        font-size: 1.35rem;
+      }
+
+      .label {
+        font-size: 1.15rem;
+      }
+    }
+
+    @media (max-width: 460px) {
+      .label {
+        white-space: nowrap; 
+        text-overflow: ellipsis;
+        overflow: hidden;
+      }
+    }
+  }
+
+  @media (max-width: 950px) {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  @media (max-width: $media-mobile) {
+    border: none;
+    padding: 0 0.5rem;
   }
 }

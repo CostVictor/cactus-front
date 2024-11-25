@@ -134,6 +134,11 @@ $dist-icons: -13rem;
     &.no_space_top {
       padding-top: 0;
     }
+
+    @media (max-width: 400px) {
+      padding-left: 2.2rem;
+      padding-right: 2.2rem;
+    }
   }
 
   @media (min-width: 1550px) {

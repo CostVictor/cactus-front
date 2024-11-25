@@ -1,7 +1,6 @@
 .container_main {
   display: flex;
   align-items: center;
-  margin-left: auto;
   position: relative;
   gap: 0.5rem;
 
@@ -13,6 +12,7 @@
   .container_menu {
     display: flex;
     position: absolute;
+    box-shadow: var(--shadow-card);
     right: -7px;
     gap: 0.6rem;
 
