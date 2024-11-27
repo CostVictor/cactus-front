@@ -8,7 +8,7 @@ interface PropsSectionImage {
 interface PropsDescription {
   title: string
   text: string
-  illustrationUrl: string
+  illustrationUrl: string | null
   illustrationDirection?: "left" | "right"
 }
 

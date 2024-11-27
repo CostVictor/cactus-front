@@ -144,8 +144,12 @@ const useAuth = (
             );
           } else {
             onFinally?.();
-            logoutInState();
+            onError?.(err);
             updateLoading(false);
+
+            if (err.status === 403) {
+              logoutInState();
+            }
           }
         }
       );

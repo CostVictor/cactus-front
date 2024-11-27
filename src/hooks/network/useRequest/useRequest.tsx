@@ -7,6 +7,8 @@ import {
   PropsFethDataFunction,
 } from "./userequest.types";
 
+import { errorExtractor } from "./userequest.utils";
+
 import Modal from "@/components/display/Modal";
 import useModal from "@/hooks/context/useModal";
 import cactusAPI from "@/services/axios/cactus-api";
@@ -48,14 +50,9 @@ const useRequest = (custom?: PropsCustomRequest, axiosInstance = cactusAPI) => {
         if (onError) {
           onError(err);
         } else {
-          let errorMessage: string | string[] = "A API não está respondendo.";
-          if (err.response) {
-            const errorResponse: PropsErrorResponse = err.response.data;
-            if (errorResponse && typeof errorResponse !== "string") {
-              errorMessage = Object.values(errorResponse).flat();
-            }
-          }
-          addNewModal(<Modal title={titleError} message={errorMessage} />);
+          addNewModal(
+            <Modal title={titleError} message={errorExtractor(err)} />
+          );
         }
       } finally {
         if (forceUpdate) setIsLoading(false);

@@ -1,4 +1,4 @@
-export interface SnackProps {
+export interface PropsSnack {
   description: string | null
   name: string
   path_img: string | null

@@ -55,30 +55,32 @@ const Section = ({
             className={`${style.icon} ${style.is_left}`}
           />
 
-          {description.illustrationDirection === "left" && (
-            <Image
-              className={style.illustration}
-              src={description.illustrationUrl}
-              alt="Ilustração da seção."
-              width={290}
-              height={290}
-            />
-          )}
+          {description.illustrationDirection === "left" &&
+            description.illustrationUrl && (
+              <Image
+                className={style.illustration}
+                src={description.illustrationUrl}
+                alt="Ilustração da seção."
+                width={290}
+                height={290}
+              />
+            )}
 
           <div className={style.container_text}>
             <h2 className={style.title}>{description.title}</h2>
             <p className={style.text}>{description.text}</p>
           </div>
 
-          {description.illustrationDirection !== "left" && (
-            <Image
-              className={style.illustration}
-              src={description.illustrationUrl}
-              alt="Ilustração da seção."
-              width={290}
-              height={290}
-            />
-          )}
+          {description.illustrationDirection !== "left" &&
+            description.illustrationUrl && (
+              <Image
+                className={style.illustration}
+                src={description.illustrationUrl}
+                alt="Ilustração da seção."
+                width={290}
+                height={290}
+              />
+            )}
         </div>
       )}
 

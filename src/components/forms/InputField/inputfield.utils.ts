@@ -30,7 +30,7 @@ export const getRegisterValidation = (config?: PropsInputConfig, options?: Props
 
   const { minLength, custom } = validation;
   return {
-    required: required ? "Este campo é obrigatório." : true,
+    required: required ? "Este campo é obrigatório." : false,
 
     minLength: minLength
       ? {

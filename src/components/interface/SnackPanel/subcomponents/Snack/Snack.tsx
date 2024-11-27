@@ -3,11 +3,11 @@ import { Icon } from "@iconify/react";
 import { motion } from "framer-motion";
 
 import { revealGrow } from "@/styles/animations";
-import { SnackProps } from "./snack.types";
+import { PropsSnack } from "./snack.types";
 import { formatMoney } from "@/utils/formatters";
 import style from "./snack.module.scss";
 
-const Snack = ({ name, price, quantity_in_stock, path_img }: SnackProps) => {
+const Snack = ({ name, price, quantity_in_stock, path_img }: PropsSnack) => {
   const lowQuantityInStock = quantity_in_stock <= 5;
 
   return (

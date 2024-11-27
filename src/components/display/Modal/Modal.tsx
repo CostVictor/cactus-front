@@ -17,6 +17,7 @@ const Modal = ({
   message,
   children,
   buttons,
+  notOverflow,
   defaultButtonText = "Fechar",
 }: PropsModal) => {
   const {
@@ -59,7 +60,9 @@ const Modal = ({
 
         <Container
           key={`content_${title}`}
-          className={style.content}
+          className={`${style.content} ${notOverflow && style.not_overflow} ${
+            buttons === null && style.complete
+          }`.trim()}
           animateChildren
         >
           {message ? (
@@ -81,24 +84,29 @@ const Modal = ({
           )}
         </Container>
 
-        <motion.div
-          key={`footer_${title}`}
-          className={style.footer}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1, transition: { delay: 0.15, duration: 0.15 } }}
-        >
-          {buttons?.length ? (
-            buttons.map((button, index) => <Button key={index} {...button} />)
-          ) : (
-            <Button
-              text={defaultButtonText}
-              appearance="main"
-              onClick={() => {
-                removeModal(-1);
-              }}
-            />
-          )}
-        </motion.div>
+        {buttons !== null && (
+          <motion.div
+            key={`footer_${title}`}
+            className={style.footer}
+            initial={{ opacity: 0 }}
+            animate={{
+              opacity: 1,
+              transition: { delay: 0.15, duration: 0.15 },
+            }}
+          >
+            {buttons?.length ? (
+              buttons.map((button, index) => <Button key={index} {...button} />)
+            ) : (
+              <Button
+                text={defaultButtonText}
+                appearance="main"
+                onClick={() => {
+                  removeModal(-1);
+                }}
+              />
+            )}
+          </motion.div>
+        )}
       </motion.div>
     </motion.article>
   );

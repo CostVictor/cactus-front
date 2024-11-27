@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Icon } from "@iconify/react";
 import { AnimatePresence } from "framer-motion";
 
 import Snack from "./subcomponents/Snack";
@@ -20,12 +21,20 @@ const SnackPanel = ({ nameCategory, snacks }: PropsSnackPanel) => {
         filterMode
       />
       <hr className="division" style={{ margin: "1rem 0" }} />
-      {snacks.length > 0 ? (
-        <Container grid={5}>
-          <article className={style.create_snack}>
-            <p>Adicionar item</p>
-          </article>
 
+      {!snacks.length && (
+        <div className={style.not_item}>
+          <Icon icon="majesticons:information-circle-line"></Icon>
+          <p>Nenhum item encontrado</p>
+        </div>
+      )}
+
+      <Container grid={5}>
+        <article className={style.create_snack}>
+          <p>Adicionar item</p>
+        </article>
+
+        {snacks.length > 0 && (
           <AnimatePresence>
             {snacks
               .filter((snack) => snack.name.toLowerCase().includes(filterName))
@@ -33,10 +42,8 @@ const SnackPanel = ({ nameCategory, snacks }: PropsSnackPanel) => {
                 <Snack key={index} {...snack} />
               ))}
           </AnimatePresence>
-        </Container>
-      ) : (
-        <p></p>
-      )}
+        )}
+      </Container>
     </div>
   );
 };

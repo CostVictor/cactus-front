@@ -68,10 +68,9 @@ export default function Home() {
               }
               backgroundGray={index % 2 === 0}
             >
-              <Container grid>
-                {Array.isArray(category.snacks) &&
-                  category.snacks.length > 0 &&
-                  category.snacks.map(
+              {Array.isArray(category.snacks) && category.snacks.length > 0 && (
+                <Container grid>
+                  {category.snacks.map(
                     (snack: { [key: string]: string }, index: number) => (
                       <CardInfo
                         key={`snack_${index}-${category.name}`}
@@ -81,7 +80,8 @@ export default function Home() {
                       />
                     )
                   )}
-              </Container>
+                </Container>
+              )}
             </Section>
           ))}
       </main>

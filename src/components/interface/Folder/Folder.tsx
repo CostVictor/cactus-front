@@ -48,7 +48,9 @@ const Folder = ({
   };
 
   return (
-    <article
+    <motion.article
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
       style={getStyleBackgroundColor(internal)}
       className={`${style.container_main} ${
         isOpen && !internal && style.open
@@ -118,7 +120,7 @@ const Folder = ({
           </motion.div>
         )}
       </AnimatePresence>
-    </article>
+    </motion.article>
   );
 };
 

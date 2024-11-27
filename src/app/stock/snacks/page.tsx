@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { notFound } from "next/navigation";
 import { Icon } from "@iconify/react";
 
@@ -8,17 +9,23 @@ import Section from "@/components/layout/Section";
 import Sidebar from "@/components/navigation/Sidebar";
 import NavStock from "@/components/navigation/NavStock";
 import Folder from "@/components/interface/Folder";
+import AddCategory from "@/components/action/AddCategory";
 import useAuth from "@/hooks/context/useAuth";
+import SnackPanel from "@/components/interface/SnackPanel";
 
-import SnackPanel, { SnackProps } from "@/components/interface/SnackPanel";
+import { PropsCategory } from "./snacks.types";
 import style from "./snacks.module.scss";
 
 export default function StockSnacks() {
+  const [data, setData] = useState<PropsCategory[] | null>(null);
+
   const {
     state: { isAuthenticated },
-    network: { data, isLoading },
+    network: { isLoading },
     actions: { safeFeth },
-  } = useAuth("employee", () => safeFeth({ url: "snacks/", method: "GET" }));
+  } = useAuth("employee", () =>
+    safeFeth({ url: "snacks/", method: "GET" }, (res) => setData(res.data))
+  );
 
   return !isLoading ? (
     isAuthenticated ? (
@@ -30,7 +37,7 @@ export default function StockSnacks() {
             <hr className="division space" />
             <div className={style.container_sessions}>
               {Array.isArray(data) && data.length > 0 ? (
-                data.map((category, index) => (
+                data.map((category: PropsCategory, index) => (
                   <Folder
                     key={index}
                     name={category.name}
@@ -42,7 +49,7 @@ export default function StockSnacks() {
                     }}
                     notification={
                       category.snacks.filter(
-                        (snack: SnackProps) => snack.quantity_in_stock <= 5
+                        (snack) => snack.quantity_in_stock <= 5
                       ).length
                         ? {
                             labels: [
@@ -52,7 +59,10 @@ export default function StockSnacks() {
                         : undefined
                     }
                   >
-                    <SnackPanel nameCategory={category.name} snacks={category.snacks} />
+                    <SnackPanel
+                      nameCategory={category.name}
+                      snacks={category.snacks}
+                    />
                   </Folder>
                 ))
               ) : (
@@ -62,6 +72,7 @@ export default function StockSnacks() {
                 </div>
               )}
             </div>
+            <AddCategory setData={setData} />
           </Section>
         </main>
         <Sidebar />
