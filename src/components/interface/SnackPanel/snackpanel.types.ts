@@ -1,6 +1,6 @@
-import { SnackProps } from "./subcomponents/Snack"
+import { PropsSnack } from "./subcomponents/Snack"
 
 export interface PropsSnackPanel {
   nameCategory: string
-  snacks: SnackProps[]
+  snacks: PropsSnack[]
 }
