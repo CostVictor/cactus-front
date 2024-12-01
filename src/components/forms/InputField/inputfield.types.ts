@@ -26,7 +26,7 @@ export interface PropsInputValidation {
 }
 
 export interface PropsInputConfig {
-  type?: "text" | "number" | "email" | "tel" | "password";
+  type?: "text" | "number" | "email" | "tel" | "password" | "price";
   register?: UseFormRegister<FieldValues>;
   validation?: PropsInputValidation;
 }

@@ -5,12 +5,16 @@ import { AnimatePresence } from "framer-motion";
 import Snack from "./subcomponents/Snack";
 import Container from "@/components/layout/Container";
 import InputField from "@/components/forms/InputField";
+import AddItem from "./subcomponents/AddItem";
 
 import { PropsSnackPanel } from "./snackpanel.types";
 import style from "./snackpanel.module.scss";
 
 const SnackPanel = ({ nameCategory, snacks }: PropsSnackPanel) => {
+  const [snacksList, setSnacksList] = useState(snacks);
   const [filterName, setFilterName] = useState("");
+
+  console.log("renderiou");
 
   return (
     <div>
@@ -22,7 +26,7 @@ const SnackPanel = ({ nameCategory, snacks }: PropsSnackPanel) => {
       />
       <hr className="division" style={{ margin: "1rem 0" }} />
 
-      {!snacks.length && (
+      {!snacksList.length && (
         <div className={style.not_item}>
           <Icon icon="majesticons:information-circle-line"></Icon>
           <p>Nenhum item encontrado</p>
@@ -30,13 +34,11 @@ const SnackPanel = ({ nameCategory, snacks }: PropsSnackPanel) => {
       )}
 
       <Container grid={5}>
-        <article className={style.create_snack}>
-          <p>Adicionar item</p>
-        </article>
+        <AddItem nameCategory={nameCategory} setSnacksList={setSnacksList} />
 
-        {snacks.length > 0 && (
+        {snacksList.length > 0 && (
           <AnimatePresence>
-            {snacks
+            {snacksList
               .filter((snack) => snack.name.toLowerCase().includes(filterName))
               .map((snack, index) => (
                 <Snack key={index} {...snack} />

@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 import { revealGrow } from "@/styles/animations";
 import { PropsSnack } from "./snack.types";
-import { formatMoney } from "@/utils/formatters";
+import { convertMoney } from "@/utils/formatters";
 import style from "./snack.module.scss";
 
 const Snack = ({ name, price, quantity_in_stock, path_img }: PropsSnack) => {
@@ -50,7 +50,7 @@ const Snack = ({ name, price, quantity_in_stock, path_img }: PropsSnack) => {
         )}
 
         <h3 className={style.title}>{name}</h3>
-        <p className={style.price}>{formatMoney(price)}</p>
+        <p className={style.price}>{convertMoney(price)}</p>
       </div>
     </motion.article>
   );

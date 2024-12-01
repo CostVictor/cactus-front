@@ -11,7 +11,7 @@ import Container from "@/components/layout/Container";
 import CardInfo from "@/components/display/CardInfo";
 import useRequest from "@/hooks/network/useRequest";
 
-import { formatMoney } from "@/utils/formatters";
+import { convertMoney } from "@/utils/formatters";
 
 export default function Home() {
   const {
@@ -75,7 +75,7 @@ export default function Home() {
                       <CardInfo
                         key={`snack_${index}-${category.name}`}
                         title={snack.name}
-                        text={formatMoney(snack.price)}
+                        text={convertMoney(snack.price)}
                         isSoldOut={!Number(snack.quantity_in_stock)}
                       />
                     )
