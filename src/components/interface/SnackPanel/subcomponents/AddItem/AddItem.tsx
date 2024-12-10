@@ -27,6 +27,7 @@ const AddItem = ({ nameCategory, setSnacksList }: PropsAddItem) => {
       quantity_in_stock: 0,
       description: null,
       path_img: null,
+      nameCategory,
     };
     setSnacksList((prevList) => [...prevList, newItem]);
   };

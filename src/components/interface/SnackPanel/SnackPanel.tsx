@@ -1,6 +1,6 @@
-import { useState } from "react";
-import { Icon } from "@iconify/react";
 import { AnimatePresence } from "framer-motion";
+import { Icon } from "@iconify/react";
+import { useState } from "react";
 
 import Snack from "./subcomponents/Snack";
 import Container from "@/components/layout/Container";
@@ -12,16 +12,19 @@ import style from "./snackpanel.module.scss";
 
 const SnackPanel = ({ nameCategory, snacks }: PropsSnackPanel) => {
   const [snacksList, setSnacksList] = useState(snacks);
-  const [filterName, setFilterName] = useState("");
-
-  console.log("renderiou");
 
   return (
     <div>
       <InputField
         name={`filter-${nameCategory}`}
         label="Filtrar item..."
-        onChange={(_, newValue) => setFilterName(newValue.toLowerCase())}
+        onChange={(_, text) =>
+          setSnacksList(
+            snacks.filter((snack) =>
+              snack.name.toLowerCase().includes(text.toLowerCase())
+            )
+          )
+        }
         filterMode
       />
       <hr className="division" style={{ margin: "1rem 0" }} />
@@ -38,11 +41,11 @@ const SnackPanel = ({ nameCategory, snacks }: PropsSnackPanel) => {
 
         {snacksList.length > 0 && (
           <AnimatePresence>
-            {snacksList
-              .filter((snack) => snack.name.toLowerCase().includes(filterName))
-              .map((snack, index) => (
-                <Snack key={index} {...snack} />
-              ))}
+            {snacksList.map((snack, index) => (
+              <div key={index}>
+                <Snack {...snack} nameCategory={nameCategory} />
+              </div>
+            ))}
           </AnimatePresence>
         )}
       </Container>

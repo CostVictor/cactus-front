@@ -1,4 +1,4 @@
-import { PropsData, PropsFormatterData } from "./formatters.types";
+import { PropsDataFormatter, PropsFormatterData } from "./formatters.types";
 
 /**
  * Remove espaços em branco do início e do fim das chaves e valores de um objeto.
@@ -6,8 +6,8 @@ import { PropsData, PropsFormatterData } from "./formatters.types";
  * @param data O objeto a ser formatado, que pode conter chaves com valores do tipo string ou objetos aninhados do mesmo tipo.
  * @returns O objeto formatado, onde todas as chaves e valores têm espaços em branco removidos.
  */
-export const trimmerData = (data: PropsData) => {
-  const formattedObj: PropsData = {};
+export const trimmerData = (data: PropsDataFormatter) => {
+  const formattedObj: PropsDataFormatter = {};
 
   Object.entries(data).forEach(([key, value]) => {
     if (typeof value === "object") {
@@ -29,8 +29,8 @@ export const trimmerData = (data: PropsData) => {
  * @param omitTo - A string a ser procurada nos nomes das chaves.
  * @returns O objeto resultante com as chaves omitidas.
  */
-export const omitKeys = (data: PropsData, omitTo: string) => {
-  const formattedObj: PropsData = {};
+export const omitKeys = (data: PropsDataFormatter, omitTo: string) => {
+  const formattedObj: PropsDataFormatter = {};
 
   Object.entries(data).forEach(([key, value]) => {
     // Verifica se a chave contém a string omitTo, caso verdade, não inclui em `formattedObj`.
@@ -53,12 +53,12 @@ export const omitKeys = (data: PropsData, omitTo: string) => {
  * @param format - O formato a ser aplicado aos dados. Pode ser um array de strings ou objetos com as propriedades `name` e `format`.
  * @returns Um novo objeto contendo os dados formatados.
  */
-export const setFormatData = (data: PropsData, format?: PropsFormatterData) => {
+export const setFormatData = (data: PropsDataFormatter, format?: PropsFormatterData) => {
   if (!format) {
     return data
   }
 
-  const formattedObj: PropsData = {};
+  const formattedObj: PropsDataFormatter = {};
 
   format.forEach(value => {
     if (typeof value === "string") {
@@ -71,7 +71,6 @@ export const setFormatData = (data: PropsData, format?: PropsFormatterData) => {
 
   return formattedObj
 }
-
 
 /**
  * Formata um valor monetário no formato brasileiro ou extrai o valor numérico, dependendo do parâmetro `reverse`.

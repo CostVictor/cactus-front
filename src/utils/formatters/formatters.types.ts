@@ -1,5 +1,5 @@
-export interface PropsData {
-  [key: string]: string | PropsData
+export interface PropsDataFormatter {
+  [key: string]: string | PropsDataFormatter
 }
 
 interface PropsFormatterList {
