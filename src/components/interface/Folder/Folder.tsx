@@ -14,6 +14,7 @@ import style from "./folder.module.scss";
 
 const Folder = ({
   name,
+  description,
   children,
   open,
   internal,
@@ -81,6 +82,8 @@ const Folder = ({
         </div>
 
         <OptionsController
+          nameCategory={name}
+          descriptionCategory={description}
           isFolderOpen={isOpen}
           toggleOpenFolder={toggleOpenFolder}
           folderConfig={folderConfig}

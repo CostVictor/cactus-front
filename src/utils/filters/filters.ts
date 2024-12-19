@@ -17,6 +17,8 @@ export const filterDifferences = <T extends object>(baseData: T, compareData: T)
       const baseValue = baseData[key] ?? '';
       const compareValue = compareData[key] ?? '';
 
+      console.log(baseValue, compareValue)
+
       if (typeof baseValue === "object" && typeof compareValue === "object") {
         const nestedDifferences = filterDifferences(baseValue as T, compareValue as T);
 

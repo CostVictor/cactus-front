@@ -41,6 +41,7 @@ export default function StockSnacks() {
                   <Folder
                     key={index}
                     name={category.name}
+                    description={category.description}
                     folderConfig={{
                       marker: {
                         appearance: "mingcute:storage-fill",
