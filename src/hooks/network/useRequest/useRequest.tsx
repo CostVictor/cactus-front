@@ -3,7 +3,6 @@ import { AxiosResponse, AxiosError } from "axios";
 
 import {
   PropsCustomRequest,
-  PropsErrorResponse,
   PropsFethDataFunction,
 } from "./userequest.types";
 
@@ -11,7 +10,7 @@ import { errorExtractor } from "./userequest.utils";
 
 import Modal from "@/components/display/Modal";
 import useModal from "@/hooks/context/useModal";
-import cactusAPI from "@/services/axios/cactus-api";
+import cactusAPI from "@/services/axios/cactusAPI";
 
 const useRequest = (custom?: PropsCustomRequest, axiosInstance = cactusAPI) => {
   const {

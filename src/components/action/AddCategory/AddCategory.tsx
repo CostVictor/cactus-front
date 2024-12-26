@@ -1,10 +1,9 @@
 import useModal from "@/hooks/context/useModal";
-import useAuth from "@/hooks/context/useAuth";
 
 import Modal from "@/components/display/Modal";
 import Form from "@/components/forms/Form";
 import InputField from "@/components/forms/InputField";
-import { errorExtractor } from "@/hooks/network/useRequest";
+import useRequest, { errorExtractor } from "@/hooks/network/useRequest";
 
 import { PropsCategory } from "@/app/stock/snacks/snacks.types";
 import { PropsAddCategory } from "./addcategory.types";
@@ -16,8 +15,8 @@ const AddCategory = ({ setData }: PropsAddCategory) => {
   } = useModal();
 
   const {
-    actions: { safeFeth },
-  } = useAuth();
+    actions: { fethData },
+  } = useRequest(); 
 
   /**
    * Adiciona uma nova categoria na exibição da tela.
@@ -48,7 +47,7 @@ const AddCategory = ({ setData }: PropsAddCategory) => {
             <div style={{ marginBottom: 5 }}>
               <Form
                 onSubmit={(data) =>
-                  safeFeth(
+                  fethData(
                     { url: "snacks/", method: "POST", content: data },
                     () => {
                       includeCategory(data.name);

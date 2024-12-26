@@ -4,12 +4,11 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 
 import useModal from "@/hooks/context/useModal";
-import useAuth from "@/hooks/context/useAuth";
 import Modal from "@/components/display/Modal";
 import Form from "@/components/forms/Form";
 import InputField from "@/components/forms/InputField";
 
-import { errorExtractor } from "@/hooks/network/useRequest";
+import useRequest, { errorExtractor } from "@/hooks/network/useRequest";
 import { filterDifferences } from "@/utils/filters";
 import { revealGrow } from "@/styles/animations";
 import { PropsSnack } from "./snack.types";
@@ -24,8 +23,8 @@ const Snack = (dataSnack: PropsSnack) => {
   const lowQuantityInStock = data.quantity_in_stock <= 5;
 
   const {
-    actions: { safeFeth },
-  } = useAuth();
+    actions: { fethData },
+  } = useRequest();
 
   const {
     actions: { addNewModal, removeModal },
@@ -52,7 +51,7 @@ const Snack = (dataSnack: PropsSnack) => {
                   editedValues.price = convertMoney(editedValues.price, true);
                 }
 
-                safeFeth(
+                fethData(
                   {
                     url: `snacks/${data.nameCategory}/${data.name}`,
                     method: "PATCH",

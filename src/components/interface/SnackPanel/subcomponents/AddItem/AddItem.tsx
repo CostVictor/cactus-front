@@ -2,23 +2,21 @@ import Modal from "@/components/display/Modal";
 import useModal from "@/hooks/context/useModal";
 import Form from "@/components/forms/Form";
 import InputField from "@/components/forms/InputField";
-import useAuth from "@/hooks/context/useAuth";
+import useRequest, { errorExtractor } from "@/hooks/network/useRequest";
 
 import { PropsSnack } from "../Snack";
-import { errorExtractor } from "@/hooks/network/useRequest";
-
 import { convertMoney } from "@/utils/formatters";
 import { PropsAddItem } from "./additem.types";
 import style from "./additem.module.scss";
 
 const AddItem = ({ nameCategory, setSnacksList }: PropsAddItem) => {
   const {
-    actions: { safeFeth },
-  } = useAuth();
-
-  const {
     actions: { addNewModal, removeModal },
   } = useModal();
+
+  const {
+    actions: { fethData },
+  } = useRequest();
 
   const includeItem = (name: string, price: string) => {
     const newItem: PropsSnack = {
@@ -45,7 +43,7 @@ const AddItem = ({ nameCategory, setSnacksList }: PropsAddItem) => {
             <div style={{ marginBottom: 5 }}>
               <Form
                 onSubmit={(data) => {
-                  safeFeth(
+                  fethData(
                     {
                       url: `snacks/${nameCategory}`,
                       method: "POST",

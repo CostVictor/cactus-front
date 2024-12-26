@@ -2,7 +2,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Icon } from "@iconify/react";
 import { useState } from "react";
 
-import useAuth from "@/hooks/context/useAuth";
 import useModal from "@/hooks/context/useModal";
 import Modal from "@/components/display/Modal";
 
@@ -11,7 +10,7 @@ import InputField from "@/components/forms/InputField";
 import Button from "@/components/forms/Button";
 
 import { filterDifferences } from "@/utils/filters";
-import { errorExtractor } from "@/hooks/network/useRequest";
+import useRequest, { errorExtractor } from "@/hooks/network/useRequest";
 
 import { fadeInFolder } from "./optionscontroller.variables";
 import { PropsOptionsControler } from "./optionscontroller.types";
@@ -28,12 +27,12 @@ const OptionsController = ({
   const { canEdit, canMinimize, addExtraOptions, button } = folderConfig;
 
   const {
-    actions: { safeFeth },
-  } = useAuth();
-
-  const {
     actions: { addNewModal, removeModal },
   } = useModal();
+
+  const {
+    actions: { fethData },
+  } = useRequest();
 
   /**
    * Abre e fecha o menu da pasta.
@@ -66,10 +65,8 @@ const OptionsController = ({
                 dataForm
               );
 
-              console.log(editedValues);
-
               if (Object.keys(editedValues).length) {
-                safeFeth(
+                fethData(
                   {
                     url: `snacks/${nameCategory}`,
                     method: "PATCH",
