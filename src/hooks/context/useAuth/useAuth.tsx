@@ -1,6 +1,7 @@
 import { useRouter } from "next/navigation";
 import useRequest from "@/hooks/network/useRequest";
 import StorageAuth from "./useauth.storage";
+import Cookies from "js-cookie";
 
 const useAuth = () => {
   const { isAuthenticated, user, loginInState, logoutInState } = StorageAuth();
@@ -20,6 +21,7 @@ const useAuth = () => {
       },
       (res) => {
         loginInState(res.data);
+        console.log(Cookies.get("cookie_auth"));
         router.push(redirectTo);
       }
     );

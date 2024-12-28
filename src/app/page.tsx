@@ -11,7 +11,7 @@ import Container from "@/components/layout/Container";
 import CardInfo from "@/components/display/CardInfo";
 import useRequest from "@/hooks/network/useRequest";
 
-import { convertMoney } from "@/utils/formatters";
+import { convertMoney } from "@/core/formatters";
 
 export default function Home() {
   const {

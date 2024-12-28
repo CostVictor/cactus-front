@@ -1,7 +1,7 @@
 import { ReactElement, MouseEventHandler } from "react"
 import { FieldValues } from "react-hook-form"
 
-import { PropsFormatterData } from "@/utils/formatters"
+import { PropsFormatterData } from "@/core/formatters"
 import { PropsInputField } from "../InputField"
 
 interface PropsFormButton {

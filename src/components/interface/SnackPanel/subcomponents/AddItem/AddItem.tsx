@@ -5,7 +5,7 @@ import InputField from "@/components/forms/InputField";
 import useRequest, { errorExtractor } from "@/hooks/network/useRequest";
 
 import { PropsSnack } from "../Snack";
-import { convertMoney } from "@/utils/formatters";
+import { convertMoney } from "@/core/formatters";
 import { PropsAddItem } from "./additem.types";
 import style from "./additem.module.scss";
 

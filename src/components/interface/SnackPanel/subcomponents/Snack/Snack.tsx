@@ -9,10 +9,10 @@ import Form from "@/components/forms/Form";
 import InputField from "@/components/forms/InputField";
 
 import useRequest, { errorExtractor } from "@/hooks/network/useRequest";
-import { filterDifferences } from "@/utils/filters";
+import { filterDifferences } from "@/core/filters";
 import { revealGrow } from "@/styles/animations";
 import { PropsSnack } from "./snack.types";
-import { convertMoney } from "@/utils/formatters";
+import { convertMoney } from "@/core/formatters";
 import style from "./snack.module.scss";
 
 const Snack = (dataSnack: PropsSnack) => {

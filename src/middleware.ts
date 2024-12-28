@@ -1,11 +1,25 @@
-import { NextResponse } from 'next/server';
-import type { NextRequest } from 'next/server';
+import { NextResponse, NextRequest } from 'next/server';
+import { PropsStorageAuth } from './hooks/context/useAuth/useauth.types';
+
+export const routesRequiredEmployee = ["/order", "/statistic", "/stock"];
 
 export function middleware(request: NextRequest) {
-  const url = request.nextUrl.clone();
+  const cookieAuth = request.cookies.get('cookie_auth');
+  const urlCurrent = request.nextUrl.clone().pathname;
+
+  if (!cookieAuth) {
+    return NextResponse.redirect(new URL("/login", request.url));
+  }
+
+  if (routesRequiredEmployee.some((route) => urlCurrent.startsWith(route))) {
+    const state = JSON.parse(cookieAuth.value).state as PropsStorageAuth;
+
+    if (!state.user || state.user.role !== "employee") {
+      return NextResponse.redirect(new URL("/", request.url));
+    }
+  }
+
   return NextResponse.next();
 }
 
-export const config = {
-  matcher: ["/history", "/order", "/profile", "/statistics", "/stock/:path*"],
-};
+export const config = { matcher: ["/history", "/order", "/profile", "/statistic", "/stock/:path*"] };

@@ -1,5 +1,5 @@
 import { PropsInputConfig, PropsInputOptions } from "./inputfield.types";
-import { convertMoney } from "@/utils/formatters";
+import { convertMoney } from "@/core/formatters";
 
 /**
  * Retorna todas as validações que o input necessita para que ocorra o submit do formulário.

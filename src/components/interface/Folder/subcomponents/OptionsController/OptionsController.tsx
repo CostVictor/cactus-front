@@ -9,7 +9,7 @@ import Form from "@/components/forms/Form";
 import InputField from "@/components/forms/InputField";
 import Button from "@/components/forms/Button";
 
-import { filterDifferences } from "@/utils/filters";
+import { filterDifferences } from "@/core/filters";
 import useRequest, { errorExtractor } from "@/hooks/network/useRequest";
 
 import { fadeInFolder } from "./optionscontroller.variables";
