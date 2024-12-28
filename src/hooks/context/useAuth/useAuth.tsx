@@ -1,43 +1,15 @@
-import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { create } from "zustand";
-import SecureLS from "secure-ls";
-
-import { storageName } from "./useauth.variables";
-import { PropsStorageAuth } from "./useauth.types";
 import useRequest from "@/hooks/network/useRequest";
-
-let secureLS: SecureLS;
-
-const StorageAuth = create<PropsStorageAuth>((set) => ({
-  state: {
-    isAuthenticated: false,
-    user: null,
-  },
-  actions: {
-    loginInState: (user) => {
-      secureLS?.set(storageName, user);
-      set(() => ({ state: { isAuthenticated: true, user } }));
-    },
-    logoutInState: () => {
-      secureLS?.remove(storageName);
-      set(() => ({ state: { isAuthenticated: false, user: null } }));
-    },
-  },
-}));
+import StorageAuth from "./useauth.storage";
 
 const useAuth = () => {
+  const { isAuthenticated, user, loginInState, logoutInState } = StorageAuth();
+  const router = useRouter();
+
   const {
     info: { isLoading },
     actions: { fethData },
   } = useRequest();
-
-  const {
-    state,
-    actions: { loginInState, logoutInState },
-  } = StorageAuth();
-
-  const router = useRouter();
 
   const login = (email: string, password: string, redirectTo: string): void => {
     fethData(
@@ -70,17 +42,10 @@ const useAuth = () => {
     );
   };
 
-  useEffect(() => {
-    secureLS = secureLS ?? new SecureLS({ encodingType: "aes" });
-    const authUser = secureLS.get(storageName);
-
-    if (authUser) loginInState(authUser);
-  }, [loginInState]);
-
   return {
-    state,
-    network: { isLoading },
+    state: { isAuthenticated, user },
     actions: { login, logout },
+    network: { isLoading },
   };
 };
 

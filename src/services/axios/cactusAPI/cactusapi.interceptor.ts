@@ -1,7 +1,8 @@
-import cactusAPI from "./cactusAPI";
-import { redirectToLogin } from "./cactusapi.utils";
+import { StorageAuth } from "@/hooks/context/useAuth";
 
-// Intercepta o erro 401 e tenta atualizar o token.
+import { redirectToLogin } from "./cactusapi.utils";
+import cactusAPI from "./cactusAPI";
+
 cactusAPI.interceptors.response.use(
   response => response,
   async err => {
@@ -21,6 +22,12 @@ cactusAPI.interceptors.response.use(
         redirectToLogin();
         return Promise.reject(refreshError);
       }
+    }
+
+    if (err.response?.status === 403) {
+      StorageAuth.getState().logoutInState();
+      await cactusAPI.post("/session/logout/");
+      window.location.href = "/";
     }
 
     return Promise.reject(err);
