@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction } from "react"
-import { PropsSnack } from "../Snack"
+import { BaseSnack } from "@APISCMapping/snacks.types"
 
 export interface PropsAddItem {
   nameCategory: string
-  setSnacksList: Dispatch<SetStateAction<PropsSnack[]>>
+  setSnacksList: Dispatch<SetStateAction<BaseSnack[]>>
 }

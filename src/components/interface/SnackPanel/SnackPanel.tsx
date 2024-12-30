@@ -43,7 +43,7 @@ const SnackPanel = ({ nameCategory, snacks }: PropsSnackPanel) => {
           <AnimatePresence>
             {snacksList.map((snack, index) => (
               <div key={index}>
-                <Snack {...snack} nameCategory={nameCategory} />
+                <Snack {...snack} />
               </div>
             ))}
           </AnimatePresence>

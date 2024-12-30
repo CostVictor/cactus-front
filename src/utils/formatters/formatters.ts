@@ -1,4 +1,5 @@
-import { PropsDataFormatter, PropsFormatterData } from "./formatters.types";
+import { PropsFormatterData } from "./formatters.types";
+import { BaseData } from "@APISCMapping/data.types";
 
 /**
  * Remove espaços em branco do início e do fim das chaves e valores de um objeto.
@@ -6,8 +7,8 @@ import { PropsDataFormatter, PropsFormatterData } from "./formatters.types";
  * @param data O objeto a ser formatado, que pode conter chaves com valores do tipo string ou objetos aninhados do mesmo tipo.
  * @returns O objeto formatado, onde todas as chaves e valores têm espaços em branco removidos.
  */
-export const trimmerData = (data: PropsDataFormatter) => {
-  const formattedObj: PropsDataFormatter = {};
+export const trimmerData = (data: BaseData) => {
+  const formattedObj: BaseData = {};
 
   Object.entries(data).forEach(([key, value]) => {
     if (typeof value === "object") {
@@ -29,8 +30,8 @@ export const trimmerData = (data: PropsDataFormatter) => {
  * @param omitTo - A string a ser procurada nos nomes das chaves.
  * @returns O objeto resultante com as chaves omitidas.
  */
-export const omitKeys = (data: PropsDataFormatter, omitTo: string) => {
-  const formattedObj: PropsDataFormatter = {};
+export const omitKeys = (data: BaseData, omitTo: string) => {
+  const formattedObj: BaseData = {};
 
   Object.entries(data).forEach(([key, value]) => {
     // Verifica se a chave contém a string omitTo, caso verdade, não inclui em `formattedObj`.
@@ -53,12 +54,12 @@ export const omitKeys = (data: PropsDataFormatter, omitTo: string) => {
  * @param format - O formato a ser aplicado aos dados. Pode ser um array de strings ou objetos com as propriedades `name` e `format`.
  * @returns Um novo objeto contendo os dados formatados.
  */
-export const setFormatData = (data: PropsDataFormatter, format?: PropsFormatterData) => {
+export const setFormatData = (data: BaseData, format?: PropsFormatterData) => {
   if (!format) {
     return data
   }
 
-  const formattedObj: PropsDataFormatter = {};
+  const formattedObj: BaseData = {};
 
   format.forEach(value => {
     if (typeof value === "string") {

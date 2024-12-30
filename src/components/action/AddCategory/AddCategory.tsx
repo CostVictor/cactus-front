@@ -3,20 +3,15 @@ import useModal from "@/hooks/context/useModal";
 import Modal from "@/components/display/Modal";
 import Form from "@/components/forms/Form";
 import InputField from "@/components/forms/InputField";
-import useRequest, { errorExtractor } from "@/hooks/network/useRequest";
 
-import { PropsCategory } from "@/app/stock/snacks/snacks.types";
+import { BaseCategory } from "@APISCMapping/snacks.types";
 import { PropsAddCategory } from "./addcategory.types";
 import style from "./addcategory.module.scss";
 
-const AddCategory = ({ setData }: PropsAddCategory) => {
+const AddCategory = ({ setStockSnacks }: PropsAddCategory) => {
   const {
     actions: { addNewModal, removeModal },
   } = useModal();
-
-  const {
-    actions: { fethData },
-  } = useRequest(); 
 
   /**
    * Adiciona uma nova categoria na exibição da tela.
@@ -24,8 +19,8 @@ const AddCategory = ({ setData }: PropsAddCategory) => {
    * @returns {void}
    */
   const includeCategory = (name: string): void =>
-    setData((prevValue) => {
-      const newCategory: PropsCategory = {
+    setStockSnacks((prevValue) => {
+      const newCategory: BaseCategory = {
         name,
         position_order: prevValue ? prevValue.length + 1 : 1,
         path_img: null,
@@ -46,22 +41,7 @@ const AddCategory = ({ setData }: PropsAddCategory) => {
           <Modal title="Criar Categoria" buttons={null}>
             <div style={{ marginBottom: 5 }}>
               <Form
-                onSubmit={(data) =>
-                  fethData(
-                    { url: "snacks/", method: "POST", content: data },
-                    () => {
-                      includeCategory(data.name);
-                      removeModal(-1);
-                    },
-                    (err) =>
-                      addNewModal(
-                        <Modal
-                          title="Erro ao Criar"
-                          message={errorExtractor(err)}
-                        />
-                      )
-                  )
-                }
+                onSubmit={(data) => console.log(data)}
                 includeButton={{
                   text: "Cancelar",
                   onClick: () => removeModal(-1),

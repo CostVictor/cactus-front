@@ -1,6 +1,6 @@
-import { PropsSnack } from "./subcomponents/Snack"
+import { BaseSnack } from "@APISCMapping/snacks.types";
 
 export interface PropsSnackPanel {
   nameCategory: string
-  snacks: PropsSnack[]
+  snacks: BaseSnack[]
 }

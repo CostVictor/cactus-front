@@ -1,7 +1,5 @@
 "use client";
 
-import { useEffect } from "react";
-
 import Sidebar from "@/components/navigation/Sidebar";
 import Header from "@/components/layout/Header";
 
@@ -11,26 +9,19 @@ import Container from "@/components/layout/Container";
 import CardInfo from "@/components/display/CardInfo";
 import useRequest from "@/hooks/network/useRequest";
 
-import { convertMoney } from "@/core/formatters";
+import { stockSnacksEP } from "@APISCMapping/endpoints";
+import { BaseCategory } from "@APISCMapping/snacks.types";
 
 export default function Home() {
   const {
     info: { data },
-    actions: { fethData },
-  } = useRequest({ initLoading: true });
-
-  useEffect(() => {
-    fethData({
-      url: "snacks/",
-      method: "GET",
-    });
-  }, [fethData]);
+  } = useRequest({ request: { url: stockSnacksEP.base, method: "GET" } });
 
   const targets = [{ text: "Início", link: "#inicio" }];
 
   // Percorre as categorias obtidas da requisição e adiciona a âncora na página.
   if (Array.isArray(data)) {
-    data.forEach((category) => {
+    data.forEach((category: BaseCategory) => {
       const name = category.name;
       targets.push({ text: name, link: `#${name}` });
     });
@@ -53,7 +44,7 @@ export default function Home() {
 
         {Array.isArray(data) &&
           data.length > 0 &&
-          data.map((category, index) => (
+          data.map((category: BaseCategory, index: number) => (
             <Section
               id={category.name}
               key={`section_${category.name}`}
@@ -70,16 +61,14 @@ export default function Home() {
             >
               {Array.isArray(category.snacks) && category.snacks.length > 0 && (
                 <Container grid>
-                  {category.snacks.map(
-                    (snack: { [key: string]: string }, index: number) => (
-                      <CardInfo
-                        key={`snack_${index}-${category.name}`}
-                        title={snack.name}
-                        text={convertMoney(snack.price)}
-                        isSoldOut={!Number(snack.quantity_in_stock)}
-                      />
-                    )
-                  )}
+                  {category.snacks.map((snack) => (
+                    <CardInfo
+                      key={`snack_${index}-${category.name}`}
+                      title={snack.name}
+                      text={snack.price}
+                      isSoldOut={!Number(snack.quantity_in_stock)}
+                    />
+                  ))}
                 </Container>
               )}
             </Section>

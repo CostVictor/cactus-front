@@ -1,22 +1,11 @@
 "use client";
 
-import { useState } from "react";
-import { Icon } from "@iconify/react";
-
 import Header from "@/components/layout/Header";
 import Section from "@/components/layout/Section";
 import Sidebar from "@/components/navigation/Sidebar";
 import NavStock from "@/components/navigation/NavStock";
-import Folder from "@/components/interface/Folder";
-import AddCategory from "@/components/action/AddCategory";
-import SnackPanel from "@/components/interface/SnackPanel";
-
-import { PropsCategory } from "./snacks.types";
-import style from "./snacks.module.scss";
 
 export default function StockSnacks() {
-  const [data, setData] = useState<PropsCategory[] | null>(null);
-
   return (
     <>
       <Header />
@@ -24,9 +13,9 @@ export default function StockSnacks() {
         <Section id="stock_snacks" maxWidthContent>
           <NavStock local="snacks" />
           <hr className="division space" />
-          <div className={style.container_sessions}>
-            {Array.isArray(data) && data.length > 0 ? (
-              data.map((category: PropsCategory, index) => (
+          {/* <div className={style.container_sessions}>
+            {Array.isArray(stockSnacks) && stockSnacks.length > 0 ? (
+              stockSnacks.map((category, index) => (
                 <Folder
                   key={index}
                   name={category.name}
@@ -62,7 +51,7 @@ export default function StockSnacks() {
               </div>
             )}
           </div>
-          <AddCategory setData={setData} />
+          <AddCategory setStockSnacks={setStockSnacks} /> */}
         </Section>
       </main>
       <Sidebar />

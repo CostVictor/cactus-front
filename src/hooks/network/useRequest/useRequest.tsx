@@ -1,65 +1,64 @@
-import { useCallback, useState, useRef } from "react";
-import { AxiosResponse, AxiosError } from "axios";
+import { useCallback, useState, useRef, useEffect } from "react";
+import { AxiosResponse } from "axios";
 
-import {
-  PropsCustomRequest,
-  PropsFethDataFunction,
-} from "./userequest.types";
-
+import { PropsFethDataFunction, PropsCustomRequest } from "./userequest.types";
 import { errorExtractor } from "./userequest.utils";
 
 import Modal from "@/components/display/Modal";
 import useModal from "@/hooks/context/useModal";
 import cactusAPI from "@/services/axios/cactusAPI";
 
-const useRequest = (custom?: PropsCustomRequest, axiosInstance = cactusAPI) => {
+const useRequest = (
+  initialRequest?: PropsFethDataFunction,
+  custom?: PropsCustomRequest
+) => {
   const {
-    forceUpdate = true,
-    initLoading = false,
-    titleError = "Erro",
+    axiosInstance = cactusAPI,
+    forceLoadingRequest = true,
+    showError = { title: "Erro na Requisição" },
   } = custom ?? {};
 
-  const [isLoading, setIsLoading] = useState(initLoading);
   const dataRef = useRef<AxiosResponse | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(
+    forceLoadingRequest ? initialRequest !== undefined : false
+  );
 
   const {
     actions: { addNewModal },
   } = useModal();
 
   const fethData = useCallback(
-    async (
-      { url, method, content, config }: PropsFethDataFunction,
-      onSuccess?: (res: AxiosResponse) => void,
-      onError?: (err: AxiosError) => void,
-      onFinally?: () => void
-    ): Promise<void> => {
-      if (forceUpdate) setIsLoading(true);
+    async ({
+      request,
+      onSuccess,
+      onError,
+      onFinally,
+    }: PropsFethDataFunction): Promise<void> => {
+      if (forceLoadingRequest) setIsLoading(true);
 
       try {
-        const res = await axiosInstance.request({
-          url,
-          method,
-          data: content,
-          ...config,
-        });
+        const res = await axiosInstance.request(request);
         dataRef.current = res;
-
-        if (onSuccess) onSuccess(res);
+        onSuccess?.(res);
       } catch (err: any) {
-        if (onError) {
-          onError(err);
-        } else {
+        onError?.(err);
+
+        if (showError) {
           addNewModal(
-            <Modal title={titleError} message={errorExtractor(err)} />
+            <Modal title={showError.title} message={errorExtractor(err)} />
           );
         }
       } finally {
-        if (forceUpdate) setIsLoading(false);
-        if (onFinally) onFinally();
+        if (forceLoadingRequest) setIsLoading(false);
+        onFinally?.();
       }
     },
-    [axiosInstance, addNewModal, forceUpdate, titleError]
+    [axiosInstance, addNewModal, forceLoadingRequest, showError]
   );
+
+  useEffect(() => {
+    if (initialRequest) fethData(initialRequest);
+  }, [initialRequest, fethData]);
 
   return {
     info: {

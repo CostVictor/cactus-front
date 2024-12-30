@@ -5,6 +5,7 @@ import Modal from "@/components/display/Modal";
 import Form from "@/components/forms/Form";
 import InputField from "@/components/forms/InputField";
 
+import { userEP } from "@APISCMapping/endpoints";
 import { cities, formatDataFormRegister } from "./formregister.variables";
 import { useRouter } from "next/navigation";
 
@@ -26,13 +27,13 @@ const FormRegister = () => {
       formatData={formatDataFormRegister}
       isLoading={isLoading}
       onSubmit={(data) =>
-        fethData(
-          {
-            url: "user/register/",
+        fethData({
+          request: {
+            url: userEP.register,
             method: "POST",
             content: data,
           },
-          (response) =>
+          onSuccess: (response) =>
             addNewModal(
               <Modal
                 title="Cadastro efetuado"
@@ -48,8 +49,8 @@ const FormRegister = () => {
                 ]}
                 {...response.data}
               />
-            )
-        )
+            ),
+        })
       }
     >
       <InputField
