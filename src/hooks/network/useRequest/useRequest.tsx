@@ -1,6 +1,4 @@
 import { useCallback, useState, useRef, useEffect } from "react";
-import { AxiosResponse } from "axios";
-
 import { PropsFethDataFunction, PropsCustomRequest } from "./userequest.types";
 import { errorExtractor } from "./userequest.utils";
 
@@ -8,17 +6,18 @@ import Modal from "@/components/display/Modal";
 import useModalActions from "@/hooks/context/useModal";
 import cactusAPI from "@/services/axios/cactusAPI";
 
-const useRequest = (
+const useRequest = <T,>(
   initialRequest?: PropsFethDataFunction,
   custom?: PropsCustomRequest
 ) => {
   const config = {
     axiosInstance: cactusAPI,
     standardDisplayError: "Erro na Requisição",
+    forceLoadingRequest: true,
     ...custom,
   };
 
-  const dataRef = useRef<AxiosResponse | null>(null);
+  const dataRef = useRef<T | null>(null);
   const initialRequestMadeRef = useRef(false);
 
   const { addNewModal } = useModalActions();
@@ -37,7 +36,7 @@ const useRequest = (
 
       try {
         const res = await config.axiosInstance.request(request);
-        dataRef.current = res;
+        dataRef.current = res.data as T;
         onSuccess?.(res);
       } catch (err: any) {
         onError?.(err);
@@ -72,7 +71,7 @@ const useRequest = (
 
   return {
     info: {
-      data: dataRef.current?.data,
+      data: dataRef.current,
       isLoading,
     },
     actions: { fethData },

@@ -5,7 +5,13 @@ import Section from "@/components/layout/Section";
 import Sidebar from "@/components/navigation/Sidebar";
 import NavStock from "@/components/navigation/NavStock";
 
+import useWebSocket from "@/hooks/network/useWebSocket";
+import { BaseCategory } from "@APISCMapping/snacks.types";
+import { stockSnacksEP } from "@APISCMapping/endpoints";
+
 export default function StockSnacks() {
+  const stockSnacks = useWebSocket<BaseCategory[]>(stockSnacksEP.base);
+
   return (
     <>
       <Header />

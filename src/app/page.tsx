@@ -17,11 +17,13 @@ export default function Home() {
 
   const {
     info: { data },
-  } = useRequest({ request: { url: stockSnacksEP.base, method: "GET" } });
+  } = useRequest<BaseCategory[]>({
+    request: { url: stockSnacksEP.base, method: "GET" },
+  });
 
   // Percorre as categorias obtidas da requisição e adiciona a âncora na página.
   if (Array.isArray(data)) {
-    data.forEach((category: BaseCategory) => {
+    data.forEach((category) => {
       const name = category.name;
       targets.push({ text: name, link: `#${name}` });
     });
@@ -44,7 +46,7 @@ export default function Home() {
 
         {Array.isArray(data) &&
           data.length > 0 &&
-          data.map((category: BaseCategory, indexCategory: number) => (
+          data.map((category, indexCategory) => (
             <Section
               id={category.name}
               key={`section_${category.name}`}
