@@ -5,27 +5,26 @@ import { PropsFethDataFunction, PropsCustomRequest } from "./userequest.types";
 import { errorExtractor } from "./userequest.utils";
 
 import Modal from "@/components/display/Modal";
-import useModal from "@/hooks/context/useModal";
+import useModalActions from "@/hooks/context/useModal";
 import cactusAPI from "@/services/axios/cactusAPI";
 
 const useRequest = (
   initialRequest?: PropsFethDataFunction,
   custom?: PropsCustomRequest
 ) => {
-  const {
-    axiosInstance = cactusAPI,
-    forceLoadingRequest = true,
-    showError = { title: "Erro na Requisição" },
-  } = custom ?? {};
+  const config = {
+    axiosInstance: cactusAPI,
+    standardDisplayError: "Erro na Requisição",
+    ...custom,
+  };
 
   const dataRef = useRef<AxiosResponse | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(
-    forceLoadingRequest ? initialRequest !== undefined : false
-  );
+  const initialRequestMadeRef = useRef(false);
 
-  const {
-    actions: { addNewModal },
-  } = useModal();
+  const { addNewModal } = useModalActions();
+  const [isLoading, setIsLoading] = useState<boolean>(
+    config.forceLoadingRequest ? initialRequest !== undefined : false
+  );
 
   const fethData = useCallback(
     async ({
@@ -34,30 +33,41 @@ const useRequest = (
       onError,
       onFinally,
     }: PropsFethDataFunction): Promise<void> => {
-      if (forceLoadingRequest) setIsLoading(true);
+      if (config.forceLoadingRequest) setIsLoading(true);
 
       try {
-        const res = await axiosInstance.request(request);
+        const res = await config.axiosInstance.request(request);
         dataRef.current = res;
         onSuccess?.(res);
       } catch (err: any) {
         onError?.(err);
 
-        if (showError) {
+        if (config.standardDisplayError) {
           addNewModal(
-            <Modal title={showError.title} message={errorExtractor(err)} />
+            <Modal
+              title={config.standardDisplayError}
+              message={errorExtractor(err)}
+            />
           );
         }
       } finally {
-        if (forceLoadingRequest) setIsLoading(false);
+        if (config.forceLoadingRequest) setIsLoading(false);
         onFinally?.();
       }
     },
-    [axiosInstance, addNewModal, forceLoadingRequest, showError]
+    [
+      addNewModal,
+      config.axiosInstance,
+      config.forceLoadingRequest,
+      config.standardDisplayError,
+    ]
   );
 
   useEffect(() => {
-    if (initialRequest) fethData(initialRequest);
+    if (initialRequest && !initialRequestMadeRef.current) {
+      fethData(initialRequest);
+      initialRequestMadeRef.current = true;
+    }
   }, [initialRequest, fethData]);
 
   return {

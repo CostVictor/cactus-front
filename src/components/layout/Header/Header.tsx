@@ -6,8 +6,8 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 
-import useModal from "@/hooks/context/useModal";
 import useAuth from "@/hooks/context/useAuth";
+import useModalActions from "@/hooks/context/useModal";
 
 import Button from "@/components/forms/Button";
 import NavLink from "@/components/navigation/NavLink";
@@ -19,14 +19,11 @@ import style from "./header.module.scss";
 
 const Header = ({ targets }: PropsHeader) => {
   const headerRef: LegacyRef<HTMLElement> | null = useRef(null);
+  const { addNewModal, removeModal } = useModalActions();
 
   const {
     state: { isAuthenticated },
   } = useAuth();
-
-  const {
-    actions: { addNewModal, removeModal },
-  } = useModal();
 
   useEffect(() => {
     /**

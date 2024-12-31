@@ -44,10 +44,11 @@ const useModal = create<PropsUseModal>((set) => ({
   },
 }));
 
+const useModalActions = () => useModal((storage) => storage.actions);
+const useModalState = () => useModal((storage) => storage.state);
+
 export const ModalManager = () => {
-  const {
-    state: { listModal },
-  } = useModal();
+  const { listModal } = useModalState();
 
   return (
     <AnimatePresence>
@@ -70,4 +71,4 @@ export const ModalManager = () => {
   );
 };
 
-export default useModal;
+export default useModalActions;

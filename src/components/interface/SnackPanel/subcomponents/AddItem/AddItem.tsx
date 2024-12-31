@@ -1,5 +1,5 @@
 import Modal from "@/components/display/Modal";
-import useModal from "@/hooks/context/useModal";
+import useModalActions from "@/hooks/context/useModal";
 import Form from "@/components/forms/Form";
 import InputField from "@/components/forms/InputField";
 import useRequest from "@/hooks/network/useRequest";
@@ -9,10 +9,7 @@ import { PropsAddItem } from "./additem.types";
 import style from "./additem.module.scss";
 
 const AddItem = ({ nameCategory }: PropsAddItem) => {
-  const {
-    actions: { addNewModal, removeModal },
-  } = useModal();
-
+  const { addNewModal, removeModal } = useModalActions();
   const {
     actions: { fethData },
   } = useRequest();
@@ -33,7 +30,7 @@ const AddItem = ({ nameCategory }: PropsAddItem) => {
                   request: {
                     url: stockSnacksEP.category(nameCategory),
                     method: "POST",
-                    content: data,
+                    data,
                   },
                   onSuccess: () => removeModal(-1),
                 })

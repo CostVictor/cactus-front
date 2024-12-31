@@ -5,15 +5,13 @@ export type PropsErrorResponse = { [key: string]: string[] } | undefined
 export interface PropsCustomRequest {
   forceLoadingRequest?: boolean
   axiosInstance?: AxiosInstance
-  showError?: {
-    title: string
-  }
+  standardDisplayError?: string | null
 }
 
 interface PropsRequest {
   url: string;
   method: "GET" | "POST" | "PATCH" | "DELETE";
-  content?: { [key: string]: string }
+  data?: { [key: string]: string }
   config?: AxiosRequestConfig;
 }
 

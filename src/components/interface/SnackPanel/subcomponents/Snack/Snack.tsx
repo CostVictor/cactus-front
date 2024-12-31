@@ -1,7 +1,7 @@
 import { Icon } from "@iconify/react";
 import { motion } from "framer-motion";
 
-import useModal from "@/hooks/context/useModal";
+import useModalActions from "@/hooks/context/useModal";
 import useRequest from "@/hooks/network/useRequest";
 
 import { revealGrow } from "@/styles/animations";
@@ -9,13 +9,10 @@ import { BaseSnack } from "@APISCMapping/snacks.types";
 import style from "./snack.module.scss";
 
 const Snack = (dataSnack: BaseSnack) => {
+  const { addNewModal, removeModal } = useModalActions();
   const {
     actions: { fethData },
   } = useRequest();
-
-  const {
-    actions: { addNewModal, removeModal },
-  } = useModal();
 
   return (
     <motion.article

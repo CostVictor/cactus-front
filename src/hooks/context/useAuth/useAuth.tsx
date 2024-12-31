@@ -11,14 +11,14 @@ const useAuth = () => {
   const {
     info: { isLoading },
     actions: { fethData },
-  } = useRequest(undefined, { showError: undefined });
+  } = useRequest();
 
   const login = (email: string, password: string, redirectTo: string): void => {
     fethData({
       request: {
         url: sessionEP.login,
         method: "POST",
-        content: { email, password },
+        data: { email, password },
       },
       onSuccess: (res) => {
         loginInState(res.data);

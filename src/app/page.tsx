@@ -13,11 +13,11 @@ import { stockSnacksEP } from "@APISCMapping/endpoints";
 import { BaseCategory } from "@APISCMapping/snacks.types";
 
 export default function Home() {
+  const targets = [{ text: "Início", link: "#inicio" }];
+
   const {
     info: { data },
   } = useRequest({ request: { url: stockSnacksEP.base, method: "GET" } });
-
-  const targets = [{ text: "Início", link: "#inicio" }];
 
   // Percorre as categorias obtidas da requisição e adiciona a âncora na página.
   if (Array.isArray(data)) {
@@ -44,7 +44,7 @@ export default function Home() {
 
         {Array.isArray(data) &&
           data.length > 0 &&
-          data.map((category: BaseCategory, index: number) => (
+          data.map((category: BaseCategory, indexCategory: number) => (
             <Section
               id={category.name}
               key={`section_${category.name}`}
@@ -53,17 +53,18 @@ export default function Home() {
                   ? {
                       ...category.description,
                       illustrationUrl: category.description.illustration_url,
-                      illustrationDirection: index % 2 === 0 ? "right" : "left",
+                      illustrationDirection:
+                        indexCategory % 2 === 0 ? "right" : "left",
                     }
                   : undefined
               }
-              backgroundGray={index % 2 === 0}
+              backgroundGray={indexCategory % 2 === 0}
             >
               {Array.isArray(category.snacks) && category.snacks.length > 0 && (
                 <Container grid>
-                  {category.snacks.map((snack) => (
+                  {category.snacks.map((snack, indexSnack) => (
                     <CardInfo
-                      key={`snack_${index}-${category.name}`}
+                      key={`snack_${indexSnack}-${category.name}`}
                       title={snack.name}
                       text={snack.price}
                       isSoldOut={!Number(snack.quantity_in_stock)}

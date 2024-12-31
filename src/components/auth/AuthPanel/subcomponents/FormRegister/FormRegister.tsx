@@ -1,5 +1,5 @@
 import useRequest from "@/hooks/network/useRequest";
-import useModal from "@/hooks/context/useModal";
+import useModalActions from "@/hooks/context/useModal";
 
 import Modal from "@/components/display/Modal";
 import Form from "@/components/forms/Form";
@@ -15,10 +15,7 @@ const FormRegister = () => {
     actions: { fethData },
   } = useRequest();
 
-  const {
-    actions: { addNewModal, removeModal },
-  } = useModal();
-
+  const { addNewModal, removeModal } = useModalActions();
   const router = useRouter();
 
   return (
@@ -31,7 +28,7 @@ const FormRegister = () => {
           request: {
             url: userEP.register,
             method: "POST",
-            content: data,
+            data,
           },
           onSuccess: (response) =>
             addNewModal(

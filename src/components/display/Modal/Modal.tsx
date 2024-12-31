@@ -3,10 +3,8 @@
 import { motion } from "framer-motion";
 
 import Button from "@/components/forms/Button";
-
 import Container from "@/components/layout/Container";
-
-import useModal from "@/hooks/context/useModal";
+import useModalActions from "@/hooks/context/useModal";
 
 import { PropsModal } from "./modal.types";
 import { fadeIn, revealGrow } from "@/styles/animations";
@@ -20,9 +18,7 @@ const Modal = ({
   notOverflow,
   defaultButtonText = "Fechar",
 }: PropsModal) => {
-  const {
-    actions: { removeModal },
-  } = useModal();
+  const { removeModal } = useModalActions();
 
   return (
     <motion.article
