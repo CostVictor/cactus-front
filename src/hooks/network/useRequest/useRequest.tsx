@@ -1,5 +1,5 @@
 import { useCallback, useState, useRef, useEffect } from "react";
-import { PropsFethDataFunction, PropsCustomRequest } from "./userequest.types";
+import { PropsfetchDataFunction, PropsCustomRequest } from "./userequest.types";
 import { errorExtractor } from "./userequest.utils";
 
 import Modal from "@/components/display/Modal";
@@ -7,7 +7,7 @@ import useModalActions from "@/hooks/context/useModal";
 import cactusAPI from "@/services/axios/cactusAPI";
 
 const useRequest = <T,>(
-  initialRequest?: PropsFethDataFunction,
+  initialRequest?: PropsfetchDataFunction,
   custom?: PropsCustomRequest
 ) => {
   const config = {
@@ -25,13 +25,13 @@ const useRequest = <T,>(
     config.forceLoadingRequest ? initialRequest !== undefined : false
   );
 
-  const fethData = useCallback(
+  const fetchData = useCallback(
     async ({
       request,
       onSuccess,
       onError,
       onFinally,
-    }: PropsFethDataFunction): Promise<void> => {
+    }: PropsfetchDataFunction): Promise<void> => {
       if (config.forceLoadingRequest) setIsLoading(true);
 
       try {
@@ -64,17 +64,17 @@ const useRequest = <T,>(
 
   useEffect(() => {
     if (initialRequest && !initialRequestMadeRef.current) {
-      fethData(initialRequest);
+      fetchData(initialRequest);
       initialRequestMadeRef.current = true;
     }
-  }, [initialRequest, fethData]);
+  }, [initialRequest, fetchData]);
 
   return {
     info: {
       data: dataRef.current,
       isLoading,
     },
-    actions: { fethData },
+    actions: { fetchData },
   };
 };
 

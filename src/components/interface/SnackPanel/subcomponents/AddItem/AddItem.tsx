@@ -11,8 +11,8 @@ import style from "./additem.module.scss";
 const AddItem = ({ nameCategory }: PropsAddItem) => {
   const { addNewModal, removeModal } = useModalActions();
   const {
-    actions: { fethData },
-  } = useRequest();
+    actions: { fetchData },
+  } = useRequest<null>();
 
   return (
     <article
@@ -24,36 +24,38 @@ const AddItem = ({ nameCategory }: PropsAddItem) => {
             buttons={null}
             notOverflow
           >
-            <Form
-              onSubmit={(data) =>
-                fethData({
-                  request: {
-                    url: stockSnacksEP.category(nameCategory),
-                    method: "POST",
-                    data,
-                  },
-                  onSuccess: () => removeModal(-1),
-                })
-              }
-              includeButton={{
-                text: "Cancelar",
-                onClick: () => removeModal(-1),
-              }}
-              defaultButtonSubmitText="Criar"
-            >
-              <InputField
-                name="name"
-                label="Nome do item"
-                config={{ validation: { capitalize: "all" } }}
-                required
-              />
-              <InputField
-                name="price"
-                label="Preço"
-                config={{ type: "price" }}
-                required
-              />
-            </Form>
+            <div style={{ marginBottom: 5 }}>
+              <Form
+                onSubmit={(data) =>
+                  fetchData({
+                    request: {
+                      url: stockSnacksEP.category(nameCategory),
+                      method: "POST",
+                      data,
+                    },
+                    onSuccess: () => removeModal(-1),
+                  })
+                }
+                includeButton={{
+                  text: "Cancelar",
+                  onClick: () => removeModal(-1),
+                }}
+                defaultButtonSubmitText="Criar"
+              >
+                <InputField
+                  name="name"
+                  label="Nome do item"
+                  config={{ validation: { capitalize: "all" } }}
+                  required
+                />
+                <InputField
+                  name="price"
+                  label="Preço"
+                  config={{ type: "price" }}
+                  required
+                />
+              </Form>
+            </div>
           </Modal>
         )
       }

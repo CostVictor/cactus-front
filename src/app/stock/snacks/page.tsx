@@ -1,16 +1,24 @@
 "use client";
 
+import { Icon } from "@iconify/react";
+
 import Header from "@/components/layout/Header";
 import Section from "@/components/layout/Section";
 import Sidebar from "@/components/navigation/Sidebar";
 import NavStock from "@/components/navigation/NavStock";
+import Folder from "@/components/interface/Folder";
+import SnackPanel from "@/components/interface/SnackPanel";
+import AddCategory from "@/components/action/AddCategory";
 
 import useWebSocket from "@/hooks/network/useWebSocket";
 import { BaseCategory } from "@APISCMapping/snacks.types";
 import { stockSnacksEP } from "@APISCMapping/endpoints";
+import style from "./snacks.module.scss";
 
 export default function StockSnacks() {
-  const stockSnacks = useWebSocket<BaseCategory[]>(stockSnacksEP.base);
+  const { data, isLoading } = useWebSocket<BaseCategory[]>(stockSnacksEP.base);
+
+  console.log("render");
 
   return (
     <>
@@ -19,9 +27,9 @@ export default function StockSnacks() {
         <Section id="stock_snacks" maxWidthContent>
           <NavStock local="snacks" />
           <hr className="division space" />
-          {/* <div className={style.container_sessions}>
-            {Array.isArray(stockSnacks) && stockSnacks.length > 0 ? (
-              stockSnacks.map((category, index) => (
+          <div className={style.container_sessions}>
+            {Array.isArray(data) && data.length > 0 ? (
+              data.map((category, index) => (
                 <Folder
                   key={index}
                   name={category.name}
@@ -51,13 +59,19 @@ export default function StockSnacks() {
                 </Folder>
               ))
             ) : (
-              <div className={style.not_categories}>
-                <Icon icon="majesticons:information-circle-line"></Icon>
-                <p>Nenhuma categoria foi encontrada</p>
+              <div className={style.message}>
+                {isLoading ? (
+                  <p>Verificando o estoque...</p>
+                ) : (
+                  <>
+                    <Icon icon="majesticons:information-circle-line"></Icon>
+                    <p>Nenhuma categoria foi encontrada</p>
+                  </>
+                )}
               </div>
             )}
           </div>
-          <AddCategory setStockSnacks={setStockSnacks} /> */}
+          <AddCategory />
         </Section>
       </main>
       <Sidebar />

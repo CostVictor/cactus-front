@@ -1,3 +1,5 @@
+"use client";
+
 import { motion, AnimatePresence, useAnimation } from "framer-motion";
 import { useRef, useState } from "react";
 import { Icon } from "@iconify/react";

@@ -15,7 +15,7 @@ interface PropsRequest {
   config?: AxiosRequestConfig;
 }
 
-export interface PropsFethDataFunction {
+export interface PropsfetchDataFunction {
   request: PropsRequest
   onSuccess?: (res: AxiosResponse) => void
   onError?: (err: AxiosError) => void

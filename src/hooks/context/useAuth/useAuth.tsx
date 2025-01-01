@@ -10,11 +10,11 @@ const useAuth = () => {
 
   const {
     info: { isLoading },
-    actions: { fethData },
+    actions: { fetchData },
   } = useRequest();
 
   const login = (email: string, password: string, redirectTo: string): void => {
-    fethData({
+    fetchData({
       request: {
         url: sessionEP.login,
         method: "POST",
@@ -28,7 +28,7 @@ const useAuth = () => {
   };
 
   const logout = () => {
-    fethData({
+    fetchData({
       request: {
         url: sessionEP.logout,
         method: "POST",

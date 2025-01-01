@@ -12,7 +12,7 @@ import { useRouter } from "next/navigation";
 const FormRegister = () => {
   const {
     info: { isLoading },
-    actions: { fethData },
+    actions: { fetchData },
   } = useRequest();
 
   const { addNewModal, removeModal } = useModalActions();
@@ -24,7 +24,7 @@ const FormRegister = () => {
       formatData={formatDataFormRegister}
       isLoading={isLoading}
       onSubmit={(data) =>
-        fethData({
+        fetchData({
           request: {
             url: userEP.register,
             method: "POST",

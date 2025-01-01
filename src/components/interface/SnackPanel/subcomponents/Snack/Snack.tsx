@@ -11,7 +11,7 @@ import style from "./snack.module.scss";
 const Snack = (dataSnack: BaseSnack) => {
   const { addNewModal, removeModal } = useModalActions();
   const {
-    actions: { fethData },
+    actions: { fetchData },
   } = useRequest();
 
   return (

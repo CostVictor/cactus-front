@@ -13,6 +13,7 @@ const StorageCookie = {
       path: "/",
       secure: process.env.NODE_ENV === "production",
       sameSite: "strict",
+      expires: 365,
     }),
   removeItem: () => Cookies.remove(cookieName),
 };
