@@ -2,7 +2,6 @@
 
 .container_main {
   display: flex;
-  position: sticky;
   z-index: 100;
   top: 0;
 
@@ -12,7 +11,9 @@
   margin-left: 4rem;
   width: calc(100% - 4rem);
 
-  &.shadow {
+  &.pos_sticky {
+    position: sticky;
+    overflow-y: auto;
     box-shadow: var(--shadow-default);
   }
 
@@ -37,7 +38,7 @@
     gap: 0.7rem;
 
     .title {
-      font-size: 1.5rem;
+      font-size: 1.7rem;
       color: var(--red-primary);
     }
   }

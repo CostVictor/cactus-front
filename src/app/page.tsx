@@ -1,25 +1,33 @@
 "use client";
 
-import Aside from "@/components/layout/Aside";
+import Sidebar from "@/components/navigation/Sidebar";
 import Header from "@/components/layout/Header";
 
-import Section from "@/components/structural/Section";
-import Container from "@/components/structural/Container";
+import Section from "@/components/layout/Section";
+import Container from "@/components/layout/Container";
 
 import CardInfo from "@/components/display/CardInfo";
-import Modal from "@/components/display/Modal";
+import useRequest from "@/hooks/network/useRequest";
 
-import useModal from "@/hooks/context/useModal";
+import { stockSnacksEP } from "@APISCMapping/endpoints";
+import { BaseCategory } from "@APISCMapping/snacks.types";
 
 export default function Home() {
-  const {
-    actions: { addNewModal },
-  } = useModal();
+  const targets = [{ text: "Início", link: "#inicio" }];
 
-  const targets = [
-    { text: "Início", link: "#inicio" },
-    { text: "Pratos", link: "#pratos" },
-  ];
+  const {
+    info: { data },
+  } = useRequest<BaseCategory[]>({
+    request: { url: stockSnacksEP.base, method: "GET" },
+  });
+
+  // Percorre as categorias obtidas da requisição e adiciona a âncora na página.
+  if (Array.isArray(data)) {
+    data.forEach((category) => {
+      const name = category.name;
+      targets.push({ text: name, link: `#${name}` });
+    });
+  }
 
   return (
     <>
@@ -34,69 +42,42 @@ export default function Home() {
             illustrationUrl: "/image-Chef.svg",
             illustrationDirection: "left",
           }}
-        >
-          <Container grid>
-            <CardInfo
-              title="Card 1"
-              text="Clique em mim!"
-              imgUrl="/imgSection/img1.svg"
-              onClick={() => {
-                addNewModal(
-                  <Modal
-                    title="Card 1"
-                    message="Conteúdo descritivo do Card 1"
-                  />
-                );
-              }}
-            />
-            <CardInfo
-              title="Card 2"
-              text="Clique em mim!"
-              imgUrl="/imgSection/img1.svg"
-              onClick={() => {
-                addNewModal(
-                  <Modal
-                    title="Card 2"
-                    message="Conteúdo descritivo do Card 2"
-                  />
-                );
-              }}
-            />
-            <CardInfo
-              title="Card 3"
-              text="Clique em mim!"
-              imgUrl="/imgSection/img1.svg"
-              onClick={() => {
-                addNewModal(
-                  <Modal
-                    title="Card 3"
-                    message="Conteúdo descritivo do Card 3"
-                  />
-                );
-              }}
-            />
-          </Container>
-        </Section>
+        />
 
-        <Section
-          id="pratos"
-          description={{
-            title: "Experimente nossos Pratos!",
-            text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem eos, accusamus dicta sed dolorum iste reiciendis placeat temporibus non rerum excepturi qui libero ad tenetur numquam.",
-            illustrationUrl: "/image-Dish.svg",
-          }}
-          backgroundGray
-        >
-          <Container grid>
-            <CardInfo title="Segunda" icon="streamline:zero-hunger" />
-            <CardInfo title="Terça" icon="streamline:zero-hunger" />
-            <CardInfo title="Quarta" icon="streamline:zero-hunger" />
-            <CardInfo title="Quinta" icon="streamline:zero-hunger" />
-            <CardInfo title="Sexta" icon="streamline:zero-hunger" />
-          </Container>
-        </Section>
+        {Array.isArray(data) &&
+          data.length > 0 &&
+          data.map((category, indexCategory) => (
+            <Section
+              id={category.name}
+              key={`section_${category.name}`}
+              description={
+                category.description
+                  ? {
+                      ...category.description,
+                      illustrationUrl: category.description.illustration_url,
+                      illustrationDirection:
+                        indexCategory % 2 === 0 ? "right" : "left",
+                    }
+                  : undefined
+              }
+              backgroundGray={indexCategory % 2 === 0}
+            >
+              {Array.isArray(category.snacks) && category.snacks.length > 0 && (
+                <Container grid>
+                  {category.snacks.map((snack, indexSnack) => (
+                    <CardInfo
+                      key={`snack_${indexSnack}-${category.name}`}
+                      title={snack.name}
+                      text={snack.price}
+                      isSoldOut={!Number(snack.quantity_in_stock)}
+                    />
+                  ))}
+                </Container>
+              )}
+            </Section>
+          ))}
       </main>
-      <Aside />
+      <Sidebar />
     </>
   );
 }

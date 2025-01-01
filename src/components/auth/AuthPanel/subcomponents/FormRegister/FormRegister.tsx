@@ -1,23 +1,21 @@
 import useRequest from "@/hooks/network/useRequest";
-import useModal from "@/hooks/context/useModal";
+import useModalActions from "@/hooks/context/useModal";
 
 import Modal from "@/components/display/Modal";
 import Form from "@/components/forms/Form";
 import InputField from "@/components/forms/InputField";
 
+import { userEP } from "@APISCMapping/endpoints";
 import { cities, formatDataFormRegister } from "./formregister.variables";
 import { useRouter } from "next/navigation";
 
 const FormRegister = () => {
   const {
     info: { isLoading },
-    actions: { fethData },
-  } = useRequest("Erro de Cadastro");
+    actions: { fetchData },
+  } = useRequest();
 
-  const {
-    actions: { addNewModal, removeModal },
-  } = useModal();
-
+  const { addNewModal, removeModal } = useModalActions();
   const router = useRouter();
 
   return (
@@ -26,13 +24,13 @@ const FormRegister = () => {
       formatData={formatDataFormRegister}
       isLoading={isLoading}
       onSubmit={(data) =>
-        fethData(
-          {
-            url: "user/register/",
+        fetchData({
+          request: {
+            url: userEP.register,
             method: "POST",
-            content: data,
+            data,
           },
-          (response) =>
+          onSuccess: (response) =>
             addNewModal(
               <Modal
                 title="Cadastro efetuado"
@@ -48,8 +46,8 @@ const FormRegister = () => {
                 ]}
                 {...response.data}
               />
-            )
-        )
+            ),
+        })
       }
     >
       <InputField

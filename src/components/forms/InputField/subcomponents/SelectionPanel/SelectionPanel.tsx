@@ -1,5 +1,5 @@
 import { PropsSelectionPanel } from "./selectionpanel.types";
-import Container from "@/components/structural/Container";
+import Container from "@/components/layout/Container";
 import style from "./selectionpanel.module.scss";
 
 const SelectionPanel = ({

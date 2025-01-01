@@ -5,9 +5,9 @@ import Link from "next/link";
 import { averiaSansLibre } from "@/styles/fonts";
 import { PropsMenuHeader } from "./menuheader.types";
 
-import Container from "@/components/structural/Container";
-import NavLink from "@/components/layout/NavLink";
-import Button from "@/components/commom/Button";
+import Container from "@/components/layout/Container";
+import NavLink from "@/components/navigation/NavLink";
+import Button from "@/components/forms/Button";
 
 import style from "./menuheader.module.scss";
 

@@ -1,7 +1,3 @@
-export interface PropsData {
-  [key: string]: string | PropsData
-}
-
 interface PropsFormatterList {
   name: string, format: PropsFormatterData
 }

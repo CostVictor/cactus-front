@@ -11,11 +11,12 @@ import Message from "./subcomponents/Message";
 
 import {
   formatTel,
+  formatPrice,
   changeValidation,
   checkMessageVisible,
-  getRegisterValidation,
 } from "./inputfield.utils";
 
+import { getRegisterValidation } from "./inputfield.validators";
 import { PropsInputField } from "./inputfield.types";
 import { animateLabel } from "./inputfield.variables";
 import style from "./inputfield.module.scss";
@@ -29,6 +30,7 @@ const InputField = ({
   onChange,
   options,
   config,
+  filterMode,
   required,
 }: PropsInputField) => {
   const [localValue, setLocalValue] = useState<string>(value ?? "");
@@ -60,6 +62,12 @@ const InputField = ({
     if (config?.type === "tel") {
       newValue = formatTel(newValue);
     }
+
+    // Formata o texto se o input for do tipo preço.
+    if (config?.type === "price") {
+      newValue = formatPrice(newValue);
+    }
+
     setLocalValue(newValue);
 
     // Aguarda o usuário parar de escrever antes de enviar o texto do input para uso externo (API).
@@ -72,8 +80,18 @@ const InputField = ({
   };
 
   return (
-    <div className={style.container_main}>
-      <SpanLabel text={label} isActive={localValue !== ""} inFocus={inFocus} />
+    <div
+      className={`${style.container_main} ${
+        filterMode && style.filter_mode
+      }`.trim()}
+    >
+      {!filterMode && (
+        <SpanLabel
+          text={label}
+          isActive={localValue !== ""}
+          inFocus={inFocus}
+        />
+      )}
 
       <div className={style.container_input}>
         {options?.icon && <Icon className={style.icon} icon={options.icon} />}
@@ -120,11 +138,12 @@ const InputField = ({
           type={
             (config?.type === "password" && valueVisible) ||
             config?.type === "tel" ||
-            config?.type === "email" ||
+            config?.type === "price" ||
             options?.selectOptions
               ? "text"
               : config?.type
           }
+          inputMode={config?.type === "price" ? "numeric" : undefined}
           maxLength={config?.validation?.maxLength}
         />
 

@@ -6,7 +6,7 @@ import { useForm, FieldValues } from "react-hook-form";
 import { PropsForm } from "./form.types";
 import { checkHasInputConfirm, getFormMessage } from "./form.utils";
 import { trimmerData, omitKeys, setFormatData } from "@/utils/formatters";
-import Button from "@/components/commom/Button";
+import Button from "@/components/forms/Button";
 
 import InputField from "../InputField";
 import style from "./form.module.scss";

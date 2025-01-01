@@ -7,7 +7,3 @@
     max-width: $limitSize;
   }
 }
-
-@mixin applyGrid($columns) {
-  grid-template-columns: repeat($columns, (100% / $columns));
-}

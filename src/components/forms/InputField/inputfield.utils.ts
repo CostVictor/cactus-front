@@ -2,89 +2,6 @@ import { PropsInputValidation, PropsInputMessage, PropsInputConfig, PropsInputOp
 import { notCapitalize } from "./inputfield.variables";
 
 /**
- * Retorna todas as validações que o input necessita para que ocorra o submit do formulário.
- * @param config Configurações do input (Aplica as validações padrão caso não fornecido).
- * @param equalTo Valor de verificação para inputs de confirmação (Opcional).
- * @param required Opção de input obrigatório (Opcional).
- * @returns Validações de registro do input.
- */
-export const getRegisterValidation = (config?: PropsInputConfig, options?: PropsInputOptions, equalTo?: string, required?: boolean) => {
-  let validation = config?.validation ?? {};
-
-  if (config?.type === "tel") {
-    // Define a configuração padrão do input tipo telefone.
-    validation = {
-      ...validation,
-      minLength: 15,
-      maxLength: 15,
-    };
-    config.validation = validation;
-  } else if (config?.type === "password") {
-    // Define a configuração padrão do input tipo password.
-    validation = {
-      ...validation,
-      minLength: 10,
-    };
-    config.validation = validation;
-  }
-
-  const { minLength, custom } = validation;
-  return {
-    required: required ? "Este campo é obrigatório." : true,
-
-    minLength: minLength
-      ? {
-        value: minLength,
-        message: `Este campo deve conter ${config?.type === "tel"
-          ? `"11" dígitos.`
-          : `pelo menos "${minLength}" caracteres.`
-          }`,
-      }
-      : undefined,
-
-    validate: {
-      ...custom,
-      ...(equalTo
-        ? {
-          confirm: (value: string) =>
-            value === equalTo ||
-            "O valor informado neste campo não coincide com o esperado.",
-        }
-        : {}),
-      ...(config?.type === "email"
-        ? {
-          checkMail: (value: string) =>
-            value.includes("@") ||
-            "Por favor, defina um e-mail válido."
-        }
-        : {}),
-      ...(config?.type === "password"
-        ? {
-          hasUpperCase: (value: string) =>
-            /[A-Z]/.test(value) ||
-            "A senha deve conter pelo menos um caractere maiúsculo.",
-          hasLowerCase: (value: string) =>
-            /[a-z]/.test(value) ||
-            "A senha deve conter pelo menos um caractere minúsculo.",
-          hasNumber: (value: string) =>
-            /\d/.test(value) || "A senha deve conter pelo menos um número.",
-          hasSymbol: (value: string) =>
-            /[\W_]/.test(value) ||
-            "A senha deve conter pelo menos um símbolo especial.",
-        }
-        : {}),
-      ...(options?.selectOptions
-        ? {
-          checkOption: (value: string) =>
-            options.selectOptions?.includes(value) ||
-            "Por favor, selecione uma opção válida."
-        }
-        : {})
-    },
-  };
-}
-
-/**
  * Remove os caracteres não autorizados.
  * @param value Texto recebido através do envento onChange do input.
  * @param validation Validações a serem aplicadas.
@@ -134,6 +51,18 @@ export const formatTel = (value: string) => {
     .replace(/(\(\d{2}\) \d{5})(\d)/, '$1-$2');
 
   return valueReturn
+}
+
+export const formatPrice = (value: string) => {
+  let valueReturn = value.replace(/\D/g, "");
+
+  // Garante que não ultrapasse o valor máximo (10000, equivalente a 100.00)
+  valueReturn = Math.min(parseInt(valueReturn || '0'), 10000).toString();
+
+  const integer = valueReturn.slice(0, -2) || '0';
+  const decimal = valueReturn.slice(-2).padStart(2, '0');
+
+  return `R$ ${integer},${decimal}`;
 }
 
 /**

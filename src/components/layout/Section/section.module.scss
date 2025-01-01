@@ -1,0 +1,180 @@
+@import "@/styles/variables.scss";
+
+$max-width: 75rem;
+$padding: 5rem 3rem;
+$dist-icons: -13rem;
+
+.container_main {
+  min-height: 100vh;
+
+  &.space_sidebar {
+    margin-left: $size-sidebar;
+  }
+
+  &.background_gray {
+    background-color: var(--gray-tertiary);
+  }
+
+  .icon {
+    display: none;
+    position: absolute;
+
+    &.is_left {
+      top: 30%;
+      left: $dist-icons;
+    }
+
+    &.is_right {
+      bottom: 30%;
+      right: $dist-icons;
+    }
+  }
+
+  .container_img {
+    box-shadow: var(--shadow-default);
+    position: relative;
+    width: 100%;
+    height: 240px;
+
+    .img {
+      object-fit: cover;
+    }
+  }
+
+  .container_description {
+    display: flex;
+    max-width: $max-width;
+    padding: $padding;
+    position: relative;
+    margin: auto;
+
+    &.steering_control {
+      flex-direction: row;
+    }
+
+    .container_text {
+      margin: auto;
+      padding: 0 3rem;
+
+      .title {
+        position: relative;
+        background: var(--red-gradient);
+        background-clip: text;
+        color: transparent;
+        font-size: 2rem;
+
+        &::before {
+          content: "";
+          position: absolute;
+          background: var(--red-gradient);
+          border-radius: 50px;
+          bottom: -5px;
+          width: 16rem;
+          height: 3px;
+        }
+      }
+
+      .text {
+        margin: 2rem;
+        font-size: 1.45rem;
+        color: var(--gray-primary);
+      }
+    }
+
+    // largura mínima Desktop
+    @media (max-width: $media-pc-min) {
+      .illustration {
+        width: 37%;
+      }
+
+      .container_text {
+        .title {
+          font-size: 1.95rem;
+        }
+
+        .text {
+          font-size: 1.4rem;
+        }
+      }
+    }
+
+    // Largura Tablet
+    @media (max-width: $media-tablet) {
+      flex-direction: column;
+      align-items: center;
+
+      &.steering_control {
+        flex-direction: column-reverse;
+      }
+
+      .illustration {
+        width: auto;
+      }
+
+      .container_text {
+        padding: 0;
+        margin-bottom: 2rem;
+      }
+    }
+  }
+
+  .container_content {
+    position: relative;
+    padding: $padding;
+    padding-top: 1.5rem;
+
+    max-width: 90rem;
+    margin: auto;
+
+    &.limited_width {
+      padding: $padding;
+      max-width: $max-width;
+    }
+
+    &.no_space_top {
+      padding-top: 0;
+    }
+
+    @media (max-width: 400px) {
+      padding-left: 2.2rem;
+      padding-right: 2.2rem;
+    }
+  }
+
+  @media (min-width: 1550px) {
+    .icon {
+      display: block;
+    }
+  }
+
+  // Largura Mobile
+  @media (max-width: $media-mobile) {
+    &.space_sidebar {
+      margin: 0;
+    }
+  }
+
+  @media (max-width: 500px) {
+    .container_content {
+      &.limited_width {
+        padding: 5rem 6rem;
+      }
+
+      &.no_space_top {
+        padding-top: 0;
+      }
+    }
+  }
+
+  @media (max-width: 430px) {
+    .container_content {
+      &.limited_width {
+        padding: $padding;
+      }
+
+      &.no_space_top {
+        padding-top: 0;
+      }
+    }
+  }
+}

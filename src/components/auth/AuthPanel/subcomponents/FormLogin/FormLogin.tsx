@@ -1,10 +1,10 @@
 import useAuth from "@/hooks/context/useAuth";
-import useModal from "@/hooks/context/useModal";
+import useModalActions from "@/hooks/context/useModal";
 
 import Modal from "@/components/display/Modal";
 import Form from "@/components/forms/Form";
 import InputField from "@/components/forms/InputField";
-import NavLink from "@/components/layout/NavLink";
+import NavLink from "@/components/navigation/NavLink";
 
 import { useSearchParams } from "next/navigation";
 import style from "./formlogin.module.scss";
@@ -15,10 +15,7 @@ const FormLogin = () => {
     actions: { login },
   } = useAuth();
 
-  const {
-    actions: { addNewModal },
-  } = useModal();
-
+  const { addNewModal } = useModalActions();
   const paramsURL = useSearchParams();
 
   return (

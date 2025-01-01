@@ -1,3 +1,4 @@
-import useModal from "./useModal";
+import useModalActions from "./useModal";
+
 export { ModalManager } from "./useModal";
-export default useModal;
+export default useModalActions;

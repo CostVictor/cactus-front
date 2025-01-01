@@ -13,7 +13,7 @@ export const revealGrow: Variants = {
 }
 
 export const enterChild: Variants = {
-  hidden: { opacity: 0, y: -5 },
+  hidden: { opacity: 0, y: -2 },
   visible: { opacity: 1, y: 0 }
 }
 

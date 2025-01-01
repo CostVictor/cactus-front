@@ -1,80 +1,81 @@
-import { AxiosResponse } from "axios";
-import { useState } from "react";
+import { useCallback, useState, useRef, useEffect } from "react";
+import { PropsfetchDataFunction, PropsCustomRequest } from "./userequest.types";
+import { errorExtractor } from "./userequest.utils";
 
-import { PropsErrorResponse, PropsFethDataFunction } from "./userequest.types";
-import cactusAPI from "@/services/axios/cactus-api";
-import useModal from "@/hooks/context/useModal";
 import Modal from "@/components/display/Modal";
-import Cookies from "js-cookie";
+import useModalActions from "@/hooks/context/useModal";
+import cactusAPI from "@/services/axios/cactusAPI";
 
-const useRequest = (defaultTitleError = "Erro", axionInstance = cactusAPI) => {
-  const [data, setData] = useState<AxiosResponse | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-
-  const {
-    actions: { addNewModal },
-  } = useModal();
-
-  /**
-   * Função assíncrona para buscar dados de uma API.
-   *
-   * @param {Object} params - Os parâmetros para a requisição.
-   * @param {string} params.url - A URL da API para a qual a requisição será feita.
-   * @param {string} params.method - O método HTTP a ser utilizado (GET, POST, etc.).
-   * @param {any} params.content - O conteúdo a ser enviado no corpo da requisição (aplicável para métodos como POST).
-   * @param {Object} [params.config] - Configurações adicionais para a requisição (opcional).
-   * @param {function} [onSuccess] - Callback a ser chamado se a requisição for bem-sucedida. Recebe a resposta da API como argumento.
-   * @param {function} [onError] - Callback a ser chamado se a requisição falhar. Recebe o erro como argumento.
-   *
-   * @returns {Promise<void>} - Retorna uma Promise que resolve quando a operação é concluída.
-   */
-  const fethData = async (
-    { url, method, content, config }: PropsFethDataFunction,
-    onSuccess?: (res: AxiosResponse) => void,
-    onError?: (err: any) => void
-  ): Promise<void> => {
-    setIsLoading(true);
-    try {
-      const csrftoken = Cookies.get("csrftoken");
-      const res = await axionInstance.request({
-        url,
-        method,
-        data: content,
-        ...config,
-        headers: {
-          ...config?.headers,
-          "X-CSRFToken": csrftoken,
-        },
-      });
-      setData(res.data);
-
-      if (onSuccess) {
-        onSuccess(res);
-      }
-    } catch (err: any) {
-      if (!onError) {
-        let errorMessage: string | string[] = "A API não está respondendo.";
-
-        if (err.status !== 500) {
-          const errorResponse: PropsErrorResponse = err.response?.data;
-          if (errorResponse) {
-            // Obtem o(s) erro(s) da requição.
-            errorMessage = Object.values(errorResponse).flat();
-          }
-        } else {
-          errorMessage = "Ocorreu um erro interno na API.";
-        }
-
-        addNewModal(<Modal title={defaultTitleError} message={errorMessage} />);
-      } else {
-        onError(err);
-      }
-    } finally {
-      setIsLoading(false);
-    }
+const useRequest = <T,>(
+  initialRequest?: PropsfetchDataFunction,
+  custom?: PropsCustomRequest
+) => {
+  const config = {
+    axiosInstance: cactusAPI,
+    standardDisplayError: "Erro na Requisição",
+    forceLoadingRequest: true,
+    ...custom,
   };
 
-  return { info: { data, isLoading }, actions: { fethData } };
+  const dataRef = useRef<T | null>(null);
+  const initialRequestMadeRef = useRef(false);
+
+  const { addNewModal } = useModalActions();
+  const [isLoading, setIsLoading] = useState<boolean>(
+    config.forceLoadingRequest ? initialRequest !== undefined : false
+  );
+
+  const fetchData = useCallback(
+    async ({
+      request,
+      onSuccess,
+      onError,
+      onFinally,
+    }: PropsfetchDataFunction): Promise<void> => {
+      if (config.forceLoadingRequest) setIsLoading(true);
+
+      try {
+        const res = await config.axiosInstance.request(request);
+        dataRef.current = res.data as T;
+        onSuccess?.(res);
+      } catch (err: any) {
+        onError?.(err);
+
+        if (config.standardDisplayError) {
+          addNewModal(
+            <Modal
+              title={config.standardDisplayError}
+              message={errorExtractor(err)}
+            />
+          );
+        }
+      } finally {
+        if (config.forceLoadingRequest) setIsLoading(false);
+        onFinally?.();
+      }
+    },
+    [
+      addNewModal,
+      config.axiosInstance,
+      config.forceLoadingRequest,
+      config.standardDisplayError,
+    ]
+  );
+
+  useEffect(() => {
+    if (initialRequest && !initialRequestMadeRef.current) {
+      fetchData(initialRequest);
+      initialRequestMadeRef.current = true;
+    }
+  }, [initialRequest, fetchData]);
+
+  return {
+    info: {
+      data: dataRef.current,
+      isLoading,
+    },
+    actions: { fetchData },
+  };
 };
 
 export default useRequest;

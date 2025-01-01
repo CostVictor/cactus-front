@@ -1,4 +1,5 @@
-import { PropsData, PropsFormatterData } from "./formatters.types";
+import { PropsFormatterData } from "./formatters.types";
+import { BaseData } from "@APISCMapping/data.types";
 
 /**
  * Remove espaços em branco do início e do fim das chaves e valores de um objeto.
@@ -6,8 +7,8 @@ import { PropsData, PropsFormatterData } from "./formatters.types";
  * @param data O objeto a ser formatado, que pode conter chaves com valores do tipo string ou objetos aninhados do mesmo tipo.
  * @returns O objeto formatado, onde todas as chaves e valores têm espaços em branco removidos.
  */
-export const trimmerData = (data: PropsData) => {
-  const formattedObj: PropsData = {};
+export const trimmerData = (data: BaseData) => {
+  const formattedObj: BaseData = {};
 
   Object.entries(data).forEach(([key, value]) => {
     if (typeof value === "object") {
@@ -29,8 +30,8 @@ export const trimmerData = (data: PropsData) => {
  * @param omitTo - A string a ser procurada nos nomes das chaves.
  * @returns O objeto resultante com as chaves omitidas.
  */
-export const omitKeys = (data: PropsData, omitTo: string) => {
-  const formattedObj: PropsData = {};
+export const omitKeys = (data: BaseData, omitTo: string) => {
+  const formattedObj: BaseData = {};
 
   Object.entries(data).forEach(([key, value]) => {
     // Verifica se a chave contém a string omitTo, caso verdade, não inclui em `formattedObj`.
@@ -53,12 +54,12 @@ export const omitKeys = (data: PropsData, omitTo: string) => {
  * @param format - O formato a ser aplicado aos dados. Pode ser um array de strings ou objetos com as propriedades `name` e `format`.
  * @returns Um novo objeto contendo os dados formatados.
  */
-export const setFormatData = (data: PropsData, format?: PropsFormatterData) => {
+export const setFormatData = (data: BaseData, format?: PropsFormatterData) => {
   if (!format) {
     return data
   }
 
-  const formattedObj: PropsData = {};
+  const formattedObj: BaseData = {};
 
   format.forEach(value => {
     if (typeof value === "string") {
@@ -70,4 +71,26 @@ export const setFormatData = (data: PropsData, format?: PropsFormatterData) => {
   })
 
   return formattedObj
+}
+
+/**
+ * Formata um valor monetário no formato brasileiro ou extrai o valor numérico, dependendo do parâmetro `reverse`.
+ * @param {string} value - A string de entrada contendo o valor monetário a ser formatado.
+ * @param {boolean} [reverse=false] - Se true, retorna o valor numérico no formato padrão (ex.: "120.50"), sem o símbolo de moeda.
+ * @returns - O valor monetário formatado. Retorna "0.00" se nenhum número válido for encontrado.
+ */
+export const convertMoney = (value: string, reverse: boolean = false) => {
+  // Obtem os valor numérico do texto.
+  const money = value.replace(",", ".").match(/\d+(\.\d+)?/g)
+
+  if (money) {
+    const value = money[0]
+
+    if (reverse) {
+      return value
+    }
+
+    return `R$ ${value.replace(".", ",")}`
+  }
+  return "0.00"
 }
