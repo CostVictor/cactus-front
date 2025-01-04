@@ -7,6 +7,7 @@ const Button = ({
   text,
   type,
   clicked,
+  noShadow,
   onClick,
   isLoading,
   appearance = "normal",
@@ -19,6 +20,7 @@ const Button = ({
     <button
       type={type}
       className={btnClass}
+      style={{ boxShadow: noShadow ? "none" : undefined }}
       onClick={isLoading ? undefined : onClick}
     >
       {text}

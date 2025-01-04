@@ -18,7 +18,7 @@ interface PropsNotificationFolder {
 
 
 export interface PropsFolderConfig {
-  canEdit?: boolean
+  edit?: () => void
   canMinimize?: boolean
   expandUntil?: string
   addExtraOptions?: PropsExtraOptionsFolder[]
@@ -31,7 +31,6 @@ export interface PropsFolderConfig {
 
 export interface PropsFolder {
   name: string
-  description?: { title: string, text: string } | null
   children: ReactNode
   open?: boolean
   internal?: boolean | number

@@ -5,6 +5,7 @@ export interface PropsButton {
   appearance?: "normal" | "main" | "submit"
   type?: "submit" | "button"
   clicked?: boolean
+  noShadow?: boolean
   onClick?: MouseEventHandler<HTMLButtonElement>
   isLoading?: boolean
 }

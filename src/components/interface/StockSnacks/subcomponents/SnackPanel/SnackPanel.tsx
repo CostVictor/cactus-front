@@ -8,30 +8,31 @@ import Snack from "./subcomponents/Snack";
 import Container from "@/components/layout/Container";
 import InputField from "@/components/forms/InputField";
 import AddItem from "./subcomponents/AddItem";
+import useModalActions from "@/hooks/context/useModal";
+import EditItem from "./subcomponents/EditItem";
 
 import { PropsSnackPanel } from "./snackpanel.types";
 import style from "./snackpanel.module.scss";
 
 const SnackPanel = ({ nameCategory, snacks }: PropsSnackPanel) => {
-  const [snacksList, setSnacksList] = useState(snacks);
+  const [filteredName, setFilteredName] = useState("");
+  const { addNewModal } = useModalActions();
+
+  const snacksFiltered = snacks.filter((snack) =>
+    snack.name.toLowerCase().includes(filteredName.toLowerCase())
+  );
 
   return (
     <div>
       <InputField
         name={`filter-${nameCategory}`}
         label="Filtrar item..."
-        onChange={(_, text) =>
-          setSnacksList(
-            snacks.filter((snack) =>
-              snack.name.toLowerCase().includes(text.toLowerCase())
-            )
-          )
-        }
+        onChange={(_, text) => setFilteredName(text)}
         filterMode
       />
       <hr className="division" style={{ margin: "1rem 0" }} />
 
-      {!snacksList.length && (
+      {!snacksFiltered.length && (
         <div className={style.not_item}>
           <Icon icon="majesticons:information-circle-line"></Icon>
           <p>Nenhum item encontrado</p>
@@ -39,12 +40,19 @@ const SnackPanel = ({ nameCategory, snacks }: PropsSnackPanel) => {
       )}
 
       <Container grid={5}>
-        <AddItem nameCategory={nameCategory} setSnacksList={setSnacksList} />
+        <AddItem nameCategory={nameCategory} />
 
-        {snacksList.length > 0 && (
+        {snacksFiltered.length > 0 && (
           <AnimatePresence>
-            {snacksList.map((snack, index) => (
-              <div key={index}>
+            {snacksFiltered.map((snack, index) => (
+              <div
+                key={index}
+                onClick={() =>
+                  addNewModal(
+                    <EditItem nameCategory={nameCategory} dataSnack={snack} />
+                  )
+                }
+              >
                 <Snack {...snack} />
               </div>
             ))}

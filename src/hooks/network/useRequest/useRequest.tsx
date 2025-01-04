@@ -1,3 +1,5 @@
+"use client";
+
 import { useCallback, useState, useRef, useEffect } from "react";
 import { PropsfetchDataFunction, PropsCustomRequest } from "./userequest.types";
 import { errorExtractor } from "./userequest.utils";

@@ -12,7 +12,10 @@ const AddItem = ({ nameCategory }: PropsAddItem) => {
   const { addNewModal, removeModal } = useModalActions();
   const {
     actions: { fetchData },
-  } = useRequest<null>();
+  } = useRequest<null>(undefined, {
+    standardDisplayError: `Erro ao criar um item em ${nameCategory}`,
+    forceLoadingRequest: false,
+  });
 
   return (
     <article

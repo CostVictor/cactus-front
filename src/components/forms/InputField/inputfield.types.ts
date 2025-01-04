@@ -1,4 +1,4 @@
-import { UseFormRegister, FieldValues } from "react-hook-form"
+import { UseFormRegister, FieldValues, UseFormSetValue } from "react-hook-form"
 
 type PropsOnChange = (key: string, newValue: string) => void;
 
@@ -36,6 +36,7 @@ export interface PropsInputField {
   label: string;
   value?: string;
   onChange?: PropsOnChange;
+  synchronize?: UseFormSetValue<FieldValues> | PropsOnChange;
   equalTo?: string;
   message?: PropsInputMessage;
   options?: PropsInputOptions;

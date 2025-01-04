@@ -1,3 +1,5 @@
+"use client";
+
 import useModalActions from "@/hooks/context/useModal";
 import useRequest from "@/hooks/network/useRequest";
 
@@ -12,7 +14,10 @@ const AddCategory = () => {
   const { addNewModal, removeModal } = useModalActions();
   const {
     actions: { fetchData },
-  } = useRequest<null>();
+  } = useRequest<null>(undefined, {
+    forceLoadingRequest: false,
+    standardDisplayError: "Erro ao criar a categoria",
+  });
 
   return (
     <div

@@ -16,7 +16,6 @@ import style from "./folder.module.scss";
 
 const Folder = ({
   name,
-  description,
   children,
   open,
   internal,
@@ -25,7 +24,6 @@ const Folder = ({
 }: PropsFolder) => {
   // Configuração padrão da pasta.
   folderConfig = {
-    canEdit: true,
     canMinimize: true,
     expandUntil: "30rem",
     ...folderConfig,
@@ -84,8 +82,6 @@ const Folder = ({
         </div>
 
         <OptionsController
-          nameCategory={name}
-          descriptionCategory={description}
           isFolderOpen={isOpen}
           toggleOpenFolder={toggleOpenFolder}
           folderConfig={folderConfig}

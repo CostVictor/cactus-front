@@ -2,29 +2,19 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Icon } from "@iconify/react";
 import { useState } from "react";
 
-import useModal from "@/hooks/context/useModal";
-import Modal from "@/components/display/Modal";
-
-import Form from "@/components/forms/Form";
-import InputField from "@/components/forms/InputField";
 import Button from "@/components/forms/Button";
-
-import { filterDifferences } from "@/utils/filters";
-import useRequest, { errorExtractor } from "@/hooks/network/useRequest";
-
 import { fadeInFolder } from "./optionscontroller.variables";
 import { PropsOptionsControler } from "./optionscontroller.types";
 import style from "./optionscontroller.module.scss";
 
 const OptionsController = ({
-  nameCategory,
-  descriptionCategory,
   isFolderOpen,
   toggleOpenFolder,
   folderConfig,
 }: PropsOptionsControler) => {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
-  const { canEdit, canMinimize, addExtraOptions, button } = folderConfig;
+  const { edit, canMinimize, addExtraOptions, button } = folderConfig;
+  const shouldRenderOptions = edit || canMinimize || addExtraOptions || button;
 
   /**
    * Abre e fecha o menu da pasta.
@@ -32,7 +22,7 @@ const OptionsController = ({
   const toggleMenu = () => setIsMenuOpen((prevValue) => !prevValue);
 
   return (
-    (canEdit || canMinimize || addExtraOptions || button) && (
+    shouldRenderOptions && (
       <div className={`${style.container_main}`}>
         <AnimatePresence>
           {button && isFolderOpen && !isMenuOpen && (
@@ -52,7 +42,7 @@ const OptionsController = ({
           )}
         </AnimatePresence>
 
-        {(canEdit || addExtraOptions) && (
+        {(edit || addExtraOptions) && (
           <>
             <AnimatePresence>
               {isMenuOpen && (
@@ -65,25 +55,24 @@ const OptionsController = ({
                   transition={{ duration: 0.15 }}
                 >
                   <div className={style.options}>
-                    {addExtraOptions &&
-                      addExtraOptions.length > 0 &&
-                      addExtraOptions.map((option, index) => (
-                        <Icon
-                          key={index}
-                          className={style.icon}
-                          onClick={option.onClick}
-                          icon={option.icon}
-                          style={{
-                            color: `var(--${
-                              option.color !== "normal" ? option.color : "gray"
-                            }-primary)`,
-                          }}
-                        />
-                      ))}
-                    {canEdit && (
+                    {addExtraOptions?.map((option, index) => (
+                      <Icon
+                        key={index}
+                        className={style.icon}
+                        onClick={option.onClick}
+                        icon={option.icon}
+                        style={{
+                          color: `var(--${
+                            option.color !== "normal" ? option.color : "gray"
+                          }-primary)`,
+                        }}
+                      />
+                    ))}
+                    {edit && (
                       <Icon
                         icon="majesticons:pencil-alt-line"
                         className={style.icon}
+                        onClick={edit}
                       />
                     )}
                   </div>

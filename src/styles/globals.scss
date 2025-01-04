@@ -23,6 +23,16 @@ body {
     overflow: hidden;
   }
 
+  .marker {
+    position: relative;
+    text-align: center;
+    font-size: 1.1rem;
+    padding: 0.4rem 0;
+    margin-bottom: 0.5rem;
+    color: var(--division-intense);
+    border-bottom: 1px dashed var(--division-intense);
+  }
+
   .division {
     border: 0;
     border-bottom: 1px solid var(--division);

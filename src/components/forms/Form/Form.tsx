@@ -17,10 +17,12 @@ const Form = ({
   includeButton,
   formatData,
   isLoading,
+  defaultButtonSubmitAppearance = "submit",
   defaultButtonSubmitText = "Enviar",
 }: PropsForm) => {
   const {
     watch,
+    setValue,
     register,
     handleSubmit,
     formState: { errors },
@@ -44,6 +46,7 @@ const Form = ({
                   child.props.equalTo ?? ""
                 ),
                 message: getFormMessage(child, errors),
+                synchronize: setValue,
                 value: child.props.value,
                 equalTo: child.props.equalTo
                   ? watch(child.props.equalTo)
@@ -68,7 +71,7 @@ const Form = ({
         <Button
           type={isLoading ? "button" : "submit"}
           text={defaultButtonSubmitText}
-          appearance={includeButton ? "main" : "submit"}
+          appearance={includeButton ? "main" : defaultButtonSubmitAppearance}
           isLoading={isLoading}
         />
       </div>

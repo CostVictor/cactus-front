@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, ChangeEvent, useRef, useMemo } from "react";
 import { RegisterOptions } from "react-hook-form";
 import { motion } from "framer-motion";
@@ -28,6 +30,7 @@ const InputField = ({
   message,
   equalTo,
   onChange,
+  synchronize,
   options,
   config,
   filterMode,
@@ -68,6 +71,7 @@ const InputField = ({
       newValue = formatPrice(newValue);
     }
 
+    synchronize?.(name, newValue);
     setLocalValue(newValue);
 
     // Aguarda o usuário parar de escrever antes de enviar o texto do input para uso externo (API).

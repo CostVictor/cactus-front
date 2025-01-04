@@ -12,8 +12,10 @@ interface PropsFormButton {
 export interface PropsForm {
   children: ReactElement<PropsInputField> | ReactElement<PropsInputField>[]
   onSubmit: (data: FieldValues) => void
+  onChange?: (key: string, newValue: string) => void
   includeButton?: PropsFormButton
   defaultButtonSubmitText?: string
+  defaultButtonSubmitAppearance?: "submit" | "main" | "normal"
   formatData?: PropsFormatterData
   isLoading?: boolean
 }

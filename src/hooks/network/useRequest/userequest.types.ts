@@ -11,7 +11,7 @@ export interface PropsCustomRequest {
 interface PropsRequest {
   url: string;
   method: "GET" | "POST" | "PATCH" | "DELETE";
-  data?: { [key: string]: string }
+  data?: { [key: string]: string | string[] }
   config?: AxiosRequestConfig;
 }
 
