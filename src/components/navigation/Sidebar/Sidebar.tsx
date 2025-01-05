@@ -7,17 +7,14 @@ import { Icon } from "@iconify/react";
 
 import { inter } from "@/styles/fonts";
 import { fadeIn } from "@/styles/animations";
-import useAuth from "@/hooks/context/useAuth";
+import useAuthState from "@/hooks/context/useAuth";
 
 import { listSidebarItems } from "./sidebar.variables";
 import ItemSidebar from "./subcomponents/Item";
 import style from "./sidebar.module.scss";
 
 const Sidebar = () => {
-  const {
-    state: { isAuthenticated, user },
-  } = useAuth();
-
+  const { isAuthenticated, user } = useAuthState();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const pathCurrent = usePathname();
 

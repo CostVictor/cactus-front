@@ -45,14 +45,14 @@ const useModal = create<PropsUseModal>((set) => ({
 }));
 
 const useModalActions = () => useModal((storage) => storage.actions);
-const useModalState = () => useModal((storage) => storage.state);
+export const useModalState = () => useModal((storage) => storage.state);
 
 export const ModalManager = () => {
   const { listModal } = useModalState();
 
   return (
     <AnimatePresence>
-      {listModal.length ? (
+      {listModal.length > 0 && (
         <motion.div
           className="block_shadow"
           animate={{
@@ -66,7 +66,7 @@ export const ModalManager = () => {
         >
           {listModal[listModal.length - 1]}
         </motion.div>
-      ) : null}
+      )}
     </AnimatePresence>
   );
 };

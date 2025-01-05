@@ -22,12 +22,6 @@
     border: 1px solid var(--division);
   }
 
-  .icon {
-    font-size: 2.2rem;
-    color: var(--gray-primary);
-    cursor: pointer;
-  }
-
   .container_logo {
     display: flex;
     align-items: center;
@@ -41,13 +35,6 @@
       font-size: 1.7rem;
       color: var(--red-primary);
     }
-  }
-
-  .container_menu {
-    display: none;
-    align-items: center;
-    margin: 1rem;
-    margin-left: auto;
   }
 
   .container_content {
@@ -68,10 +55,6 @@
 
     .container_content {
       display: none;
-    }
-
-    .container_menu {
-      display: flex;
     }
   }
 }

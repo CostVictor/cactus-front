@@ -1,4 +1,4 @@
-import useAuth from "@/hooks/context/useAuth";
+import { useAuthActions } from "@/hooks/context/useAuth";
 import useModalActions from "@/hooks/context/useModal";
 
 import Modal from "@/components/display/Modal";
@@ -13,7 +13,7 @@ const FormLogin = () => {
   const {
     network: { isLoading },
     actions: { login },
-  } = useAuth();
+  } = useAuthActions();
 
   const { addNewModal } = useModalActions();
   const paramsURL = useSearchParams();

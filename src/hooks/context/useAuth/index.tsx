@@ -1,5 +1,6 @@
-import useAuth from "./useAuth";
+import useAuthState from "./useAuth";
 import StorageAuth from "./useauth.storage";
 
-export default useAuth;
+export default useAuthState;
 export { StorageAuth };
+export { useAuthActions } from "./useAuth";

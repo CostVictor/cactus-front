@@ -4,14 +4,18 @@ import StorageAuth from "./useauth.storage";
 
 import { sessionEP } from "@APISCMapping/endpoints";
 
-const useAuth = () => {
-  const { isAuthenticated, user, loginInState, logoutInState } = StorageAuth();
+export const useAuthState = () => StorageAuth((storage) => storage.state);
+
+export const useAuthActions = () => {
   const router = useRouter();
+  const { loginInState, logoutInState } = StorageAuth(
+    (storage) => storage.actions
+  );
 
   const {
     info: { isLoading },
     actions: { fetchData },
-  } = useRequest();
+  } = useRequest<null>();
 
   const login = (email: string, password: string, redirectTo: string): void => {
     fetchData({
@@ -41,10 +45,9 @@ const useAuth = () => {
   };
 
   return {
-    state: { isAuthenticated, user },
     actions: { login, logout },
     network: { isLoading },
   };
 };
 
-export default useAuth;
+export default useAuthState;
