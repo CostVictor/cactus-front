@@ -13,11 +13,11 @@ import EditCategory from "./subcomponents/EditCategory";
 import EditOrderCategory from "./subcomponents/EditOrderCategory";
 
 import { BaseCategory } from "@APISCMapping/snacks.types";
-import { stockSnacksEP } from "@APISCMapping/endpoints";
+import { stockSnackEP } from "@APISCMapping/endpoints";
 import style from "./stocksnacks.module.scss";
 
 const StockSnacks = () => {
-  const { data, isLoading } = useWebSocket<BaseCategory[]>(stockSnacksEP.base);
+  const { data, isLoading } = useWebSocket<BaseCategory[]>(stockSnackEP.base);
   const { addNewModal } = useModalActions();
 
   return (

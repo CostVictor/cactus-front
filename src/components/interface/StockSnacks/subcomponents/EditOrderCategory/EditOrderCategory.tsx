@@ -6,7 +6,7 @@ import useRequest from "@/hooks/network/useRequest";
 import useModalActions from "@/hooks/context/useModal";
 import Modal from "@/components/display/Modal";
 
-import { stockSnacksEP } from "@APISCMapping/endpoints";
+import { stockSnackEP } from "@APISCMapping/endpoints";
 import { EditOrderCategoryProps } from "./editordercategory.types";
 import style from "./editordercategory.module.scss";
 
@@ -32,7 +32,7 @@ const EditOrderCategory = ({ listCategories }: EditOrderCategoryProps) => {
             if (JSON.stringify(categories) !== JSON.stringify(listCategories)) {
               fetchData({
                 request: {
-                  url: stockSnacksEP.base,
+                  url: stockSnackEP.base,
                   data: { update_position_order: categories },
                   method: "PATCH",
                 },

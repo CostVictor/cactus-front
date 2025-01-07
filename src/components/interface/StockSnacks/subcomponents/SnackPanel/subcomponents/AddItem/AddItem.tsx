@@ -4,7 +4,7 @@ import Form from "@/components/forms/Form";
 import InputField from "@/components/forms/InputField";
 import useRequest from "@/hooks/network/useRequest";
 
-import { stockSnacksEP } from "@APISCMapping/endpoints";
+import { stockSnackEP } from "@APISCMapping/endpoints";
 import { PropsAddItem } from "./additem.types";
 import style from "./additem.module.scss";
 
@@ -32,7 +32,7 @@ const AddItem = ({ nameCategory }: PropsAddItem) => {
                 onSubmit={(data) =>
                   fetchData({
                     request: {
-                      url: stockSnacksEP.category(nameCategory),
+                      url: stockSnackEP.category(nameCategory),
                       method: "POST",
                       data,
                     },

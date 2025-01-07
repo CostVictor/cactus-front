@@ -7,7 +7,7 @@ import Modal from "@/components/display/Modal";
 import Form from "@/components/forms/Form";
 import InputField from "@/components/forms/InputField";
 
-import { stockSnacksEP } from "@APISCMapping/endpoints";
+import { stockSnackEP } from "@APISCMapping/endpoints";
 import style from "./addcategory.module.scss";
 
 const AddCategory = () => {
@@ -30,7 +30,7 @@ const AddCategory = () => {
                 onSubmit={(data) =>
                   fetchData({
                     request: {
-                      url: stockSnacksEP.base,
+                      url: stockSnackEP.base,
                       method: "POST",
                       data,
                     },

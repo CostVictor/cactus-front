@@ -8,7 +8,7 @@ import Button from "@/components/forms/Button";
 
 import { FieldValues } from "react-hook-form";
 import { filterDifferences } from "@/utils/filters";
-import { stockSnacksEP } from "@APISCMapping/endpoints";
+import { stockSnackEP } from "@APISCMapping/endpoints";
 import { EditItemProps } from "./edititem.types";
 
 const EditItem = ({ dataSnack, nameCategory }: EditItemProps) => {
@@ -32,7 +32,7 @@ const EditItem = ({ dataSnack, nameCategory }: EditItemProps) => {
     if (Object.keys(differences).length) {
       fetchData({
         request: {
-          url: stockSnacksEP.item(nameCategory, dataSnack.name),
+          url: stockSnackEP.item(nameCategory, dataSnack.name),
           method: "PATCH",
           data: differences,
         },
@@ -102,7 +102,7 @@ const EditItem = ({ dataSnack, nameCategory }: EditItemProps) => {
                       onClick: () =>
                         fetchData({
                           request: {
-                            url: stockSnacksEP.item(
+                            url: stockSnackEP.item(
                               nameCategory,
                               dataSnack.name
                             ),

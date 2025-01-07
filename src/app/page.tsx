@@ -9,7 +9,7 @@ import Container from "@/components/layout/Container";
 import CardInfo from "@/components/display/CardInfo";
 import useRequest from "@/hooks/network/useRequest";
 
-import { stockSnacksEP } from "@APISCMapping/endpoints";
+import { stockSnackEP } from "@APISCMapping/endpoints";
 import { BaseCategory } from "@APISCMapping/snacks.types";
 
 export default function Home() {
@@ -18,7 +18,7 @@ export default function Home() {
   const {
     info: { data },
   } = useRequest<BaseCategory[]>({
-    request: { url: stockSnacksEP.base, method: "GET" },
+    request: { url: stockSnackEP.base, method: "GET" },
   });
 
   // Percorre as categorias obtidas da requisição e adiciona a âncora na página.

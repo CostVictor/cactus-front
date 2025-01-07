@@ -8,7 +8,7 @@ import Button from "@/components/forms/Button";
 
 import { FieldValues } from "react-hook-form";
 import { filterDifferences } from "@/utils/filters";
-import { stockSnacksEP } from "@APISCMapping/endpoints";
+import { stockSnackEP } from "@APISCMapping/endpoints";
 import { BaseCategory } from "@APISCMapping/snacks.types";
 
 const EditCategory = ({ category }: { category: BaseCategory }) => {
@@ -41,7 +41,7 @@ const EditCategory = ({ category }: { category: BaseCategory }) => {
 
       fetchData({
         request: {
-          url: stockSnacksEP.category(category.name),
+          url: stockSnackEP.category(category.name),
           method: "PATCH",
           data: differences,
         },
@@ -116,7 +116,7 @@ const EditCategory = ({ category }: { category: BaseCategory }) => {
                       onClick: () =>
                         fetchData({
                           request: {
-                            url: stockSnacksEP.category(category.name),
+                            url: stockSnackEP.category(category.name),
                             method: "DELETE",
                           },
                           onSuccess: () => {

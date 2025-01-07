@@ -83,6 +83,8 @@ const Sidebar = () => {
                         isActive={
                           pathCurrent === "/"
                             ? item.url === pathCurrent
+                            : item.urlAlias
+                            ? pathCurrent.includes(item.urlAlias)
                             : item.url.includes(pathCurrent)
                         }
                       />
