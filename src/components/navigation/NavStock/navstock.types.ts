@@ -1,3 +1,3 @@
 export interface PropsNavStock {
-  local: "snacks" | "dishes"
+  local: "snack" | "lunch"
 }

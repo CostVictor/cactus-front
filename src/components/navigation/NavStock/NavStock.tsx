@@ -11,16 +11,16 @@ const NavStock = ({ local }: PropsNavStock) => {
     <nav className={style.container_main}>
       <h2>Estoques</h2>
       <Container className={style.container_options}>
-        {local === "snacks" ? (
+        {local === "snack" ? (
           <>
             <Button text="Lanches" clicked />
-            <Link href="/stock/dishes">
+            <Link href="/stock/lunch">
               <Button text="Almoços" />
             </Link>
           </>
         ) : (
           <>
-            <Link href="/stock/snacks">
+            <Link href="/stock/snack">
               <Button text="Lanches" />
             </Link>
             <Button text="Almoços" clicked />

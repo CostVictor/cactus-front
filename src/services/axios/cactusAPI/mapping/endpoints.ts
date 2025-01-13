@@ -20,8 +20,8 @@ export const stockSnackEP = {
 };
 
 export const stockLunchEP = {
-  base: "lunch",
-  baseIngredient: "lunch/ingredients",
+  base: "lunch/",
+  baseIngredient: "lunch/ingredients/",
   dish: (name: string) => `lunch/${name}/`,
   ingredient: (name: string) => `lunch/ingredients/${name}/`,
   composition: (dishName: string, ingredientName: string) => `lunch/${dishName}/${ingredientName}/`,
