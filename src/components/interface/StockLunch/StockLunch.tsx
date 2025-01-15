@@ -2,12 +2,18 @@
 
 import useWebSocket from "@/hooks/network/useWebSocket";
 import { stockLunchEP } from "@APISCMapping/endpoints";
-import ItemInfo from "@/components/display/ItemInfo";
+
+import { StockLunchProps } from "./stocklunch.types";
+import IngredientPanel from "./subcomponents/IngredientPanel";
 
 const StockLunch = () => {
-  const { data, isLoading } = useWebSocket(stockLunchEP.base);
+  const { data, isLoading } = useWebSocket<StockLunchProps>(stockLunchEP.base);
 
-  return <div>Show</div>;
+  return (
+    <>
+      <IngredientPanel ingredients={data?.ingredients ?? []} />
+    </>
+  );
 };
 
 export default StockLunch;

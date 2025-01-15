@@ -9,5 +9,5 @@ export const animateLabel: Variants = {
  * Lista de palavras que não devem ser capitalizadas.
  */
 export const notCapitalize = [
-  "da", "do", "de"
+  "da", "das", "do", "dos", "de"
 ]

@@ -10,7 +10,7 @@ import CardInfo from "@/components/display/CardInfo";
 import useRequest from "@/hooks/network/useRequest";
 
 import { stockSnackEP } from "@APISCMapping/endpoints";
-import { BaseCategory } from "@APISCMapping/snacks.types";
+import { BaseCategory } from "@APISCMapping/snack.types";
 
 export default function Home() {
   const targets = [{ text: "Início", link: "#inicio" }];

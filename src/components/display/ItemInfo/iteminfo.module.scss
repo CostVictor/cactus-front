@@ -3,11 +3,27 @@
   align-items: center;
   justify-content: center;
   position: relative;
+  cursor: pointer;
+  margin: 10px auto;
 
+  width: 85%;
   padding: 0.75rem;
   border-radius: 15px;
-  background-color: var(--bg-aba);
+  background-color: var(--bg-secondary);
   box-shadow: var(--shadow-btn);
+
+  &.add {
+    border: 2.5px dashed var(--division-intense);
+    box-shadow: none;
+
+    p {
+      color: var(--division-intense);
+    }
+  }
+
+  &.bg_dark {
+    background-color: var(--bg-aba);
+  }
 
   .icon_action {
     color: var(--gray-primary);

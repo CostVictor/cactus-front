@@ -9,7 +9,7 @@ import Button from "@/components/forms/Button";
 import { FieldValues } from "react-hook-form";
 import { filterDifferences } from "@/utils/filters";
 import { stockSnackEP } from "@APISCMapping/endpoints";
-import { BaseCategory } from "@APISCMapping/snacks.types";
+import { BaseCategory } from "@APISCMapping/snack.types";
 
 const EditCategory = ({ category }: { category: BaseCategory }) => {
   const { addNewModal, removeModal } = useModalActions();

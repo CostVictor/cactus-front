@@ -1,0 +1,33 @@
+.container_main {
+  background-color: var(--bg-aba);
+  border-radius: 20px;
+  min-height: 15rem;
+
+  .container_title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gray-primary);
+    height: 3rem;
+    border-bottom: 1px solid var(--division);
+
+    h3 {
+      font-size: 1.35rem;
+    }
+  }
+
+  .container_content {
+    padding: 1.7rem 2.2rem;
+  }
+
+  .not_item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 0.3rem;
+    font-size: 1.2rem;
+    margin-top: 1rem;
+    color: var(--black-primary);
+  }
+}

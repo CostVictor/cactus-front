@@ -73,9 +73,9 @@ export const getRegisterValidation = (config?: PropsInputConfig, options?: Props
             "A senha deve conter pelo menos um símbolo especial.",
         }
         : {}),
-      ...(config?.type === "price"
+      ...(config?.type === "price" && !validation.freeValue
         ? {
-          notFree: (value: string) => parseFloat(convertMoney(value, true)) > 0 || "O item não pode ser grátis."
+          notFree: (value: string) => parseFloat(convertMoney(value, true)) > 0 || "O item não pode ser gratuito."
         }
         : {}),
       ...(options?.selectOptions

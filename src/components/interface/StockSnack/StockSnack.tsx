@@ -12,7 +12,7 @@ import AddCategory from "./subcomponents/AddCategory";
 import EditCategory from "./subcomponents/EditCategory";
 import EditOrderCategory from "./subcomponents/EditOrderCategory";
 
-import { BaseCategory } from "@APISCMapping/snacks.types";
+import { BaseCategory } from "@APISCMapping/snack.types";
 import { stockSnackEP } from "@APISCMapping/endpoints";
 import style from "./stocksnack.module.scss";
 

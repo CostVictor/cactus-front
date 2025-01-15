@@ -22,6 +22,7 @@ export interface PropsInputValidation {
   maxLength?: number;
   notNumber?: boolean;
   notSymbol?: boolean;
+  freeValue?: boolean;
   capitalize?: "first" | "all";
 }
 
