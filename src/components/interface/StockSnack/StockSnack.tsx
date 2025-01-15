@@ -14,7 +14,7 @@ import EditOrderCategory from "./subcomponents/EditOrderCategory";
 
 import { BaseCategory } from "@APISCMapping/snacks.types";
 import { stockSnackEP } from "@APISCMapping/endpoints";
-import style from "./StockSnack.module.scss";
+import style from "./stocksnack.module.scss";
 
 const StockSnack = () => {
   const { data, isLoading } = useWebSocket<BaseCategory[]>(stockSnackEP.base);
