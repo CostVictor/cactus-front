@@ -9,9 +9,9 @@ import { stockLunchEP } from "@APISCMapping/endpoints";
 const AddIngredient = () => {
   const { removeModal } = useModalActions();
   const {
+    info: { isLoading },
     actions: { fetchData },
   } = useRequest<null>(undefined, {
-    forceLoadingRequest: false,
     standardDisplayError: "Erro ao criar o ingrediente",
   });
 
@@ -31,6 +31,7 @@ const AddIngredient = () => {
           }
           includeButton={{ text: "Cancelar", onClick: () => removeModal(-1) }}
           defaultButtonSubmitText="Criar"
+          isLoading={isLoading}
         >
           <InputField
             name="name"
@@ -44,7 +45,7 @@ const AddIngredient = () => {
           </p>
           <InputField
             name="additional_charge"
-            label="Valor por unidade"
+            label="Valor por acrescimo"
             config={{ type: "price", validation: { freeValue: true } }}
           />
         </Form>

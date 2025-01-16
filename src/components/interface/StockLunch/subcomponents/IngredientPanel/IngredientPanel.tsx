@@ -5,11 +5,12 @@ import ItemInfo from "@/components/display/ItemInfo";
 import Container from "@/components/layout/Container";
 
 import AddIngredient from "./subcomponents/AddIngredient";
+import EditIngredient from "./subcomponents/EditIngredient";
 
 import { IngredientPanelProps } from "./ingredientpanel.types";
 import style from "./ingredientpanel.module.scss";
 
-const IngredientPanel = ({ ingredients }: IngredientPanelProps) => {
+const IngredientPanel = ({ ingredients, isLoading }: IngredientPanelProps) => {
   const { addNewModal } = useModalActions();
 
   return (
@@ -19,23 +20,37 @@ const IngredientPanel = ({ ingredients }: IngredientPanelProps) => {
       </div>
 
       {!ingredients.length && (
-        <div className={style.not_item}>
-          <Icon icon="majesticons:information-circle-line"></Icon>
-          <p>Nenhum item encontrado</p>
+        <div className={style.message}>
+          {isLoading ? (
+            <p>Verificando o estoque...</p>
+          ) : (
+            <>
+              <Icon icon="majesticons:information-circle-line"></Icon>
+              <p>Nenhum item encontrado</p>
+            </>
+          )}
         </div>
       )}
 
       <Container grid={5} className={style.container_content}>
         <ItemInfo
           text="Adicionar item"
-          appearance="add"
           onClick={() => addNewModal(<AddIngredient />)}
+          typeAdd
         />
         {ingredients.length > 0 &&
           ingredients.map((ingredient, index) => (
             <ItemInfo
               key={index}
               text={ingredient.name}
+              alternativeText={
+                ingredient.additional_charge
+                  ? `${ingredient.additional_charge} p/ acrescimo`
+                  : undefined
+              }
+              onClick={() =>
+                addNewModal(<EditIngredient ingredient={ingredient} />)
+              }
               actionIcon="material-symbols:edit-square-outline"
               displayIcon="streamline:zero-hunger"
             />

@@ -9,15 +9,15 @@ import Button from "@/components/forms/Button";
 import { FieldValues } from "react-hook-form";
 import { filterDifferences } from "@/utils/filters";
 import { stockSnackEP } from "@APISCMapping/endpoints";
-import { BaseCategory } from "@APISCMapping/snack.types";
+import { EditCategoryProps } from "./editcategory.types";
 
-const EditCategory = ({ category }: { category: BaseCategory }) => {
+const EditCategory = ({ category }: EditCategoryProps) => {
   const { addNewModal, removeModal } = useModalActions();
   const {
+    info: { isLoading },
     actions: { fetchData },
   } = useRequest<null>(undefined, {
     standardDisplayError: `Erro ao editar a categoria ${category.name}`,
-    forceLoadingRequest: false,
   });
 
   /**
@@ -63,6 +63,7 @@ const EditCategory = ({ category }: { category: BaseCategory }) => {
           onSubmit={handleSubmit}
           includeButton={{ text: "Cancelar", onClick: () => removeModal(-1) }}
           defaultButtonSubmitText="Salvar"
+          isLoading={isLoading}
           formatData={[
             "name",
             { name: "description", format: ["title", "text"] },

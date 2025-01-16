@@ -8,31 +8,36 @@ import Button from "@/components/forms/Button";
 
 import { FieldValues } from "react-hook-form";
 import { filterDifferences } from "@/utils/filters";
-import { stockSnackEP } from "@APISCMapping/endpoints";
-import { EditItemProps } from "./edititem.types";
+import { stockLunchEP } from "@APISCMapping/endpoints";
+import { EditIngredientProps } from "./editingredient.types";
 
-const EditItem = ({ dataSnack, nameCategory }: EditItemProps) => {
+const EditIngredient = ({ ingredient }: EditIngredientProps) => {
   const { addNewModal, removeModal } = useModalActions();
+
   const {
     info: { isLoading },
     actions: { fetchData },
-  } = useRequest<null>(undefined, {
-    standardDisplayError: `Erro ao editar o item ${dataSnack.name}`,
+  } = useRequest(undefined, {
+    standardDisplayError: "Erro ao editar o ingrediente",
   });
 
   /**
-   * Função responsável por processar o envio do formulário de edição do item.
-   * Compara os dados atuais do item com os dados fornecidos pelo usuário
+   * Função responsável por processar o envio do formulário de edição do ingrediente.
+   * Compara os dados atuais do ingrediente com os dados fornecidos pelo usuário
    * e envia apenas as diferenças para a API.
    *
    * @param {FieldValues} data - Os dados do formulário enviados pelo usuário.
    */
   const handleSubmit = (data: FieldValues) => {
-    const differences = filterDifferences(dataSnack, data, ["category"]);
+    if (data.additional_charge === "R$ 0,00") {
+      data.additional_charge = null;
+    }
+
+    const differences = filterDifferences(ingredient, data);
     if (Object.keys(differences).length) {
       fetchData({
         request: {
-          url: stockSnackEP.item(nameCategory, dataSnack.name),
+          url: stockLunchEP.ingredient(ingredient.name),
           method: "PATCH",
           data: differences,
         },
@@ -44,57 +49,41 @@ const EditItem = ({ dataSnack, nameCategory }: EditItemProps) => {
   };
 
   return (
-    <Modal title={`Editar ${dataSnack.name}`} buttons={null} notOverflow>
+    <Modal title={`Editar ${ingredient.name}`} buttons={null} notOverflow>
       <div style={{ marginBottom: 5 }}>
         <Form
-          onSubmit={handleSubmit}
-          includeButton={{
-            text: "Cancelar",
-            onClick: () => removeModal(-1),
-          }}
+          includeButton={{ text: "Cancelar", onClick: () => removeModal(-1) }}
           defaultButtonSubmitText="Salvar"
+          onSubmit={handleSubmit}
           isLoading={isLoading}
         >
           <InputField
             name="name"
             label="Nome"
-            value={dataSnack.name}
             config={{ validation: { capitalize: "all" } }}
+            value={ingredient.name}
             required
-          />
-          <InputField
-            name="price"
-            label="Preço"
-            value={dataSnack.price}
-            config={{ type: "price" }}
-            required
-          />
-          <InputField
-            name="description"
-            label="Descrição"
-            value={dataSnack.description ?? ""}
           />
 
           <p className="marker">
-            Importante (Evitar edição em horário de pico)
+            Defina um valor para acrescimos (R$ 0,00 para remover)
           </p>
           <InputField
-            name="quantity_in_stock"
-            label="Quantidade em estoque"
-            value={dataSnack.quantity_in_stock.toString()}
-            config={{ type: "number" }}
-            required
+            name="additional_charge"
+            label="Valor por acrescimo"
+            value={ingredient.additional_charge ?? undefined}
+            config={{ type: "price", validation: { freeValue: true } }}
           />
 
           <p className="marker"></p>
           <Button
-            text="Excluir Item"
+            text="Excluir Ingrediente"
             type="button"
             onClick={() =>
               addNewModal(
                 <Modal
                   title="Confirmar Exclusão"
-                  message={`Ao excluir o item "${dataSnack.name}", ele não aparecerá mais na lista de itens.`}
+                  message={`Ao excluir o ingrediente "${ingredient.name}", ele também será removido de todos os pratos que o utilizam.`}
                   buttons={[
                     { text: "Voltar", onClick: () => removeModal(-1) },
                     {
@@ -103,10 +92,7 @@ const EditItem = ({ dataSnack, nameCategory }: EditItemProps) => {
                       onClick: () =>
                         fetchData({
                           request: {
-                            url: stockSnackEP.item(
-                              nameCategory,
-                              dataSnack.name
-                            ),
+                            url: stockLunchEP.ingredient(ingredient.name),
                             method: "DELETE",
                           },
                           onSuccess: () => {
@@ -127,4 +113,4 @@ const EditItem = ({ dataSnack, nameCategory }: EditItemProps) => {
   );
 };
 
-export default EditItem;
+export default EditIngredient;

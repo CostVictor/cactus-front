@@ -11,7 +11,10 @@ const StockLunch = () => {
 
   return (
     <>
-      <IngredientPanel ingredients={data?.ingredients ?? []} />
+      <IngredientPanel
+        ingredients={data?.ingredients ?? []}
+        isLoading={isLoading}
+      />
     </>
   );
 };

@@ -7,19 +7,20 @@ import style from "./iteminfo.module.scss";
 
 const ItemInfo = ({
   text,
+  alternativeText,
   displayIcon,
   actionIcon,
-  color,
-  appearance,
+  colorDark,
+  typeAdd,
   onClick,
 }: IntemInfoProps) => {
   return (
     <motion.div
-      className={`${style.container_main} ${
-        color === "dark" && style.bg_dark
-      } ${appearance === "add" && style.add}`.trim()}
+      className={`${style.container_main} ${colorDark && style.bg_dark} ${
+        typeAdd && style.add
+      }`.trim()}
       onClick={onClick}
-      variants={appearance !== "add" ? revealGrow : undefined}
+      variants={revealGrow}
       initial="hidden"
       animate="visible"
       exit="exit"
@@ -29,6 +30,7 @@ const ItemInfo = ({
         <Icon className={style.icon_display} icon={displayIcon} />
       )}
       <p>{text}</p>
+      {alternativeText && <span>{alternativeText}</span>}
     </motion.div>
   );
 };

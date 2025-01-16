@@ -13,9 +13,9 @@ import style from "./addcategory.module.scss";
 const AddCategory = () => {
   const { addNewModal, removeModal } = useModalActions();
   const {
+    info: { isLoading },
     actions: { fetchData },
   } = useRequest<null>(undefined, {
-    forceLoadingRequest: false,
     standardDisplayError: "Erro ao criar a categoria",
   });
 
@@ -42,6 +42,7 @@ const AddCategory = () => {
                   onClick: () => removeModal(-1),
                 }}
                 defaultButtonSubmitText="Criar"
+                isLoading={isLoading}
               >
                 <InputField
                   name="name"

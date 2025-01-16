@@ -11,10 +11,10 @@ import style from "./additem.module.scss";
 const AddItem = ({ nameCategory }: PropsAddItem) => {
   const { addNewModal, removeModal } = useModalActions();
   const {
+    info: { isLoading },
     actions: { fetchData },
   } = useRequest<null>(undefined, {
     standardDisplayError: `Erro ao criar um item em ${nameCategory}`,
-    forceLoadingRequest: false,
   });
 
   return (
@@ -44,6 +44,7 @@ const AddItem = ({ nameCategory }: PropsAddItem) => {
                   onClick: () => removeModal(-1),
                 }}
                 defaultButtonSubmitText="Criar"
+                isLoading={isLoading}
               >
                 <InputField
                   name="name"
