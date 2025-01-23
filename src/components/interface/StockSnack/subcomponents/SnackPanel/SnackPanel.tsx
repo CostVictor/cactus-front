@@ -6,7 +6,6 @@ import { useState } from "react";
 
 import Snack from "./subcomponents/Snack";
 import Container from "@/components/layout/Container";
-import InputField from "@/components/forms/InputField";
 import AddItem from "./subcomponents/AddItem";
 import useModalActions from "@/hooks/context/useModal";
 import EditItem from "./subcomponents/EditItem";
@@ -24,12 +23,12 @@ const SnackPanel = ({ nameCategory, snacks }: PropsSnackPanel) => {
 
   return (
     <div>
-      <InputField
+      {/* <InputField
         name={`filter-${nameCategory}`}
         label="Filtrar item..."
         onChange={(_, text) => setFilteredName(text)}
         filterMode
-      />
+      /> */}
       <hr className="division" style={{ margin: "1rem 0" }} />
 
       {!snacksFiltered.length && (

@@ -3,12 +3,12 @@ import { PropsEyePassword } from "./eyepassword.types";
 import style from "./eyepassword.module.scss";
 
 const EyePassword = ({
-  isValueVisible,
-  setValueVisible,
+  isPasswordVisible,
+  setIsPasswordVisible,
   isMessageMode,
 }: PropsEyePassword) => {
   const toggleValueVisible = () =>
-    setValueVisible((prevVisible) => !prevVisible);
+    setIsPasswordVisible((prevVisible) => !prevVisible);
 
   return (
     <div
@@ -19,7 +19,7 @@ const EyePassword = ({
     >
       <Icon
         className={style.icon}
-        icon={isValueVisible ? "ph:eye-closed-bold" : "ph:eye-bold"}
+        icon={isPasswordVisible ? "ph:eye-closed-bold" : "ph:eye-bold"}
       />
     </div>
   );

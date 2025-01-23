@@ -3,7 +3,6 @@ import useModalActions from "@/hooks/context/useModal";
 import Modal from "@/components/display/Modal";
 
 import Form from "@/components/forms/Form";
-import InputField from "@/components/forms/InputField";
 import { stockLunchEP } from "@APISCMapping/endpoints";
 
 const AddIngredient = () => {
@@ -18,7 +17,7 @@ const AddIngredient = () => {
   return (
     <Modal title="Adicionar Ingrediente" buttons={null} notOverflow>
       <div style={{ marginBottom: 5 }}>
-        <Form
+        {/* <Form
           onSubmit={(data) =>
             fetchData({
               request: {
@@ -48,7 +47,7 @@ const AddIngredient = () => {
             label="Valor por acrescimo"
             config={{ type: "price", validation: { freeValue: true } }}
           />
-        </Form>
+        </Form> */}
       </div>
     </Modal>
   );

@@ -1,42 +1,4 @@
-import { PropsInputValidation, PropsInputMessage, PropsInputConfig, PropsInputOptions } from "./inputfield.types";
-import { notCapitalize } from "./inputfield.variables";
-
-/**
- * Remove os caracteres não autorizados.
- * @param value Texto recebido através do envento onChange do input.
- * @param validation Validações a serem aplicadas.
- * @returns Texto validado.
- */
-export const changeValidation = (value: string, validation: PropsInputValidation) => {
-  const { notNumber, notSymbol, capitalize } = validation
-  let valueReturn = value.trimStart().replace("  ", " ")
-
-  if (notNumber) {
-    valueReturn = valueReturn.replace(/[0-9]/g, "");
-  }
-
-  if (notSymbol) {
-    valueReturn = valueReturn.replace(/[^A-Za-zÀ-ÿ0-9\s]/g, "");
-  }
-
-  if (capitalize) {
-    valueReturn = formatCapitalize(valueReturn, capitalize)
-  }
-
-  return valueReturn
-}
-
-/**
- * Define se a mensagem deve está em exibição.
- * @param localValue Texto atual do input.
- * @param message Configuração das mensagens do input.
- */
-export const checkMessageVisible = (localValue?: string, message?: PropsInputMessage) => {
-  if (message?.text && (message.isError || !localValue)) {
-    return true
-  }
-  return false
-}
+import { notCapitalize } from "./usewriting.variables";
 
 /**
  * Remove caracteres que não são dígitos e formata para o padrão de telefone.

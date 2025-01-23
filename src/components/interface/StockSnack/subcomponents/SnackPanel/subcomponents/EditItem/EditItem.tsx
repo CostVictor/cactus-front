@@ -3,7 +3,6 @@ import useModalActions from "@/hooks/context/useModal";
 import Modal from "@/components/display/Modal";
 
 import Form from "@/components/forms/Form";
-import InputField from "@/components/forms/InputField";
 import Button from "@/components/forms/Button";
 
 import { FieldValues } from "react-hook-form";
@@ -46,7 +45,7 @@ const EditItem = ({ dataSnack, nameCategory }: EditItemProps) => {
   return (
     <Modal title={`Editar ${dataSnack.name}`} buttons={null} notOverflow>
       <div style={{ marginBottom: 5 }}>
-        <Form
+        {/* <Form
           onSubmit={handleSubmit}
           includeButton={{
             text: "Cancelar",
@@ -121,7 +120,7 @@ const EditItem = ({ dataSnack, nameCategory }: EditItemProps) => {
             }
             noShadow
           />
-        </Form>
+        </Form> */}
       </div>
     </Modal>
   );

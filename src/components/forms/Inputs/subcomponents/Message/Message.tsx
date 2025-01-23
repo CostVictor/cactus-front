@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { PropsInputMessage } from "../../inputfield.types";
+import { PropsInputMessage } from "../../TextField/textfield.types";
 import style from "./message.module.scss";
 
 import { enterChild } from "@/styles/animations";

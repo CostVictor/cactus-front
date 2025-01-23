@@ -3,7 +3,6 @@ import useModalActions from "@/hooks/context/useModal";
 import Modal from "@/components/display/Modal";
 
 import Form from "@/components/forms/Form";
-import InputField from "@/components/forms/InputField";
 import Button from "@/components/forms/Button";
 
 import { FieldValues } from "react-hook-form";
@@ -51,7 +50,7 @@ const EditIngredient = ({ ingredient }: EditIngredientProps) => {
   return (
     <Modal title={`Editar ${ingredient.name}`} buttons={null} notOverflow>
       <div style={{ marginBottom: 5 }}>
-        <Form
+        {/* <Form
           includeButton={{ text: "Cancelar", onClick: () => removeModal(-1) }}
           defaultButtonSubmitText="Salvar"
           onSubmit={handleSubmit}
@@ -107,7 +106,7 @@ const EditIngredient = ({ ingredient }: EditIngredientProps) => {
             }
             noShadow
           />
-        </Form>
+        </Form> */}
       </div>
     </Modal>
   );

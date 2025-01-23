@@ -1,4 +1,4 @@
-import { trimmerData, omitKeys, setFormatData, convertMoney } from "./formatters";
-export { trimmerData, omitKeys, setFormatData, convertMoney }
+import { trimmerData, omitKeys, setFormatData } from "./formatters";
+export { trimmerData, omitKeys, setFormatData }
 
 export type { PropsFormatterData } from "./formatters.types"

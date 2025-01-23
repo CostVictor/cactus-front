@@ -1,7 +1,6 @@
 import Modal from "@/components/display/Modal";
 import useModalActions from "@/hooks/context/useModal";
 import Form from "@/components/forms/Form";
-import InputField from "@/components/forms/InputField";
 import useRequest from "@/hooks/network/useRequest";
 
 import { stockSnackEP } from "@APISCMapping/endpoints";
@@ -28,7 +27,7 @@ const AddItem = ({ nameCategory }: PropsAddItem) => {
             notOverflow
           >
             <div style={{ marginBottom: 5 }}>
-              <Form
+              {/* <Form
                 onSubmit={(data) =>
                   fetchData({
                     request: {
@@ -58,7 +57,7 @@ const AddItem = ({ nameCategory }: PropsAddItem) => {
                   config={{ type: "price" }}
                   required
                 />
-              </Form>
+              </Form> */}
             </div>
           </Modal>
         )

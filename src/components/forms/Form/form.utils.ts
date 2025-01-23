@@ -1,5 +1,4 @@
 import { ReactElement } from "react"
-import { PropsInputField } from "../InputField"
 import { FieldErrors, FieldValues } from "react-hook-form"
 
 /**
@@ -19,7 +18,7 @@ export const checkHasInputConfirm = (name: string, equalTo: string) => {
  * @param errors Objeto com os erros fornecidos pela lib react-hook-form.
  * @returns Configuração com as informações da mensagem do input.
  */
-export const getFormMessage = (child: ReactElement<PropsInputField>, errors: FieldErrors<FieldValues>) => {
+export const getFormMessage = (child: ReactElement, errors: FieldErrors<FieldValues>) => {
   const nameCurrent = checkHasInputConfirm(child.props.name, child.props.equalTo ?? "");
   const textErrorCurrent = errors[nameCurrent]?.message?.toString();
 

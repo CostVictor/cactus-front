@@ -5,7 +5,6 @@ import useRequest from "@/hooks/network/useRequest";
 
 import Modal from "@/components/display/Modal";
 import Form from "@/components/forms/Form";
-import InputField from "@/components/forms/InputField";
 
 import { stockSnackEP } from "@APISCMapping/endpoints";
 import style from "./addcategory.module.scss";
@@ -26,7 +25,7 @@ const AddCategory = () => {
         addNewModal(
           <Modal title="Criar Categoria" buttons={null}>
             <div style={{ marginBottom: 5 }}>
-              <Form
+              {/* <Form
                 onSubmit={(data) =>
                   fetchData({
                     request: {
@@ -54,7 +53,7 @@ const AddCategory = () => {
                   }}
                   required
                 />
-              </Form>
+              </Form> */}
             </div>
           </Modal>
         )

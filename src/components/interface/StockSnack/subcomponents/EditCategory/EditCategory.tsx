@@ -3,7 +3,6 @@ import useModalActions from "@/hooks/context/useModal";
 import Modal from "@/components/display/Modal";
 
 import Form from "@/components/forms/Form";
-import InputField from "@/components/forms/InputField";
 import Button from "@/components/forms/Button";
 
 import { FieldValues } from "react-hook-form";
@@ -59,7 +58,7 @@ const EditCategory = ({ category }: EditCategoryProps) => {
       notOverflow
     >
       <div style={{ marginBottom: 5 }}>
-        <Form
+        {/* <Form
           onSubmit={handleSubmit}
           includeButton={{ text: "Cancelar", onClick: () => removeModal(-1) }}
           defaultButtonSubmitText="Salvar"
@@ -132,7 +131,7 @@ const EditCategory = ({ category }: EditCategoryProps) => {
             }
             noShadow
           />
-        </Form>
+        </Form> */}
       </div>
     </Modal>
   );

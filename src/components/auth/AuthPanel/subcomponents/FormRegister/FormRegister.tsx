@@ -3,7 +3,7 @@ import useModalActions from "@/hooks/context/useModal";
 
 import Modal from "@/components/display/Modal";
 import Form from "@/components/forms/Form";
-import InputField from "@/components/forms/InputField";
+import TextField from "@/components/forms/Inputs/TextField";
 
 import { userEP } from "@APISCMapping/endpoints";
 import { cities, formatDataFormRegister } from "./formregister.variables";
@@ -19,38 +19,9 @@ const FormRegister = () => {
   const router = useRouter();
 
   return (
-    <Form
-      defaultButtonSubmitText="Criar conta"
-      formatData={formatDataFormRegister}
-      isLoading={isLoading}
-      onSubmit={(data) =>
-        fetchData({
-          request: {
-            url: userEP.register,
-            method: "POST",
-            data,
-          },
-          onSuccess: (response) =>
-            addNewModal(
-              <Modal
-                title="Cadastro efetuado"
-                buttons={[
-                  {
-                    text: "Ir ao login",
-                    appearance: "main",
-                    onClick: () => {
-                      router.push("/login");
-                      removeModal(-1);
-                    },
-                  },
-                ]}
-                {...response.data}
-              />
-            ),
-        })
-      }
-    >
-      <InputField
+    <Form onSubmit={() => console.log("ok")}>
+      <TextField name="name" label="Teste" />
+      {/* <InputField
         name="username"
         label="Nome e sobrenome"
         config={{
@@ -96,7 +67,7 @@ const FormRegister = () => {
         config={{ type: "password" }}
         equalTo="password"
         required
-      />
+      /> */}
     </Form>
   );
 };

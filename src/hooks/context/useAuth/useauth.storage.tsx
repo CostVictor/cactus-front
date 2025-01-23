@@ -11,7 +11,7 @@ const StorageCookie = {
   setItem: (_: string, value: string) =>
     Cookies.set(cookieName, value, {
       path: "/",
-      secure: process.env.NODE_ENV === "production",
+      secure: false, // process.env.NODE_ENV === "production"
       sameSite: "strict",
       expires: 365,
     }),
