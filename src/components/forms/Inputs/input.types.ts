@@ -1,34 +1,33 @@
-import { UseFormRegister, FieldValues, RegisterOptions } from "react-hook-form";
-import { PropsWritingValidations, PropsWritingCapitalize } from "@/hooks/formatter/useWriting";
+import { UseFormRegister, FieldValues } from "react-hook-form";
+import { PropsConfigValidation } from "@/hooks/form/useValidation";
+import { PropsConfigWriting } from "@/hooks/form/useWriting";
+import { PropsTextFieldType } from "./TextField";
+
+export type PropsAllTypes = PropsTextFieldType
 
 export type PropsInputOnChange = (key: string, newValue: string) => void;
 
-export interface PropsInputCustomValidation {
-  [key: string]: PropsInputCustomValidation | RegisterOptions | ((arg: any) => RegisterOptions);
-}
-
-export interface PropsInputValueValidations {
-  minLength?: number;
-  maxLength?: number;
-  freeValue?: boolean;
-}
-
-export interface PropsInputValidation {
-  custom?: PropsInputCustomValidation;
-  writing?: PropsWritingValidations
-  value?: PropsInputValueValidations
+export interface PropsInputMessage {
+  text: string
+  isError?: boolean;
 }
 
 export interface PropsBaseInputConfig {
-  register?: UseFormRegister<FieldValues>;
-  validation?: PropsInputValidation;
-  capitalize?: PropsWritingCapitalize;
+  initValue?: string
+  validation?: PropsConfigValidation
+  writing?: PropsConfigWriting
+  control?: {
+    register: UseFormRegister<FieldValues>
+  }
 };
 
 export interface PropsBaseInput {
   name: string
   label: string
-  initValue?: string
   inactive?: boolean
   required?: boolean
+  toDisregard?: boolean
+  onChange?: PropsInputOnChange
+  message?: PropsInputMessage
+  config?: PropsBaseInputConfig
 }

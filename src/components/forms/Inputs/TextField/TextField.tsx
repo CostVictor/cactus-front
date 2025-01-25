@@ -2,7 +2,8 @@ import { Icon } from "@iconify/react";
 import { motion } from "framer-motion";
 import { useState } from "react";
 
-import useWriting from "@/hooks/formatter/useWriting";
+import useWriting from "@/hooks/form/useWriting";
+import useValidation from "@/hooks/form/useValidation";
 import SpanLabel from "../subcomponents/SpanLabel";
 import EyePassword from "./subcomponents/EyePassword";
 import Message from "../subcomponents/Message";
@@ -11,29 +12,36 @@ import { inter } from "@/styles/fonts";
 import { animateLabel } from "../input.variants";
 
 import { PropsTextField, PropsTextFieldConfig } from "./textfield.types";
+import { getClassTextField } from "./textfield.utils";
 import style from "./textfield.module.scss";
 
 const TextField = ({
   name,
   label,
-  initValue,
   config,
   message,
+  onChange,
   inactive,
   required,
 }: PropsTextField) => {
-  const { type, capitalize, icon, validation, register }: PropsTextFieldConfig =
-    {
-      type: "text",
-      ...config,
-    };
+  const fieldConfig = {
+    type: "text",
+    ...config,
+  } satisfies PropsTextFieldConfig;
 
   const {
     info: { currentValue },
     actions: { changeValue },
   } = useWriting({
-    initValue,
-    capitalize,
+    initValue: fieldConfig.initValue,
+    config: fieldConfig.writing,
+    onChange,
+  });
+
+  const validations = useValidation({
+    config: fieldConfig.validation,
+    type: fieldConfig.type,
+    required,
   });
 
   const [inFocus, setInFocus] = useState(false);
@@ -51,11 +59,13 @@ const TextField = ({
       />
 
       <div className={style.container_input}>
-        {icon && <Icon className={style.icon} icon={icon} />}
+        {fieldConfig.icon && (
+          <Icon className={style.icon} icon={fieldConfig.icon} />
+        )}
         {required && (
           <span
             className={`${inter.className} ${style.span_required} ${
-              type === "password" && style.password_mode
+              fieldConfig.type === "password" ? style.password_mode : ""
             }`.trim()}
           >
             Obrigatório
@@ -65,7 +75,7 @@ const TextField = ({
         <motion.label
           htmlFor={name}
           className={`${inter.className} ${style.label} ${
-            icon && style.indent
+            fieldConfig.icon ? style.indent : ""
           }`.trim()}
           variants={animateLabel}
           initial="visible"
@@ -75,21 +85,29 @@ const TextField = ({
         </motion.label>
 
         <input
+          {...config?.control?.register(name)}
           id={name}
           value={currentValue}
           onChange={changeValue}
           onFocus={() => setInFocus(true)}
-          className={`${style.input} ${
-            isMessageVisible && style.message_mode
-          } ${type === "password" && style.password_mode} ${
-            icon && style.indent
-          }`.trim()}
-          type={type === "password" && isPasswordVisible ? "text" : type}
-          inputMode={type !== "password" ? type : "text"}
-          maxLength={validation?.value?.maxLength}
+          onBlur={() => setInFocus(false)}
+          className={getClassTextField(
+            fieldConfig.type,
+            isMessageVisible,
+            fieldConfig.icon
+          )}
+          type={
+            fieldConfig.type === "password" && isPasswordVisible
+              ? "text"
+              : fieldConfig.type
+          }
+          inputMode={
+            fieldConfig.type !== "password" ? fieldConfig.type : "text"
+          }
+          maxLength={fieldConfig.validation?.maxLength}
         />
 
-        {type === "password" && (
+        {fieldConfig.type === "password" && (
           <EyePassword
             isPasswordVisible={isPasswordVisible}
             setIsPasswordVisible={setIsPasswordVisible}

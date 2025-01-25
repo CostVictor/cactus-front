@@ -1,16 +1,14 @@
 import { PropsBaseInput, PropsBaseInputConfig } from "../input.types";
+import { PropsConfigWriting } from "@/hooks/form/useWriting";
 
-export interface PropsInputMessage {
-  text: string
-  isError?: boolean;
-}
+export type PropsTextFieldType = "text" | "numeric" | "email" | "password"
 
 export interface PropsTextFieldConfig extends PropsBaseInputConfig {
-  type?: "text" | "numeric" | "email" | "password";
+  type?: PropsTextFieldType;
   icon?: string
+  writing?: Omit<PropsConfigWriting, "format">
 }
 
 export interface PropsTextField extends PropsBaseInput {
-  message?: PropsInputMessage
   config?: PropsTextFieldConfig
 }

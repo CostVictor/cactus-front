@@ -3,12 +3,7 @@ import { PropsUseWriting } from "./usewriting.types";
 import { listFormatters, listValidations } from "./usewriting.variables";
 import { formatCapitalize } from "./usewriting.utils";
 
-const useWriting = ({
-  initValue,
-  capitalize,
-  validations,
-  format,
-}: PropsUseWriting) => {
+const useWriting = ({ initValue, onChange, config }: PropsUseWriting) => {
   const [currentValue, setCurrentValue] = useState(initValue ?? "");
 
   /**
@@ -17,6 +12,7 @@ const useWriting = ({
   const changeValue = (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
+    const { rules: validations, format, capitalize } = config ?? {};
     let newValue = event.target.value.trimStart().replace("  ", " ");
 
     Object.keys(validations ?? {}).forEach((validation) =>
@@ -27,6 +23,7 @@ const useWriting = ({
     if (capitalize) newValue = formatCapitalize(newValue, capitalize);
 
     setCurrentValue(newValue);
+    onChange?.(event.target.id, newValue);
   };
 
   return { info: { currentValue }, actions: { changeValue } };

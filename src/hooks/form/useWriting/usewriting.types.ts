@@ -1,16 +1,22 @@
 import { listFormatters, listValidations } from "./usewriting.variables"
+import { PropsInputOnChange } from "@/components/forms/Inputs";
 
 export type PropsWritingCapitalize = "first" | "all"
 
-export type PropsWritingValidations = {
+export type PropsWritingRules = {
   [K in keyof typeof listValidations]?: boolean;
 };
 
+export interface PropsConfigWriting {
+  format?: keyof typeof listFormatters
+  capitalize?: PropsWritingCapitalize
+  rules?: PropsWritingRules
+}
+
 export interface PropsUseWriting {
   initValue?: string
-  capitalize?: PropsWritingCapitalize
-  format?: keyof typeof listFormatters
-  validations?: PropsWritingValidations
+  onChange?: PropsInputOnChange
+  config?: PropsConfigWriting
 }
 
 export interface PropsListValidations {

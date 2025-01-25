@@ -1,35 +1,74 @@
-import { ReactElement } from "react"
-import { FieldErrors, FieldValues } from "react-hook-form"
+import { PropsFormatterData } from "./form.types";
+import { BaseData } from "@APISCMapping/data.types";
 
 /**
- * Adiciona "..._remove" no identificador único do input caso seja um campo de confirmação.
- * @param name Identificador único do input.
- * @param iqualTo Texto que define qual deverá ser o valor final do input.
- * @returns Texto marcado com "..._remove" caso seja um input de confirmação.
+ * Remove espaços em branco do início e do fim das chaves e valores de um objeto.
+ * Se o valor de uma chave for um objeto, aplica a mesma formatação recursivamente.
+ * @param data O objeto a ser formatado, que pode conter chaves com valores do tipo string ou objetos aninhados do mesmo tipo.
+ * @returns O objeto formatado, onde todas as chaves e valores têm espaços em branco removidos.
  */
-export const checkHasInputConfirm = (name: string, equalTo: string) => {
-  return `${name}${equalTo ? "_remove" : ""}`;
-};
+export const trimmerData = (data: BaseData) => {
+  const formattedObj: BaseData = {};
 
+  Object.entries(data).forEach(([key, value]) => {
+    if (typeof value === "object") {
+      // Aplica a recursividade se for `object`.
+      formattedObj[key] = trimmerData(value)
+    } else {
+      formattedObj[key] = value.trim()
+    }
+  })
+
+  return formattedObj
+}
 
 /**
- * Verifica a existência de mensagens de erro relacionada ao input e retorna a mensagem.
- * @param child Componente React InputField.
- * @param errors Objeto com os erros fornecidos pela lib react-hook-form.
- * @returns Configuração com as informações da mensagem do input.
+ * Remove chaves de um objeto cujos nomes contêm a string especificada.
+ * A remoção ocorre de forma recursiva em objetos aninhados.
+ *
+ * @param data - O objeto a ser processado.
+ * @param omitTo - A string a ser procurada nos nomes das chaves.
+ * @returns O objeto resultante com as chaves omitidas.
  */
-export const getFormMessage = (child: ReactElement, errors: FieldErrors<FieldValues>) => {
-  const nameCurrent = checkHasInputConfirm(child.props.name, child.props.equalTo ?? "");
-  const textErrorCurrent = errors[nameCurrent]?.message?.toString();
+export const omitKeys = (data: BaseData, omitTo: string) => {
+  const formattedObj: BaseData = {};
 
-  const textProvided = child.props.message?.text ?? "";
-  const errorProvided = child.props.message?.isError ?? false;
+  Object.entries(data).forEach(([key, value]) => {
+    // Verifica se a chave contém a string omitTo, caso verdade, não inclui em `formattedObj`.
+    if (!key.includes(omitTo)) {
+      if (typeof value === 'object') {
+        // Aplica a recursividade se for `object`.
+        formattedObj[key] = omitKeys(value, omitTo);
+      } else {
+        formattedObj[key] = value;
+      }
+    }
+  });
 
-  const textCurrent = textErrorCurrent ? textErrorCurrent : textProvided;
-  const isError = textErrorCurrent ? true : errorProvided;
+  return formattedObj
+}
 
-  return {
-    text: textCurrent,
-    isError: isError,
+/**
+ * Formata os dados de acordo com um formato especificado.
+ * @param data - Os dados a serem formatados. Espera-se que seja um objeto onde as chaves são strings.
+ * @param format - O formato a ser aplicado aos dados. Pode ser um array de strings ou objetos com as propriedades `name` e `format`.
+ * @returns Um novo objeto contendo os dados formatados.
+ */
+export const setFormatData = (data: BaseData, format?: PropsFormatterData) => {
+  if (!format) {
+    return data
   }
-};
+
+  const formattedObj: BaseData = {};
+
+  format.forEach(value => {
+    if (typeof value === "string") {
+      formattedObj[value] = data[value];
+    } else {
+      const { name, format } = value
+      formattedObj[name] = setFormatData(data, format)
+    }
+  })
+
+  return formattedObj
+}
