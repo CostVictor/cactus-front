@@ -17,4 +17,8 @@
     color: var(--red-secondary);
     font-weight: bolder;
   }
+
+  &.bg_dark {
+    background-color: var(--bg-aba);
+  }
 }

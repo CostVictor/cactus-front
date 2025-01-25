@@ -11,22 +11,16 @@
   box-shadow: var(--shadow-default);
   border-radius: 10px;
 
-  &.filter_mode {
-    margin: 0;
-    box-shadow: none;
+  &.inactive {
+    cursor: not-allowed;
 
-    .container_input {
-      .input {
-        background-color: var(--gray-secondary);
-        font-size: 1rem;
-        padding: 0.7rem;
-        width: 70%;
-      }
-
-      .label {
-        font-size: 1rem;
-        left: 1rem;
-      }
+    *,
+    .container_input .input,
+    .container_input .label,
+    .container_input .icon,
+    .container_input .span_required {
+      pointer-events: none;
+      color: var(--division);
     }
   }
 
@@ -48,6 +42,10 @@
 
       &.indent {
         text-indent: 1.8rem;
+      }
+
+      &.bg_dark {
+        background-color: var(--bg-aba);
       }
 
       &.message_mode {
@@ -91,7 +89,7 @@
       user-select: none;
       pointer-events: none;
 
-      color: var(--division-intense);
+      color: var(--gray-primary);
       font-size: 1rem;
       position: absolute;
       right: 1.5%;

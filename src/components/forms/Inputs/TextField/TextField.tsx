@@ -25,6 +25,7 @@ const TextField = ({
   required,
 }: PropsTextField) => {
   const fieldConfig = {
+    icon: inactive ? "basil:user-block-outline" : config?.icon,
     type: "text",
     ...config,
   } satisfies PropsTextFieldConfig;
@@ -51,10 +52,15 @@ const TextField = ({
     message?.text && (message.isError || !currentValue) ? true : false;
 
   return (
-    <div className={style.container_main}>
+    <div
+      className={`${style.container_main} ${
+        inactive ? style.inactive : ""
+      }`.trim()}
+    >
       <SpanLabel
         text={label}
         isActive={currentValue !== ""}
+        bgDark={fieldConfig.bgDark}
         inFocus={inFocus}
       />
 
@@ -68,7 +74,7 @@ const TextField = ({
               fieldConfig.type === "password" ? style.password_mode : ""
             }`.trim()}
           >
-            Obrigatório
+            *
           </span>
         )}
 
@@ -78,8 +84,8 @@ const TextField = ({
             fieldConfig.icon ? style.indent : ""
           }`.trim()}
           variants={animateLabel}
-          initial="visible"
-          animate={currentValue || inFocus ? "hidden" : undefined}
+          initial={config?.initValue ? "hidden" : "visible"}
+          animate={currentValue || inFocus ? "hidden" : "visible"}
         >
           {label}
         </motion.label>
@@ -91,11 +97,7 @@ const TextField = ({
           onChange={changeValue}
           onFocus={() => setInFocus(true)}
           onBlur={() => setInFocus(false)}
-          className={getClassTextField(
-            fieldConfig.type,
-            isMessageVisible,
-            fieldConfig.icon
-          )}
+          className={getClassTextField(fieldConfig, isMessageVisible)}
           type={
             fieldConfig.type === "password" && isPasswordVisible
               ? "text"

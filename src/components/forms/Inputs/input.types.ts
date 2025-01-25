@@ -14,6 +14,8 @@ export interface PropsInputMessage {
 
 export interface PropsBaseInputConfig {
   initValue?: string
+  bgDark?: boolean
+  icon?: string
   validation?: PropsConfigValidation
   writing?: PropsConfigWriting
   control?: {

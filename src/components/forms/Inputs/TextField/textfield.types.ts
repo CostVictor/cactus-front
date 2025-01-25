@@ -5,7 +5,6 @@ export type PropsTextFieldType = "text" | "numeric" | "email" | "password"
 
 export interface PropsTextFieldConfig extends PropsBaseInputConfig {
   type?: PropsTextFieldType;
-  icon?: string
   writing?: Omit<PropsConfigWriting, "format">
 }
 
