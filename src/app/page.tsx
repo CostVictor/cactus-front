@@ -4,7 +4,7 @@ import Sidebar from "@/components/navigation/Sidebar";
 import Header from "@/components/layout/Header";
 
 import Section from "@/components/layout/Section";
-import Container from "@/components/layout/Container";
+import Grid from "@/components/layout/Grid";
 
 import CardInfo from "@/components/display/CardInfo";
 import useRequest from "@/hooks/network/useRequest";
@@ -63,7 +63,7 @@ export default function Home() {
               backgroundGray={indexCategory % 2 === 0}
             >
               {Array.isArray(category.snacks) && category.snacks.length > 0 && (
-                <Container grid>
+                <Grid>
                   {category.snacks.map((snack, indexSnack) => (
                     <CardInfo
                       key={`snack_${indexSnack}-${category.name}`}
@@ -72,7 +72,7 @@ export default function Home() {
                       isSoldOut={!Number(snack.quantity_in_stock)}
                     />
                   ))}
-                </Container>
+                </Grid>
               )}
             </Section>
           ))}

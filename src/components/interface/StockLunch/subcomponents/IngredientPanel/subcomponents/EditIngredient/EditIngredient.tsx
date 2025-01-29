@@ -38,10 +38,10 @@ const EditIngredient = ({ ingredient }: EditIngredientProps) => {
           method: "PATCH",
           data: differences,
         },
-        onSuccess: () => removeModal(-1),
+        onSuccess: () => removeModal(),
       });
     } else {
-      removeModal(-1);
+      removeModal();
     }
   };
 

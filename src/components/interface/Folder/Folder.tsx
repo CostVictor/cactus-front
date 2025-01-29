@@ -5,7 +5,7 @@ import { useRef, useState } from "react";
 import { Icon } from "@iconify/react";
 import Image from "next/image";
 
-import Container from "@/components/layout/Container";
+import Grid from "@/components/layout/Grid";
 import LabelController from "./subcomponents/LabelController";
 import OptionsController from "./subcomponents/OptionsController";
 
@@ -111,12 +111,12 @@ const Folder = ({
               {notification?.message && (
                 <p className={style.span_message}>{notification.message}</p>
               )}
-              <Container
+              <Grid
                 className={style.content}
                 style={{ maxHeight: folderConfig.expandUntil }}
               >
                 {children}
-              </Container>
+              </Grid>
             </motion.div>
           </motion.div>
         )}

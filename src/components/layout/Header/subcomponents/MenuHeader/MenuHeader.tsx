@@ -8,7 +8,7 @@ import { PropsHeader } from "../../header.types";
 import useModalActions, { useModalState } from "@/hooks/context/useModal";
 import useAuthState from "@/hooks/context/useAuth";
 
-import Container from "@/components/layout/Container";
+import Grid from "@/components/layout/Grid";
 import NavLink from "@/components/navigation/NavLink";
 
 import style from "./menuheader.module.scss";
@@ -33,7 +33,7 @@ const MenuHeader = ({ targets }: PropsHeader) => {
             <div className={style.header}>
               <Icon
                 icon="ci:close-sm"
-                onClick={() => removeModal(-1)}
+                onClick={() => removeModal()}
                 className={style.icon}
               />
               <h2 className={`${averiaSansLibre.className} ${style.title}`}>
@@ -56,16 +56,16 @@ const MenuHeader = ({ targets }: PropsHeader) => {
               </div>
             )}
 
-            <Container className={style.content} animateChildren>
+            <Grid className={style.content}>
               {targets?.map((target, index) => (
                 <NavLink
                   key={index}
                   text={target.text}
                   link={target.link}
-                  onClick={() => removeModal(-1)}
+                  onClick={() => removeModal()}
                 />
               ))}
-            </Container>
+            </Grid>
           </motion.nav>
         )
       }

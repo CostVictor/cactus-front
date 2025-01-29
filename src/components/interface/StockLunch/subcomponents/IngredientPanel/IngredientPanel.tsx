@@ -2,7 +2,7 @@ import { Icon } from "@iconify/react";
 
 import useModalActions from "@/hooks/context/useModal";
 import ItemInfo from "@/components/display/ItemInfo";
-import Container from "@/components/layout/Container";
+import Grid from "@/components/layout/Grid";
 
 import AddIngredient from "./subcomponents/AddIngredient";
 import EditIngredient from "./subcomponents/EditIngredient";
@@ -32,7 +32,7 @@ const IngredientPanel = ({ ingredients, isLoading }: IngredientPanelProps) => {
         </div>
       )}
 
-      <Container grid={5} className={style.container_content}>
+      <Grid className={style.container_content}>
         <ItemInfo
           text="Adicionar item"
           onClick={() => addNewModal(<AddIngredient />)}
@@ -55,7 +55,7 @@ const IngredientPanel = ({ ingredients, isLoading }: IngredientPanelProps) => {
               displayIcon="streamline:zero-hunger"
             />
           ))}
-      </Container>
+      </Grid>
     </div>
   );
 };

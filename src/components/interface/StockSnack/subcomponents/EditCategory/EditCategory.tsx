@@ -41,10 +41,10 @@ const EditCategory = ({ category }: EditCategoryProps) => {
           method: "PATCH",
           data: differences,
         },
-        onSuccess: () => removeModal(-1),
+        onSuccess: () => removeModal(),
       });
     } else {
-      removeModal(-1);
+      removeModal();
     }
   };
 

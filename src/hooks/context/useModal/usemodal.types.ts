@@ -6,6 +6,6 @@ export interface PropsUseModal {
   }
   actions: {
     addNewModal: (modal: ReactNode) => void
-    removeModal: (index: number) => void
+    removeModal: () => void
   }
 }

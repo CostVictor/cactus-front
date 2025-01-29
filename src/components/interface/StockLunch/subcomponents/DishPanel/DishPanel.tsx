@@ -5,7 +5,7 @@ import useModalActions from "@/hooks/context/useModal";
 import Modal from "@/components/display/Modal";
 
 import ItemInfo from "@/components/display/ItemInfo";
-import Container from "@/components/layout/Container";
+import Grid from "@/components/layout/Grid";
 
 import { DishPanelProps } from "./dishpanel.types";
 import style from "./dishpanel.module.scss";
@@ -23,7 +23,7 @@ const DishPanel = ({ dish, allIngredientsName }: DishPanelProps) => {
         </span>
       )}
 
-      <Container grid={5}>
+      <Grid>
         <ItemInfo
           text="Vincular item"
           onClick={() =>
@@ -37,7 +37,7 @@ const DishPanel = ({ dish, allIngredientsName }: DishPanelProps) => {
           colorDark
           typeAdd
         />
-      </Container>
+      </Grid>
     </div>
   );
 };

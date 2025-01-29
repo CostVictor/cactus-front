@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 
-import Container from "@/components/layout/Container";
+import Grid from "@/components/layout/Grid";
 import useModalActions from "@/hooks/context/useModal";
 
 import { PropsModal } from "./modal.types";
@@ -53,12 +53,11 @@ const Modal = ({
           </motion.h2>
         </div>
 
-        <Container
+        <Grid
           key={`content_${title}`}
           className={`${style.content} ${notOverflow && style.not_overflow} ${
             buttons === null && style.complete
           }`.trim()}
-          animateChildren
         >
           {message ? (
             Array.isArray(message) ? (
@@ -77,7 +76,7 @@ const Modal = ({
           ) : (
             children
           )}
-        </Container>
+        </Grid>
 
         {buttons !== null && (
           <motion.div

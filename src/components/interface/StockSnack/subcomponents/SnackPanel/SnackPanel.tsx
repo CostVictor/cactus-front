@@ -5,10 +5,10 @@ import { Icon } from "@iconify/react";
 import { useState } from "react";
 
 import Snack from "./subcomponents/Snack";
-import Container from "@/components/layout/Container";
 import AddItem from "./subcomponents/AddItem";
 import useModalActions from "@/hooks/context/useModal";
 import EditItem from "./subcomponents/EditItem";
+import Grid from "@/components/layout/Grid";
 
 import { PropsSnackPanel } from "./snackpanel.types";
 import style from "./snackpanel.module.scss";
@@ -38,10 +38,10 @@ const SnackPanel = ({ nameCategory, snacks }: PropsSnackPanel) => {
         </div>
       )}
 
-      <Container grid={5}>
+      <Grid>
         <AddItem nameCategory={nameCategory} />
 
-        {snacksFiltered.length > 0 && (
+        {!!snacksFiltered.length && (
           <AnimatePresence>
             {snacksFiltered.map((snack, index) => (
               <div
@@ -57,7 +57,7 @@ const SnackPanel = ({ nameCategory, snacks }: PropsSnackPanel) => {
             ))}
           </AnimatePresence>
         )}
-      </Container>
+      </Grid>
     </div>
   );
 };

@@ -29,12 +29,11 @@ const useModal = create<PropsUseModal>((set) => ({
         return { state: { listModal: [...storage.state.listModal, modal] } };
       });
     },
-    removeModal: (index) =>
+    removeModal: () =>
       set((storage) => {
         const newList = storage.state.listModal;
-        const newIndex = index < 0 ? newList.length + index : index;
+        newList.splice(newList.length - 1, 1);
 
-        newList.splice(newIndex, 1);
         if (!newList.length) {
           document.body.classList.remove("blocked_scroll");
         }
@@ -52,7 +51,7 @@ export const ModalManager = () => {
 
   return (
     <AnimatePresence>
-      {listModal.length > 0 && (
+      {!!listModal.length && (
         <motion.div
           className="block_shadow"
           animate={{
