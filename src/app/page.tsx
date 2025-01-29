@@ -62,7 +62,7 @@ export default function Home() {
               }
               backgroundGray={indexCategory % 2 === 0}
             >
-              {Array.isArray(category.snacks) && category.snacks.length > 0 && (
+              {Array.isArray(category.snacks) && !!category.snacks.length && (
                 <Grid>
                   {category.snacks.map((snack, indexSnack) => (
                     <CardInfo

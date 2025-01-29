@@ -8,9 +8,8 @@ const Grid = ({ children, className, style, sizeItem }: PropsGrid) => {
         ...style,
         display: "grid",
         gridTemplateColumns: `repeat(auto-fill, minmax(${
-          sizeItem || 200
+          sizeItem ? `${sizeItem}px` : "200px"
         }, 1fr))`,
-        justifyItems: "start",
       }}
     >
       {children}
