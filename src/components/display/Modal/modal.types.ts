@@ -1,7 +1,6 @@
 import { ReactNode } from "react";
-import { PropsButton } from "@/components/forms/Button";
 
-type PropsButtonModal = Omit<PropsButton, "link"> & {
+type PropsButtonModal = {
   appearance?: "normal" | "main";
 };
 

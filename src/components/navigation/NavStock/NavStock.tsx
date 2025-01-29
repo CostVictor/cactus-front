@@ -1,7 +1,6 @@
 import Link from "next/link";
 
 import Container from "@/components/layout/Container";
-import Button from "@/components/forms/Button";
 
 import { PropsNavStock } from "./navstock.types";
 import style from "./navstock.module.scss";
@@ -13,17 +12,17 @@ const NavStock = ({ local }: PropsNavStock) => {
       <Container className={style.container_options}>
         {local === "snack" ? (
           <>
-            <Button text="Lanches" clicked />
+            {/* <Button text="Lanches" clicked /> */}
             <Link href="/stock/lunch">
-              <Button text="Almoços" />
+              {/* <Button text="Almoços" /> */}
             </Link>
           </>
         ) : (
           <>
             <Link href="/stock/snack">
-              <Button text="Lanches" />
+              {/* <Button text="Lanches" /> */}
             </Link>
-            <Button text="Almoços" clicked />
+            {/* <Button text="Almoços" clicked /> */}
           </>
         )}
       </Container>

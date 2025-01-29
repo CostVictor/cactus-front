@@ -4,7 +4,6 @@ import useModalActions from "@/hooks/context/useModal";
 import useRequest from "@/hooks/network/useRequest";
 
 import Modal from "@/components/display/Modal";
-import Form from "@/components/forms/Form";
 
 import { stockSnackEP } from "@APISCMapping/endpoints";
 import style from "./addcategory.module.scss";

@@ -2,7 +2,6 @@ import { useAuthActions } from "@/hooks/context/useAuth";
 import useModalActions from "@/hooks/context/useModal";
 
 import Modal from "@/components/display/Modal";
-import Form from "@/components/forms/Form";
 import NavLink from "@/components/navigation/NavLink";
 
 import { useSearchParams } from "next/navigation";

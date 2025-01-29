@@ -2,7 +2,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Icon } from "@iconify/react";
 import { useState } from "react";
 
-import Button from "@/components/forms/Button";
+// import Button from "@/components/forms/Button";
 import { fadeInFolder } from "./optionscontroller.variables";
 import { PropsOptionsControler } from "./optionscontroller.types";
 import style from "./optionscontroller.module.scss";
@@ -33,11 +33,11 @@ const OptionsController = ({
               animate="visible"
               exit="exit"
             >
-              <Button
+              {/* <Button
                 text={button.text}
                 onClick={button.onClick}
                 appearance="main"
-              />
+              /> */}
             </motion.div>
           )}
         </AnimatePresence>

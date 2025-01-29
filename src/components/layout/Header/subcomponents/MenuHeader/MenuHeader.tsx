@@ -10,7 +10,6 @@ import useAuthState from "@/hooks/context/useAuth";
 
 import Container from "@/components/layout/Container";
 import NavLink from "@/components/navigation/NavLink";
-import Button from "@/components/forms/Button";
 
 import style from "./menuheader.module.scss";
 
@@ -45,14 +44,14 @@ const MenuHeader = ({ targets }: PropsHeader) => {
             {!isAuthenticated && (
               <div className={style.container_auth}>
                 <Link href="/register">
-                  <Button text="Cadastrar" onClick={() => removeModal(-1)} />
+                  {/* <Button text="Cadastrar" onClick={() => removeModal(-1)} /> */}
                 </Link>
                 <Link href="/login">
-                  <Button
+                  {/* <Button
                     text="Logar"
                     appearance="main"
                     onClick={() => removeModal(-1)}
-                  />
+                  /> */}
                 </Link>
               </div>
             )}

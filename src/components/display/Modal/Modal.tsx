@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 
-import Button from "@/components/forms/Button";
 import Container from "@/components/layout/Container";
 import useModalActions from "@/hooks/context/useModal";
 
@@ -90,7 +89,7 @@ const Modal = ({
               transition: { delay: 0.15, duration: 0.15 },
             }}
           >
-            {buttons?.length ? (
+            {/* {buttons?.length ? (
               buttons.map((button, index) => <Button key={index} {...button} />)
             ) : (
               <Button
@@ -100,7 +99,7 @@ const Modal = ({
                   removeModal(-1);
                 }}
               />
-            )}
+            )} */}
           </motion.div>
         )}
       </motion.div>

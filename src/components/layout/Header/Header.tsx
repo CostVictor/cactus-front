@@ -5,7 +5,6 @@ import Image from "next/image";
 import Link from "next/link";
 
 import useAuthState from "@/hooks/context/useAuth";
-import Button from "@/components/forms/Button";
 import NavLink from "@/components/navigation/NavLink";
 
 import { yesevaOne } from "@/styles/fonts";
@@ -58,10 +57,10 @@ const Header = ({ targets }: PropsHeader) => {
         <div className={style.container_content}>
           {targets?.length ? <hr className={style.division} /> : null}
           <Link href="/register">
-            <Button text="Cadastrar" />
+            {/* <Button text="Cadastrar" /> */}
           </Link>
           <Link href="/login">
-            <Button text="Logar" appearance="main" />
+            {/* <Button text="Logar" appearance="main" /> */}
           </Link>
         </div>
       )}

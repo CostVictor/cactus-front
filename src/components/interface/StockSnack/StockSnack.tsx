@@ -5,7 +5,6 @@ import { Icon } from "@iconify/react";
 import useModalActions from "@/hooks/context/useModal";
 import useWebSocket from "@/hooks/network/useWebSocket";
 import Folder from "@/components/interface/Folder";
-import Button from "@/components/forms/Button";
 
 import SnackPanel from "./subcomponents/SnackPanel";
 import AddCategory from "./subcomponents/AddCategory";
@@ -24,7 +23,7 @@ const StockSnack = () => {
     <>
       {Array.isArray(data) && data.length > 1 && (
         <div className={style.btn_reorder}>
-          <Button
+          {/* <Button
             text="Ordenar"
             appearance="main"
             onClick={() =>
@@ -34,7 +33,7 @@ const StockSnack = () => {
                 />
               )
             }
-          />
+          /> */}
         </div>
       )}
       <div className={style.container_sessions}>
