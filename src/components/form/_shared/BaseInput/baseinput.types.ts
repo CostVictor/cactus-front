@@ -28,10 +28,12 @@ export interface PropsBaseInputConfig {
   icon?: string;
   rules?: PropsBaseInputConfigRules;
   writing?: PropsBaseInputConfigWriting;
+  isMessageMode?: boolean;
 }
 
 export interface PropsBaseInput {
   name: string;
+  label: string;
   type: PropsBaseInputTypes;
   control: Control<FieldValues>;
   className?: string;

@@ -4,6 +4,5 @@ export interface PropsTextField {
   name: string;
   label: string;
   control: Control<FieldValues>;
-  error?: string;
   config?: {}
 }

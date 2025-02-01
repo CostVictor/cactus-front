@@ -1,4 +1,4 @@
-type PropsCustomValidation = (value: string) => boolean | string;
+export type PropsCustomValidation = (value: string) => boolean | string;
 
 export interface PropsGroupCustomValidation {
   [key: string]: PropsCustomValidation;
