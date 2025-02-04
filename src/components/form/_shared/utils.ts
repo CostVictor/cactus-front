@@ -15,11 +15,20 @@ export const formatTel = (value: string) => {
   return valueReturn
 }
 
+/**
+ * Formata um valor de string como um preço em Real Brasileiro (R$).
+ * 
+ * A função remove todos os caracteres não numéricos da string de entrada, garante que o 
+ * número resultante não exceda 9999 (equivalente a R$ 99,99) e o formata com duas casas decimais.
+ * 
+ * @param value - O valor da string a ser formatado como preço.
+ * @returns A string de preço formatada no formato `R$ xx,xx`.
+ */
 export const formatPrice = (value: string) => {
   let valueReturn = value.replace(/\D/g, "");
 
-  // Garante que não ultrapasse o valor máximo (10000, equivalente a 100.00)
-  valueReturn = Math.min(parseInt(valueReturn || '0'), 10000).toString();
+  // Garante que não ultrapasse o valor máximo (9999, equivalente a R$ 99.99)
+  valueReturn = Math.min(parseInt(valueReturn || '0'), 9999).toString();
 
   const integer = valueReturn.slice(0, -2) || '0';
   const decimal = valueReturn.slice(-2).padStart(2, '0');

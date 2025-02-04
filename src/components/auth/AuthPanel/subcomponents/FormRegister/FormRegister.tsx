@@ -5,6 +5,7 @@ import useModalActions from "@/hooks/context/useModal";
 import Modal from "@/components/display/Modal";
 import Form from "@/components/form/Form/Form";
 import TextField from "@/components/form/TextField";
+import FormattedField from "@/components/form/FormattedField";
 
 import { userEP } from "@APISCMapping/endpoints";
 import { cities, formatDataFormRegister } from "./formregister.variables";
@@ -21,6 +22,8 @@ const FormRegister = () => {
     watch,
     control,
     handleSubmit,
+    setValue,
+    getValues,
     formState: { errors },
   } = useForm();
 
@@ -57,10 +60,12 @@ const FormRegister = () => {
         }}
         required
       />
-      <TextField
+      <FormattedField
         name="tel"
+        type="tel"
         label="Telefone"
         control={control}
+        setValue={setValue}
         message={
           errors.tel
             ? { text: errors.tel.message as string, isError: true }
@@ -76,12 +81,16 @@ const FormRegister = () => {
         message={
           errors.password
             ? { text: errors.password.message as string, isError: true }
+            : !getValues("password")
+            ? {
+                text: "A senha deve incluir pelo menos: 10 caracteres, uma letra maiúscula, uma letra minúscula, um número e um símbolo especial.",
+              }
             : undefined
         }
         required
       />
       <TextField
-        name="conf_password"
+        name="conf_password__notIncluded"
         label="Confirmar senha"
         type="password"
         control={control}
@@ -101,7 +110,6 @@ const FormRegister = () => {
             },
           },
         }}
-        notIncluded
         required
       />
       <button>Ok</button>

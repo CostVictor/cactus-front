@@ -1,4 +1,5 @@
 import { Control, FieldValues } from 'react-hook-form';
+import { ReactNode } from 'react';
 
 import { PropsGroupCustomValidation } from '../types';
 import { writingFormatters, writingRules } from '../variables';
@@ -38,8 +39,8 @@ export interface PropsBaseInput {
   control: Control<FieldValues>;
   className?: string;
   onChange?: () => void;
-  notIncluded?: boolean;
   required?: boolean;
   inactive?: boolean;
   config?: PropsBaseInputConfig;
+  children?: ReactNode
 }

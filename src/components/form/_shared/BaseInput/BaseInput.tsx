@@ -21,13 +21,13 @@ const BaseInput = ({
   className,
   control,
   config,
-  notIncluded,
   inactive,
   required,
+  children,
 }: PropsBaseInput) => {
   const { initValue, valueRules, writing, icon, isMessageMode } = config ?? {};
   const inputIcon = icon || (inactive ? "basil:user-block-outline" : undefined);
-  const inputName = notIncluded ? `${name}__notIncluded` : name;
+  const isInputOption = type === "password" || !!children;
 
   const [passwordVisible, setPasswordVisible] = useState(false);
   const { setIsFocused } = useFocus();
@@ -39,18 +39,18 @@ const BaseInput = ({
       : type;
 
   const inputClass = clsx(style.input, {
-    [style.password_mode]: type === "password",
+    [style.option_mode]: isInputOption,
     [style.message_mode]: isMessageMode,
   });
 
-  const fieldValue = useWatch({ control, name: inputName });
+  const fieldValue = useWatch({ control, name });
 
   const {
     field,
     formState: { isSubmitting },
   } = useController({
+    name,
     control,
-    name: inputName,
     defaultValue: initValue || "",
     rules: {
       validate: {
@@ -74,7 +74,7 @@ const BaseInput = ({
       {required && (
         <span
           className={clsx(inter.className, style.span_required, {
-            [style.password_mode]: type === "password",
+            [style.indent]: isInputOption,
           })}
         >
           *
@@ -121,6 +121,8 @@ const BaseInput = ({
           </motion.div>
         </AnimatePresence>
       )}
+
+      {children}
     </div>
   );
 };

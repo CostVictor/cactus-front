@@ -18,7 +18,7 @@
   right: 1.2%;
   top: 1.5%;
 
-  &.password_mode {
+  &.indent {
     right: 3rem;
   }
 }
@@ -43,7 +43,7 @@
     border-bottom-right-radius: 0;
   }
 
-  &.password_mode {
+  &.option_mode {
     border-right: 1px solid var(--division);
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
