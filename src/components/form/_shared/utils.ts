@@ -1,4 +1,34 @@
 import { notCapitalize } from "./variables";
+import Fuse from "fuse.js";
+
+/**
+ * Filtra as opções fornecidas com base na string alvo usando busca difusa.
+ *
+ * @param target - A string a ser buscada dentro das opções.
+ * @param options - Um array de strings a serem filtradas.
+ * @returns Um array de strings que correspondem à string alvo com base na busca difusa.
+ *
+ * A função normaliza as opções removendo os acentos e, em seguida,
+ * usa a biblioteca Fuse.js para realizar uma busca difusa. Se a string alvo for
+ * fornecida, ela retorna as opções originais que correspondem à string alvo. Se
+ * a string alvo estiver vazia, ela retorna o array original de opções.
+ */
+export const filterOption = (target: string, options: string[]) => {
+  const normalizedOptions = options.map((option) => ({
+    normalized: option.normalize("NFD").replace(/[\u0300-\u036f]/g, ""),
+    original: option,
+  }));
+
+  const fuse = new Fuse(normalizedOptions, {
+    keys: ["normalized", "original"],
+    includeScore: true,
+    threshold: 0.35,
+  });
+
+  return !!target
+    ? fuse.search(target).map((result) => result.item.original)
+    : options;
+}
 
 /**
  * Remove caracteres que não são dígitos e formata para o padrão de telefone.

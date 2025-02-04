@@ -90,7 +90,9 @@ const BaseInput = ({
 
       <input
         {...field}
+        id={name}
         type={inputType}
+        autoComplete={name}
         inputMode={inputMode}
         className={inputClass}
         maxLength={valueRules?.maxLength}

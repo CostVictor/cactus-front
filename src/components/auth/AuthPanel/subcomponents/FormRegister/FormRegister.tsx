@@ -6,6 +6,7 @@ import Modal from "@/components/display/Modal";
 import Form from "@/components/form/Form/Form";
 import TextField from "@/components/form/TextField";
 import FormattedField from "@/components/form/FormattedField";
+import SelectField from "@/components/form/SelectField";
 
 import { userEP } from "@APISCMapping/endpoints";
 import { cities, formatDataFormRegister } from "./formregister.variables";
@@ -33,6 +34,7 @@ const FormRegister = () => {
   return (
     <Form
       onSubmit={(data) => console.log(data)}
+      outputData={formatDataFormRegister}
       handleSubmit={handleSubmit}
       className={style.form}
     >
@@ -41,7 +43,7 @@ const FormRegister = () => {
         label="Nome e sobrenome"
         control={control}
         message={
-          errors.username
+          errors.username?.message
             ? { text: errors.username.message as string, isError: true }
             : undefined
         }
@@ -67,8 +69,21 @@ const FormRegister = () => {
         control={control}
         setValue={setValue}
         message={
-          errors.tel
+          errors.tel?.message
             ? { text: errors.tel.message as string, isError: true }
+            : undefined
+        }
+        required
+      />
+      <SelectField
+        name="city"
+        label="Cidade"
+        control={control}
+        setValue={setValue}
+        options={cities}
+        message={
+          errors.city?.message
+            ? { text: errors.city.message as string, isError: true }
             : undefined
         }
         required
@@ -79,7 +94,7 @@ const FormRegister = () => {
         type="password"
         control={control}
         message={
-          errors.password
+          errors.password?.message
             ? { text: errors.password.message as string, isError: true }
             : !getValues("password")
             ? {
@@ -95,7 +110,7 @@ const FormRegister = () => {
         type="password"
         control={control}
         message={
-          errors.conf_password__notIncluded
+          errors.conf_password__notIncluded?.message
             ? {
                 text: errors.conf_password__notIncluded.message as string,
                 isError: true,

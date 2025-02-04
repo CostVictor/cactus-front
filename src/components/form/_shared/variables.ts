@@ -7,7 +7,7 @@ export const notCapitalize = [
 export const writingRules = {
   notNumber: /[0-9]/g,
   notSymbol: /[^A-Za-zÀ-ÿ0-9\s]/g
-} satisfies { [key: string]: RegExp }
+} as const satisfies { [key: string]: RegExp }
 
 export const writingFormatters = {
   price: formatPrice,
