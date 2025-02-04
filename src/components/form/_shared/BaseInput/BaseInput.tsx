@@ -1,14 +1,16 @@
-import { useController } from "react-hook-form";
+import { useController, useWatch } from "react-hook-form";
+import { AnimatePresence, motion } from "framer-motion";
 import { Icon } from "@iconify/react";
 import { useState } from "react";
+import clsx from "clsx";
 
 import useFocus from "../_hooks/useFocus";
 import Label from "../_subcomponents/Label";
 import { genericValidations } from "../validations";
 import { inter } from "@/styles/fonts";
 
+import { handleChangeValue, getValidationByType } from "./baseinput.utils";
 import { PropsBaseInput } from "./baseinput.types";
-import { handleChangeValue } from "./baseinput.utils";
 import style from "./baseinput.module.scss";
 
 const BaseInput = ({
@@ -23,8 +25,9 @@ const BaseInput = ({
   inactive,
   required,
 }: PropsBaseInput) => {
-  const { initValue, rules, writing, icon, isMessageMode } = config ?? {};
+  const { initValue, valueRules, writing, icon, isMessageMode } = config ?? {};
   const inputIcon = icon || (inactive ? "basil:user-block-outline" : undefined);
+  const inputName = notIncluded ? `${name}__notIncluded` : name;
 
   const [passwordVisible, setPasswordVisible] = useState(false);
   const { setIsFocused } = useFocus();
@@ -35,44 +38,44 @@ const BaseInput = ({
       ? "text"
       : type;
 
-  const inputClass = [
-    style.input,
-    type === "password" && style.password_mode,
-    isMessageMode && style.message_mode,
-  ]
-    .filter(Boolean)
-    .join(" ");
+  const inputClass = clsx(style.input, {
+    [style.password_mode]: type === "password",
+    [style.message_mode]: isMessageMode,
+  });
+
+  const fieldValue = useWatch({ control, name: inputName });
 
   const {
     field,
     formState: { isSubmitting },
   } = useController({
     control,
-    name: notIncluded ? `${name}__notIncluded` : name,
+    name: inputName,
     defaultValue: initValue || "",
     rules: {
       validate: {
-        ...rules?.custom,
         required: required ? genericValidations.required() : () => undefined,
-        minLength: rules?.minLength
-          ? genericValidations.minLength(rules.minLength)
+        minLength: valueRules?.minLength
+          ? genericValidations.minLength(valueRules.minLength)
           : () => undefined,
+        ...valueRules?.custom,
+        ...(required || !!fieldValue ? getValidationByType(type) : {}),
       },
     },
   });
 
   return (
     <div
+      style={{ position: "relative", display: "flex", width: "100%" }}
       className={className}
-      style={{ position: "relative", display: "flex" }}
     >
       {inputIcon && <Icon className={style.icon} icon={inputIcon} />}
 
       {required && (
         <span
-          className={`${inter.className} ${style.span_required} ${
-            inputType === "password" ? style.password_mode : ""
-          }`.trim()}
+          className={clsx(inter.className, style.span_required, {
+            [style.password_mode]: type === "password",
+          })}
         >
           *
         </span>
@@ -90,7 +93,7 @@ const BaseInput = ({
         type={inputType}
         inputMode={inputMode}
         className={inputClass}
-        maxLength={rules?.maxLength}
+        maxLength={valueRules?.maxLength}
         disabled={isSubmitting || inactive}
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
@@ -101,18 +104,22 @@ const BaseInput = ({
         }}
       />
 
-      {inputType === "password" && (
-        <div
-          onClick={() => setPasswordVisible((prevState) => !prevState)}
-          className={`${style.container_password} ${
-            isMessageMode ? style.message_mode : ""
-          }`.trim()}
-        >
-          <Icon
-            icon={passwordVisible ? "ph:eye-closed-bold" : "ph:eye-bold"}
-            className={style.icon}
-          />
-        </div>
+      {type === "password" && (
+        <AnimatePresence>
+          <motion.div
+            whileTap={{ scale: 0.9 }}
+            whileFocus={{ border: "1px solid var(--red-secondary)" }}
+            onTap={() => setPasswordVisible((prevState) => !prevState)}
+            className={clsx(style.container_password, {
+              [style.message_mode]: isMessageMode,
+            })}
+          >
+            <Icon
+              icon={passwordVisible ? "ph:eye-closed-bold" : "ph:eye-bold"}
+              className={style.icon}
+            />
+          </motion.div>
+        </AnimatePresence>
       )}
     </div>
   );

@@ -1,6 +1,8 @@
 import { motion, AnimatePresence } from "framer-motion";
 import useFocus from "../../_hooks/useFocus";
+import clsx from "clsx";
 
+import { inter } from "@/styles/fonts";
 import { animateLabel, animateSpanLabel } from "./label.variants";
 import { PropsLabel } from "./label.types";
 import style from "./label.module.scss";
@@ -20,9 +22,9 @@ const Label = ({
       <AnimatePresence>
         {(hasValue || isFocused) && (
           <motion.span
-            className={`${style.span_label} ${
-              inactive ? style.inactive : ""
-            }`.trim()}
+            className={clsx(inter.className, style.span_label, {
+              [style.inactive]: inactive,
+            })}
             variants={animateSpanLabel}
             initial="hidden"
             animate="visible"
@@ -47,9 +49,10 @@ const Label = ({
         variants={animateLabel}
         initial={initHidden ? "hidden" : "visible"}
         animate={hasValue || isFocused ? "hidden" : "visible"}
-        className={`${style.label} ${indent ? style.indent : ""} ${
-          inactive ? style.inactive : ""
-        }`.trim()}
+        className={clsx(inter.className, style.label, {
+          [style.indent]: indent,
+          [style.inactive]: inactive,
+        })}
       >
         {label}
       </motion.label>

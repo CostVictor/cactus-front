@@ -4,10 +4,10 @@ export const notCapitalize = [
   "da", "das", "do", "dos", "de"
 ]
 
-export const writingRules: { [key: string]: RegExp } = {
+export const writingRules = {
   notNumber: /[0-9]/g,
   notSymbol: /[^A-Za-zÀ-ÿ0-9\s]/g
-}
+} satisfies { [key: string]: RegExp }
 
 export const writingFormatters = {
   price: formatPrice,

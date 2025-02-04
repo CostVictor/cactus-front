@@ -1,9 +1,18 @@
 import { trimmerData, omitKeys, setFormatData } from "./form.utils";
 import { PropsForm } from "./form.types";
 
-const Form = ({ children, onSubmit, handleSubmit, outputData }: PropsForm) => {
+const Form = ({
+  children,
+  onSubmit,
+  handleSubmit,
+  outputData,
+  className,
+  style,
+}: PropsForm) => {
   return (
     <form
+      style={style}
+      className={className}
       onSubmit={handleSubmit((data) =>
         onSubmit(
           setFormatData(

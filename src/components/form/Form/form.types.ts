@@ -1,6 +1,6 @@
 import { UseFormHandleSubmit, FieldValues } from "react-hook-form";
 import { BaseData } from "@APISCMapping/data.types";
-import { ReactNode } from "react";
+import { ReactNode, CSSProperties } from "react";
 
 interface PropsFormatterList {
   name: string, format: PropsFormatterData
@@ -13,4 +13,6 @@ export interface PropsForm {
   onSubmit: (data: BaseData) => void;
   handleSubmit: UseFormHandleSubmit<FieldValues>;
   outputData?: PropsFormatterData;
+  className?: string;
+  style?: CSSProperties;
 }

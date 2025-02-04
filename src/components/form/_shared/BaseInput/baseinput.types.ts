@@ -11,7 +11,7 @@ export type PropsWritingRules = {
   [K in keyof typeof writingRules]?: boolean;
 };
 
-export interface PropsBaseInputConfigRules {
+export interface PropsBaseInputConfigValueRules {
   custom?: PropsGroupCustomValidation;
   minLength?: number;
   maxLength?: number;
@@ -25,10 +25,10 @@ export interface PropsBaseInputConfigWriting {
 
 export interface PropsBaseInputConfig {
   initValue?: string;
-  icon?: string;
-  rules?: PropsBaseInputConfigRules;
+  valueRules?: PropsBaseInputConfigValueRules;
   writing?: PropsBaseInputConfigWriting;
   isMessageMode?: boolean;
+  icon?: string;
 }
 
 export interface PropsBaseInput {

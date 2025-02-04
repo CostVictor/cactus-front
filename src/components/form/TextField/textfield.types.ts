@@ -1,8 +1,7 @@
-import { Control, FieldValues } from "react-hook-form";
+import { PropsBaseInput, PropsBaseInputTypes } from "../_shared/BaseInput";
+import { PropsMessage } from "../_shared/_subcomponents/Message";
 
-export interface PropsTextField {
-  name: string;
-  label: string;
-  control: Control<FieldValues>;
-  config?: {}
+export type PropsTextField = Omit<PropsBaseInput, "type"> & {
+  type?: Exclude<PropsBaseInputTypes, "tel" | "datetime-local" | "search" | "image" | "price">
+  message?: PropsMessage
 }
