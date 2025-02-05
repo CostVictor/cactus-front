@@ -1,6 +1,9 @@
 .form {
   display: flex;
   flex-direction: column;
+  overflow-y: auto;
+  max-height: 25rem;
+  padding: 1rem;
   gap: 1.3rem;
   width: 100%;
 }

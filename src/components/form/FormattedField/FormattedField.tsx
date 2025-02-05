@@ -40,6 +40,7 @@ const FormattedField = (props: PropsFormattedField) => {
       <FocusProvider>
         <BaseInput {...propsFormatField}>
           <motion.div
+            title="Limpar campo"
             whileTap={{ scale: 0.9 }}
             whileFocus={{ border: "1px solid var(--red-secondary)" }}
             className={style.container_clean}

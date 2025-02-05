@@ -37,12 +37,12 @@ const SelectField = (props: PropsSelectField) => {
   } as PropsBaseInput;
 
   return (
-    <div>
+    <div className={style.container_main}>
       <FocusProvider>
         <BaseInput {...propsSelectField} />
+        {!!message && <Message text={message} isError={isError} />}
         <SelectPanel {...props} />
       </FocusProvider>
-      {!!message && <Message text={message} isError={isError} />}
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import { filterOption } from "@/components/form/_shared/utils";
 import { useWatch, useFormContext } from "react-hook-form";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useMemo } from "react";
 
 import useFocus from "../../../_shared/_hooks/useFocus";
@@ -19,11 +19,17 @@ const SelectPanel = ({ name, options }: PropsSelectPanel) => {
   );
 
   return (
-    <>
+    <AnimatePresence>
       {isFocused && (
-        <motion.ul>
+        <motion.ul
+          initial={{ opacity: 0, maxHeight: 0 }}
+          animate={{ opacity: 1, maxHeight: "10rem" }}
+          exit={{ opacity: 1, maxHeight: 0 }}
+          transition={{ duration: 0.2 }}
+          className={style.container_main}
+        >
           {filteredOptions.map((option, index) => (
-            <motion.li
+            <li
               key={`option_${index}`}
               className={style.option}
               onMouseDown={() => {
@@ -32,11 +38,11 @@ const SelectPanel = ({ name, options }: PropsSelectPanel) => {
               }}
             >
               {option}
-            </motion.li>
+            </li>
           ))}
         </motion.ul>
       )}
-    </>
+    </AnimatePresence>
   );
 };
 

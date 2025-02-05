@@ -50,6 +50,7 @@ const FormRegister = () => {
           required
         />
         <FormattedField name="tel" type="tel" label="Telefone" required />
+        <TextField name="email" label="E-mail" type="email" required />
         <SelectField name="city" label="Cidade" options={cities} required />
         <TextField
           name="password"

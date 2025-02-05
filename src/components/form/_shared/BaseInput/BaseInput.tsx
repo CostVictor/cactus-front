@@ -105,6 +105,7 @@ const BaseInput = ({
       {type === "password" && (
         <AnimatePresence>
           <motion.div
+            title={`${passwordVisible ? "Ocultar" : "Exibir"} senha`}
             whileTap={{ scale: 0.9 }}
             whileFocus={{ border: "1px solid var(--red-secondary)" }}
             onTap={() => setPasswordVisible((prevState) => !prevState)}
