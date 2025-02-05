@@ -1,17 +1,21 @@
+import { useFormContext } from "react-hook-form";
 import { trimmerData, omitKeys, setFormatData } from "./form.utils";
 import { PropsForm } from "./form.types";
 
 const Form = ({
   children,
   onSubmit,
-  handleSubmit,
+
   outputData,
   className,
   style,
 }: PropsForm) => {
+  const { handleSubmit, getValues } = useFormContext();
+
   return (
     <form
       style={style}
+      onChange={() => console.log(getValues())}
       className={className}
       onSubmit={handleSubmit((data) =>
         onSubmit(

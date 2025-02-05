@@ -1,4 +1,4 @@
-import { useForm } from "react-hook-form";
+import { useForm, FormProvider } from "react-hook-form";
 import useRequest from "@/hooks/network/useRequest";
 import useModalActions from "@/hooks/context/useModal";
 
@@ -19,116 +19,64 @@ const FormRegister = () => {
     actions: { fetchData },
   } = useRequest();
 
-  const {
-    watch,
-    control,
-    handleSubmit,
-    setValue,
-    getValues,
-    formState: { errors },
-  } = useForm();
+  const formMethods = useForm();
 
   const { addNewModal, removeModal } = useModalActions();
   const router = useRouter();
 
   return (
-    <Form
-      onSubmit={(data) => console.log(data)}
-      outputData={formatDataFormRegister}
-      handleSubmit={handleSubmit}
-      className={style.form}
-    >
-      <TextField
-        name="username"
-        label="Nome e sobrenome"
-        control={control}
-        message={
-          errors.username?.message
-            ? { text: errors.username.message as string, isError: true }
-            : undefined
-        }
-        config={{
-          writing: {
-            capitalize: "all",
-            rules: { notNumber: true, notSymbol: true },
-          },
-          valueRules: {
-            custom: {
-              name: (value) =>
-                value.length >= 10 ||
-                "Por favor, defina um nome que facilite sua identificação",
+    <FormProvider {...formMethods}>
+      <Form
+        onSubmit={(data) => console.log(data)}
+        outputData={formatDataFormRegister}
+        className={style.form}
+      >
+        <TextField
+          name="username"
+          label="Nome e sobrenome"
+          config={{
+            writing: {
+              capitalize: "all",
+              rules: { notNumber: true, notSymbol: true },
             },
-          },
-        }}
-        required
-      />
-      <FormattedField
-        name="tel"
-        type="tel"
-        label="Telefone"
-        control={control}
-        setValue={setValue}
-        message={
-          errors.tel?.message
-            ? { text: errors.tel.message as string, isError: true }
-            : undefined
-        }
-        required
-      />
-      <SelectField
-        name="city"
-        label="Cidade"
-        control={control}
-        setValue={setValue}
-        options={cities}
-        message={
-          errors.city?.message
-            ? { text: errors.city.message as string, isError: true }
-            : undefined
-        }
-        required
-      />
-      <TextField
-        name="password"
-        label="Senha"
-        type="password"
-        control={control}
-        message={
-          errors.password?.message
-            ? { text: errors.password.message as string, isError: true }
-            : !getValues("password")
-            ? {
-                text: "A senha deve incluir pelo menos: 10 caracteres, uma letra maiúscula, uma letra minúscula, um número e um símbolo especial.",
-              }
-            : undefined
-        }
-        required
-      />
-      <TextField
-        name="conf_password__notIncluded"
-        label="Confirmar senha"
-        type="password"
-        control={control}
-        message={
-          errors.conf_password__notIncluded?.message
-            ? {
-                text: errors.conf_password__notIncluded.message as string,
-                isError: true,
-              }
-            : undefined
-        }
-        config={{
-          valueRules: {
-            custom: {
-              confPassword: (value) =>
-                value === watch("password") || "As senhas não coincidem",
+            valueRules: {
+              custom: {
+                name: (value) =>
+                  value.length >= 10 ||
+                  "Por favor, defina um nome que facilite sua identificação",
+              },
             },
-          },
-        }}
-        required
-      />
-      <button>Ok</button>
-    </Form>
+          }}
+          required
+        />
+        <FormattedField name="tel" type="tel" label="Telefone" required />
+        <SelectField name="city" label="Cidade" options={cities} required />
+        <TextField
+          name="password"
+          label="Senha"
+          type="password"
+          message="A senha deve incluir pelo menos: 12 caracteres, uma letra maiúscula, 
+          uma letra minúscula, um número e um símbolo especial."
+          required
+        />
+        <TextField
+          name="conf_password__notIncluded"
+          label="Confirmar senha"
+          type="password"
+          config={{
+            valueRules: {
+              custom: {
+                confPassword: (value) =>
+                  value === formMethods.watch("password") ||
+                  "As senhas não coincidem",
+              },
+            },
+          }}
+          required
+        />
+        <button>Ok</button>
+      </Form>
+    </FormProvider>
   );
 };
 

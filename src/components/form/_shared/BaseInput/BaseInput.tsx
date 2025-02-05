@@ -1,4 +1,4 @@
-import { useController, useWatch } from "react-hook-form";
+import { useFormContext, useWatch } from "react-hook-form";
 import { AnimatePresence, motion } from "framer-motion";
 import { Icon } from "@iconify/react";
 import { useState } from "react";
@@ -19,19 +19,25 @@ const BaseInput = ({
   type,
   onChange,
   className,
-  control,
   config,
   inactive,
   required,
   children,
 }: PropsBaseInput) => {
+  const {
+    control,
+    register,
+    formState: { isSubmitting },
+  } = useFormContext();
+
   const { initValue, valueRules, writing, icon, isMessageMode } = config ?? {};
   const inputIcon = icon || (inactive ? "basil:user-block-outline" : undefined);
-  const isInputOption = type === "password" || !!children;
+  const isButtonMode = type === "password" || !!children;
 
   const [passwordVisible, setPasswordVisible] = useState(false);
   const { setIsFocused } = useFocus();
 
+  const inputValue = useWatch({ name, control }) as string;
   const inputMode = type === "price" ? "numeric" : undefined;
   const inputType =
     type === "price" || (type === "password" && passwordVisible)
@@ -39,30 +45,18 @@ const BaseInput = ({
       : type;
 
   const inputClass = clsx(style.input, {
-    [style.option_mode]: isInputOption,
+    [style.button_mode]: isButtonMode,
     [style.message_mode]: isMessageMode,
   });
 
-  const fieldValue = useWatch({ control, name });
-
-  const {
-    field,
-    formState: { isSubmitting },
-  } = useController({
-    name,
-    control,
-    defaultValue: initValue || "",
-    rules: {
-      validate: {
-        required: required ? genericValidations.required() : () => undefined,
-        minLength: valueRules?.minLength
-          ? genericValidations.minLength(valueRules.minLength)
-          : () => undefined,
-        ...valueRules?.custom,
-        ...(required || !!fieldValue ? getValidationByType(type) : {}),
-      },
-    },
-  });
+  const validationsRules = {
+    required: required ? genericValidations.required() : () => undefined,
+    minLength: valueRules?.minLength
+      ? genericValidations.minLength(valueRules.minLength)
+      : () => undefined,
+    ...valueRules?.custom,
+    ...(required || !!inputValue ? getValidationByType(type) : {}),
+  };
 
   return (
     <div
@@ -74,7 +68,7 @@ const BaseInput = ({
       {required && (
         <span
           className={clsx(inter.className, style.span_required, {
-            [style.indent]: isInputOption,
+            [style.indent]: isButtonMode,
           })}
         >
           *
@@ -82,14 +76,14 @@ const BaseInput = ({
       )}
 
       <Label
-        hasValue={!!field.value}
-        htmlFor={field.name}
+        hasValue={!!inputValue}
+        htmlFor={name}
         inactive={inactive}
         label={label}
       />
 
       <input
-        {...field}
+        {...register(name, { validate: validationsRules })}
         id={name}
         type={inputType}
         autoComplete={name}
@@ -97,11 +91,13 @@ const BaseInput = ({
         className={inputClass}
         maxLength={valueRules?.maxLength}
         disabled={isSubmitting || inactive}
+        defaultValue={initValue || ""}
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
         onInvalid={(event) => event.preventDefault()}
         onChange={(event) => {
-          handleChangeValue(event, field, writing);
+          event.target.value = handleChangeValue(event, writing);
+          register(name).onChange(event);
           onChange?.();
         }}
       />

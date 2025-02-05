@@ -1,3 +1,5 @@
+import { useFormContext } from "react-hook-form";
+
 import BaseInput, { PropsBaseInput } from "../_shared/BaseInput";
 import { genericValidations } from "../_shared/validations";
 import { FocusProvider } from "../_shared/_hooks/useFocus";
@@ -8,12 +10,22 @@ import SelectPanel from "./subcomponents/SelectPanel";
 import style from "./selectfield.module.scss";
 
 const SelectField = (props: PropsSelectField) => {
+  const {
+    formState: { errors },
+  } = useFormContext();
+
+  const fieldError = errors[props.name];
+  const [message, isError] = [
+    (fieldError?.message as string) || props.message,
+    !!fieldError?.message,
+  ];
+
   const propsSelectField = {
     ...props,
     type: "text",
     config: {
       ...props.config,
-      isMessageMode: !!props.message,
+      isMessageMode: !!message,
       valueRules: {
         ...props.config?.valueRules,
         custom: {
@@ -30,7 +42,7 @@ const SelectField = (props: PropsSelectField) => {
         <BaseInput {...propsSelectField} />
         <SelectPanel {...props} />
       </FocusProvider>
-      {!!props.message && <Message {...props.message} />}
+      {!!message && <Message text={message} isError={isError} />}
     </div>
   );
 };

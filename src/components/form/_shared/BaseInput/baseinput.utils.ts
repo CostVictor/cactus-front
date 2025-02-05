@@ -7,14 +7,14 @@ import { typeValidations } from "../validations";
 import { formatCapitalize } from "../utils";
 
 /**
- * Função que manipula o valor do input.
- * @param event Evento de mudança do input.
- * @param field Propriedades do campo do formulário.
- * @param config Configurações adicionais para manipulação do valor.
+ * Manipula a mudança de valor de um campo de entrada.
+ *
+ * @param event - Evento de mudança do campo de entrada.
+ * @param config - Configurações opcionais para a entrada.
+ * @returns O valor processado após aplicar as regras e formatações.
  */
 export const handleChangeValue = (
   event: ChangeEvent<HTMLInputElement>,
-  field: ControllerRenderProps<FieldValues, string>,
   config?: PropsBaseInputConfigWriting
 ) => {
   const { rules, setFormat, capitalize } = config ?? {};
@@ -29,7 +29,7 @@ export const handleChangeValue = (
   value = setFormat ? writingFormatters[setFormat](value) : value;
   if (capitalize) value = formatCapitalize(value, capitalize);
 
-  field.onChange(value);
+  return value
 }
 
 /**

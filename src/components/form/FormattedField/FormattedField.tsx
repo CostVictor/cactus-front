@@ -1,3 +1,4 @@
+import { useFormContext } from "react-hook-form";
 import { motion } from "framer-motion";
 import { Icon } from "@iconify/react";
 
@@ -9,11 +10,23 @@ import Message from "../_shared/_subcomponents/Message";
 import style from "./formattedfield.module.scss";
 
 const FormattedField = (props: PropsFormattedField) => {
+  const {
+    setValue,
+    clearErrors,
+    formState: { errors },
+  } = useFormContext();
+
+  const fieldError = errors[props.name];
+  const [message, isError] = [
+    (fieldError?.message as string) || props.message,
+    !!fieldError?.message,
+  ];
+
   const propsFormatField = {
     ...props,
     config: {
       ...props.config,
-      isMessageMode: !!props.message,
+      isMessageMode: !!message,
       writing: { ...props.config?.writing, setFormat: props.type },
       valueRules: {
         ...props.config?.valueRules,
@@ -29,14 +42,17 @@ const FormattedField = (props: PropsFormattedField) => {
           <motion.div
             whileTap={{ scale: 0.9 }}
             whileFocus={{ border: "1px solid var(--red-secondary)" }}
-            onTap={() => props.setValue(props.name, "")}
             className={style.container_clean}
+            onTap={() => {
+              setValue(props.name, "");
+              clearErrors(props.name);
+            }}
           >
             <Icon className={style.icon} icon="game-icons:cancel" />
           </motion.div>
         </BaseInput>
       </FocusProvider>
-      {!!props.message && <Message {...props.message} />}
+      {!!message && <Message text={message} isError={isError} />}
     </div>
   );
 };
