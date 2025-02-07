@@ -1,0 +1,47 @@
+.button {
+  position: relative;
+  padding: 0.35rem 1rem;
+  border: 1px solid var(--division);
+  border-radius: 10px;
+  box-shadow: var(--shadow-btn);
+
+  font-size: 1.1rem;
+  color: var(--red-tertiary);
+  background-color: var(--bg-secondary);
+  letter-spacing: 1px;
+
+  text-decoration: none;
+  cursor: pointer;
+
+  &.principal {
+    background-color: var(--red-secondary);
+    border-color: var(--red-border);
+    color: var(--white-primary);
+
+    .icon {
+      color: var(--white-primary);
+    }
+  }
+
+  &.large_mode {
+    width: 90%;
+    height: 3rem;
+    font-size: 1.4rem;
+    border-radius: 40px;
+  }
+
+  &.loading {
+    color: transparent;
+    cursor: not-allowed;
+  }
+
+  .icon {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+
+    font-size: 2rem;
+    color: var(--red-tertiary);
+  }
+}

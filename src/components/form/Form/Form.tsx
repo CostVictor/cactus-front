@@ -3,19 +3,19 @@ import { trimmerData, omitKeys, setFormatData } from "./form.utils";
 import { PropsForm } from "./form.types";
 
 const Form = ({
+  id,
   children,
   onSubmit,
-
   outputData,
   className,
   style,
 }: PropsForm) => {
-  const { handleSubmit, getValues } = useFormContext();
+  const { handleSubmit } = useFormContext();
 
   return (
     <form
+      id={id}
       style={style}
-      onChange={() => console.log(getValues())}
       className={className}
       onSubmit={handleSubmit((data) =>
         onSubmit(

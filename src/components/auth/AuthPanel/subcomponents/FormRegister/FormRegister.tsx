@@ -1,4 +1,4 @@
-import { useForm, FormProvider } from "react-hook-form";
+import { useForm, FormProvider, FieldValues } from "react-hook-form";
 import useRequest from "@/hooks/network/useRequest";
 import useModalActions from "@/hooks/context/useModal";
 
@@ -7,6 +7,7 @@ import Form from "@/components/form/Form/Form";
 import TextField from "@/components/form/TextField";
 import FormattedField from "@/components/form/FormattedField";
 import SelectField from "@/components/form/SelectField";
+import Button from "@/components/form/Button";
 
 import { userEP } from "@APISCMapping/endpoints";
 import { cities, formatDataFormRegister } from "./formregister.variables";
@@ -17,17 +18,44 @@ const FormRegister = () => {
   const {
     info: { isLoading },
     actions: { fetchData },
-  } = useRequest();
+  } = useRequest(undefined, { standardDisplayError: "Erro ao cadastrar" });
 
-  const formMethods = useForm();
-
+  const form = useForm();
   const { addNewModal, removeModal } = useModalActions();
   const router = useRouter();
 
+  const handleSubmit = (data: FieldValues) => {
+    // fetchData({
+    //   request: {
+    //     url: userEP.register,
+    //     method: "POST",
+    //     data,
+    //   },
+    //   onSuccess: (response) =>
+    //     addNewModal(
+    //       <Modal
+    //         title="Cadastro efetuado"
+    //         buttons={[
+    //           {
+    //             text: "Ir ao login",
+    //             appearance: "main",
+    //             onClick: () => {
+    //               router.push("/login");
+    //               removeModal();
+    //             },
+    //           },
+    //         ]}
+    //         {...response.data}
+    //       />
+    //     ),
+    // });
+  };
+
   return (
-    <FormProvider {...formMethods}>
+    <FormProvider {...form}>
       <Form
-        onSubmit={(data) => console.log(data)}
+        id="FormRegister"
+        onSubmit={handleSubmit}
         outputData={formatDataFormRegister}
         className={style.form}
       >
@@ -68,15 +96,20 @@ const FormRegister = () => {
             valueRules: {
               custom: {
                 confPassword: (value) =>
-                  value === formMethods.watch("password") ||
-                  "As senhas não coincidem",
+                  value === form.watch("password") || "As senhas não coincidem",
               },
             },
           }}
           required
         />
-        <button>Ok</button>
       </Form>
+      <Button
+        text="Criar conta"
+        type="submit"
+        formId="FormRegister"
+        appearance="principal"
+        largeMode
+      />
     </FormProvider>
   );
 };
