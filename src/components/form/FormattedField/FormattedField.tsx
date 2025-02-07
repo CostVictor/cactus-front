@@ -22,6 +22,7 @@ const FormattedField = (props: PropsFormattedField) => {
     !!fieldError?.message,
   ];
 
+  const includeCleaner = props.includeCleaner || props.type === "price";
   const propsFormatField = {
     ...props,
     config: {
@@ -39,18 +40,20 @@ const FormattedField = (props: PropsFormattedField) => {
     <div className={style.container_main}>
       <FocusProvider>
         <BaseInput {...propsFormatField}>
-          <motion.div
-            title="Limpar campo"
-            whileTap={{ scale: 0.9 }}
-            whileFocus={{ border: "1px solid var(--red-secondary)" }}
-            className={style.container_clean}
-            onTap={() => {
-              setValue(props.name, "");
-              clearErrors(props.name);
-            }}
-          >
-            <Icon className={style.icon} icon="game-icons:cancel" />
-          </motion.div>
+          {includeCleaner && (
+            <motion.div
+              title="Limpar campo"
+              whileTap={{ scale: 0.9 }}
+              whileFocus={{ border: "1px solid var(--red-secondary)" }}
+              className={style.container_clean}
+              onTap={() => {
+                setValue(props.name, "");
+                clearErrors(props.name);
+              }}
+            >
+              <Icon className={style.icon} icon="game-icons:cancel" />
+            </motion.div>
+          )}
         </BaseInput>
       </FocusProvider>
       {!!message && <Message text={message} isError={isError} />}
