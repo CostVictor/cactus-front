@@ -3,7 +3,7 @@ import useRequest from "@/hooks/network/useRequest";
 import useModalActions from "@/hooks/context/useModal";
 
 import Modal from "@/components/display/Modal";
-import Form from "@/components/form/Form/Form";
+import Form from "@/components/form/Form";
 import TextField from "@/components/form/TextField";
 import FormattedField from "@/components/form/FormattedField";
 import SelectField from "@/components/form/SelectField";
@@ -25,30 +25,30 @@ const FormRegister = () => {
   const router = useRouter();
 
   const handleSubmit = (data: FieldValues) => {
-    // fetchData({
-    //   request: {
-    //     url: userEP.register,
-    //     method: "POST",
-    //     data,
-    //   },
-    //   onSuccess: (response) =>
-    //     addNewModal(
-    //       <Modal
-    //         title="Cadastro efetuado"
-    //         buttons={[
-    //           {
-    //             text: "Ir ao login",
-    //             appearance: "main",
-    //             onClick: () => {
-    //               router.push("/login");
-    //               removeModal();
-    //             },
-    //           },
-    //         ]}
-    //         {...response.data}
-    //       />
-    //     ),
-    // });
+    fetchData({
+      request: {
+        url: userEP.register,
+        method: "POST",
+        data,
+      },
+      onSuccess: (response) =>
+        addNewModal(
+          <Modal
+            title="Cadastro efetuado"
+            buttons={[
+              {
+                text: "Ir ao login",
+                appearance: "main",
+                onClick: () => {
+                  router.push("/login");
+                  removeModal();
+                },
+              },
+            ]}
+            {...response.data}
+          />
+        ),
+    });
   };
 
   return (
@@ -71,7 +71,7 @@ const FormRegister = () => {
               custom: {
                 name: (value) =>
                   value.length >= 10 ||
-                  "Por favor, defina um nome que facilite sua identificação",
+                  "Por favor, defina um nome que facilite sua identificação.",
               },
             },
           }}
@@ -83,7 +83,7 @@ const FormRegister = () => {
         <TextField
           name="password"
           label="Senha"
-          type="password"
+          type="demanding-password"
           message="A senha deve incluir pelo menos: 12 caracteres, uma letra maiúscula, 
           uma letra minúscula, um número e um símbolo especial."
           required
@@ -96,7 +96,8 @@ const FormRegister = () => {
             valueRules: {
               custom: {
                 confPassword: (value) =>
-                  value === form.watch("password") || "As senhas não coincidem",
+                  value === form.watch("password") ||
+                  "As senhas não coincidem.",
               },
             },
           }}
@@ -108,7 +109,8 @@ const FormRegister = () => {
         type="submit"
         formId="FormRegister"
         appearance="principal"
-        largeMode
+        isLoading={isLoading || form.formState.isSubmitting}
+        largeMode="90%"
       />
     </FormProvider>
   );

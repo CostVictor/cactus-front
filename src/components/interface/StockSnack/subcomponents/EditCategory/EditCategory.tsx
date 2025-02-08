@@ -49,11 +49,7 @@ const EditCategory = ({ category }: EditCategoryProps) => {
   };
 
   return (
-    <Modal
-      title={`Editar Categoria ${category.name}`}
-      buttons={null}
-      notOverflow
-    >
+    <Modal title={`Editar Categoria ${category.name}`} notOverflow>
       <div style={{ marginBottom: 5 }}>
         {/* <Form
           onSubmit={handleSubmit}

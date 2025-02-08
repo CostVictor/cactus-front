@@ -32,21 +32,25 @@ const BaseInput = ({
 
   const { initValue, valueRules, writing, icon, isMessageMode } = config ?? {};
   const inputIcon = icon || (inactive ? "basil:user-block-outline" : undefined);
-  const isButtonMode = type === "password" || !!children;
+  const isButtonMode = type.includes("password") || !!children;
 
   const [passwordVisible, setPasswordVisible] = useState(false);
   const { setIsFocused } = useFocus();
 
   const inputValue = useWatch({ name, control }) as string;
   const inputMode = type === "price" ? "numeric" : undefined;
-  const inputType =
-    type === "price" || (type === "password" && passwordVisible)
+  const inputType = type.includes("password")
+    ? passwordVisible
       ? "text"
-      : type;
+      : "password"
+    : type === "price"
+    ? "text"
+    : type;
 
   const inputClass = clsx(style.input, {
     [style.button_mode]: isButtonMode,
     [style.message_mode]: isMessageMode,
+    [style.indent]: !!inputIcon,
   });
 
   const validationsRules = {
@@ -63,7 +67,7 @@ const BaseInput = ({
       style={{ position: "relative", display: "flex", width: "100%" }}
       className={className}
     >
-      {inputIcon && <Icon className={style.icon} icon={inputIcon} />}
+      {!!inputIcon && <Icon className={style.icon} icon={inputIcon} />}
 
       {required && (
         <span
@@ -79,6 +83,7 @@ const BaseInput = ({
         hasValue={!!inputValue}
         htmlFor={name}
         inactive={inactive}
+        indent={!!inputIcon}
         label={label}
       />
 
@@ -102,7 +107,7 @@ const BaseInput = ({
         }}
       />
 
-      {type === "password" && (
+      {type.includes("password") && (
         <AnimatePresence>
           <motion.div
             title={`${passwordVisible ? "Ocultar" : "Exibir"} senha`}

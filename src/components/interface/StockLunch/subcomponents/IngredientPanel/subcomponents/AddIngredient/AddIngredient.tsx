@@ -14,7 +14,7 @@ const AddIngredient = () => {
   });
 
   return (
-    <Modal title="Adicionar Ingrediente" buttons={null} notOverflow>
+    <Modal title="Adicionar Ingrediente" notOverflow>
       <div style={{ marginBottom: 5 }}>
         {/* <Form
           onSubmit={(data) =>

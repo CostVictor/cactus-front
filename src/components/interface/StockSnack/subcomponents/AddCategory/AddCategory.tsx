@@ -22,7 +22,7 @@ const AddCategory = () => {
       className={style.container}
       onClick={() =>
         addNewModal(
-          <Modal title="Criar Categoria" buttons={null}>
+          <Modal title="Criar Categoria">
             <div style={{ marginBottom: 5 }}>
               {/* <Form
                 onSubmit={(data) =>

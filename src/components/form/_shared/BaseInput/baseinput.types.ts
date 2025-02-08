@@ -4,7 +4,7 @@ import { ReactNode } from 'react';
 import { PropsGroupCustomValidation } from '../types';
 import { writingFormatters, writingRules } from '../variables';
 
-export type PropsBaseInputTypes = "text" | "password" | "email" | "number" | "tel" | "datetime-local" | "search" | "image" | "price";
+export type PropsBaseInputTypes = "text" | "password" | "demanding-password" | "email" | "number" | "tel" | "datetime-local" | "search" | "image" | "price";
 
 export type PropsWritingCapitalize = "first" | "all"
 

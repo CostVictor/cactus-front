@@ -3,6 +3,7 @@
 import { Suspense } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import clsx from "clsx";
 
 import SideIcon from "@/components/interface/SideIcon";
 import NavLink from "@/components/navigation/NavLink";
@@ -21,7 +22,7 @@ const AuthPanel = ({ type }: PropsAuthPanel) => {
         <SideIcon
           key={index}
           position={index < 2 ? "left" : "right"}
-          className={`${style.icon} ${style[`pos_${index + 1}`]}`}
+          className={clsx(style.icon, style[`pos_${index + 1}`])}
         />
       ))}
 
@@ -29,9 +30,7 @@ const AuthPanel = ({ type }: PropsAuthPanel) => {
         <Image
           src="/logo.svg"
           alt="Logo da lanchonete Cactus Comida Boa"
-          className={`${style.img} ${
-            type !== "login" ? style.inactive : ""
-          }`.trim()}
+          className={clsx(style.img, { [style.inactive]: type !== "login" })}
           width={160}
           height={110}
           priority
@@ -39,9 +38,9 @@ const AuthPanel = ({ type }: PropsAuthPanel) => {
       </Link>
 
       <div
-        className={`${style.panel} ${
-          type === "register" ? style.max_width : ""
-        }`.trim()}
+        className={clsx(style.panel, {
+          [style.max_width]: type === "register",
+        })}
       >
         {type === "register" && (
           <Link href="/" className={style.img}>
@@ -55,7 +54,10 @@ const AuthPanel = ({ type }: PropsAuthPanel) => {
           </Link>
         )}
 
-        <div className={style.content}>
+        <div
+          className={style.content}
+          style={type === "register" ? { width: "100%" } : undefined}
+        >
           <h1 className={style.title}>{title[type]}</h1>
 
           {type === "login" ? (

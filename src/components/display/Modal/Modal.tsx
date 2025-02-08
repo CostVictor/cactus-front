@@ -1,8 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
+import clsx from "clsx";
 
-import Grid from "@/components/layout/Grid";
+import Button from "@/components/form/Button";
 import useModalActions from "@/hooks/context/useModal";
 
 import { PropsModal } from "./modal.types";
@@ -53,11 +54,9 @@ const Modal = ({
           </motion.h2>
         </div>
 
-        <Grid
+        <div
           key={`content_${title}`}
-          className={`${style.content} ${notOverflow && style.not_overflow} ${
-            buttons === null && style.complete
-          }`.trim()}
+          className={clsx(style.content, { [style.not_overflow]: notOverflow })}
         >
           {message ? (
             Array.isArray(message) ? (
@@ -76,31 +75,27 @@ const Modal = ({
           ) : (
             children
           )}
-        </Grid>
+        </div>
 
-        {buttons !== null && (
-          <motion.div
-            key={`footer_${title}`}
-            className={style.footer}
-            initial={{ opacity: 0 }}
-            animate={{
-              opacity: 1,
-              transition: { delay: 0.15, duration: 0.15 },
-            }}
-          >
-            {/* {buttons?.length ? (
-              buttons.map((button, index) => <Button key={index} {...button} />)
-            ) : (
-              <Button
-                text={defaultButtonText}
-                appearance="main"
-                onClick={() => {
-                  removeModal(-1);
-                }}
-              />
-            )} */}
-          </motion.div>
-        )}
+        <motion.div
+          key={`footer_${title}`}
+          className={style.footer}
+          initial={{ opacity: 0 }}
+          animate={{
+            opacity: 1,
+            transition: { delay: 0.15, duration: 0.15 },
+          }}
+        >
+          {buttons?.length ? (
+            buttons.map((button, index) => <Button key={index} {...button} />)
+          ) : (
+            <Button
+              text={defaultButtonText}
+              appearance="principal"
+              onClick={() => removeModal()}
+            />
+          )}
+        </motion.div>
       </motion.div>
     </motion.article>
   );

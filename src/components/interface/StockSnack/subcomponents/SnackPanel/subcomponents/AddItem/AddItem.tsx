@@ -20,11 +20,7 @@ const AddItem = ({ nameCategory }: PropsAddItem) => {
       className={style.create_snack}
       onClick={() =>
         addNewModal(
-          <Modal
-            title={`Criar Item em ${nameCategory}`}
-            buttons={null}
-            notOverflow
-          >
+          <Modal title={`Criar Item em ${nameCategory}`} notOverflow>
             <div style={{ marginBottom: 5 }}>
               {/* <Form
                 onSubmit={(data) =>

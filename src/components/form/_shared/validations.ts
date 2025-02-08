@@ -10,7 +10,7 @@ export const typeValidations = {
   email: () => (value) => /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(value) || 'Este endereço de e-mail é inválido.',
   price: () => (value) => !!parseFloat(value.replace(/\D/g, "")) || 'O preço do item não pode ser gratuito.',
   tel: () => (value) => /^\(\d{2}\) \d{5}-\d{4}$/.test(value) || 'O número de telefone deve possuir "11" dígitos.',
-  password: () => ({
+  "demanding-password": () => ({
     minLength: (value) => value.length >= 12 || 'A senha deve possuir, pelo menos, "12" caracteres.',
     hasUpperCase: (value) => /[A-Z]/.test(value) || 'A senha deve conter pelo menos um caractere maiúsculo.',
     hasLowerCase: (value) => /[a-z]/.test(value) || 'A senha deve conter pelo menos um caractere minúsculo.',

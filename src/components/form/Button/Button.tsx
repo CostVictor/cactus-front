@@ -17,7 +17,7 @@ const Button = ({
 }: PropsButton) => {
   const buttonClass = clsx(alatsi.className, style.button, {
     [style.principal]: appearance === "principal",
-    [style.large_mode]: largeMode,
+    [style.large_mode]: typeof largeMode === "string" || largeMode,
     [style.loading]: isLoading,
   });
 
@@ -28,6 +28,13 @@ const Button = ({
       onTap={onClick}
       disabled={isLoading}
       className={buttonClass}
+      style={
+        !!largeMode
+          ? {
+              width: typeof largeMode === "string" ? largeMode : "100%",
+            }
+          : undefined
+      }
       whileTap={
         !isLoading ? { boxShadow: "var(--shadow-btn-click)" } : undefined
       }

@@ -46,7 +46,7 @@ const EditIngredient = ({ ingredient }: EditIngredientProps) => {
   };
 
   return (
-    <Modal title={`Editar ${ingredient.name}`} buttons={null} notOverflow>
+    <Modal title={`Editar ${ingredient.name}`} notOverflow>
       <div style={{ marginBottom: 5 }}>
         {/* <Form
           includeButton={{ text: "Cancelar", onClick: () => removeModal(-1) }}
