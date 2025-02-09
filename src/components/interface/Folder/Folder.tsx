@@ -5,7 +5,6 @@ import { useRef, useState } from "react";
 import { Icon } from "@iconify/react";
 import Image from "next/image";
 
-import Grid from "@/components/layout/Grid";
 import LabelController from "./subcomponents/LabelController";
 import OptionsController from "./subcomponents/OptionsController";
 
@@ -20,18 +19,18 @@ const Folder = ({
   open,
   internal,
   notification,
-  folderConfig,
+  config,
 }: PropsFolder) => {
   // Configuração padrão da pasta.
-  folderConfig = {
+  config = {
     canMinimize: true,
     expandUntil: "30rem",
-    ...folderConfig,
+    ...config,
   };
-  const folderMarker = folderConfig.marker;
+  const folderMarker = config.marker;
 
   const [isOpen, setIsOpen] = useState<boolean>(
-    folderConfig.canMinimize ? open ?? false : true
+    config.canMinimize ? open ?? false : true
   );
 
   const controlAnimateContent = useAnimation();
@@ -84,7 +83,7 @@ const Folder = ({
         <OptionsController
           isFolderOpen={isOpen}
           toggleOpenFolder={toggleOpenFolder}
-          folderConfig={folderConfig}
+          folderConfig={config}
         />
       </div>
 
@@ -111,12 +110,12 @@ const Folder = ({
               {notification?.message && (
                 <p className={style.span_message}>{notification.message}</p>
               )}
-              <Grid
+              <div
                 className={style.content}
-                style={{ maxHeight: folderConfig.expandUntil }}
+                style={{ maxHeight: config.expandUntil }}
               >
                 {children}
-              </Grid>
+              </div>
             </motion.div>
           </motion.div>
         )}

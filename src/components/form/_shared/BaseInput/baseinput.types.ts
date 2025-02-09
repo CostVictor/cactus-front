@@ -1,8 +1,8 @@
-import { Control, FieldValues } from 'react-hook-form';
 import { ReactNode } from 'react';
 
 import { PropsGroupCustomValidation } from '../types';
-import { writingFormatters, writingRules } from '../variables';
+import { writingFormatters } from '../utils';
+import { writingRules } from '../variables';
 
 export type PropsBaseInputTypes = "text" | "password" | "demanding-password" | "email" | "number" | "tel" | "datetime-local" | "search" | "image" | "price";
 

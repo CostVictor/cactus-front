@@ -6,6 +6,7 @@ import Link from "next/link";
 
 import useAuthState from "@/hooks/context/useAuth";
 import NavLink from "@/components/navigation/NavLink";
+import Button from "@/components/form/Button";
 
 import { yesevaOne } from "@/styles/fonts";
 import { PropsHeader } from "./header.types";
@@ -57,10 +58,10 @@ const Header = ({ targets }: PropsHeader) => {
         <div className={style.container_content}>
           {targets?.length ? <hr className={style.division} /> : null}
           <Link href="/register">
-            {/* <Button text="Cadastrar" /> */}
+            <Button text="Cadastrar" />
           </Link>
           <Link href="/login">
-            {/* <Button text="Logar" appearance="main" /> */}
+            <Button text="Logar" appearance="principal" />
           </Link>
         </div>
       )}

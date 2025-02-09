@@ -14,36 +14,37 @@ const EditOrderCategory = ({ listCategories }: EditOrderCategoryProps) => {
   const [categories, setCategories] = useState(listCategories);
   const { removeModal } = useModalActions();
   const {
+    info: { isLoading },
     actions: { fetchData },
   } = useRequest<null>(undefined, {
-    forceLoadingRequest: false,
     standardDisplayError: "Erro ao reordenar as categorias",
   });
 
   return (
     <Modal
       title="Ordenar Categorias"
-      // buttons={[
-      //   { text: "Cancelar", onClick: () => removeModal(-1) },
-      //   {
-      //     text: "Salvar",
-      //     appearance: "main",
-      //     onClick: () => {
-      //       if (JSON.stringify(categories) !== JSON.stringify(listCategories)) {
-      //         fetchData({
-      //           request: {
-      //             url: stockSnackEP.base,
-      //             data: { update_position_order: categories },
-      //             method: "PATCH",
-      //           },
-      //           onSuccess: () => removeModal(-1),
-      //         });
-      //       } else {
-      //         removeModal(-1);
-      //       }
-      //     },
-      //   },
-      // ]}
+      buttons={[
+        { text: "Cancelar", onClick: () => removeModal() },
+        {
+          isLoading,
+          text: "Salvar",
+          appearance: "principal",
+          onClick: () => {
+            if (JSON.stringify(categories) !== JSON.stringify(listCategories)) {
+              fetchData({
+                request: {
+                  url: stockSnackEP.base,
+                  data: { update_position_order: categories },
+                  method: "PATCH",
+                },
+                onSuccess: () => removeModal(),
+              });
+            } else {
+              removeModal();
+            }
+          },
+        },
+      ]}
     >
       <Reorder.Group
         axis="y"

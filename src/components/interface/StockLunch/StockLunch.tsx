@@ -27,7 +27,7 @@ const StockLunch = () => {
             <Folder
               key={`dish-${dish.day_name}`}
               name={`Prato de ${dish.day_name}`}
-              folderConfig={{
+              config={{
                 marker: {
                   appearance: "mingcute:storage-fill",
                   type: "icon",

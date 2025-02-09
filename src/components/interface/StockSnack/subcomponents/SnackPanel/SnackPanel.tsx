@@ -2,14 +2,16 @@
 
 import { AnimatePresence } from "framer-motion";
 import { Icon } from "@iconify/react";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 
 import Snack from "./subcomponents/Snack";
 import AddItem from "./subcomponents/AddItem";
 import useModalActions from "@/hooks/context/useModal";
 import EditItem from "./subcomponents/EditItem";
 import Grid from "@/components/layout/Grid";
+import FilterField from "@/components/form/FilterField";
 
+import { filterOption } from "@/components/form/_shared/utils";
 import { PropsSnackPanel } from "./snackpanel.types";
 import style from "./snackpanel.module.scss";
 
@@ -17,18 +19,22 @@ const SnackPanel = ({ nameCategory, snacks }: PropsSnackPanel) => {
   const [filteredName, setFilteredName] = useState("");
   const { addNewModal } = useModalActions();
 
-  const snacksFiltered = snacks.filter((snack) =>
-    snack.name.toLowerCase().includes(filteredName.toLowerCase())
-  );
+  const snacksFiltered = useMemo(() => {
+    const filteredOptions = filterOption(
+      filteredName,
+      snacks.map((snack) => snack.name)
+    );
+
+    return snacks.filter((snack) => filteredOptions.includes(snack.name));
+  }, [filteredName, snacks]);
 
   return (
     <div>
-      {/* <InputField
-        name={`filter-${nameCategory}`}
+      <FilterField
         label="Filtrar item..."
-        onChange={(_, text) => setFilteredName(text)}
-        filterMode
-      /> */}
+        name={`${nameCategory}_snack`}
+        onChange={(text) => setFilteredName(text)}
+      />
       <hr className="division" style={{ margin: "1rem 0" }} />
 
       {!snacksFiltered.length && (
@@ -38,7 +44,7 @@ const SnackPanel = ({ nameCategory, snacks }: PropsSnackPanel) => {
         </div>
       )}
 
-      <Grid>
+      <Grid sizeItem={180}>
         <AddItem nameCategory={nameCategory} />
 
         {!!snacksFiltered.length && (

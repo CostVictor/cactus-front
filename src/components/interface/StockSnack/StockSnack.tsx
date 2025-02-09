@@ -10,6 +10,7 @@ import SnackPanel from "./subcomponents/SnackPanel";
 import AddCategory from "./subcomponents/AddCategory";
 import EditCategory from "./subcomponents/EditCategory";
 import EditOrderCategory from "./subcomponents/EditOrderCategory";
+import Button from "@/components/form/Button";
 
 import { BaseCategory } from "@APISCMapping/snack.types";
 import { stockSnackEP } from "@APISCMapping/endpoints";
@@ -23,9 +24,8 @@ const StockSnack = () => {
     <>
       {Array.isArray(data) && data.length > 1 && (
         <div className={style.btn_reorder}>
-          {/* <Button
-            text="Ordenar"
-            appearance="main"
+          <Button
+            text="Editar Ordem"
             onClick={() =>
               addNewModal(
                 <EditOrderCategory
@@ -33,16 +33,16 @@ const StockSnack = () => {
                 />
               )
             }
-          /> */}
+          />
         </div>
       )}
       <div className={style.container_sessions}>
         {Array.isArray(data) && data.length > 0 ? (
           data.map((category, index) => (
             <Folder
-              key={index}
+              key={`folder_${index}`}
               name={category.name}
-              folderConfig={{
+              config={{
                 marker: {
                   appearance: "mingcute:storage-fill",
                   type: "icon",

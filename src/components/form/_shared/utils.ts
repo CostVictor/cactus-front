@@ -94,3 +94,8 @@ export const formatCapitalize = (text: string, upper: "first" | "all") => {
   const listText = text.split(" ").map(word => formatOneUpper(word));
   return listText.join(" ");
 }
+
+export const writingFormatters = {
+  price: formatPrice,
+  tel: formatTel
+} as const

@@ -35,5 +35,5 @@ export interface PropsFolder {
   open?: boolean
   internal?: boolean | number
   notification?: PropsNotificationFolder
-  folderConfig?: PropsFolderConfig
+  config?: PropsFolderConfig
 }

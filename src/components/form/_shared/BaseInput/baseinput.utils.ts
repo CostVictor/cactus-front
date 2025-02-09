@@ -1,10 +1,8 @@
-import { ControllerRenderProps, FieldValues } from "react-hook-form";
 import { ChangeEvent } from "react"
-
 import { PropsBaseInputConfigWriting, PropsBaseInputTypes } from "./baseinput.types";
-import { writingRules, writingFormatters } from "../variables";
+import { writingRules } from "../variables";
 import { typeValidations } from "../validations";
-import { formatCapitalize } from "../utils";
+import { formatCapitalize, writingFormatters } from "../utils";
 
 /**
  * Manipula a mudança de valor de um campo de entrada.
