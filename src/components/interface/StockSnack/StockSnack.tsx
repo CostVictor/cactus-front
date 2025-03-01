@@ -79,7 +79,12 @@ const StockSnack = () => {
           </div>
         )}
       </div>
-      <AddCategory />
+      <div
+        className={style.add_category}
+        onClick={() => addNewModal(<AddCategory />)}
+      >
+        <p>Adicionar nova categoria</p>
+      </div>
     </>
   );
 };

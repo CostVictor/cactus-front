@@ -19,3 +19,19 @@
     color: var(--black-primary);
   }
 }
+
+.add_category {
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+
+  padding: 0.6rem;
+  margin: 2.5rem 0;
+
+  border-radius: 20px;
+  border: 2.5px dashed var(--division-intense);
+
+  background-color: var(--bg-aba);
+  color: var(--division-intense);
+  font-size: 1.8rem;
+}

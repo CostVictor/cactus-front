@@ -16,6 +16,7 @@ const Modal = ({
   children,
   buttons,
   notOverflow,
+  formMode,
   defaultButtonText = "Fechar",
 }: PropsModal) => {
   const { removeModal } = useModalActions();
@@ -56,7 +57,10 @@ const Modal = ({
 
         <div
           key={`content_${title}`}
-          className={clsx(style.content, { [style.not_overflow]: notOverflow })}
+          className={clsx(style.content, {
+            [style.not_overflow]: notOverflow,
+            [style.form_mode]: formMode === "content" || formMode === true,
+          })}
         >
           {message ? (
             Array.isArray(message) ? (
@@ -79,7 +83,9 @@ const Modal = ({
 
         <motion.div
           key={`footer_${title}`}
-          className={style.footer}
+          className={clsx(style.footer, {
+            [style.form_mode]: formMode === "button" || formMode === true,
+          })}
           initial={{ opacity: 0 }}
           animate={{
             opacity: 1,

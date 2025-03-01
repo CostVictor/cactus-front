@@ -1,5 +1,5 @@
-export const baseUrlHttp = "http://192.168.3.102:8000/";
-export const baseUrlWs = "ws://192.168.3.102:8000/";
+export const baseUrlHttp = "http://192.168.3.158:8000/";
+export const baseUrlWs = "ws://192.168.3.158:8000/";
 
 export const sessionEP = {
   base: "session/",

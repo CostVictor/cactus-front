@@ -22,6 +22,7 @@ const EditOrderCategory = ({ listCategories }: EditOrderCategoryProps) => {
 
   return (
     <Modal
+      formMode="button"
       title="Ordenar Categorias"
       buttons={[
         { text: "Cancelar", onClick: () => removeModal() },

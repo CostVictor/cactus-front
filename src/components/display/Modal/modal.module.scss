@@ -8,7 +8,7 @@ $width-modal: 35rem;
   width: $width-modal;
 
   .body {
-    background-color: var(--bg-primary);
+    background-color: var(--white-secondary);
     box-shadow: var(--shadow-default);
     width: 100%;
     border-radius: 25px;
@@ -39,6 +39,10 @@ $width-modal: 35rem;
         overflow: hidden;
       }
 
+      &.form_mode {
+        padding: 1rem;
+      }
+
       .message_span {
         display: flex;
         gap: 0.5rem;
@@ -61,6 +65,13 @@ $width-modal: 35rem;
       align-items: center;
       gap: 2rem;
       height: 5rem;
+
+      &.form_mode {
+        justify-content: flex-end;
+        margin: 0 5%;
+        padding: 0 1rem;
+        gap: 1.5rem;
+      }
     }
   }
   @media (max-width: $media-tablet) {

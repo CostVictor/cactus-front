@@ -8,4 +8,5 @@ export interface PropsModal {
   buttons?: PropsButton[];
   defaultButtonText?: string;
   notOverflow?: boolean
+  formMode?: boolean | "button" | "content"
 }
