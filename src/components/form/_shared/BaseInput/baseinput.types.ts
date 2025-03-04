@@ -36,7 +36,6 @@ export interface PropsBaseInput {
   name: string;
   label: string;
   type: PropsBaseInputTypes;
-  className?: string;
   onChange?: () => void;
   required?: boolean;
   inactive?: boolean;

@@ -18,7 +18,6 @@ const BaseInput = ({
   label,
   type,
   onChange,
-  className,
   config,
   inactive,
   required,
@@ -63,10 +62,7 @@ const BaseInput = ({
   };
 
   return (
-    <div
-      style={{ position: "relative", display: "flex", width: "100%" }}
-      className={className}
-    >
+    <div className={style.container_main}>
       {!!inputIcon && <Icon className={style.icon} icon={inputIcon} />}
 
       {required && (
