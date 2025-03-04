@@ -36,7 +36,9 @@ const BaseInput = ({
   const [passwordVisible, setPasswordVisible] = useState(false);
   const { setIsFocused } = useFocus();
 
-  const inputValue = useWatch({ name, control }) as string;
+  const defaultValue = initValue || "";
+  const inputValue = useWatch({ name, control }) ?? defaultValue;
+
   const inputMode = type === "price" ? "numeric" : undefined;
   const inputType = type.includes("password")
     ? passwordVisible
@@ -92,7 +94,7 @@ const BaseInput = ({
         className={inputClass}
         maxLength={valueRules?.maxLength}
         disabled={isSubmitting || inactive}
-        defaultValue={initValue || ""}
+        defaultValue={defaultValue}
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
         onInvalid={(event) => event.preventDefault()}

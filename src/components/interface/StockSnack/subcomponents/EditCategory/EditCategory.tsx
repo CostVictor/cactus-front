@@ -1,8 +1,14 @@
+import { FieldValues, useForm, FormProvider } from "react-hook-form";
 import useRequest from "@/hooks/network/useRequest";
 import useModalActions from "@/hooks/context/useModal";
-import Modal from "@/components/display/Modal";
 
-import { FieldValues } from "react-hook-form";
+import Modal from "@/components/display/Modal";
+import Form from "@/components/form/Form";
+import TextField from "@/components/form/TextField";
+import AreaField from "@/components/form/AreaField";
+import Button from "@/components/form/Button";
+
+import RemoveCategory from "./subcomponents/RemoveCategory";
 import { filterDifferences } from "@/utils/filters";
 import { stockSnackEP } from "@APISCMapping/endpoints";
 import { EditCategoryProps } from "./editcategory.types";
@@ -15,6 +21,9 @@ const EditCategory = ({ category }: EditCategoryProps) => {
   } = useRequest<null>(undefined, {
     standardDisplayError: `Erro ao editar a categoria ${category.name}`,
   });
+
+  const formId = "form-edit-category";
+  const form = useForm();
 
   /**
    * Função responsável por processar o envio do formulário de edição da categoria.
@@ -49,83 +58,68 @@ const EditCategory = ({ category }: EditCategoryProps) => {
   };
 
   return (
-    <Modal title={`Editar Categoria ${category.name}`} notOverflow>
-      <div style={{ marginBottom: 5 }}>
-        {/* <Form
+    <Modal
+      formMode
+      title={`Editar Categoria ${category.name}`}
+      buttons={[
+        { text: "Cancelar", onClick: () => removeModal() },
+        {
+          appearance: "principal",
+          text: "Salvar",
+          type: "submit",
+          isLoading,
+          formId,
+        },
+      ]}
+    >
+      <FormProvider {...form}>
+        <Form
+          id={formId}
           onSubmit={handleSubmit}
-          includeButton={{ text: "Cancelar", onClick: () => removeModal(-1) }}
-          defaultButtonSubmitText="Salvar"
-          isLoading={isLoading}
-          formatData={[
+          outputData={[
             "name",
             { name: "description", format: ["title", "text"] },
           ]}
         >
-          <InputField
+          <TextField
             name="name"
             label="Nome"
-            value={category.name}
-            config={{ validation: { capitalize: "all" } }}
+            config={{
+              initValue: category.name,
+              writing: { capitalize: "all" },
+            }}
             required
           />
 
           <p className="marker">Descrição da Categoria</p>
-          <InputField
+          <AreaField
             name="title"
             label="Título"
-            value={category.description?.title}
             config={{
-              validation: {
-                custom: {
-                  includeNameCategory: (value) =>
-                    value.includes(category.name) ||
-                    `O título da descrição da categoria deve possuir o nome "${category.name}".`,
-                },
+              initValue: category.description?.title,
+              valueRules: {
+                includeNameCategory: (value) =>
+                  value.includes(form.watch("name")) ||
+                  "O título da descrição deve conter o nome da categoria.",
               },
             }}
             required
           />
-          <InputField
+          <AreaField
             name="text"
             label="Texto"
-            value={category.description?.text}
+            config={{ initValue: category.description?.text }}
             required
           />
-
-          <p className="marker"></p>
-          <Button
-            text="Excluir Categoria"
-            type="button"
-            onClick={() =>
-              addNewModal(
-                <Modal
-                  title="Confirmar Exclusão"
-                  message={`Ao excluir a categoria "${category.name}", todos os itens relacionados a ela também serão excluídos.`}
-                  buttons={[
-                    { text: "Voltar", onClick: () => removeModal(-1) },
-                    {
-                      text: "Excluir",
-                      appearance: "main",
-                      onClick: () =>
-                        fetchData({
-                          request: {
-                            url: stockSnackEP.category(category.name),
-                            method: "DELETE",
-                          },
-                          onSuccess: () => {
-                            removeModal(-2);
-                            removeModal(-1);
-                          },
-                        }),
-                    },
-                  ]}
-                />
-              )
-            }
-            noShadow
-          />
-        </Form> */}
-      </div>
+          <span className="marker"></span>
+        </Form>
+      </FormProvider>
+      <Button
+        text="Excluir Categoria"
+        onClick={() =>
+          addNewModal(<RemoveCategory categoryName={category.name} />)
+        }
+      />
     </Modal>
   );
 };

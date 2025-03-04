@@ -7,14 +7,7 @@ import { animateLabel, animateSpanLabel } from "./label.variants";
 import { PropsLabel } from "./label.types";
 import style from "./label.module.scss";
 
-const Label = ({
-  hasValue,
-  label,
-  htmlFor,
-  initHidden,
-  indent,
-  inactive,
-}: PropsLabel) => {
+const Label = ({ hasValue, label, htmlFor, indent, inactive }: PropsLabel) => {
   const { isFocused } = useFocus();
 
   return (
@@ -47,7 +40,7 @@ const Label = ({
       <motion.label
         htmlFor={htmlFor}
         variants={animateLabel}
-        initial={initHidden ? "hidden" : "visible"}
+        initial="visible"
         animate={hasValue || isFocused ? "hidden" : "visible"}
         className={clsx(inter.className, style.label, {
           [style.indent]: indent,
