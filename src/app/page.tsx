@@ -18,7 +18,10 @@ export default function Home() {
   const {
     info: { data },
   } = useRequest<BaseCategory[]>({
-    request: { url: stockSnackEP.base, method: "GET" },
+    initFetchData: {
+      request: { url: stockSnackEP.base, method: "GET" },
+      modalTitleWhenError: "Erro ao carregar as categorias",
+    },
   });
 
   // Percorre as categorias obtidas da requisição e adiciona a âncora na página.

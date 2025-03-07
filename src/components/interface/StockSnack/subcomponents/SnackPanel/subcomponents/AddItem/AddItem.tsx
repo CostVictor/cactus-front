@@ -11,9 +11,7 @@ const AddItem = ({ nameCategory }: PropsAddItem) => {
   const {
     info: { isLoading },
     actions: { fetchData },
-  } = useRequest<null>(undefined, {
-    standardDisplayError: `Erro ao criar um item em ${nameCategory}`,
-  });
+  } = useRequest<null>();
 
   return (
     <article

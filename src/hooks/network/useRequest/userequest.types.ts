@@ -2,10 +2,11 @@ import { AxiosRequestConfig, AxiosResponse, AxiosError, AxiosInstance } from "ax
 
 export type PropsErrorResponse = { [key: string]: string[] } | undefined
 
-export interface PropsCustomRequest {
+export interface PropsConfigRequest {
   forceLoadingRequest?: boolean
+  defaultErrorTitle?: string
+  showErrorModal?: boolean
   axiosInstance?: AxiosInstance
-  standardDisplayError?: string | null
 }
 
 interface PropsRequest {
@@ -15,9 +16,15 @@ interface PropsRequest {
   config?: AxiosRequestConfig;
 }
 
-export interface PropsfetchDataFunction {
+export interface PropsFetchDataFunction {
   request: PropsRequest
+  modalTitleWhenError?: string
   onSuccess?: (res: AxiosResponse) => void
   onError?: (err: AxiosError) => void
   onFinally?: () => void
+}
+
+export interface PropsUseRequest {
+  initFetchData?: PropsFetchDataFunction
+  config?: PropsConfigRequest
 }

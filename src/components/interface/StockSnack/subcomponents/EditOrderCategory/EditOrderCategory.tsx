@@ -16,9 +16,7 @@ const EditOrderCategory = ({ listCategories }: EditOrderCategoryProps) => {
   const {
     info: { isLoading },
     actions: { fetchData },
-  } = useRequest<null>(undefined, {
-    standardDisplayError: "Erro ao reordenar as categorias",
-  });
+  } = useRequest<null>();
 
   return (
     <Modal
@@ -38,6 +36,7 @@ const EditOrderCategory = ({ listCategories }: EditOrderCategoryProps) => {
                   data: { update_position_order: categories },
                   method: "PATCH",
                 },
+                modalTitleWhenError: "Erro ao reordenar as categorias",
                 onSuccess: () => removeModal(),
               });
             } else {

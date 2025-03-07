@@ -14,9 +14,7 @@ const useWebSocket = <T,>(relativeUrl: string) => {
 
   const {
     actions: { fetchData },
-  } = useRequest<null>(undefined, {
-    forceLoadingRequest: false,
-  });
+  } = useRequest<null>({ config: { forceLoadingRequest: false } });
 
   const { addNewModal } = useModalActions();
 

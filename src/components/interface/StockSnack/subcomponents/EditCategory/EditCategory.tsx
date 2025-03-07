@@ -18,9 +18,7 @@ const EditCategory = ({ category }: EditCategoryProps) => {
   const {
     info: { isLoading },
     actions: { fetchData },
-  } = useRequest<null>(undefined, {
-    standardDisplayError: `Erro ao editar a categoria ${category.name}`,
-  });
+  } = useRequest<null>();
 
   const formId = "form-edit-category";
   const form = useForm();
@@ -50,6 +48,7 @@ const EditCategory = ({ category }: EditCategoryProps) => {
           method: "PATCH",
           data: differences,
         },
+        modalTitleWhenError: `Erro ao editar a categoria ${category.name}`,
         onSuccess: () => removeModal(),
       });
     } else {

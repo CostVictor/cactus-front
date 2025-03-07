@@ -2,7 +2,6 @@ import useRequest from "@/hooks/network/useRequest";
 import useModalActions from "@/hooks/context/useModal";
 import Modal from "@/components/display/Modal";
 
-
 import { FieldValues } from "react-hook-form";
 import { filterDifferences } from "@/utils/filters";
 import { stockLunchEP } from "@APISCMapping/endpoints";
@@ -14,9 +13,7 @@ const EditIngredient = ({ ingredient }: EditIngredientProps) => {
   const {
     info: { isLoading },
     actions: { fetchData },
-  } = useRequest(undefined, {
-    standardDisplayError: "Erro ao editar o ingrediente",
-  });
+  } = useRequest<null>();
 
   /**
    * Função responsável por processar o envio do formulário de edição do ingrediente.
@@ -38,6 +35,7 @@ const EditIngredient = ({ ingredient }: EditIngredientProps) => {
           method: "PATCH",
           data: differences,
         },
+        modalTitleWhenError: "Erro ao editar o ingrediente",
         onSuccess: () => removeModal(),
       });
     } else {

@@ -12,9 +12,7 @@ const EditItem = ({ dataSnack, nameCategory }: EditItemProps) => {
   const {
     info: { isLoading },
     actions: { fetchData },
-  } = useRequest<null>(undefined, {
-    standardDisplayError: `Erro ao editar o item ${dataSnack.name}`,
-  });
+  } = useRequest<null>();
 
   /**
    * Função responsável por processar o envio do formulário de edição do item.
@@ -32,6 +30,7 @@ const EditItem = ({ dataSnack, nameCategory }: EditItemProps) => {
           method: "PATCH",
           data: differences,
         },
+        modalTitleWhenError: `Erro ao editar o item ${dataSnack.name}`,
         onSuccess: () => removeModal(),
       });
     } else {

@@ -9,9 +9,7 @@ const AddIngredient = () => {
   const {
     info: { isLoading },
     actions: { fetchData },
-  } = useRequest<null>(undefined, {
-    standardDisplayError: "Erro ao criar o ingrediente",
-  });
+  } = useRequest<null>();
 
   return (
     <Modal title="Adicionar Ingrediente" notOverflow>

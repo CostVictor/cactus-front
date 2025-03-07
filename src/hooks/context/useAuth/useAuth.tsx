@@ -24,6 +24,7 @@ export const useAuthActions = () => {
         method: "POST",
         data: { email, password },
       },
+      modalTitleWhenError: "Erro ao efetuar o login",
       onSuccess: (res) => {
         loginInState(res.data);
         router.push(redirectTo);
@@ -37,6 +38,7 @@ export const useAuthActions = () => {
         url: sessionEP.logout,
         method: "POST",
       },
+      modalTitleWhenError: "Erro ao efetuar o logout",
       onSuccess: () => {
         logoutInState();
         router.push("/");

@@ -1,22 +1,22 @@
 "use client";
 
 import { useCallback, useState, useRef, useEffect } from "react";
-import { PropsfetchDataFunction, PropsCustomRequest } from "./userequest.types";
+import { PropsUseRequest, PropsFetchDataFunction } from "./userequest.types";
 import { errorExtractor } from "./userequest.utils";
 
 import Modal from "@/components/display/Modal";
 import useModalActions from "@/hooks/context/useModal";
 import cactusAPI from "@/services/axios/cactusAPI";
 
-const useRequest = <T,>(
-  initialRequest?: PropsfetchDataFunction,
-  custom?: PropsCustomRequest
-) => {
-  const config = {
+const useRequest = <T,>(props?: PropsUseRequest) => {
+  const { initFetchData, config } = props || {};
+
+  const defaultConfig = {
     axiosInstance: cactusAPI,
-    standardDisplayError: "Erro na Requisição",
     forceLoadingRequest: true,
-    ...custom,
+    defaultErrorTitle: "Erro na Requisição",
+    showErrorModal: true,
+    ...config,
   };
 
   const dataRef = useRef<T | null>(null);
@@ -24,52 +24,55 @@ const useRequest = <T,>(
 
   const { addNewModal } = useModalActions();
   const [isLoading, setIsLoading] = useState<boolean>(
-    config.forceLoadingRequest ? initialRequest !== undefined : false
+    defaultConfig.forceLoadingRequest ? initFetchData !== undefined : false
   );
+
+  console.log("render");
 
   const fetchData = useCallback(
     async ({
       request,
+      modalTitleWhenError,
       onSuccess,
       onError,
       onFinally,
-    }: PropsfetchDataFunction): Promise<void> => {
-      if (config.forceLoadingRequest) setIsLoading(true);
+    }: PropsFetchDataFunction): Promise<void> => {
+      if (defaultConfig.forceLoadingRequest) setIsLoading(true);
 
       try {
-        const res = await config.axiosInstance.request(request);
+        const res = await defaultConfig.axiosInstance.request(request);
         dataRef.current = res.data as T;
         onSuccess?.(res);
       } catch (err: any) {
         onError?.(err);
-
-        if (config.standardDisplayError) {
+        if (defaultConfig.showErrorModal) {
           addNewModal(
             <Modal
-              title={config.standardDisplayError}
+              title={modalTitleWhenError || defaultConfig.defaultErrorTitle}
               message={errorExtractor(err)}
             />
           );
         }
       } finally {
-        if (config.forceLoadingRequest) setIsLoading(false);
+        if (defaultConfig.forceLoadingRequest) setIsLoading(false);
         onFinally?.();
       }
     },
     [
       addNewModal,
-      config.axiosInstance,
-      config.forceLoadingRequest,
-      config.standardDisplayError,
+      defaultConfig.axiosInstance,
+      defaultConfig.forceLoadingRequest,
+      defaultConfig.defaultErrorTitle,
+      defaultConfig.showErrorModal,
     ]
   );
 
   useEffect(() => {
-    if (initialRequest && !initialRequestMadeRef.current) {
-      fetchData(initialRequest);
+    if (initFetchData && !initialRequestMadeRef.current) {
+      fetchData(initFetchData);
       initialRequestMadeRef.current = true;
     }
-  }, [initialRequest, fetchData]);
+  }, [initFetchData, fetchData]);
 
   return {
     info: {

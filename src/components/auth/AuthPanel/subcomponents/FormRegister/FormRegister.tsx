@@ -18,7 +18,7 @@ const FormRegister = () => {
   const {
     info: { isLoading },
     actions: { fetchData },
-  } = useRequest(undefined, { standardDisplayError: "Erro ao cadastrar" });
+  } = useRequest<null>();
 
   const form = useForm();
   const { addNewModal, removeModal } = useModalActions();
@@ -31,6 +31,7 @@ const FormRegister = () => {
         method: "POST",
         data,
       },
+      modalTitleWhenError: "Erro ao efetuar o cadastro",
       onSuccess: (response) =>
         addNewModal(
           <Modal

@@ -16,9 +16,7 @@ const AddCategory = () => {
   const {
     info: { isLoading },
     actions: { fetchData },
-  } = useRequest<null>(undefined, {
-    standardDisplayError: "Erro ao criar a categoria",
-  });
+  } = useRequest<null>();
 
   const formId = "form-create-category";
   const form = useForm();
@@ -51,6 +49,7 @@ const AddCategory = () => {
                 method: "POST",
                 data,
               },
+              modalTitleWhenError: "Erro ao criar a categoria",
               onSuccess: () => removeModal(),
             })
           }

@@ -10,9 +10,7 @@ const RemoveCategory = ({ categoryName }: PropsRemoveCategory) => {
   const {
     info: { isLoading },
     actions: { fetchData },
-  } = useRequest(undefined, {
-    standardDisplayError: "Erro ao apagar a categoria",
-  });
+  } = useRequest<null>();
 
   return (
     <Modal
@@ -31,6 +29,7 @@ const RemoveCategory = ({ categoryName }: PropsRemoveCategory) => {
                 url: stockSnackEP.category(categoryName),
                 method: "DELETE",
               },
+              modalTitleWhenError: `Erro ao excluir a categoria ${categoryName}`,
               onSuccess: () => {
                 // Remove os dois pop-ups armazenados para a confirmação.
                 removeModal();
