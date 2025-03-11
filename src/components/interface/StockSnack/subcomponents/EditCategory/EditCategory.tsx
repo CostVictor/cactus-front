@@ -37,11 +37,6 @@ const EditCategory = ({ category }: EditCategoryProps) => {
       "category",
     ]);
     if (Object.keys(differences).length) {
-      if ("description" in differences) {
-        differences.update_description = differences.description;
-        delete differences.description;
-      }
-
       fetchData({
         request: {
           url: stockSnackEP.category(category.name),
