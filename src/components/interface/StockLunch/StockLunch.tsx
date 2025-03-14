@@ -2,18 +2,17 @@
 
 import Folder from "../Folder";
 import useWebSocket from "@/hooks/network/useWebSocket";
-import useModalActions from "@/hooks/context/useModal";
 
 import IngredientPanel from "./subcomponents/IngredientPanel";
 import DishPanel from "./subcomponents/DishPanel";
 import { StockLunchProps } from "./stocklunch.types";
 
-import { stockLunchEP } from "@APISCMapping/endpoints";
+import { apiHTTP } from "@api/endpoints";
 import style from "./stocklunch.module.scss";
 
 const StockLunch = () => {
-  const { data, isLoading } = useWebSocket<StockLunchProps>(stockLunchEP.base);
-  const { addNewModal } = useModalActions();
+  const { lunch } = apiHTTP;
+  const { data, isLoading } = useWebSocket<StockLunchProps>(lunch.baseUrl);
 
   return (
     <>

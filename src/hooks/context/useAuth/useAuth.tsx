@@ -2,7 +2,7 @@ import { useRouter } from "next/navigation";
 import useRequest from "@/hooks/network/useRequest";
 import StorageAuth from "./useauth.storage";
 
-import { sessionEP } from "@APISCMapping/endpoints";
+import { apiHTTP } from "@api/endpoints";
 
 export const useAuthState = () => StorageAuth((storage) => storage.state);
 
@@ -17,10 +17,12 @@ export const useAuthActions = () => {
     actions: { fetchData },
   } = useRequest<null>();
 
+  const { session } = apiHTTP;
+
   const login = (email: string, password: string, redirectTo: string): void => {
     fetchData({
       request: {
-        url: sessionEP.login,
+        url: session.login,
         method: "POST",
         data: { email, password },
       },
@@ -35,7 +37,7 @@ export const useAuthActions = () => {
   const logout = () => {
     fetchData({
       request: {
-        url: sessionEP.logout,
+        url: session.logout,
         method: "POST",
       },
       modalTitleWhenError: "Erro ao efetuar o logout",

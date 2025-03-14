@@ -1,4 +1,4 @@
-import { daysWeek } from "@/core/variables"
+import { daysWeek } from "@api/variables"
 
 export interface BaseIngredient {
   name: string

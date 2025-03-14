@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { baseUrlWs, sessionEP } from "@APISCMapping/endpoints";
+import { apiHTTP, apiWS } from "@api/endpoints";
 
 import useRequest from "../useRequest";
 import useModalActions from "@/hooks/context/useModal";
@@ -12,6 +12,8 @@ const useWebSocket = <T,>(relativeUrl: string) => {
   const [isLoading, setIsLoading] = useState(true);
   const [quantityReset, setQuantityReset] = useState(0);
 
+  const { session } = apiHTTP;
+
   const {
     actions: { fetchData },
   } = useRequest<null>({ config: { forceLoadingRequest: false } });
@@ -19,7 +21,7 @@ const useWebSocket = <T,>(relativeUrl: string) => {
   const { addNewModal } = useModalActions();
 
   useEffect(() => {
-    const ws = new WebSocket(baseUrlWs + relativeUrl);
+    const ws = new WebSocket(apiWS.baseUrl + relativeUrl);
 
     ws.onmessage = (event) => {
       const data = JSON.parse(event.data) as T;
@@ -31,7 +33,7 @@ const useWebSocket = <T,>(relativeUrl: string) => {
       switch (event.code) {
         case 4001:
           fetchData({
-            request: { url: sessionEP.refresh, method: "POST" },
+            request: { url: session.refresh, method: "POST" },
             onSuccess: () => setQuantityReset((prevValue) => prevValue + 1),
             onError: () => (window.location.href = "/login"),
           });
@@ -58,7 +60,7 @@ const useWebSocket = <T,>(relativeUrl: string) => {
     };
 
     return () => ws.close();
-  }, [relativeUrl, addNewModal, fetchData, quantityReset]);
+  }, [relativeUrl, addNewModal, fetchData, quantityReset, session.refresh]);
 
   return { data, isLoading };
 };

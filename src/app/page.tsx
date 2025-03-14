@@ -9,17 +9,18 @@ import Grid from "@/components/layout/Grid";
 import CardInfo from "@/components/display/CardInfo";
 import useRequest from "@/hooks/network/useRequest";
 
-import { stockSnackEP } from "@APISCMapping/endpoints";
-import { BaseCategory } from "@APISCMapping/snack.types";
+import { BaseCategory } from "@api/types/snack";
+import { apiHTTP } from "@api/endpoints";
 
 export default function Home() {
   const targets = [{ text: "Início", link: "#inicio" }];
+  const { snack } = apiHTTP;
 
   const {
     info: { data },
   } = useRequest<BaseCategory[]>({
     initFetchData: {
-      request: { url: stockSnackEP.base, method: "GET" },
+      request: { url: snack.baseUrl, method: "GET" },
       modalTitleWhenError: "Erro ao carregar as categorias",
     },
   });

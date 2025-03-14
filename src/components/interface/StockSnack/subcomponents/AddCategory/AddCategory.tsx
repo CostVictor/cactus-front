@@ -9,7 +9,7 @@ import Modal from "@/components/display/Modal";
 import Form from "@/components/form/Form";
 import TextField from "@/components/form/TextField";
 
-import { stockSnackEP } from "@APISCMapping/endpoints";
+import { apiHTTP } from "@api/endpoints";
 
 const AddCategory = () => {
   const { removeModal } = useModalActions();
@@ -18,6 +18,7 @@ const AddCategory = () => {
     actions: { fetchData },
   } = useRequest<null>();
 
+  const { snack } = apiHTTP;
   const formId = "form-create-category";
   const form = useForm();
 
@@ -45,7 +46,7 @@ const AddCategory = () => {
           onSubmit={(data) =>
             fetchData({
               request: {
-                url: stockSnackEP.base,
+                url: snack.baseUrl,
                 method: "POST",
                 data,
               },

@@ -10,8 +10,8 @@ import Button from "@/components/form/Button";
 
 import RemoveCategory from "./subcomponents/RemoveCategory";
 import { filterDifferences } from "@/utils/filters";
-import { stockSnackEP } from "@APISCMapping/endpoints";
 import { EditCategoryProps } from "./editcategory.types";
+import { apiHTTP } from "@api/endpoints";
 
 const EditCategory = ({ category }: EditCategoryProps) => {
   const { addNewModal, removeModal } = useModalActions();
@@ -20,6 +20,7 @@ const EditCategory = ({ category }: EditCategoryProps) => {
     actions: { fetchData },
   } = useRequest<null>();
 
+  const { snack } = apiHTTP;
   const formId = "form-edit-category";
   const form = useForm();
 
@@ -39,7 +40,7 @@ const EditCategory = ({ category }: EditCategoryProps) => {
     if (Object.keys(differences).length) {
       fetchData({
         request: {
-          url: stockSnackEP.category(category.name),
+          url: snack.category(category.name),
           method: "PATCH",
           data: differences,
         },

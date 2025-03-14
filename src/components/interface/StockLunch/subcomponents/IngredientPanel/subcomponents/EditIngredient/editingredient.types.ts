@@ -1,4 +1,4 @@
-import { BaseIngredient } from "@APISCMapping/lunch.types"
+import { BaseIngredient } from "@api/types/lunch"
 
 export interface EditIngredientProps {
   ingredient: BaseIngredient

@@ -1,8 +1,8 @@
-import { baseUrlHttp } from "./mapping/endpoints";
+import { apiHTTP } from "./endpoints";
 import axios from "axios";
 
 const cactusAPI = axios.create({
-  baseURL: baseUrlHttp,
+  baseURL: apiHTTP.baseUrl,
   withCredentials: true,
   timeout: 5 * 1000,
 });

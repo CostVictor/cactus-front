@@ -1,4 +1,4 @@
-import { BaseSnack } from "@/services/axios/cactusAPI/mapping/snack.types";
+import { BaseSnack } from "@api/types/snack";
 
 export interface EditItemProps {
   dataSnack: BaseSnack;

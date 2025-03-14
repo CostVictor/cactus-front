@@ -1,4 +1,4 @@
-import { BaseCategory } from "@APISCMapping/snack.types";
+import { BaseCategory } from "@api/types/snack"
 
 export interface EditCategoryProps {
   category: BaseCategory

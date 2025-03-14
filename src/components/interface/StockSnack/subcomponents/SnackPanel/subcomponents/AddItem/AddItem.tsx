@@ -2,7 +2,7 @@ import Modal from "@/components/display/Modal";
 import useModalActions from "@/hooks/context/useModal";
 import useRequest from "@/hooks/network/useRequest";
 
-import { stockSnackEP } from "@APISCMapping/endpoints";
+import { apiHTTP } from "@api/endpoints";
 import { PropsAddItem } from "./additem.types";
 import style from "./additem.module.scss";
 
@@ -12,6 +12,8 @@ const AddItem = ({ nameCategory }: PropsAddItem) => {
     info: { isLoading },
     actions: { fetchData },
   } = useRequest<null>();
+
+  const { snack } = apiHTTP;
 
   return (
     <article

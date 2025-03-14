@@ -2,7 +2,7 @@ import useRequest from "@/hooks/network/useRequest";
 import useModalActions from "@/hooks/context/useModal";
 import Modal from "@/components/display/Modal";
 
-import { stockLunchEP } from "@APISCMapping/endpoints";
+import { apiHTTP } from "@api/endpoints";
 
 const AddIngredient = () => {
   const { removeModal } = useModalActions();

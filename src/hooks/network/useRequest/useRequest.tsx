@@ -6,17 +6,16 @@ import { errorExtractor } from "./userequest.utils";
 
 import Modal from "@/components/display/Modal";
 import useModalActions from "@/hooks/context/useModal";
-import cactusAPI from "@/services/axios/cactusAPI";
+import cactusAPI from "@api/client";
+import "@api/interceptor";
 
 const useRequest = <T,>(props?: PropsUseRequest) => {
-  const { initFetchData, config } = props || {};
-
   const defaultConfig = {
     axiosInstance: cactusAPI,
     forceLoadingRequest: true,
     defaultErrorTitle: "Erro na Requisição",
     showErrorModal: true,
-    ...config,
+    ...props?.config,
   };
 
   const dataRef = useRef<T | null>(null);
@@ -24,10 +23,10 @@ const useRequest = <T,>(props?: PropsUseRequest) => {
 
   const { addNewModal } = useModalActions();
   const [isLoading, setIsLoading] = useState<boolean>(
-    defaultConfig.forceLoadingRequest ? initFetchData !== undefined : false
+    defaultConfig.forceLoadingRequest
+      ? props?.initFetchData !== undefined
+      : false
   );
-
-  console.log("render");
 
   const fetchData = useCallback(
     async ({
@@ -68,11 +67,13 @@ const useRequest = <T,>(props?: PropsUseRequest) => {
   );
 
   useEffect(() => {
+    const initFetchData = props?.initFetchData;
+
     if (initFetchData && !initialRequestMadeRef.current) {
       fetchData(initFetchData);
       initialRequestMadeRef.current = true;
     }
-  }, [initFetchData, fetchData]);
+  }, [props?.initFetchData, fetchData]);
 
   return {
     info: {

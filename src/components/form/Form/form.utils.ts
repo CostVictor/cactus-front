@@ -1,5 +1,5 @@
 import { PropsFormatterData } from "./form.types";
-import { BaseData } from "@APISCMapping/data.types";
+import { BaseData } from "@api/types/data";
 
 /**
  * Remove espaços em branco do início e do fim das chaves e valores de um objeto.

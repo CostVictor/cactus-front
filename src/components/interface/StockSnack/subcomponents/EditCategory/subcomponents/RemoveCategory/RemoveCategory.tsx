@@ -2,8 +2,8 @@ import useModalActions from "@/hooks/context/useModal";
 import useRequest from "@/hooks/network/useRequest";
 
 import Modal from "@/components/display/Modal";
-import { stockSnackEP } from "@APISCMapping/endpoints";
 import { PropsRemoveCategory } from "./removecategory.types";
+import { apiHTTP } from "@api/endpoints";
 
 const RemoveCategory = ({ categoryName }: PropsRemoveCategory) => {
   const { removeModal } = useModalActions();
@@ -11,6 +11,8 @@ const RemoveCategory = ({ categoryName }: PropsRemoveCategory) => {
     info: { isLoading },
     actions: { fetchData },
   } = useRequest<null>();
+
+  const { snack } = apiHTTP;
 
   return (
     <Modal
@@ -26,7 +28,7 @@ const RemoveCategory = ({ categoryName }: PropsRemoveCategory) => {
           onClick: () =>
             fetchData({
               request: {
-                url: stockSnackEP.category(categoryName),
+                url: snack.category(categoryName),
                 method: "DELETE",
               },
               modalTitleWhenError: `Erro ao excluir a categoria ${categoryName}`,

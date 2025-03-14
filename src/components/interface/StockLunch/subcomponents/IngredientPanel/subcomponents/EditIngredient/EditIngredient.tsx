@@ -4,11 +4,12 @@ import Modal from "@/components/display/Modal";
 
 import { FieldValues } from "react-hook-form";
 import { filterDifferences } from "@/utils/filters";
-import { stockLunchEP } from "@APISCMapping/endpoints";
 import { EditIngredientProps } from "./editingredient.types";
+import { apiHTTP } from "@api/endpoints";
 
 const EditIngredient = ({ ingredient }: EditIngredientProps) => {
   const { addNewModal, removeModal } = useModalActions();
+  const { lunch } = apiHTTP;
 
   const {
     info: { isLoading },
@@ -31,7 +32,7 @@ const EditIngredient = ({ ingredient }: EditIngredientProps) => {
     if (Object.keys(differences).length) {
       fetchData({
         request: {
-          url: stockLunchEP.ingredient(ingredient.name),
+          url: lunch.ingredient(ingredient.name),
           method: "PATCH",
           data: differences,
         },

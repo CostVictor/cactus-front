@@ -9,12 +9,13 @@ import FormattedField from "@/components/form/FormattedField";
 import SelectField from "@/components/form/SelectField";
 import Button from "@/components/form/Button";
 
-import { userEP } from "@APISCMapping/endpoints";
+import { apiHTTP } from "@api/endpoints";
 import { cities, formatDataFormRegister } from "./formregister.variables";
 import { useRouter } from "next/navigation";
 import style from "./formregister.module.scss";
 
 const FormRegister = () => {
+  const { user } = apiHTTP;
   const {
     info: { isLoading },
     actions: { fetchData },
@@ -27,7 +28,7 @@ const FormRegister = () => {
   const handleSubmit = (data: FieldValues) => {
     fetchData({
       request: {
-        url: userEP.register,
+        url: user.register,
         method: "POST",
         data,
       },

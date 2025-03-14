@@ -3,7 +3,7 @@ import { Icon } from "@iconify/react";
 import { motion } from "framer-motion";
 
 import { revealGrow } from "@/styles/animations";
-import { BaseSnack } from "@/services/axios/cactusAPI/mapping/snack.types";
+import { BaseSnack } from "@api/types/snack";
 import style from "./snack.module.scss";
 
 const Snack = (data: BaseSnack) => {

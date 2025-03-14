@@ -4,8 +4,8 @@ import Modal from "@/components/display/Modal";
 
 import { FieldValues } from "react-hook-form";
 import { filterDifferences } from "@/utils/filters";
-import { stockSnackEP } from "@APISCMapping/endpoints";
 import { EditItemProps } from "./edititem.types";
+import { apiHTTP } from "@api/endpoints";
 
 const EditItem = ({ dataSnack, nameCategory }: EditItemProps) => {
   const { addNewModal, removeModal } = useModalActions();
@@ -13,6 +13,8 @@ const EditItem = ({ dataSnack, nameCategory }: EditItemProps) => {
     info: { isLoading },
     actions: { fetchData },
   } = useRequest<null>();
+
+  const { snack } = apiHTTP;
 
   /**
    * Função responsável por processar o envio do formulário de edição do item.
@@ -26,7 +28,7 @@ const EditItem = ({ dataSnack, nameCategory }: EditItemProps) => {
     if (Object.keys(differences).length) {
       fetchData({
         request: {
-          url: stockSnackEP.item(nameCategory, dataSnack.name),
+          url: snack.item(nameCategory, dataSnack.name),
           method: "PATCH",
           data: differences,
         },

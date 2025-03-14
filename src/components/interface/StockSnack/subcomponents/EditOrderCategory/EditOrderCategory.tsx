@@ -6,7 +6,7 @@ import useRequest from "@/hooks/network/useRequest";
 import useModalActions from "@/hooks/context/useModal";
 import Modal from "@/components/display/Modal";
 
-import { stockSnackEP } from "@APISCMapping/endpoints";
+import { apiHTTP } from "@api/endpoints";
 import { EditOrderCategoryProps } from "./editordercategory.types";
 import style from "./editordercategory.module.scss";
 
@@ -17,6 +17,8 @@ const EditOrderCategory = ({ listCategories }: EditOrderCategoryProps) => {
     info: { isLoading },
     actions: { fetchData },
   } = useRequest<null>();
+
+  const { snack } = apiHTTP;
 
   return (
     <Modal
@@ -32,7 +34,7 @@ const EditOrderCategory = ({ listCategories }: EditOrderCategoryProps) => {
             if (JSON.stringify(categories) !== JSON.stringify(listCategories)) {
               fetchData({
                 request: {
-                  url: stockSnackEP.base,
+                  url: snack.baseUrl,
                   data: { update_position_order: categories },
                   method: "PATCH",
                 },

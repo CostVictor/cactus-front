@@ -1,4 +1,4 @@
-import { BaseDish } from "@APISCMapping/lunch.types"
+import { BaseDish } from "@api/types/lunch"
 
 export interface DishPanelProps {
   allIngredientsName: string[]

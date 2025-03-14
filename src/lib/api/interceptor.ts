@@ -1,12 +1,13 @@
 import { StorageAuth } from "@/hooks/context/useAuth";
 
-import { sessionEP } from "./mapping/endpoints";
-import { redirectToLogin } from "./cactusapi.utils";
-import cactusAPI from "./cactusAPI";
+import { apiHTTP } from "./endpoints";
+import { redirectToLogin } from "./utils";
+import cactusAPI from "./client";
 
 cactusAPI.interceptors.response.use(
   response => response,
   async err => {
+    const { session } = apiHTTP;
     const config = err.config;
 
     if (err.response?.status === 401 && !config.url.includes("login")) {
@@ -16,7 +17,7 @@ cactusAPI.interceptors.response.use(
       }
 
       try {
-        await cactusAPI.post(sessionEP.refresh);
+        await cactusAPI.post(session.refresh);
         return cactusAPI(config);
 
       } catch (refreshError) {
@@ -27,7 +28,7 @@ cactusAPI.interceptors.response.use(
 
     if (err.response?.status === 403 && !config.url.includes("register")) {
       StorageAuth.getState().actions.logoutInState();
-      await cactusAPI.post(sessionEP.logout);
+      await cactusAPI.post(session.logout);
       window.location.href = "/";
     }
 
