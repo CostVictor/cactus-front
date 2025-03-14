@@ -1,10 +1,10 @@
 export const apiHTTP = {
-  baseUrl: process.env.BASE_URL_HTTP_API,
+  baseUrl: process.env.NEXT_PUBLIC_API_URL_HTTP,
 
   session: {
     login: "session/login/",
     logout: "session/logout/",
-    refresh: "session/refresh/"
+    refresh: "session/refresh_token/"
   },
 
   user: {
@@ -13,9 +13,9 @@ export const apiHTTP = {
   },
 
   snack: {
-    baseUrl: "snacks/",
-    category: (name: string) => `snacks/${name}/`,
-    item: (nameCategory: string, nameSnack: string) => `snacks/${nameCategory}/${nameSnack}/`
+    baseUrl: "snack/",
+    category: (name: string) => `snack/${name}/`,
+    item: (nameCategory: string, nameSnack: string) => `snack/${nameCategory}/${nameSnack}/`
   },
 
   lunch: {
@@ -30,7 +30,7 @@ export const apiHTTP = {
 
 
 export const apiWS = {
-  baseUrl: process.env.BASE_URL_WS_API,
+  baseUrl: process.env.NEXT_PUBLIC_API_URL_WS,
 
   snack: {
     baseUrl: "snack/",

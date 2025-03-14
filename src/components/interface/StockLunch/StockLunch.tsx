@@ -7,11 +7,11 @@ import IngredientPanel from "./subcomponents/IngredientPanel";
 import DishPanel from "./subcomponents/DishPanel";
 import { StockLunchProps } from "./stocklunch.types";
 
-import { apiHTTP } from "@api/endpoints";
+import { apiWS } from "@api/endpoints";
 import style from "./stocklunch.module.scss";
 
 const StockLunch = () => {
-  const { lunch } = apiHTTP;
+  const { lunch } = apiWS;
   const { data, isLoading } = useWebSocket<StockLunchProps>(lunch.baseUrl);
 
   return (

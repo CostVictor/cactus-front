@@ -12,13 +12,13 @@ import EditCategory from "./subcomponents/EditCategory";
 import EditOrderCategory from "./subcomponents/EditOrderCategory";
 import Button from "@/components/form/Button";
 
-import { apiHTTP } from "@api/endpoints";
+import { apiWS } from "@api/endpoints";
 import { BaseCategory } from "@api/types/snack";
 
 import style from "./stocksnack.module.scss";
 
 const StockSnack = () => {
-  const { snack } = apiHTTP;
+  const { snack } = apiWS;
   const { data, isLoading } = useWebSocket<BaseCategory[]>(snack.baseUrl);
   const { addNewModal } = useModalActions();
 
