@@ -12,6 +12,7 @@ import RemoveCategory from "./subcomponents/RemoveCategory";
 import { filterDifferences } from "@/utils/filters";
 import { EditCategoryProps } from "./editcategory.types";
 import { apiHTTP } from "@api/endpoints";
+import style from "./editcategory.module.scss";
 
 const EditCategory = ({ category }: EditCategoryProps) => {
   const { addNewModal, removeModal } = useModalActions();
@@ -71,6 +72,7 @@ const EditCategory = ({ category }: EditCategoryProps) => {
         <Form
           id={formId}
           onSubmit={handleSubmit}
+          className={style.form_edit_category}
           outputData={[
             "name",
             { name: "description", format: ["title", "text"] },
@@ -91,6 +93,7 @@ const EditCategory = ({ category }: EditCategoryProps) => {
             name="title"
             label="Título"
             config={{
+              expandTo: "75px",
               initValue: category.description?.title,
               valueRules: {
                 includeNameCategory: (value) =>

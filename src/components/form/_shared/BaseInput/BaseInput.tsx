@@ -37,7 +37,7 @@ const BaseInput = ({
   const { setIsFocused } = useFocus();
 
   const defaultValue = initValue || "";
-  const inputValue = useWatch({ name, control }) ?? defaultValue;
+  const inputValue = (useWatch({ name, control }) ?? defaultValue) as string;
 
   const inputMode = type === "price" ? "numeric" : undefined;
   const inputType = type.includes("password")
@@ -48,7 +48,7 @@ const BaseInput = ({
     ? "text"
     : type;
 
-  const inputClass = clsx(style.input, {
+  const inputClass = clsx(inter.className, style.input, {
     [style.button_mode]: isButtonMode,
     [style.message_mode]: isMessageMode,
     [style.indent]: !!inputIcon,

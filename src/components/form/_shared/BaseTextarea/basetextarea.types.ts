@@ -4,6 +4,7 @@ export interface PropsBaseTextareaConfig {
   initValue?: string;
   valueRules?: PropsGroupCustomValidation;
   isMessageMode?: boolean;
+  expandTo?: string | number;
 }
 
 export interface PropsBaseTextarea {

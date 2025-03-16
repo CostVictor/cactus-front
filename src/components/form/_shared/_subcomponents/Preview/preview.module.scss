@@ -1,0 +1,17 @@
+.container_main {
+  width: 100%;
+  display: flex;
+
+  background-color: var(--white-secondary);
+  border-radius: 10px;
+
+  .text {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+
+    color: var(--black-primary);
+    font-size: 0.96rem;
+    margin: 0.4rem 0.8rem;
+  }
+}
