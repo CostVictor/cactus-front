@@ -12,7 +12,7 @@ const AddIngredient = () => {
   } = useRequest<null>();
 
   return (
-    <Modal title="Adicionar Ingrediente" notOverflow>
+    <Modal title="Adicionar Ingrediente">
       <div style={{ marginBottom: 5 }}>
         {/* <Form
           onSubmit={(data) =>

@@ -33,12 +33,6 @@ $width-modal: 35rem;
       margin: 5%;
       margin-bottom: 0;
 
-      &.not_overflow {
-        max-width: none;
-        max-height: none;
-        overflow: hidden;
-      }
-
       &.form_mode {
         padding: 1rem;
       }

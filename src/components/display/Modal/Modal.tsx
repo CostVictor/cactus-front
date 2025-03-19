@@ -15,7 +15,6 @@ const Modal = ({
   message,
   children,
   buttons,
-  notOverflow,
   formMode,
   defaultButtonText = "Fechar",
 }: PropsModal) => {
@@ -58,7 +57,6 @@ const Modal = ({
         <div
           key={`content_${title}`}
           className={clsx(style.content, {
-            [style.not_overflow]: notOverflow,
             [style.form_mode]: formMode === "content" || formMode === true,
           })}
         >

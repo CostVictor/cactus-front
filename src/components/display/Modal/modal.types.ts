@@ -7,6 +7,5 @@ export interface PropsModal {
   children?: ReactNode;
   buttons?: PropsButton[];
   defaultButtonText?: string;
-  notOverflow?: boolean
   formMode?: boolean | "button" | "content"
 }

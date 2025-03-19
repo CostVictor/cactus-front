@@ -45,7 +45,12 @@ const SnackPanel = ({ nameCategory, snacks }: PropsSnackPanel) => {
       )}
 
       <Grid sizeItem={180}>
-        <AddItem nameCategory={nameCategory} />
+        <article
+          className={style.create_snack}
+          onClick={() => addNewModal(<AddItem nameCategory={nameCategory} />)}
+        >
+          <p>Adicionar item</p>
+        </article>
 
         {!!snacksFiltered.length && (
           <AnimatePresence>

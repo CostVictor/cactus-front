@@ -41,7 +41,7 @@ const EditItem = ({ dataSnack, nameCategory }: EditItemProps) => {
   };
 
   return (
-    <Modal title={`Editar ${dataSnack.name}`} notOverflow>
+    <Modal title={`Editar ${dataSnack.name}`}>
       <div style={{ marginBottom: 5 }}>
         {/* <Form
           onSubmit={handleSubmit}
