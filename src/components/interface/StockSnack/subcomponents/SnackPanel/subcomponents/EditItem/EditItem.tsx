@@ -1,11 +1,22 @@
+import { useForm, FormProvider } from "react-hook-form";
+import { FieldValues } from "react-hook-form";
+
 import useRequest from "@/hooks/network/useRequest";
 import useModalActions from "@/hooks/context/useModal";
 import Modal from "@/components/display/Modal";
 
-import { FieldValues } from "react-hook-form";
+import Form from "@/components/form/Form";
+import TextField from "@/components/form/TextField";
+import FormattedField from "@/components/form/FormattedField";
+import AreaField from "@/components/form/AreaField";
+import Button from "@/components/form/Button";
+
 import { filterDifferences } from "@/utils/filters";
-import { EditItemProps } from "./edititem.types";
 import { apiHTTP } from "@api/endpoints";
+
+import RemoveItem from "./subcomponents/RemoveItem";
+import { EditItemProps } from "./edititem.types";
+import style from "./edititem.module.scss";
 
 const EditItem = ({ dataSnack, nameCategory }: EditItemProps) => {
   const { addNewModal, removeModal } = useModalActions();
@@ -15,6 +26,9 @@ const EditItem = ({ dataSnack, nameCategory }: EditItemProps) => {
   } = useRequest<null>();
 
   const { snack } = apiHTTP;
+
+  const formId = "form-edit-item";
+  const form = useForm();
 
   /**
    * Função responsável por processar o envio do formulário de edição do item.
@@ -32,7 +46,7 @@ const EditItem = ({ dataSnack, nameCategory }: EditItemProps) => {
           method: "PATCH",
           data: differences,
         },
-        modalTitleWhenError: `Erro ao editar o item ${dataSnack.name}`,
+        modalTitleWhenError: "Erro ao editar o item",
         onSuccess: () => removeModal(),
       });
     } else {
@@ -41,85 +55,80 @@ const EditItem = ({ dataSnack, nameCategory }: EditItemProps) => {
   };
 
   return (
-    <Modal title={`Editar ${dataSnack.name}`}>
-      <div style={{ marginBottom: 5 }}>
-        {/* <Form
+    <Modal
+      formMode
+      title={`Editar ${dataSnack.name}`}
+      buttons={[
+        { text: "Cancelar", onClick: () => removeModal() },
+        {
+          text: "Salvar",
+          type: "submit",
+          appearance: "principal",
+          isLoading,
+          formId,
+        },
+      ]}
+    >
+      <FormProvider {...form}>
+        <Form
+          id={formId}
           onSubmit={handleSubmit}
-          includeButton={{
-            text: "Cancelar",
-            onClick: () => removeModal(-1),
-          }}
-          defaultButtonSubmitText="Salvar"
-          isLoading={isLoading}
+          className={style.form_edit_item}
         >
-          <InputField
+          <TextField
             name="name"
             label="Nome"
-            value={dataSnack.name}
-            config={{ validation: { capitalize: "all" } }}
+            config={{
+              initValue: dataSnack.name,
+              writing: { capitalize: "all" },
+            }}
             required
           />
-          <InputField
+          <FormattedField
             name="price"
             label="Preço"
-            value={dataSnack.price}
-            config={{ type: "price" }}
+            type="price"
+            config={{ initValue: dataSnack.price }}
             required
           />
-          <InputField
+          <AreaField
             name="description"
             label="Descrição"
-            value={dataSnack.description ?? ""}
+            config={{ initValue: dataSnack.description ?? "" }}
           />
 
           <p className="marker">
             Importante (Evitar edição em horário de pico)
           </p>
-          <InputField
+          <TextField
             name="quantity_in_stock"
             label="Quantidade em estoque"
-            value={dataSnack.quantity_in_stock.toString()}
-            config={{ type: "number" }}
+            type="number"
+            config={{
+              initValue: dataSnack.quantity_in_stock.toString(),
+              valueRules: {
+                custom: {
+                  notNegative: (value) =>
+                    parseFloat(value) >= 0 ||
+                    "A quantidade de itens no estoque deve ser maior ou igual a zero (0).",
+                },
+              },
+            }}
             required
           />
-
           <p className="marker"></p>
-          <Button
-            text="Excluir Item"
-            type="button"
-            onClick={() =>
-              addNewModal(
-                <Modal
-                  title="Confirmar Exclusão"
-                  message={`Ao excluir o item "${dataSnack.name}", ele não aparecerá mais na lista de itens.`}
-                  buttons={[
-                    { text: "Voltar", onClick: () => removeModal(-1) },
-                    {
-                      text: "Excluir",
-                      appearance: "main",
-                      onClick: () =>
-                        fetchData({
-                          request: {
-                            url: stockSnackEP.item(
-                              nameCategory,
-                              dataSnack.name
-                            ),
-                            method: "DELETE",
-                          },
-                          onSuccess: () => {
-                            removeModal(-2);
-                            removeModal(-1);
-                          },
-                        }),
-                    },
-                  ]}
-                />
-              )
-            }
-            noShadow
-          />
-        </Form> */}
-      </div>
+        </Form>
+      </FormProvider>
+
+      <Button
+        text="Excluir Item"
+        type="button"
+        onClick={() =>
+          addNewModal(
+            <RemoveItem nameCategory={nameCategory} nameItem={dataSnack.name} />
+          )
+        }
+      />
     </Modal>
   );
 };
