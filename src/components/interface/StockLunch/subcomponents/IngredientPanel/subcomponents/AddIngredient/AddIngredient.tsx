@@ -1,51 +1,74 @@
+import { useForm, FormProvider } from "react-hook-form";
+
 import useRequest from "@/hooks/network/useRequest";
 import useModalActions from "@/hooks/context/useModal";
 import Modal from "@/components/display/Modal";
 
+import Form from "@/components/form/Form";
+import TextField from "@/components/form/TextField";
+import FormattedField from "@/components/form/FormattedField";
+
 import { apiHTTP } from "@api/endpoints";
+import style from "./addingredient.module.scss";
 
 const AddIngredient = () => {
-  const { removeModal } = useModalActions();
   const {
     info: { isLoading },
     actions: { fetchData },
   } = useRequest<null>();
 
+  const { removeModal } = useModalActions();
+  const { lunch } = apiHTTP;
+
+  const formId = "form-create-ingredient";
+  const form = useForm();
+
   return (
-    <Modal title="Adicionar Ingrediente">
-      <div style={{ marginBottom: 5 }}>
-        {/* <Form
+    <Modal
+      formMode
+      title="Adicionar Ingrediente"
+      buttons={[
+        { text: "Cancelar", onClick: () => removeModal() },
+        {
+          text: "Criar",
+          appearance: "principal",
+          type: "submit",
+          isLoading,
+          formId,
+        },
+      ]}
+    >
+      <FormProvider {...form}>
+        <Form
+          id={formId}
+          className={style.form_add_ingredient}
           onSubmit={(data) =>
             fetchData({
-              request: {
-                url: stockLunchEP.baseIngredient,
-                method: "POST",
-                data,
-              },
-              onSuccess: () => removeModal(-1),
+              request: { url: lunch.baseIngredients, method: "POST", data },
+              modalTitleWhenError: "Erro ao Criar o Ingrediente",
+              onSuccess: () => removeModal(),
             })
           }
-          includeButton={{ text: "Cancelar", onClick: () => removeModal(-1) }}
-          defaultButtonSubmitText="Criar"
-          isLoading={isLoading}
         >
-          <InputField
+          <TextField
             name="name"
             label="Nome"
-            config={{ validation: { capitalize: "all" } }}
+            config={{ writing: { capitalize: "all" } }}
             required
           />
 
           <p className="marker">
             Você pode permitir que o cliente peça acrescentado
           </p>
-          <InputField
+          <FormattedField
             name="additional_charge"
             label="Valor por acrescimo"
-            config={{ type: "price", validation: { freeValue: true } }}
+            type="price"
+            config={{ valueRules: { custom: { price: () => true } } }}
+            message="R$ 0,00 não acrescenta valor."
           />
-        </Form> */}
-      </div>
+        </Form>
+      </FormProvider>
     </Modal>
   );
 };

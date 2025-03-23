@@ -59,8 +59,8 @@ const BaseInput = ({
     minLength: valueRules?.minLength
       ? genericValidations.minLength(valueRules.minLength)
       : () => undefined,
-    ...valueRules?.custom,
     ...(required || !!inputValue ? getValidationByType(type) : {}),
+    ...valueRules?.custom,
   };
 
   return (
