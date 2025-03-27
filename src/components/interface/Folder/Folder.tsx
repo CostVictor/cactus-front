@@ -4,6 +4,7 @@ import { motion, AnimatePresence, useAnimation } from "framer-motion";
 import { useRef, useState } from "react";
 import { Icon } from "@iconify/react";
 import Image from "next/image";
+import clsx from "clsx";
 
 import LabelController from "./subcomponents/LabelController";
 import OptionsController from "./subcomponents/OptionsController";
@@ -52,12 +53,14 @@ const Folder = ({
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       style={getStyleBackgroundColor(internal)}
-      className={`${style.container_main} ${
-        isOpen && !internal && style.open
-      }`.trim()}
+      className={clsx(style.container_main, {
+        [style.open]: isOpen && !internal,
+      })}
     >
       <div
-        className={`${style.header} ${isOpen && style.division_visible}`.trim()}
+        className={clsx(style.header, {
+          [style.division_visible]: isOpen,
+        })}
       >
         <div className={style.container_label}>
           {folderMarker ? (

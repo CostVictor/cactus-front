@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Icon } from "@iconify/react";
+import clsx from "clsx";
 
 import { revealGrow } from "@/styles/animations";
 import { IntemInfoProps } from "./iteminfo.types";
@@ -15,10 +16,11 @@ const ItemInfo = ({
   onClick,
 }: IntemInfoProps) => {
   return (
-    <motion.div
-      className={`${style.container_main} ${colorDark && style.bg_dark} ${
-        typeAdd && style.add
-      }`.trim()}
+    <motion.article
+      className={clsx(style.container_main, {
+        [style.bg_dark]: colorDark,
+        [style.add]: typeAdd,
+      })}
       onClick={onClick}
       variants={revealGrow}
       initial="hidden"
@@ -31,7 +33,7 @@ const ItemInfo = ({
       )}
       <p>{text}</p>
       {alternativeText && <span>{alternativeText}</span>}
-    </motion.div>
+    </motion.article>
   );
 };
 

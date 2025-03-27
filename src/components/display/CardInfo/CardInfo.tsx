@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { Icon } from "@iconify/react";
+import clsx from "clsx";
 
 import { PropsCardInfo } from "./cardinfo.types";
 import style from "./cardinfo.module.scss";
@@ -19,7 +20,9 @@ const CardInfo = ({
     <motion.article
       id={title}
       onClick={!isSoldOut ? onClick : undefined}
-      className={`${style.container} ${isSoldOut ? style.sold_out : ""}`.trim()}
+      className={clsx(style.container, {
+        [style.sold_out]: isSoldOut,
+      })}
       style={
         markerColor ? { borderRight: `solid 2.5rem ${markerColor}` } : undefined
       }

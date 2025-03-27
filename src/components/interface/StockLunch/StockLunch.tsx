@@ -1,5 +1,7 @@
 "use client";
 
+import { use, useMemo } from "react";
+
 import Folder from "../Folder";
 import useWebSocket from "@/hooks/network/useWebSocket";
 
@@ -13,6 +15,11 @@ import style from "./stocklunch.module.scss";
 const StockLunch = () => {
   const { lunch } = apiWS;
   const { data, isLoading } = useWebSocket<StockLunchProps>(lunch.baseUrl);
+
+  const allIngredientsName = useMemo(
+    () => data?.ingredients.map((ingredient) => ingredient.name) ?? [],
+    [data]
+  );
 
   return (
     <>
@@ -33,12 +40,7 @@ const StockLunch = () => {
                 },
               }}
             >
-              <DishPanel
-                dish={dish}
-                allIngredientsName={data.ingredients.map(
-                  (ingredient) => ingredient.name
-                )}
-              />
+              <DishPanel dish={dish} allIngredientsName={allIngredientsName} />
             </Folder>
           ))}
       </div>

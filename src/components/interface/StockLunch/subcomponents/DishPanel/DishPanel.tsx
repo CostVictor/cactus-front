@@ -1,4 +1,5 @@
 import { Icon } from "@iconify/react";
+import { useMemo } from "react";
 
 import useRequest from "@/hooks/network/useRequest";
 import useModalActions from "@/hooks/context/useModal";
@@ -7,12 +8,29 @@ import Modal from "@/components/display/Modal";
 import ItemInfo from "@/components/display/ItemInfo";
 import Grid from "@/components/layout/Grid";
 
+import AddComposition from "./subcomponents/AddComposition";
+
+import { apiHTTP } from "@api/endpoints";
 import { DishPanelProps } from "./dishpanel.types";
 import style from "./dishpanel.module.scss";
 
 const DishPanel = ({ dish, allIngredientsName }: DishPanelProps) => {
   const { addNewModal, removeModal } = useModalActions();
   const { multiple_choice, single_choice } = dish.ingredients;
+  const { lunch } = apiHTTP;
+
+  // Verifica quais são os ingredientes que ainda não foram vinculados ao prato.
+  const ingredientsNameNotIncludedInDish = useMemo(
+    () =>
+      allIngredientsName.filter(
+        (name) =>
+          !multiple_choice.find((ingredient) => ingredient.name === name) &&
+          !Object.values(single_choice ?? {})
+            .flat()
+            .find((ingredient) => ingredient.name === name)
+      ),
+    [allIngredientsName, multiple_choice, single_choice]
+  );
 
   return (
     <div className={style.container_main}>
@@ -28,9 +46,9 @@ const DishPanel = ({ dish, allIngredientsName }: DishPanelProps) => {
           text="Vincular item"
           onClick={() =>
             addNewModal(
-              <Modal
-                title="Recurso indisponível"
-                message="A vinculação de ingredientes ainda está em desenvolvimento."
+              <AddComposition
+                dayName={dish.day_name}
+                options={ingredientsNameNotIncludedInDish}
               />
             )
           }

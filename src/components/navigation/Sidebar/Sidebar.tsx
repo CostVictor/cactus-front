@@ -4,6 +4,7 @@ import { useEffect, useState, Fragment } from "react";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
 import { Icon } from "@iconify/react";
+import clsx from "clsx";
 
 import { inter } from "@/styles/fonts";
 import { fadeIn } from "@/styles/animations";
@@ -31,7 +32,7 @@ const Sidebar = () => {
     });
 
   return (
-    <nav className={`${style.sidebar} ${isOpen ? style.open : ""}`.trim()}>
+    <nav className={clsx(style.sidebar, { [style.open]: isOpen })}>
       <div id="container-menu" className={style.menu}>
         {isOpen ? (
           <>

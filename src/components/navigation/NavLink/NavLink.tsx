@@ -1,12 +1,14 @@
+import Link from "next/link";
+import clsx from "clsx";
+
 import { averiaSansLibre } from "@/styles/fonts";
 import { PropsLink } from "./navlink.types";
 import style from "./navlink.module.scss";
-import Link from "next/link";
 
 const NavLink = ({ text, link, onClick }: PropsLink) => {
-  const linkClass = `${averiaSansLibre.className} ${style.link} ${
-    link.includes("#") ? style.target : ""
-  }`.trim();
+  const linkClass = clsx(averiaSansLibre.className, style.link, {
+    [style.target]: link.includes("#"),
+  });
 
   return (
     <Link className={linkClass} href={link} onClick={onClick}>

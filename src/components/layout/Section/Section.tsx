@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import clsx from "clsx";
 
 import Carousel from "./subcomponents/Carousel";
 import SideIcon from "@/components/interface/SideIcon";
@@ -20,9 +21,10 @@ const Section = ({
   return (
     <section
       id={id}
-      className={`${style.container_main} ${
-        backgroundGray ? style.background_gray : ""
-      } ${reserveSidebarSpace ? style.space_sidebar : ""}`.trim()}
+      className={clsx(style.container_main, {
+        [style.background_gray]: backgroundGray,
+        [style.space_sidebar]: reserveSidebarSpace,
+      })}
     >
       {sectionImage &&
         (sectionImage.viewImages ? (
@@ -44,11 +46,10 @@ const Section = ({
 
       {description && (
         <div
-          className={`${style.container_description} ${
-            description.illustrationDirection === "left"
-              ? style.steering_control
-              : ""
-          }`.trim()}
+          className={clsx(style.container_description, {
+            [style.steering_control]:
+              description.illustrationDirection === "left",
+          })}
         >
           <SideIcon
             position="left"
@@ -86,9 +87,10 @@ const Section = ({
 
       {children && (
         <div
-          className={`${style.container_content} ${
-            description ? style.no_space_top : ""
-          } ${!maxWidthContent ? style.limited_width : ""}`.trim()}
+          className={clsx(style.container_content, {
+            [style.no_space_top]: description,
+            [style.limited_width]: !maxWidthContent,
+          })}
         >
           {children}
           {!maxWidthContent && (

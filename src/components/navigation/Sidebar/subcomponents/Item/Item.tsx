@@ -3,6 +3,7 @@
 import { Icon } from "@iconify/react";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import clsx from "clsx";
 
 import { fadeIn } from "@/styles/animations";
 import { PropsItemSidebar } from "./item.types";
@@ -16,7 +17,7 @@ const ItemSidebar = ({
   isActive,
 }: PropsItemSidebar) => {
   return (
-    <li className={`${style.item} ${isActive ? style.selected : ""}`.trim()}>
+    <li className={clsx(style.item, { [style.selected]: isActive })}>
       <Link href={url} className={style.link}>
         <motion.div
           variants={fadeIn}
@@ -26,13 +27,13 @@ const ItemSidebar = ({
         >
           <Icon
             icon={icon}
-            className={`${style.icon} ${isOpen ? style.min : ""}`.trim()}
+            className={clsx(style.icon, { [style.min]: isOpen })}
           />
         </motion.div>
 
         <motion.p
           key={`${url} ${String(isOpen)}`}
-          className={`${style.text} ${!isOpen ? style.inactive : ""}`.trim()}
+          className={clsx(style.text, { [style.inactive]: !isOpen })}
           variants={fadeIn}
           initial="hidden"
           animate="visible"
