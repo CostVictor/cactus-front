@@ -1,3 +1,3 @@
 export interface BaseData {
-  [key: string]: string | BaseData;
+  [key: string]: string | string[] | BaseData;
 }

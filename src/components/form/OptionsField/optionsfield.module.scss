@@ -26,8 +26,14 @@
     top: 1.5%;
   }
 
+  .error {
+    color: var(--red-primary);
+    text-align: center;
+    font-size: 1rem;
+    padding: 0.5rem;
+  }
+
   .container_options {
-    background-color: var(--white-secondary);
     box-shadow: var(--shadow-secondary);
     border-radius: 8px;
 
@@ -45,11 +51,6 @@
       border-top: solid 1px var(--division);
       color: var(--black-primary);
 
-      &:focus {
-        outline: 2px solid var(--red-primary); // Feedback visual ao focar
-        outline-offset: -2px;
-      }
-
       &:has(input:checked) {
         .marker {
           box-shadow: var(--shadow-btn-click);
@@ -64,10 +65,6 @@
             }
           }
         }
-      }
-
-      &:hover {
-        background-color: var(--gray-tertiary);
       }
 
       &.no_border {

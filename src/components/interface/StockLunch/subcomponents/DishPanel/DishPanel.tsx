@@ -20,7 +20,7 @@ const DishPanel = ({ dish, allIngredientsName }: DishPanelProps) => {
   const { lunch } = apiHTTP;
 
   // Verifica quais são os ingredientes que ainda não foram vinculados ao prato.
-  const ingredientsNameNotIncludedInDish = useMemo(
+  const nameIngredientsNotIncludedInDish = useMemo(
     () =>
       allIngredientsName.filter(
         (name) =>
@@ -41,6 +41,7 @@ const DishPanel = ({ dish, allIngredientsName }: DishPanelProps) => {
         </span>
       )}
 
+      {/* Grid de múltipla escolha */}
       <Grid>
         <ItemInfo
           text="Vincular item"
@@ -48,13 +49,22 @@ const DishPanel = ({ dish, allIngredientsName }: DishPanelProps) => {
             addNewModal(
               <AddComposition
                 dayName={dish.day_name}
-                options={ingredientsNameNotIncludedInDish}
+                options={nameIngredientsNotIncludedInDish}
               />
             )
           }
           colorDark
           typeAdd
         />
+
+        {multiple_choice.map((ingredient, index) => (
+          <ItemInfo
+            key={index}
+            text={ingredient.name}
+            actionIcon="material-symbols:edit-square-outline"
+            displayIcon="gridicons:sync"
+          />
+        ))}
       </Grid>
     </div>
   );

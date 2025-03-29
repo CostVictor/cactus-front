@@ -1,11 +1,13 @@
 import { useFormContext } from "react-hook-form";
 import { motion } from "framer-motion";
 import { Icon } from "@iconify/react";
+import { useMemo } from "react";
 import clsx from "clsx";
 
 import { inter } from "@/styles/fonts";
+import { genericValidations } from "../_shared/validations";
 
-import { PropsOptionsField } from "./optionsfield.types";
+import { PropsOptionsField, PropsOptions } from "./optionsfield.types";
 import style from "./optionsfield.module.scss";
 
 const OptionsField = ({
@@ -13,20 +15,18 @@ const OptionsField = ({
   label,
   type,
   options,
-  message,
+  config,
   required,
 }: PropsOptionsField) => {
   const {
     register,
     setValue,
+    getValues,
     formState: { errors },
   } = useFormContext();
 
   const fieldError = errors[name];
-  const [hasMessage, isError] = [
-    (fieldError?.message as string) || message,
-    !!fieldError?.message,
-  ];
+  const errorMessage = (fieldError?.message ?? "") as string;
 
   const icon =
     type === "radio"
@@ -38,12 +38,57 @@ const OptionsField = ({
       ? "mdi:checkbox-marked-circle-outline"
       : "ion:md-checkbox-outline";
 
-  const handleKeyDown = (event: React.KeyboardEvent, option: string) => {
+  /**
+   * Manipula eventos de pressionamento de tecla para seleção de opções.
+   * Suporta teclas "Enter" e "Espaço" para interações com elementos radio ou checkbox.
+   *
+   * @param {React.KeyboardEvent} event - O evento de teclado disparado.
+   * @param {PropsOptions} option - A opção associada ao evento.
+   * @property {string} [option.value] - O valor da opção (opcional).
+   * @property {string} [option.name] - O nome da opção (usado como fallback se value não estiver presente).
+   */
+  const handleKeyDown = (event: React.KeyboardEvent, option: PropsOptions) => {
     if (event.key === "Enter" || event.key === " ") {
       event.preventDefault();
-      setValue(name, option, { shouldValidate: true });
+
+      const optionValue = option.value ?? option.name;
+
+      if (type === "radio") {
+        setValue(name, optionValue, { shouldValidate: true });
+        return;
+      }
+
+      const currentValues = (getValues(name) ?? []) as string[];
+
+      const newValues = currentValues.includes(optionValue)
+        ? currentValues.filter((value) => value !== optionValue)
+        : [...currentValues, optionValue];
+
+      setValue(name, newValues, { shouldValidate: true });
     }
   };
+
+  // Converte o valor de `options` se for string[] para PropsOptions[].
+  const optionsMemo = useMemo(() => {
+    if (options.every((option) => typeof option === "string")) {
+      return options.map((name) => ({ name } as PropsOptions));
+    }
+    return options;
+  }, [options]);
+
+  // Define as regras de validação baseadas no tipo de campo.
+  let validationRules;
+  if (type === "checkbox") {
+    validationRules = {
+      required: required
+        ? (value: string[]) => !!value.length || "Este campo é obrigatório."
+        : () => undefined,
+    };
+  } else {
+    validationRules = {
+      required: required ? genericValidations.required() : () => undefined,
+    };
+  }
 
   return (
     <div className={style.container_main}>
@@ -55,16 +100,31 @@ const OptionsField = ({
 
       <p className="marker"></p>
 
+      {errorMessage && (
+        <p className={clsx(inter.className, style.error)}>{errorMessage}</p>
+      )}
+
       <div className={style.container_options}>
-        {options.map((option, index) => (
-          <label
+        {optionsMemo.map((option, index) => (
+          <motion.label
+            key={option.name}
             tabIndex={0}
-            key={option}
+            onKeyDown={(event) => handleKeyDown(event, option)}
+            initial={{ backgroundColor: "var(--white-secondary)" }}
+            whileHover={{ backgroundColor: "var(--gray-tertiary)" }}
+            whileFocus={{ backgroundColor: "var(--gray-tertiary)" }}
             className={clsx(inter.className, style.option, {
               [style.no_border]: !index,
             })}
           >
-            <input {...register(name)} type={type} value={option} />
+            <input
+              {...register(name, { validate: validationRules })}
+              defaultChecked={config?.initChecked?.includes(
+                option.value ?? option.name
+              )}
+              value={option.value ?? option.name}
+              type={type}
+            />
             <div className={style.marker}>
               <Icon icon={icon} className={style.icon} />
               <Icon
@@ -72,8 +132,8 @@ const OptionsField = ({
                 className={clsx(style.icon, style.checked)}
               />
             </div>
-            {option}
-          </label>
+            {option.name}
+          </motion.label>
         ))}
       </div>
     </div>

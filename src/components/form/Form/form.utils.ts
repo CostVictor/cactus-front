@@ -11,9 +11,14 @@ export const trimmerData = (data: BaseData) => {
   const formattedObj: BaseData = {};
 
   Object.entries(data).forEach(([key, value]) => {
-    if (typeof value === "object") {
-      // Aplica a recursividade se for `object`.
+    if (Array.isArray(value)) {
+      // Percorre o array e remove os espaços em branco.
+      formattedObj[key] = value.map((name) => name.trim())
+
+    } else if (typeof value === "object") {
+      // Aplica a recursividade se for `object` e não for `array`.
       formattedObj[key] = trimmerData(value)
+
     } else {
       formattedObj[key] = value.trim()
     }
@@ -36,9 +41,10 @@ export const omitKeys = (data: BaseData, omitTo: string) => {
   Object.entries(data).forEach(([key, value]) => {
     // Verifica se a chave contém a string omitTo, caso verdade, não inclui em `formattedObj`.
     if (!key.includes(omitTo)) {
-      if (typeof value === 'object') {
+      if (typeof value === 'object' && !Array.isArray(value)) {
         // Aplica a recursividade se for `object`.
         formattedObj[key] = omitKeys(value, omitTo);
+
       } else {
         formattedObj[key] = value;
       }

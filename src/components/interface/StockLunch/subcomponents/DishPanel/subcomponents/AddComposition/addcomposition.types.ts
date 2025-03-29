@@ -1,4 +1,7 @@
+import { PropsOptions } from "@/components/form/OptionsField";
+
 export interface PropsAddComposition {
   dayName: string;
-  options: string[];
+  options: PropsOptions[] | string[];
+  choiceNumber?: number;
 }
