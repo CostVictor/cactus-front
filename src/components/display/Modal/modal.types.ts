@@ -1,15 +1,11 @@
+import { PropsButton } from "@/components/form/Button";
 import { ReactNode } from "react";
-import { PropsButton } from "@/components/forms/Button";
-
-type PropsButtonModal = Omit<PropsButton, "link"> & {
-  appearance?: "normal" | "main";
-};
 
 export interface PropsModal {
   title: string;
   message?: string | string[];
   children?: ReactNode;
-  buttons?: PropsButtonModal[] | null;
+  buttons?: PropsButton[];
   defaultButtonText?: string;
-  notOverflow?: boolean
+  formMode?: boolean | "button" | "content"
 }

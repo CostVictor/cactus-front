@@ -43,5 +43,5 @@ export const listSidebarItems: PropsListSidebarItems = [
       { name: "Estatística", icon: "mage:chart-b", url: "/statistic" },
     ], requiresAuth: true, access: "employee"
   },
-  { items: [{ name: "Estoque", icon: "tabler:folder", url: "/stock/snacks" }], requiresAuth: true, access: "employee" },
+  { items: [{ name: "Estoque", icon: "tabler:folder", url: "/stock/snack", urlAlias: "/stock" }], requiresAuth: true, access: "employee" },
 ];

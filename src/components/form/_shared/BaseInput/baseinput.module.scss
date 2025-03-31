@@ -1,0 +1,80 @@
+.container_main {
+  position: relative;
+  display: flex;
+  width: 100%;
+
+  .icon {
+    position: absolute;
+    font-size: 1.7rem;
+
+    color: var(--gray-primary);
+    transform: translateY(-50%);
+    left: 0.5rem;
+    top: 50%;
+  }
+
+  .span_required {
+    user-select: none;
+    pointer-events: none;
+
+    color: var(--gray-primary);
+    font-size: 1rem;
+    position: absolute;
+    right: 1.2%;
+    top: 1.5%;
+
+    &.indent {
+      right: 3rem;
+    }
+  }
+
+  .input {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1.2rem;
+
+    background-color: var(--bg-primary);
+    color: var(--black-primary);
+
+    border: none;
+    border-radius: 10px;
+
+    &.indent {
+      text-indent: 1.8rem;
+    }
+
+    &.message_mode {
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+
+    &.button_mode {
+      border-right: 1px solid var(--division);
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+  }
+
+  .container_password {
+    width: 3rem;
+    background-color: var(--bg-primary);
+    border-radius: 0 10px 10px 0;
+    user-select: none;
+    cursor: pointer;
+    position: relative;
+
+    .icon {
+      position: relative;
+      transform: translate(-50%, -50%);
+      top: 50%;
+      left: 50%;
+
+      color: var(--gray-primary);
+      font-size: 1.1rem;
+    }
+
+    &.message_mode {
+      border-bottom-right-radius: 0;
+    }
+  }
+}

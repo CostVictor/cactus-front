@@ -11,7 +11,7 @@ const StorageCookie = {
   setItem: (_: string, value: string) =>
     Cookies.set(cookieName, value, {
       path: "/",
-      secure: process.env.NODE_ENV === "production",
+      secure: false, // process.env.NODE_ENV === "production"
       sameSite: "strict",
       expires: 365,
     }),
@@ -21,14 +21,31 @@ const StorageCookie = {
 const StorageAuth = create<PropsStorageAuth>()(
   persist(
     (set) => ({
-      isAuthenticated: false,
-      user: null,
-      loginInState: (user) => set(() => ({ isAuthenticated: true, user })),
-      logoutInState: () => set(() => ({ isAuthenticated: false, user: null })),
+      state: {
+        isAuthenticated: false,
+        user: null,
+      },
+      actions: {
+        loginInState: (user) =>
+          set(() => ({
+            state: {
+              isAuthenticated: true,
+              user,
+            },
+          })),
+        logoutInState: () =>
+          set(() => ({
+            state: {
+              isAuthenticated: false,
+              user: null,
+            },
+          })),
+      },
     }),
     {
       name: cookieName,
       storage: createJSONStorage(() => StorageCookie),
+      partialize: (storage) => ({ state: storage.state }),
     }
   )
 );

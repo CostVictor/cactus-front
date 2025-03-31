@@ -2,6 +2,7 @@ interface PropsMenuItem {
   name: string
   icon: string
   url: string
+  urlAlias?: string
   requiresAuth?: boolean
 }
 

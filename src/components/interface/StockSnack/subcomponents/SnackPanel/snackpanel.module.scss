@@ -1,0 +1,32 @@
+.not_item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 0.3rem;
+  font-size: 1.2rem;
+  margin: 0.5rem 0;
+  color: var(--black-primary);
+}
+
+.create_snack {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+
+  font-size: 1.3rem;
+  width: 85%;
+  min-height: 87px;
+  margin: 10px auto;
+
+  color: var(--division-intense);
+  background-color: var(--bg-aba);
+
+  border: 2.5px dashed var(--division-intense);
+  border-radius: 20px;
+
+  p {
+    user-select: none;
+  }
+}

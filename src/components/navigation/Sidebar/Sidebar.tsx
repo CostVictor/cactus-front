@@ -4,20 +4,18 @@ import { useEffect, useState, Fragment } from "react";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
 import { Icon } from "@iconify/react";
+import clsx from "clsx";
 
 import { inter } from "@/styles/fonts";
 import { fadeIn } from "@/styles/animations";
-import useAuth from "@/hooks/context/useAuth";
+import useAuthState from "@/hooks/context/useAuth";
 
 import { listSidebarItems } from "./sidebar.variables";
 import ItemSidebar from "./subcomponents/Item";
 import style from "./sidebar.module.scss";
 
 const Sidebar = () => {
-  const {
-    state: { isAuthenticated, user },
-  } = useAuth();
-
+  const { isAuthenticated, user } = useAuthState();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const pathCurrent = usePathname();
 
@@ -34,7 +32,7 @@ const Sidebar = () => {
     });
 
   return (
-    <nav className={`${style.sidebar} ${isOpen ? style.open : ""}`.trim()}>
+    <nav className={clsx(style.sidebar, { [style.open]: isOpen })}>
       <div id="container-menu" className={style.menu}>
         {isOpen ? (
           <>
@@ -86,6 +84,8 @@ const Sidebar = () => {
                         isActive={
                           pathCurrent === "/"
                             ? item.url === pathCurrent
+                            : item.urlAlias
+                            ? pathCurrent.includes(item.urlAlias)
                             : item.url.includes(pathCurrent)
                         }
                       />

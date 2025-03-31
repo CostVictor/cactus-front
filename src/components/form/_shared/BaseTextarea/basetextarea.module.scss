@@ -1,0 +1,38 @@
+.container_main {
+  position: relative;
+  display: flex;
+  width: 100%;
+
+  .span_required {
+    user-select: none;
+    pointer-events: none;
+
+    color: var(--gray-primary);
+    font-size: 1rem;
+    position: absolute;
+    right: 1.2%;
+    top: 1.5%;
+  }
+
+  .textarea {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1.2rem;
+    line-height: 1.65rem;
+    resize: none;
+
+    background-color: var(--bg-primary);
+    border: none;
+    border-radius: 10px;
+
+    &.message_mode {
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+
+    &.closed {
+      overflow: hidden;
+      user-select: none;
+    }
+  }
+}

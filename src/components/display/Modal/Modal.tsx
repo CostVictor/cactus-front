@@ -1,9 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
+import clsx from "clsx";
 
-import Button from "@/components/forms/Button";
-import Container from "@/components/layout/Container";
+import Button from "@/components/form/Button";
 import useModalActions from "@/hooks/context/useModal";
 
 import { PropsModal } from "./modal.types";
@@ -15,7 +15,7 @@ const Modal = ({
   message,
   children,
   buttons,
-  notOverflow,
+  formMode,
   defaultButtonText = "Fechar",
 }: PropsModal) => {
   const { removeModal } = useModalActions();
@@ -54,12 +54,11 @@ const Modal = ({
           </motion.h2>
         </div>
 
-        <Container
+        <div
           key={`content_${title}`}
-          className={`${style.content} ${notOverflow && style.not_overflow} ${
-            buttons === null && style.complete
-          }`.trim()}
-          animateChildren
+          className={clsx(style.content, {
+            [style.form_mode]: formMode === "content" || formMode === true,
+          })}
         >
           {message ? (
             Array.isArray(message) ? (
@@ -78,31 +77,29 @@ const Modal = ({
           ) : (
             children
           )}
-        </Container>
+        </div>
 
-        {buttons !== null && (
-          <motion.div
-            key={`footer_${title}`}
-            className={style.footer}
-            initial={{ opacity: 0 }}
-            animate={{
-              opacity: 1,
-              transition: { delay: 0.15, duration: 0.15 },
-            }}
-          >
-            {buttons?.length ? (
-              buttons.map((button, index) => <Button key={index} {...button} />)
-            ) : (
-              <Button
-                text={defaultButtonText}
-                appearance="main"
-                onClick={() => {
-                  removeModal(-1);
-                }}
-              />
-            )}
-          </motion.div>
-        )}
+        <motion.div
+          key={`footer_${title}`}
+          className={clsx(style.footer, {
+            [style.form_mode]: formMode === "button" || formMode === true,
+          })}
+          initial={{ opacity: 0 }}
+          animate={{
+            opacity: 1,
+            transition: { delay: 0.15, duration: 0.15 },
+          }}
+        >
+          {buttons?.length ? (
+            buttons.map((button, index) => <Button key={index} {...button} />)
+          ) : (
+            <Button
+              text={defaultButtonText}
+              appearance="principal"
+              onClick={() => removeModal()}
+            />
+          )}
+        </motion.div>
       </motion.div>
     </motion.article>
   );

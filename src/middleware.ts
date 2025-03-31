@@ -12,7 +12,8 @@ export function middleware(request: NextRequest) {
   }
 
   if (routesRequiredEmployee.some((route) => urlCurrent.startsWith(route))) {
-    const state = JSON.parse(cookieAuth.value).state as PropsStorageAuth;
+    const storage = JSON.parse(cookieAuth.value).state as PropsStorageAuth;
+    const state = storage.state;
 
     if (!state.user || state.user.role !== "employee") {
       return NextResponse.redirect(new URL("/", request.url));

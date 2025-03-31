@@ -18,8 +18,8 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"],
-      "@APISCMapping/*": ["./src/services/axios/cactusAPI/mapping/*"]
+      "@api/*": ["./src/lib/api/*"],
+      "@/*": ["./src/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

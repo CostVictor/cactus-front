@@ -1,10 +1,13 @@
-import useAuth from "@/hooks/context/useAuth";
+import { useForm, FormProvider } from "react-hook-form";
+import { useAuthActions } from "@/hooks/context/useAuth";
 import useModalActions from "@/hooks/context/useModal";
 
 import Modal from "@/components/display/Modal";
-import Form from "@/components/forms/Form";
-import InputField from "@/components/forms/InputField";
 import NavLink from "@/components/navigation/NavLink";
+
+import Form from "@/components/form/Form";
+import TextField from "@/components/form/TextField";
+import Button from "@/components/form/Button";
 
 import { useSearchParams } from "next/navigation";
 import style from "./formlogin.module.scss";
@@ -13,50 +16,59 @@ const FormLogin = () => {
   const {
     network: { isLoading },
     actions: { login },
-  } = useAuth();
+  } = useAuthActions();
 
   const { addNewModal } = useModalActions();
   const paramsURL = useSearchParams();
 
+  const form = useForm();
+
   return (
-    <Form
-      defaultButtonSubmitText="Entrar"
-      isLoading={isLoading}
-      onSubmit={(data) => {
-        const redirectTo = paramsURL.get("redirectTo");
-        const { email, password } = data;
-        login(email, password, redirectTo ?? "/");
-      }}
-    >
-      <InputField
-        name="email"
-        label="E-mail"
-        config={{ type: "email" }}
-        options={{ icon: "lucide:circle-user-round" }}
-        required
-      />
-      <InputField
-        name="password"
-        label="Senha"
-        config={{ type: "password" }}
-        options={{ icon: "uil:lock-alt" }}
-        required
-      />
-      <div className={style.container_options}>
-        <NavLink
-          text="Esqueci minha senha"
-          link=""
-          onClick={() =>
-            addNewModal(
-              <Modal
-                title="Função indisponível"
-                message="Esta funcionalidade ainda está em desenvolvimento."
-              />
-            )
-          }
+    <FormProvider {...form}>
+      <Form
+        className={style.form}
+        onSubmit={(data) => {
+          const redirectTo = paramsURL.get("redirectTo");
+          const { email, password } = data;
+          login(email, password, redirectTo || "/");
+        }}
+      >
+        <TextField
+          name="email"
+          label="E-mail"
+          type="email"
+          config={{ icon: "lucide:circle-user-round" }}
+          required
         />
-      </div>
-    </Form>
+        <TextField
+          name="password"
+          label="Senha"
+          type="password"
+          config={{ icon: "uil:lock-alt" }}
+          required
+        />
+        <div className={style.container_options}>
+          <NavLink
+            text="Esqueci minha senha"
+            link=""
+            onClick={() =>
+              addNewModal(
+                <Modal
+                  title="Função indisponível"
+                  message="Esta funcionalidade ainda está em desenvolvimento."
+                />
+              )
+            }
+          />
+        </div>
+        <Button
+          text="Entrar"
+          appearance="principal"
+          isLoading={form.formState.isSubmitting || isLoading}
+          largeMode
+        />
+      </Form>
+    </FormProvider>
   );
 };
 

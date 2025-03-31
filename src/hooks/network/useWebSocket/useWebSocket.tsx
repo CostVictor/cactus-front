@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
-import { baseUrlWs, sessionEP } from "@APISCMapping/endpoints";
+import { useState, useEffect } from "react";
+import { apiHTTP, apiWS } from "@api/endpoints";
 
 import useRequest from "../useRequest";
 import useModalActions from "@/hooks/context/useModal";
@@ -10,23 +10,22 @@ import Modal from "@/components/display/Modal";
 const useWebSocket = <T,>(relativeUrl: string) => {
   const [data, setData] = useState<T | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const quantityReset = useRef(0);
+  const [quantityReset, setQuantityReset] = useState(0);
+
+  const { session } = apiHTTP;
 
   const {
     actions: { fetchData },
-  } = useRequest<null>(undefined, {
-    forceLoadingRequest: false,
-  });
+  } = useRequest<null>({ config: { forceLoadingRequest: false } });
 
   const { addNewModal } = useModalActions();
 
   useEffect(() => {
-    const ws = new WebSocket(baseUrlWs + relativeUrl);
-
-    ws.onopen = () => setIsLoading(false);
+    const ws = new WebSocket(apiWS.baseUrl + relativeUrl);
 
     ws.onmessage = (event) => {
       const data = JSON.parse(event.data) as T;
+      setIsLoading(false);
       setData(data);
     };
 
@@ -34,15 +33,13 @@ const useWebSocket = <T,>(relativeUrl: string) => {
       switch (event.code) {
         case 4001:
           fetchData({
-            request: { url: sessionEP.refresh, method: "POST" },
-            onSuccess: () => quantityReset.current++,
+            request: { url: session.refresh, method: "POST" },
+            onSuccess: () => setQuantityReset((prevValue) => prevValue + 1),
             onError: () => (window.location.href = "/login"),
-            onFinally: () => setIsLoading(false),
           });
           break;
 
         case 4003:
-          setIsLoading(false);
           window.location.href = "/";
           break;
 
@@ -53,7 +50,7 @@ const useWebSocket = <T,>(relativeUrl: string) => {
               <Modal
                 title="A conexão WebSocket foi fechada"
                 message={
-                  event.reason ? event.reason : "A API Cactus fechou a conexão."
+                  event.reason ? event.reason : "A API fechou a conexão."
                 }
               />
             );
@@ -63,7 +60,7 @@ const useWebSocket = <T,>(relativeUrl: string) => {
     };
 
     return () => ws.close();
-  }, [relativeUrl, addNewModal, fetchData, quantityReset]);
+  }, [relativeUrl, addNewModal, fetchData, quantityReset, session.refresh]);
 
   return { data, isLoading };
 };

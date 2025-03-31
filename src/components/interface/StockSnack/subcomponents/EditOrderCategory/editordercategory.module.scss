@@ -1,0 +1,35 @@
+.container_reorder {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  gap: 0.8rem;
+  padding: 1rem;
+
+  .item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+
+    color: var(--black-primary);
+    background-color: var(--bg-secondary);
+    box-shadow: var(--shadow-btn);
+
+    width: 100%;
+    font-size: 1.5rem;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    cursor: grab;
+
+    .symbol {
+      position: absolute;
+      transform: translateY(-50%);
+      top: 50%;
+      left: 5px;
+    }
+
+    &:active {
+      cursor: grabbing;
+    }
+  }
+}

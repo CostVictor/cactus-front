@@ -1,4 +1,5 @@
 import { Icon } from "@iconify/react";
+import clsx from "clsx";
 
 import { PropsLabelController } from "./labelcontroller.types";
 import { nameIcons } from "./labelcontroller.variables";
@@ -13,16 +14,15 @@ const LabelController = ({ labels }: PropsLabelController) => {
             {label.type && label.type !== "normal" && (
               <Icon
                 icon={nameIcons[label.type]}
-                className={`${style.icon} ${style[label.type]}`.trim()}
+                className={clsx(style.icon, style[label.type])}
               />
             )}
             <p
               title={label.text}
-              className={`${style.label} ${
-                label.type === "pending" || label.type === "success"
-                  ? style[label.type]
-                  : ""
-              }`.trim()}
+              className={clsx(style.label, {
+                [style[label.type ?? ""]]:
+                  label.type === "pending" || label.type === "success",
+              })}
             >
               {label.text}
             </p>

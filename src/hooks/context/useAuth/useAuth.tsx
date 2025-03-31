@@ -2,24 +2,31 @@ import { useRouter } from "next/navigation";
 import useRequest from "@/hooks/network/useRequest";
 import StorageAuth from "./useauth.storage";
 
-import { sessionEP } from "@APISCMapping/endpoints";
+import { apiHTTP } from "@api/endpoints";
 
-const useAuth = () => {
-  const { isAuthenticated, user, loginInState, logoutInState } = StorageAuth();
+export const useAuthState = () => StorageAuth((storage) => storage.state);
+
+export const useAuthActions = () => {
   const router = useRouter();
+  const { loginInState, logoutInState } = StorageAuth(
+    (storage) => storage.actions
+  );
 
   const {
     info: { isLoading },
     actions: { fetchData },
-  } = useRequest();
+  } = useRequest<null>();
+
+  const { session } = apiHTTP;
 
   const login = (email: string, password: string, redirectTo: string): void => {
     fetchData({
       request: {
-        url: sessionEP.login,
+        url: session.login,
         method: "POST",
         data: { email, password },
       },
+      modalTitleWhenError: "Erro ao efetuar o login",
       onSuccess: (res) => {
         loginInState(res.data);
         router.push(redirectTo);
@@ -30,9 +37,10 @@ const useAuth = () => {
   const logout = () => {
     fetchData({
       request: {
-        url: sessionEP.logout,
+        url: session.logout,
         method: "POST",
       },
+      modalTitleWhenError: "Erro ao efetuar o logout",
       onSuccess: () => {
         logoutInState();
         router.push("/");
@@ -41,10 +49,9 @@ const useAuth = () => {
   };
 
   return {
-    state: { isAuthenticated, user },
     actions: { login, logout },
     network: { isLoading },
   };
 };
 
-export default useAuth;
+export default useAuthState;

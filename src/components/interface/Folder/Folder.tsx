@@ -4,8 +4,8 @@ import { motion, AnimatePresence, useAnimation } from "framer-motion";
 import { useRef, useState } from "react";
 import { Icon } from "@iconify/react";
 import Image from "next/image";
+import clsx from "clsx";
 
-import Container from "@/components/layout/Container";
 import LabelController from "./subcomponents/LabelController";
 import OptionsController from "./subcomponents/OptionsController";
 
@@ -16,24 +16,22 @@ import style from "./folder.module.scss";
 
 const Folder = ({
   name,
-  description,
   children,
   open,
   internal,
   notification,
-  folderConfig,
+  config,
 }: PropsFolder) => {
   // Configuração padrão da pasta.
-  folderConfig = {
-    canEdit: true,
+  config = {
     canMinimize: true,
     expandUntil: "30rem",
-    ...folderConfig,
+    ...config,
   };
-  const folderMarker = folderConfig.marker;
+  const folderMarker = config.marker;
 
   const [isOpen, setIsOpen] = useState<boolean>(
-    folderConfig.canMinimize ? open ?? false : true
+    config.canMinimize ? open ?? false : true
   );
 
   const controlAnimateContent = useAnimation();
@@ -55,12 +53,14 @@ const Folder = ({
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       style={getStyleBackgroundColor(internal)}
-      className={`${style.container_main} ${
-        isOpen && !internal && style.open
-      }`.trim()}
+      className={clsx(style.container_main, {
+        [style.open]: isOpen && !internal,
+      })}
     >
       <div
-        className={`${style.header} ${isOpen && style.division_visible}`.trim()}
+        className={clsx(style.header, {
+          [style.division_visible]: isOpen,
+        })}
       >
         <div className={style.container_label}>
           {folderMarker ? (
@@ -84,11 +84,9 @@ const Folder = ({
         </div>
 
         <OptionsController
-          nameCategory={name}
-          descriptionCategory={description}
           isFolderOpen={isOpen}
           toggleOpenFolder={toggleOpenFolder}
-          folderConfig={folderConfig}
+          folderConfig={config}
         />
       </div>
 
@@ -115,12 +113,12 @@ const Folder = ({
               {notification?.message && (
                 <p className={style.span_message}>{notification.message}</p>
               )}
-              <Container
+              <div
                 className={style.content}
-                style={{ maxHeight: folderConfig.expandUntil }}
+                style={{ maxHeight: config.expandUntil }}
               >
                 {children}
-              </Container>
+              </div>
             </motion.div>
           </motion.div>
         )}

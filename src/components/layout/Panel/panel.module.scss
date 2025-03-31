@@ -1,0 +1,22 @@
+.container_main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  padding: 1rem;
+  gap: 1rem;
+
+  background-color: var(--bg-secondary);
+  box-shadow: var(--shadow-card);
+  border-radius: 20px;
+
+  &.bg_dark {
+    background-color: var(--bg-aba);
+  }
+
+  h2 {
+    font-size: 1.6rem;
+    color: var(--gray-primary);
+  }
+}

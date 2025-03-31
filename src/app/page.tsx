@@ -4,21 +4,25 @@ import Sidebar from "@/components/navigation/Sidebar";
 import Header from "@/components/layout/Header";
 
 import Section from "@/components/layout/Section";
-import Container from "@/components/layout/Container";
+import Grid from "@/components/layout/Grid";
 
 import CardInfo from "@/components/display/CardInfo";
 import useRequest from "@/hooks/network/useRequest";
 
-import { stockSnacksEP } from "@APISCMapping/endpoints";
-import { BaseCategory } from "@APISCMapping/snacks.types";
+import { BaseCategory } from "@api/types/snack";
+import { apiHTTP } from "@api/endpoints";
 
 export default function Home() {
   const targets = [{ text: "Início", link: "#inicio" }];
+  const { snack } = apiHTTP;
 
   const {
     info: { data },
   } = useRequest<BaseCategory[]>({
-    request: { url: stockSnacksEP.base, method: "GET" },
+    initFetchData: {
+      request: { url: snack.baseUrl, method: "GET" },
+      modalTitleWhenError: "Erro ao carregar as categorias",
+    },
   });
 
   // Percorre as categorias obtidas da requisição e adiciona a âncora na página.
@@ -62,8 +66,8 @@ export default function Home() {
               }
               backgroundGray={indexCategory % 2 === 0}
             >
-              {Array.isArray(category.snacks) && category.snacks.length > 0 && (
-                <Container grid>
+              {Array.isArray(category.snacks) && !!category.snacks.length && (
+                <Grid>
                   {category.snacks.map((snack, indexSnack) => (
                     <CardInfo
                       key={`snack_${indexSnack}-${category.name}`}
@@ -72,7 +76,7 @@ export default function Home() {
                       isSoldOut={!Number(snack.quantity_in_stock)}
                     />
                   ))}
-                </Container>
+                </Grid>
               )}
             </Section>
           ))}

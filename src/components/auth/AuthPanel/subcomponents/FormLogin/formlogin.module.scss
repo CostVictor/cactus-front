@@ -1,12 +1,17 @@
-.container_options {
+.form {
   display: flex;
-  flex-direction: row-reverse;
+  flex-direction: column;
+  padding: 1rem;
+  padding-bottom: 0.9rem;
+  gap: 1.3rem;
+  width: 100%;
 
-  width: 90%;
-  margin: 0 auto;
+  .container_options {
+    text-align: end;
 
-  a {
-    font-size: 1rem;
-    text-decoration: none;
+    a {
+      font-size: 1rem;
+      text-decoration: none;
+    }
   }
 }
