@@ -5,9 +5,14 @@ export interface BaseIngredient {
   additional_charge: string | null
 }
 
+export interface BaseIngredientsSingleChoice {
+  [key: number]: BaseIngredient[]
+
+}
+
 export interface BaseIngredients {
   multiple_choice: BaseIngredient[]
-  single_choice?: { [key: number]: BaseIngredient[] }
+  single_choice?: BaseIngredientsSingleChoice
 }
 
 export interface BaseDish {

@@ -9,6 +9,7 @@ import ItemInfo from "@/components/display/ItemInfo";
 import Grid from "@/components/layout/Grid";
 
 import AddComposition from "./subcomponents/AddComposition";
+import EditComposition from "./subcomponents/EditComposition";
 
 import { apiHTTP } from "@api/endpoints";
 import { DishPanelProps } from "./dishpanel.types";
@@ -32,6 +33,8 @@ const DishPanel = ({ dish, allIngredientsName }: DishPanelProps) => {
     [allIngredientsName, multiple_choice, single_choice]
   );
 
+  const quantityFieldSingleChoice = Object.keys(single_choice ?? {}).length;
+
   return (
     <div className={style.container_main}>
       {!multiple_choice.length && (
@@ -44,7 +47,7 @@ const DishPanel = ({ dish, allIngredientsName }: DishPanelProps) => {
       {/* Grid de múltipla escolha */}
       <Grid>
         <ItemInfo
-          text="Vincular item"
+          text="Vincular ingrediente"
           onClick={() =>
             addNewModal(
               <AddComposition
@@ -63,6 +66,16 @@ const DishPanel = ({ dish, allIngredientsName }: DishPanelProps) => {
             text={ingredient.name}
             actionIcon="material-symbols:edit-square-outline"
             displayIcon="gridicons:sync"
+            onClick={() =>
+              addNewModal(
+                <EditComposition
+                  dayName={dish.day_name}
+                  ingredientName={ingredient.name}
+                  quantityFieldSingleChoice={quantityFieldSingleChoice}
+                  currentChoiceNumber={0}
+                />
+              )
+            }
           />
         ))}
       </Grid>

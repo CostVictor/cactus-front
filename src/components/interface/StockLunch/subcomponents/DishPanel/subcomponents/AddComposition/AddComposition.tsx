@@ -56,7 +56,7 @@ const AddComposition = ({
         >
           <OptionsField
             name="list_ingredients"
-            label="Selecione os ingredientes de multipla escolha:"
+            label="Selecione os ingredientes de múltipla escolha:"
             type="checkbox"
             options={options}
             required
