@@ -21,6 +21,7 @@ const OptionsField = ({
   const {
     register,
     setValue,
+    setError,
     getValues,
     formState: { errors },
   } = useFormContext();
@@ -76,6 +77,11 @@ const OptionsField = ({
     return options;
   }, [options]);
 
+  // Define o erro quando o campo for obrigatório e nenhuma opção estiver disponível.
+  if (required && !optionsMemo.length && !errorMessage) {
+    setError(name, { message: "Você precisa escolher uma opção" });
+  }
+
   // Define as regras de validação baseadas no tipo de campo.
   let validationRules;
   if (type === "checkbox") {
@@ -101,7 +107,15 @@ const OptionsField = ({
       <p className="marker"></p>
 
       {errorMessage && (
-        <p className={clsx(inter.className, style.error)}>{errorMessage}</p>
+        <p className={clsx(inter.className, style.text, style.error)}>
+          {errorMessage}
+        </p>
+      )}
+
+      {!optionsMemo.length && !errorMessage && (
+        <p className={clsx(inter.className, style.text)}>
+          {config?.messageWhenNotOptions || "Nenhuma opção disponível"}
+        </p>
       )}
 
       <div className={style.container_options}>

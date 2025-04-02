@@ -1,10 +1,10 @@
-FROM node:18-alpine
+FROM node:20-alpine
 
 WORKDIR /app
 
 # Instala as dependências
 COPY package.json package-lock.json ./
-RUN npm ci
+RUN npm install
 
 # Copia os arquivos
 COPY . .
@@ -13,4 +13,4 @@ COPY . .
 EXPOSE 3000
 
 # Inicia o app
-CMD ["npm", "dev"]
+CMD ["npm", "run", "dev"]

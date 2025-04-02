@@ -5,6 +5,7 @@ export interface PropsOptions {
 
 interface PropsConfigOptionsField {
   initChecked?: string | string[]
+  messageWhenNotOptions?: string
 }
 
 export interface PropsOptionsField {
