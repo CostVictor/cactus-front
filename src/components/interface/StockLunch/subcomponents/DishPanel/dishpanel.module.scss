@@ -1,4 +1,25 @@
 .container_main {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  .add_single_choice {
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+
+    width: 70%;
+    padding: 0.2rem;
+    margin: 0.8rem auto;
+
+    border-radius: 10px;
+    border: 2.5px dashed var(--division-intense);
+
+    background-color: var(--bg-aba);
+    color: var(--division-intense);
+    font-size: 1.5rem;
+  }
+
   .not_item {
     display: flex;
     align-items: center;

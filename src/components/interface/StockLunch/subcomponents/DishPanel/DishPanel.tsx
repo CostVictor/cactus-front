@@ -1,24 +1,19 @@
 import { Icon } from "@iconify/react";
 import { useMemo } from "react";
+import clsx from "clsx";
 
-import useRequest from "@/hooks/network/useRequest";
+import { averiaSansLibre } from "@/styles/fonts";
+import ChoiceBlock from "./subcomponents/ChoiceBlock";
+
 import useModalActions from "@/hooks/context/useModal";
-import Modal from "@/components/display/Modal";
+import AddComposition from "./subcomponents/ChoiceBlock/subcomponents/AddComposition";
 
-import ItemInfo from "@/components/display/ItemInfo";
-import Grid from "@/components/layout/Grid";
-
-import AddComposition from "./subcomponents/AddComposition";
-import EditComposition from "./subcomponents/EditComposition";
-
-import { apiHTTP } from "@api/endpoints";
 import { DishPanelProps } from "./dishpanel.types";
 import style from "./dishpanel.module.scss";
 
 const DishPanel = ({ dish, allIngredientsName }: DishPanelProps) => {
-  const { addNewModal, removeModal } = useModalActions();
   const { multiple_choice, single_choice } = dish.ingredients;
-  const { lunch } = apiHTTP;
+  const { addNewModal } = useModalActions();
 
   // Verifica quais são os ingredientes que ainda não foram vinculados ao prato.
   const nameIngredientsNotIncludedInDish = useMemo(
@@ -45,40 +40,41 @@ const DishPanel = ({ dish, allIngredientsName }: DishPanelProps) => {
       )}
 
       {/* Grid de múltipla escolha */}
-      <Grid>
-        <ItemInfo
-          text="Vincular ingrediente"
-          onClick={() =>
-            addNewModal(
-              <AddComposition
-                dayName={dish.day_name}
-                options={nameIngredientsNotIncludedInDish}
-              />
-            )
-          }
-          colorDark
-          typeAdd
-        />
+      <ChoiceBlock
+        ingredients={multiple_choice}
+        optionsToAdd={nameIngredientsNotIncludedInDish}
+        quantityFieldSingleChoice={quantityFieldSingleChoice}
+        dayName={dish.day_name}
+        choiceNumber={0}
+      />
 
-        {multiple_choice.map((ingredient, index) => (
-          <ItemInfo
+      {!!quantityFieldSingleChoice &&
+        Object.values(single_choice ?? {}).map((listIngredients, index) => (
+          // Grid de escolha individual
+          <ChoiceBlock
             key={index}
-            text={ingredient.name}
-            actionIcon="material-symbols:edit-square-outline"
-            displayIcon="gridicons:sync"
-            onClick={() =>
-              addNewModal(
-                <EditComposition
-                  dayName={dish.day_name}
-                  ingredientName={ingredient.name}
-                  quantityFieldSingleChoice={quantityFieldSingleChoice}
-                  currentChoiceNumber={0}
-                />
-              )
-            }
+            ingredients={listIngredients}
+            optionsToAdd={nameIngredientsNotIncludedInDish}
+            quantityFieldSingleChoice={quantityFieldSingleChoice}
+            dayName={dish.day_name}
+            choiceNumber={index + 1}
           />
         ))}
-      </Grid>
+
+      <button
+        className={clsx(averiaSansLibre.className, style.add_single_choice)}
+        onClick={() =>
+          addNewModal(
+            <AddComposition
+              dayName={dish.day_name}
+              options={nameIngredientsNotIncludedInDish}
+              choiceNumber={quantityFieldSingleChoice + 1}
+            />
+          )
+        }
+      >
+        Adicionar área de escolha única
+      </button>
     </div>
   );
 };

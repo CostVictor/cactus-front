@@ -1,6 +1,7 @@
 "use client";
 
 import { Icon } from "@iconify/react";
+import clsx from "clsx";
 
 import useModalActions from "@/hooks/context/useModal";
 import useWebSocket from "@/hooks/network/useWebSocket";
@@ -11,6 +12,8 @@ import AddCategory from "./subcomponents/AddCategory";
 import EditCategory from "./subcomponents/EditCategory";
 import EditOrderCategory from "./subcomponents/EditOrderCategory";
 import Button from "@/components/form/Button";
+
+import { averiaSansLibre } from "@/styles/fonts";
 
 import { apiWS } from "@api/endpoints";
 import { BaseCategory } from "@api/types/snack";
@@ -81,12 +84,12 @@ const StockSnack = () => {
           </div>
         )}
       </div>
-      <div
-        className={style.add_category}
+      <button
+        className={clsx(averiaSansLibre.className, style.add_category)}
         onClick={() => addNewModal(<AddCategory />)}
       >
-        <p>Adicionar nova categoria</p>
-      </div>
+        Adicionar nova categoria
+      </button>
     </>
   );
 };

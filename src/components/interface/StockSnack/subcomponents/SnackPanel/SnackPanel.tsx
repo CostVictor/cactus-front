@@ -1,8 +1,9 @@
 "use client";
 
 import { AnimatePresence } from "framer-motion";
-import { Icon } from "@iconify/react";
 import { useState, useMemo } from "react";
+import { Icon } from "@iconify/react";
+import clsx from "clsx";
 
 import Snack from "./subcomponents/Snack";
 import AddItem from "./subcomponents/AddItem";
@@ -10,6 +11,8 @@ import useModalActions from "@/hooks/context/useModal";
 import EditItem from "./subcomponents/EditItem";
 import Grid from "@/components/layout/Grid";
 import FilterField from "@/components/form/FilterField";
+
+import { averiaSansLibre } from "@/styles/fonts";
 
 import { filterOption } from "@/components/form/_shared/utils";
 import { PropsSnackPanel } from "./snackpanel.types";
@@ -45,12 +48,12 @@ const SnackPanel = ({ nameCategory, snacks }: PropsSnackPanel) => {
       )}
 
       <Grid sizeItem={180}>
-        <article
-          className={style.create_snack}
+        <button
+          className={clsx(averiaSansLibre.className, style.create_snack)}
           onClick={() => addNewModal(<AddItem nameCategory={nameCategory} />)}
         >
-          <p>Adicionar item</p>
-        </article>
+          Adicionar item
+        </button>
 
         {!!snacksFiltered.length && (
           <AnimatePresence>

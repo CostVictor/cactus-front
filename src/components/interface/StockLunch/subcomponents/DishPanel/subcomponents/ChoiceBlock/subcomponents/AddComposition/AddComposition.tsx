@@ -55,8 +55,12 @@ const AddComposition = ({
           }}
         >
           <OptionsField
-            name="list_ingredients"
-            label="Selecione os ingredientes de múltipla escolha:"
+            name="ingredients"
+            label={`Selecione os ingredientes de ${
+              choiceNumber
+                ? `escolha única do bloco ${choiceNumber}`
+                : "múltipla escolha"
+            }:`}
             type="checkbox"
             options={options}
             required
