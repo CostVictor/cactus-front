@@ -1,18 +1,22 @@
 "use client";
 
-import { use, useMemo } from "react";
+import { useMemo } from "react";
 
 import Folder from "../Folder";
 import useWebSocket from "@/hooks/network/useWebSocket";
+import useModalActions from "@/hooks/context/useModal";
 
 import IngredientPanel from "./subcomponents/IngredientPanel";
 import DishPanel from "./subcomponents/DishPanel";
 import { StockLunchProps } from "./stocklunch.types";
 
 import { apiWS } from "@api/endpoints";
+import EditDish from "./subcomponents/EditDish";
 import style from "./stocklunch.module.scss";
 
 const StockLunch = () => {
+  const { addNewModal } = useModalActions();
+
   const { lunch } = apiWS;
   const { data, isLoading } = useWebSocket<StockLunchProps>(lunch.baseUrl);
 
@@ -38,6 +42,7 @@ const StockLunch = () => {
                   appearance: "mingcute:storage-fill",
                   type: "icon",
                 },
+                edit: () => addNewModal(<EditDish dish={dish} />),
               }}
             >
               <DishPanel dish={dish} allIngredientsName={allIngredientsName} />
