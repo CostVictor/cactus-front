@@ -4,7 +4,7 @@ import { PropsGroupCustomValidation } from '../types';
 import { writingFormatters } from '../utils';
 import { writingRules } from '../variables';
 
-export type PropsBaseInputTypes = "text" | "password" | "demanding-password" | "email" | "number" | "tel" | "datetime-local" | "search" | "image" | "price";
+export type PropsBaseInputTypes = "text" | "password" | "demanding-password" | "email" | "number" | "tel" | "price";
 
 export type PropsWritingCapitalize = "first" | "all"
 

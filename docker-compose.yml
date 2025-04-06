@@ -9,4 +9,4 @@ services:
     env_file:
       - .env.local
     command: > 
-      sh -c "npm run dev"
+      sh -c "npm ci && npm run dev"
