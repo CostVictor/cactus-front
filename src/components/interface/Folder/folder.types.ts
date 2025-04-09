@@ -33,7 +33,6 @@ export interface PropsFolder {
   name: string
   children: ReactNode
   open?: boolean
-  internal?: boolean | number
   notification?: PropsNotificationFolder
   config?: PropsFolderConfig
 }

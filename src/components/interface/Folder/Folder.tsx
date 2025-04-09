@@ -10,7 +10,6 @@ import LabelController from "./subcomponents/LabelController";
 import OptionsController from "./subcomponents/OptionsController";
 
 import { folderAnimate, childFolderAnimate } from "./folder.variables";
-import { getStyleBackgroundColor } from "./folder.utils";
 import { PropsFolder } from "./folder.types";
 import style from "./folder.module.scss";
 
@@ -18,7 +17,6 @@ const Folder = ({
   name,
   children,
   open,
-  internal,
   notification,
   config,
 }: PropsFolder) => {
@@ -52,9 +50,8 @@ const Folder = ({
     <motion.article
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      style={getStyleBackgroundColor(internal)}
       className={clsx(style.container_main, {
-        [style.open]: isOpen && !internal,
+        [style.open]: isOpen,
       })}
     >
       <div
