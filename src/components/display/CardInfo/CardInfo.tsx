@@ -19,7 +19,7 @@ const CardInfo = ({
   return (
     <motion.article
       id={title}
-      onClick={!isSoldOut ? onClick : undefined}
+      onClick={onClick}
       className={clsx(style.container, {
         [style.sold_out]: isSoldOut,
       })}

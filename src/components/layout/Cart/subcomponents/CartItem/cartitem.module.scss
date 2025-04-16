@@ -1,0 +1,37 @@
+.container_main {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  width: 100%;
+  padding: 0.3rem 0.6rem;
+  gap: 1rem;
+
+  color: var(--black-primary);
+  font-size: 1.1rem;
+
+  .price {
+    color: var(--red-primary);
+  }
+
+  div {
+    display: flex;
+    align-items: center;
+    width: 70%;
+    gap: 0.8rem;
+
+    .name {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      width: 100%;
+    }
+
+    .action {
+      font-size: 1.5rem;
+      padding: 0.2rem;
+      cursor: pointer;
+      user-select: none;
+    }
+  }
+}

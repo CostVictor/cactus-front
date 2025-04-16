@@ -1,10 +1,14 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import Sidebar from "@/components/navigation/Sidebar";
 import Header from "@/components/layout/Header";
 
 import Section from "@/components/layout/Section";
 import Grid from "@/components/layout/Grid";
+
+import Modal from "@/components/display/Modal";
+import useModalActions from "@/hooks/context/useModal";
 
 import CardInfo from "@/components/display/CardInfo";
 import useRequest from "@/hooks/network/useRequest";
@@ -13,6 +17,9 @@ import { BaseCategory } from "@api/types/snack";
 import { apiHTTP } from "@api/endpoints";
 
 export default function Home() {
+  const { addNewModal } = useModalActions();
+  const router = useRouter();
+
   const targets = [{ text: "Início", link: "#inicio" }];
   const { snack } = apiHTTP;
 
@@ -74,6 +81,18 @@ export default function Home() {
                       title={snack.name}
                       text={snack.price}
                       isSoldOut={!Number(snack.quantity_in_stock)}
+                      onClick={() =>
+                        Number(snack.quantity_in_stock)
+                          ? router.push(
+                              `/buy?category=${category.name}&item=${snack.name}`
+                            )
+                          : addNewModal(
+                              <Modal
+                                title="Item Esgotado"
+                                message={`O item "${snack.name}" encontra-se esgotado no momento.`}
+                              />
+                            )
+                      }
                     />
                   ))}
                 </Grid>
