@@ -6,8 +6,20 @@
   border-left: 1px solid var(--division);
   padding: 0.5rem 0 0.5rem 0.5rem;
 
-  h3 {
-    color: var(--division);
+  .container_title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-right: 0.5rem;
+
+    h3 {
+      color: var(--division);
+    }
+
+    p {
+      font-size: 1.1rem;
+      color: var(--red-primary);
+    }
   }
 
   .container_content {

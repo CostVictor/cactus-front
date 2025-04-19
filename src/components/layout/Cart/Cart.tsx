@@ -1,4 +1,6 @@
 import { Icon } from "@iconify/react";
+import { useState } from "react";
+import clsx from "clsx";
 
 import useAuthState from "@/hooks/context/useAuth";
 import Button from "@/components/form/Button";
@@ -6,21 +8,35 @@ import Button from "@/components/form/Button";
 import CartCategory from "./subcomponents/CartCategory";
 import CartItem from "./subcomponents/CartItem";
 
+import useCart, { useCartState } from "@/hooks/context/useCart";
+
 import { PropsCart } from "./cart.types";
 import style from "./cart.module.scss";
 
 const Cart = ({ title, buttons }: PropsCart) => {
+  const { isOpen, toggleIsOpen } = useCartState();
+
   const { user } = useAuthState();
+  const cart = useCart();
 
   return (
-    <section className={style.container_main}>
+    <section className={clsx(style.container_main, { [style.open]: isOpen })}>
       <div className={style.container_menu}>
-        <Icon
-          className={style.icon_cart}
-          icon="material-symbols:shopping-cart-rounded"
-        />
+        <div className={style.icon_cart}>
+          {!isOpen && <p>5</p>}
+          <Icon icon="material-symbols:shopping-cart-rounded" />
+        </div>
         <h2>{title}</h2>
-        <Icon className={style.icon_close} icon="ci:close-sm" />
+        <Icon
+          className={style.icon_action}
+          onClick={toggleIsOpen}
+          xlinkTitle={isOpen ? "Abrir" : "Fechar"}
+          icon={
+            isOpen
+              ? "ci:close-sm"
+              : "material-symbols:keyboard-arrow-up-rounded"
+          }
+        />
       </div>
 
       {user?.role === "employee" && (
@@ -34,24 +50,12 @@ const Cart = ({ title, buttons }: PropsCart) => {
       )}
 
       <div className={style.cart}>
-        <CartCategory title="Salgados">
-          <CartItem name="Coxinha" quantity={1} pricePerUnit={1} borderDashed />
-          <CartItem name="Pastel" quantity={1} pricePerUnit={1} borderDashed />
-        </CartCategory>
-        <CartCategory title="Bebidas">
-          <CartItem
-            name="Coca-Cola"
-            quantity={1}
-            pricePerUnit={1}
-            borderDashed
-          />
-          <CartItem
-            name="Suco de Laranja"
-            quantity={1}
-            pricePerUnit={1}
-            borderDashed
-          />
-        </CartCategory>
+        <CartItem
+          category="Bebidas"
+          name="Coca-Cola"
+          price="R$ 5,00"
+          quantity={1}
+        ></CartItem>
       </div>
 
       <span className={style.span_total_area}>

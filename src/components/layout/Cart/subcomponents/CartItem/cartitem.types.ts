@@ -1,6 +1,8 @@
 export interface PropsCartItem {
+  category: string;
   name: string;
+  price: string;
   quantity: number;
-  pricePerUnit: number;
+  maxQuantity?: number;
   borderDashed?: boolean;
 }
