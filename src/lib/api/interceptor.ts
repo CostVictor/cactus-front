@@ -10,7 +10,7 @@ cactusAPI.interceptors.response.use(
     const { session } = apiHTTP;
     const config = err.config;
 
-    if (err.response?.status === 401 && !config.url.includes("login")) {
+    if (err.response?.status === 401 && !config.url.includes("login") && !config.url.includes("logout")) {
       if (config.url.includes("refresh")) {
         redirectToLogin();
         return Promise.reject(err);

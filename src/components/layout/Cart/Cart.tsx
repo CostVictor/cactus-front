@@ -1,5 +1,5 @@
 import { Icon } from "@iconify/react";
-import { useState } from "react";
+import { useMemo } from "react";
 import clsx from "clsx";
 
 import useAuthState from "@/hooks/context/useAuth";
@@ -23,7 +23,7 @@ const Cart = ({ title, buttons }: PropsCart) => {
     <section className={clsx(style.container_main, { [style.open]: isOpen })}>
       <div className={style.container_menu}>
         <div className={style.icon_cart}>
-          {!isOpen && <p>5</p>}
+          {!isOpen && cart && <p>5</p>}
           <Icon icon="material-symbols:shopping-cart-rounded" />
         </div>
         <h2>{title}</h2>
@@ -49,14 +49,7 @@ const Cart = ({ title, buttons }: PropsCart) => {
         </span>
       )}
 
-      <div className={style.cart}>
-        <CartItem
-          category="Bebidas"
-          name="Coca-Cola"
-          price="R$ 5,00"
-          quantity={1}
-        ></CartItem>
-      </div>
+      <div className={style.cart}></div>
 
       <span className={style.span_total_area}>
         <p className={style.text}>Total:</p>

@@ -84,7 +84,7 @@ export default function Home() {
                       onClick={() =>
                         Number(snack.quantity_in_stock)
                           ? router.push(
-                              `/buy?category=${category.name}&item=${snack.name}`
+                              `/buy/snack?category=${category.name}&item=${snack.name}`
                             )
                           : addNewModal(
                               <Modal

@@ -56,7 +56,7 @@ function BuyContent() {
   );
 }
 
-export default function BuyPage() {
+export default function BuySnackPage() {
   return (
     <Suspense>
       <BuyContent />

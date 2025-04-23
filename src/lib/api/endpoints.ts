@@ -22,6 +22,7 @@ export const apiHTTP = {
     baseUrl: "lunch/",
     baseIngredients: "lunch/ingredients/",
 
+    today: (withProducts: boolean) => `lunch/today/?with_products=${withProducts}`,
     dish: (name: string) => `lunch/${name}/`,
     composition: (nameDish: string, nameIngredient: string) => `lunch/${nameDish}/${nameIngredient}/`,
     ingredient: (name: string) => `lunch/ingredients/${name}/`
