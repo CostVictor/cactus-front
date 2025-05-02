@@ -1,20 +1,27 @@
 interface PropsStorageCartItem {
   name: string;
   quantity: number;
+  price: string | null;
 }
 
 interface PropsStorageCartCategory {
-  [category: string]: PropsStorageCartItem[];
+  basePrice: string | null;
+  items: PropsStorageCartItem[]
+}
+
+interface PropsStorageCartSnacks {
+  [category: string]: PropsStorageCartCategory
 }
 
 export interface PropsStorageCart {
-  items: PropsStorageCartCategory | null;
   state: {
-    isOpen: boolean;
-    toggleIsOpen: () => void;
-  },
+    lunch: PropsStorageCartCategory | null;
+    snack: PropsStorageCartSnacks | null;
+  }
   actions: {
-    editCart: (category: string, name: string, quantity: number) => void;
+    getTotalPrice: () => string;
+    setLunch: (name: string, price: string, quantity: number) => void;
+    setSnack: (category: string, name: string, price: string, quantity: number) => void;
     clearCart: () => void;
   }
 }

@@ -1,5 +1,5 @@
 import { Icon } from "@iconify/react";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import clsx from "clsx";
 
 import useAuthState from "@/hooks/context/useAuth";
@@ -8,28 +8,34 @@ import Button from "@/components/form/Button";
 import CartCategory from "./subcomponents/CartCategory";
 import CartItem from "./subcomponents/CartItem";
 
-import useCart, { useCartState } from "@/hooks/context/useCart";
+import useCart, { useCartActions } from "@/hooks/context/useCart";
 
 import { PropsCart } from "./cart.types";
 import style from "./cart.module.scss";
 
-const Cart = ({ title, buttons }: PropsCart) => {
-  const { isOpen, toggleIsOpen } = useCartState();
+const Cart = ({ stock, buttons }: PropsCart) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const stockIsArray = Array.isArray(stock);
+  const applyCategory = stockIsArray && stock.length > 1;
 
   const { user } = useAuthState();
-  const cart = useCart();
+  const { lunch, snack } = useCart();
+  const { setLunch, setSnack, getTotalPrice } = useCartActions();
+
+  console.log("total price", getTotalPrice());
 
   return (
     <section className={clsx(style.container_main, { [style.open]: isOpen })}>
       <div className={style.container_menu}>
         <div className={style.icon_cart}>
-          {!isOpen && cart && <p>5</p>}
+          {!isOpen && ((!!lunch && !stockIsArray) || !!snack) && <p>5</p>}
           <Icon icon="material-symbols:shopping-cart-rounded" />
         </div>
-        <h2>{title}</h2>
+        <h2>Carrinho</h2>
         <Icon
           className={style.icon_action}
-          onClick={toggleIsOpen}
+          onClick={() => setIsOpen((prev) => !prev)}
           xlinkTitle={isOpen ? "Abrir" : "Fechar"}
           icon={
             isOpen
@@ -49,7 +55,10 @@ const Cart = ({ title, buttons }: PropsCart) => {
         </span>
       )}
 
-      <div className={style.cart}></div>
+      <div className={style.cart}>
+        {!stockIsArray && <p>Lunch</p>}
+        {}
+      </div>
 
       <span className={style.span_total_area}>
         <p className={style.text}>Total:</p>

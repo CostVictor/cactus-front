@@ -45,7 +45,7 @@ function BuyContent() {
   return (
     <>
       <Cart
-        title="Carrinho"
+        stock={data ?? []}
         buttons={[
           { text: "Cancelar Compra" },
           { text: "Concluir", appearance: "principal" },
