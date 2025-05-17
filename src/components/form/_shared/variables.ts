@@ -1,5 +1,5 @@
 export const notCapitalize = [
-  "da", "das", "do", "dos", "de"
+  "da", "das", "do", "dos", "de", "e"
 ]
 
 export const writingRules = {

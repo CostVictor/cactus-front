@@ -2,13 +2,17 @@ import { create } from "zustand";
 import { PropsStorageCart } from "./usecart.types";
 
 const StorageCart = create<PropsStorageCart>((set, get) => ({
-  state: {
+  stockLunch: {
+    lunch: null,
+    snack: null,
+  },
+  stockSnack: {
     lunch: null,
     snack: null,
   },
   actions: {
-    getTotalPrice: () => {
-      const { lunch, snack } = get().state;
+    getTotalPrice: (stock) => {
+      const { lunch, snack } = get()[stock];
 
       // Obtem o valor total referente a compra do almoço.
       const lunchPrice =
@@ -52,7 +56,7 @@ const StorageCart = create<PropsStorageCart>((set, get) => ({
     },
     setLunch: (name, price, quantity) =>
       set((storage) => {
-        const lunch = storage.state.lunch;
+        const lunch = storage.stockLunch.lunch;
         var lunchItems = lunch?.items || [];
 
         if (quantity <= 0) {
@@ -70,17 +74,18 @@ const StorageCart = create<PropsStorageCart>((set, get) => ({
         }
 
         return {
-          state: {
-            ...storage.state,
+          ...storage,
+          stockLunch: {
+            ...storage.stockLunch,
             lunch: lunchItems.length
               ? { basePrice: lunch?.basePrice || null, items: lunchItems }
               : null,
           },
         };
       }),
-    setSnack: (category, name, price, quantity) =>
+    setSnack: (stock, category, name, price, quantity) =>
       set((storage) => {
-        const snack = storage.state.snack || {};
+        const snack = storage[stock].snack || {};
         var snackItems = snack?.[category]?.items || [];
 
         if (quantity <= 0) {
@@ -105,13 +110,21 @@ const StorageCart = create<PropsStorageCart>((set, get) => ({
         }
 
         return {
-          state: {
-            ...storage.state,
+          ...storage,
+          [stock]: {
+            ...storage[stock],
             snack: Object.keys(snack) ? snack : null,
           },
         };
       }),
-    clearCart: () => set(() => ({ state: { lunch: null, snack: null } })),
+    clearCart: (stock) =>
+      set((storage) => ({
+        ...storage,
+        [stock]: {
+          lunch: null,
+          snack: null,
+        },
+      })),
   },
 }));
 

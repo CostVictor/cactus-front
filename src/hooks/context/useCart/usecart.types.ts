@@ -14,14 +14,18 @@ interface PropsStorageCartSnacks {
 }
 
 export interface PropsStorageCart {
-  state: {
+  stockLunch: {
     lunch: PropsStorageCartCategory | null;
+    snack: PropsStorageCartSnacks | null;
+  },
+  stockSnack: {
+    lunch: null;
     snack: PropsStorageCartSnacks | null;
   }
   actions: {
-    getTotalPrice: () => string;
+    getTotalPrice: (stock: "stockLunch" | "stockSnack") => string;
     setLunch: (name: string, price: string, quantity: number) => void;
-    setSnack: (category: string, name: string, price: string, quantity: number) => void;
-    clearCart: () => void;
+    setSnack: (stock: "stockLunch" | "stockSnack", category: string, name: string, price: string, quantity: number) => void;
+    clearCart: (stock: "stockLunch" | "stockSnack") => void;
   }
 }

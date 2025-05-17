@@ -1,6 +1,5 @@
 import StorageCart from "./usecart.storage";
 
 export const useCartActions = () => StorageCart((storage) => storage.actions);
-const useCart = () => StorageCart((storage) => storage.state);
-
-export default useCart;
+export const useCartLunch = () => StorageCart((storage) => storage.stockLunch);
+export const useCartSnack = () => StorageCart((storage) => storage.stockSnack);
