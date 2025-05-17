@@ -58,8 +58,68 @@ const Cart = ({ cartRef, stock, buttons }: PropsCart) => {
       )}
 
       <div className={style.cart}>
-        {!stockIsArray && <p>Lunch</p>}
-        {}
+        {!stockIsArray && (
+          <CartCategory
+            basePrice={lunch?.basePrice || undefined}
+            title="Almoço"
+          >
+            {lunch?.items.map((item, index) => (
+              <CartItem
+                key={index}
+                category="Almoço"
+                maxQuantity={item.price === "--" ? 1 : 100}
+                borderDashed
+                {...item}
+              />
+            ))}
+          </CartCategory>
+        )}
+
+        {Object.entries(snack ?? {}).map(([nameCategory, category], index) => {
+          const listRef = stockIsArray ? stock : stock.products;
+          const items = category.items.map((item) => {
+            const itemStockRef = listRef
+              .find((category) => category.name === nameCategory)
+              ?.snacks.find((snack) => snack.name === item.name);
+
+            if (!!itemStockRef) {
+              if (
+                itemStockRef.quantity_in_stock < item.quantity ||
+                itemStockRef.price !== item.price
+              ) {
+                setSnack(
+                  cartRef,
+                  nameCategory,
+                  item.name,
+                  itemStockRef.price,
+                  itemStockRef.quantity_in_stock
+                );
+              }
+
+              return (
+                <CartItem
+                  key={item.name}
+                  category={nameCategory}
+                  maxQuantity={itemStockRef.quantity_in_stock}
+                  borderDashed={applyCategory}
+                  {...item}
+                />
+              );
+            } else {
+              setSnack(cartRef, nameCategory, item.name, item.price, 0);
+            }
+          });
+
+          if (applyCategory) {
+            return (
+              <CartCategory key={index} title={nameCategory}>
+                {items}
+              </CartCategory>
+            );
+          }
+
+          return items;
+        })}
       </div>
 
       <span className={style.span_total_area}>

@@ -15,7 +15,7 @@ export interface PropsStorageCartSubmit {
 interface PropsStorageCartItem {
   name: string;
   quantity: number;
-  price: string | null;
+  price: string;
 }
 
 interface PropsStorageCartCategory {

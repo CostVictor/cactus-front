@@ -18,11 +18,12 @@ const StorageCart = create<PropsStorageCart>((set, get) => ({
       // Obtem o valor total referente a compra do almoço.
       const lunchPrice =
         (lunch?.items.reduce((total, item) => {
-          const value = !item.price
-            ? 0
-            : parseFloat(
-                item.price.replace("R$", "").replace(",", ".").trim()
-              ) || 0;
+          const value =
+            item.price === "--"
+              ? 0
+              : parseFloat(
+                  item.price.replace("R$", "").replace(",", ".").trim()
+                ) || 0;
 
           // Calcula o valor do acrescimo para o ingrediente (desconsiderando a primeira unidade).
           if (value > 0 && item.quantity > 1) {
