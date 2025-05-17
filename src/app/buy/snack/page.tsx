@@ -9,11 +9,13 @@ import Modal from "@/components/display/Modal";
 import useModalActions from "@/hooks/context/useModal";
 
 import Cart from "@/components/layout/Cart";
+import useCart from "@/hooks/context/useCart";
 
 import { BaseCategory } from "@api/types/snack";
 import { apiHTTP } from "@api/endpoints";
 
 function BuyContent() {
+  const { getCart, clearCart } = useCart.actions();
   const { snack } = apiHTTP;
 
   const {
@@ -48,8 +50,18 @@ function BuyContent() {
         cartRef="cartSnack"
         stock={data ?? []}
         buttons={[
-          { text: "Cancelar Compra" },
-          { text: "Concluir", appearance: "principal" },
+          {
+            text: "Cancelar Compra",
+            onClick: () => {
+              clearCart("cartSnack");
+              router.push("/");
+            },
+          },
+          {
+            text: "Prosseguir",
+            appearance: "principal",
+            onClick: () => console.log(getCart("cartSnack")),
+          },
         ]}
       />
       <main>Main</main>

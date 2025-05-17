@@ -12,7 +12,6 @@ import useCart from "@/hooks/context/useCart";
 
 import { PropsCart } from "./cart.types";
 import style from "./cart.module.scss";
-import { console } from "inspector";
 
 const Cart = ({ cartRef, stock, buttons }: PropsCart) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -23,14 +22,16 @@ const Cart = ({ cartRef, stock, buttons }: PropsCart) => {
 
   const { cartLunch, cartSnack, actions } = useCart;
 
-  const { setLunch, setSnack, getTotalPrice } = actions();
+  const { setLunch, setSnack, getTotalPrice, getQuantity } = actions();
   const { lunch, snack } = cartRef === "cartLunch" ? cartLunch() : cartSnack();
 
   return (
     <section className={clsx(style.container_main, { [style.open]: isOpen })}>
       <div className={style.container_menu}>
         <div className={style.icon_cart}>
-          {!isOpen && ((!!lunch && !stockIsArray) || !!snack) && <p>5</p>}
+          {!isOpen && ((!!lunch && !stockIsArray) || !!snack) && (
+            <p>{getQuantity(cartRef)}</p>
+          )}
           <Icon icon="material-symbols:shopping-cart-rounded" />
         </div>
         <h2>Carrinho</h2>

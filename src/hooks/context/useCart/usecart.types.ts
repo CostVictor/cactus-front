@@ -1,3 +1,17 @@
+interface PropsStorageCartSubmitItem {
+  name: string;
+  quantity: number;
+}
+
+interface PropsStorageCartSubmitSnack {
+  [category: string]: PropsStorageCartSubmitItem[]
+}
+
+export interface PropsStorageCartSubmit {
+  lunch: PropsStorageCartSubmitItem[];
+  snack: PropsStorageCartSubmitSnack;
+}
+
 interface PropsStorageCartItem {
   name: string;
   quantity: number;
@@ -24,6 +38,8 @@ export interface PropsStorageCart {
   }
   actions: {
     getTotalPrice: (ref: "cartLunch" | "cartSnack") => string;
+    getQuantity: (ref: "cartLunch" | "cartSnack") => number;
+    getCart: (ref: "cartLunch" | "cartSnack") => PropsStorageCartSubmit;
     setLunch: (name: string, price: string, quantity: number) => void;
     setSnack: (ref: "cartLunch" | "cartSnack", category: string, name: string, price: string, quantity: number) => void;
     clearCart: (ref: "cartLunch" | "cartSnack") => void;

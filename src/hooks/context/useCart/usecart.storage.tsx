@@ -1,5 +1,5 @@
+import { PropsStorageCart, PropsStorageCartSubmit } from "./usecart.types";
 import { create } from "zustand";
-import { PropsStorageCart } from "./usecart.types";
 
 const StorageCart = create<PropsStorageCart>((set, get) => ({
   cartLunch: {
@@ -54,6 +54,48 @@ const StorageCart = create<PropsStorageCart>((set, get) => ({
       );
 
       return `R$ ${(lunchPrice + snackPrice).toFixed(2)}`.replace(".", ",");
+    },
+    getQuantity: (ref) => {
+      const { cartLunch, cartSnack } = get();
+      const { lunch, snack } = ref === "cartLunch" ? cartLunch : cartSnack;
+      return (
+        (lunch?.items.length || 0) +
+        Object.values(snack || {}).reduce((total, category) => {
+          return total + category.items.length;
+        }, 0)
+      );
+    },
+    getCart: (ref) => {
+      const { cartLunch, cartSnack } = get();
+      const { lunch, snack } = ref === "cartLunch" ? cartLunch : cartSnack;
+
+      const cart = {
+        lunch: [],
+        snack: {},
+      } as PropsStorageCartSubmit;
+
+      if (ref === "cartLunch") {
+        for (let item of lunch?.items || []) {
+          cart.lunch.push({ name: item.name, quantity: item.quantity });
+        }
+      }
+
+      for (let obj of Object.entries(snack || {})) {
+        const [nameCategory, category] = obj;
+
+        for (let item of category.items) {
+          if (!cart.snack.hasOwnProperty(nameCategory)) {
+            cart.snack[nameCategory] = [];
+          }
+
+          cart.snack[nameCategory].push({
+            name: item.name,
+            quantity: item.quantity,
+          });
+        }
+      }
+
+      return cart;
     },
     setLunch: (name, price, quantity) =>
       set((storage) => {
