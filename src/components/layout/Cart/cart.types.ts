@@ -8,6 +8,7 @@ interface PropsStockCartLunch {
 }
 
 export interface PropsCart {
+  cartRef: "cartLunch" | "cartSnack";
   stock: BaseCategory[] | PropsStockCartLunch;
   buttons: PropsButton[];
 }

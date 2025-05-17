@@ -45,6 +45,7 @@ function BuyContent() {
   return (
     <>
       <Cart
+        cartRef="cartSnack"
         stock={data ?? []}
         buttons={[
           { text: "Cancelar Compra" },

@@ -1,1 +1,2 @@
-export { useCartActions, useCartLunch, useCartSnack } from "./useCart";
+import useCart from "./useCart";
+export default useCart;

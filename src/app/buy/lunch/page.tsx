@@ -30,13 +30,6 @@ export default function BuyLunchPage() {
 
   return (
     <>
-      <Cart
-        title="Carrinho"
-        buttons={[
-          { text: "Cancelar Compra" },
-          { text: "Concluir", appearance: "principal" },
-        ]}
-      />
       <main>Main</main>
     </>
   );

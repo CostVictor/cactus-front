@@ -1,5 +1,5 @@
 import { Icon } from "@iconify/react";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import clsx from "clsx";
 
 import useAuthState from "@/hooks/context/useAuth";
@@ -8,22 +8,23 @@ import Button from "@/components/form/Button";
 import CartCategory from "./subcomponents/CartCategory";
 import CartItem from "./subcomponents/CartItem";
 
-import useCart, { useCartActions } from "@/hooks/context/useCart";
+import useCart from "@/hooks/context/useCart";
 
 import { PropsCart } from "./cart.types";
 import style from "./cart.module.scss";
+import { console } from "inspector";
 
-const Cart = ({ stock, buttons }: PropsCart) => {
+const Cart = ({ cartRef, stock, buttons }: PropsCart) => {
   const [isOpen, setIsOpen] = useState(false);
+  const { user } = useAuthState();
 
   const stockIsArray = Array.isArray(stock);
   const applyCategory = stockIsArray && stock.length > 1;
 
-  const { user } = useAuthState();
-  const { lunch, snack } = useCart();
-  const { setLunch, setSnack, getTotalPrice } = useCartActions();
+  const { cartLunch, cartSnack, actions } = useCart;
 
-  console.log("total price", getTotalPrice());
+  const { setLunch, setSnack, getTotalPrice } = actions();
+  const { lunch, snack } = cartRef === "cartLunch" ? cartLunch() : cartSnack();
 
   return (
     <section className={clsx(style.container_main, { [style.open]: isOpen })}>
@@ -62,7 +63,7 @@ const Cart = ({ stock, buttons }: PropsCart) => {
 
       <span className={style.span_total_area}>
         <p className={style.text}>Total:</p>
-        <p className={style.price}>R$ 26,00</p>
+        <p className={style.price}>{getTotalPrice(cartRef)}</p>
       </span>
 
       <div className={style.container_actions}>

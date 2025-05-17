@@ -2,17 +2,18 @@ import { create } from "zustand";
 import { PropsStorageCart } from "./usecart.types";
 
 const StorageCart = create<PropsStorageCart>((set, get) => ({
-  stockLunch: {
+  cartLunch: {
     lunch: null,
     snack: null,
   },
-  stockSnack: {
+  cartSnack: {
     lunch: null,
     snack: null,
   },
   actions: {
-    getTotalPrice: (stock) => {
-      const { lunch, snack } = get()[stock];
+    getTotalPrice: (ref) => {
+      const { cartLunch, cartSnack } = get();
+      const { lunch, snack } = ref === "cartLunch" ? cartLunch : cartSnack;
 
       // Obtem o valor total referente a compra do almoço.
       const lunchPrice =
@@ -56,7 +57,7 @@ const StorageCart = create<PropsStorageCart>((set, get) => ({
     },
     setLunch: (name, price, quantity) =>
       set((storage) => {
-        const lunch = storage.stockLunch.lunch;
+        const lunch = storage.cartLunch.lunch;
         var lunchItems = lunch?.items || [];
 
         if (quantity <= 0) {
@@ -75,17 +76,17 @@ const StorageCart = create<PropsStorageCart>((set, get) => ({
 
         return {
           ...storage,
-          stockLunch: {
-            ...storage.stockLunch,
+          cartLunch: {
+            ...storage.cartLunch,
             lunch: lunchItems.length
               ? { basePrice: lunch?.basePrice || null, items: lunchItems }
               : null,
           },
         };
       }),
-    setSnack: (stock, category, name, price, quantity) =>
+    setSnack: (ref, category, name, price, quantity) =>
       set((storage) => {
-        const snack = storage[stock].snack || {};
+        const snack = storage[ref].snack || {};
         var snackItems = snack?.[category]?.items || [];
 
         if (quantity <= 0) {
@@ -111,16 +112,16 @@ const StorageCart = create<PropsStorageCart>((set, get) => ({
 
         return {
           ...storage,
-          [stock]: {
-            ...storage[stock],
+          [ref]: {
+            ...storage[ref],
             snack: Object.keys(snack) ? snack : null,
           },
         };
       }),
-    clearCart: (stock) =>
+    clearCart: (ref) =>
       set((storage) => ({
         ...storage,
-        [stock]: {
+        [ref]: {
           lunch: null,
           snack: null,
         },
