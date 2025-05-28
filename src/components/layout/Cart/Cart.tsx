@@ -17,13 +17,14 @@ const Cart = ({ cartRef, stock, buttons }: PropsCart) => {
   const [isOpen, setIsOpen] = useState(false);
   const { user } = useAuthState();
 
-  const stockIsArray = Array.isArray(stock);
-  const applyCategory = stockIsArray && stock.length > 1;
-
   const { cartLunch, cartSnack, actions } = useCart;
 
-  const { setLunch, setSnack, getTotalPrice, getQuantity } = actions();
+  const { setSnack, getTotalPrice, getQuantity } = actions();
   const { lunch, snack } = cartRef === "cartLunch" ? cartLunch() : cartSnack();
+
+  const stockIsArray = Array.isArray(stock);
+  const applyCategory =
+    !stockIsArray || (stockIsArray && Object.keys(snack ?? {}).length > 1);
 
   return (
     <section className={clsx(style.container_main, { [style.open]: isOpen })}>
@@ -66,6 +67,7 @@ const Cart = ({ cartRef, stock, buttons }: PropsCart) => {
             {lunch?.items.map((item, index) => (
               <CartItem
                 key={index}
+                cartRef="cartLunch"
                 category="Almoço"
                 maxQuantity={item.price === "--" ? 1 : 100}
                 borderDashed
@@ -99,6 +101,7 @@ const Cart = ({ cartRef, stock, buttons }: PropsCart) => {
               return (
                 <CartItem
                   key={item.name}
+                  cartRef={cartRef}
                   category={nameCategory}
                   maxQuantity={itemStockRef.quantity_in_stock}
                   borderDashed={applyCategory}

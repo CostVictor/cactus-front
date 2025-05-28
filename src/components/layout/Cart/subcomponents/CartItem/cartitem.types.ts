@@ -1,4 +1,5 @@
 export interface PropsCartItem {
+  cartRef: "cartLunch" | "cartSnack";
   category: string;
   name: string;
   price: string;

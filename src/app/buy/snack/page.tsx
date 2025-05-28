@@ -5,8 +5,10 @@ import { useEffect, Suspense } from "react";
 
 import useRequest from "@/hooks/network/useRequest";
 
-import Modal from "@/components/display/Modal";
 import useModalActions from "@/hooks/context/useModal";
+import BuySection from "../_subcomponents/BuySection";
+import BuyPanel from "../_subcomponents/BuyPanel";
+import BuyModal from "../_subcomponents/BuyModal";
 
 import Cart from "@/components/layout/Cart";
 import useCart from "@/hooks/context/useCart";
@@ -32,17 +34,26 @@ function BuyContent() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const category = searchParams.get("category");
-  const item = searchParams.get("item");
+  const categoryName = searchParams.get("category");
+  const itemName = searchParams.get("item");
 
   const { addNewModal } = useModalActions();
 
   useEffect(() => {
-    if (category && item && !isLoading) {
-      addNewModal(<Modal title="Teste" />);
+    if (categoryName && itemName && !isLoading && Array.isArray(data)) {
+      const snack = data
+        .find((category) => category.name === categoryName)
+        ?.snacks.find((snack) => snack.name === itemName);
+
+      if (snack) {
+        addNewModal(
+          <BuyModal categoryName={categoryName} snack={snack} setQuantity />
+        );
+      }
+
       router.replace(pathname);
     }
-  }, [isLoading, router, pathname, addNewModal, category, item]);
+  }, [categoryName, itemName, isLoading, data, pathname, router, addNewModal]);
 
   return (
     <>
@@ -64,7 +75,11 @@ function BuyContent() {
           },
         ]}
       />
-      <main>Main</main>
+      <main>
+        <BuySection>
+          {Array.isArray(data) && <BuyPanel products={data} />}
+        </BuySection>
+      </main>
     </>
   );
 }

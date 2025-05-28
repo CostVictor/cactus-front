@@ -1,0 +1,12 @@
+.container_main {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  gap: 2rem;
+
+  margin-left: 25rem;
+
+  @media (max-width: 800px) {
+    margin-left: 0;
+  }
+}

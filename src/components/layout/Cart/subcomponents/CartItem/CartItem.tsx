@@ -1,10 +1,13 @@
 import { motion } from "framer-motion";
 import clsx from "clsx";
 
+import useCart from "@/hooks/context/useCart";
+
 import { PropsCartItem } from "./cartitem.types";
 import style from "./cartitem.module.scss";
 
 const CartItem = ({
+  cartRef,
   category,
   name,
   price,
@@ -12,6 +15,34 @@ const CartItem = ({
   maxQuantity,
   borderDashed,
 }: PropsCartItem) => {
+  const { setLunch, setSnack } = useCart.actions();
+
+  /**
+   * Adiciona um item ao carrinho.
+   */
+  const handdleAdd = () => {
+    if (maxQuantity && quantity >= maxQuantity) return;
+
+    if (category === "Almoço") {
+      setLunch(name, price, quantity + 1);
+      return;
+    }
+
+    setSnack(cartRef, category, name, price, quantity + 1);
+  };
+
+  /**
+   * Remove um item do carrinho.
+   */
+  const handdleRemove = () => {
+    if (category === "Almoço") {
+      setLunch(name, price, quantity - 1);
+      return;
+    }
+
+    setSnack(cartRef, category, name, price, quantity - 1);
+  };
+
   return (
     <motion.article
       title={name}
@@ -27,9 +58,12 @@ const CartItem = ({
     >
       <div className={style.container_info}>
         <p className={style.name}>{name}</p>
-        <p className={style.action}>-</p>
+        <p className={style.action} onClick={handdleRemove}>
+          -
+        </p>
         <p className={style.quantity}>{quantity}</p>
         <p
+          onClick={handdleAdd}
           className={clsx(style.action, {
             [style.disabled]: maxQuantity && quantity === maxQuantity,
           })}
