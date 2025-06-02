@@ -38,6 +38,9 @@ const EditItem = ({ dataSnack, nameCategory }: EditItemProps) => {
    * @param {FieldValues} data - Os dados do formulário enviados pelo usuário.
    */
   const handleSubmit = (data: FieldValues) => {
+    const quantity = data.quantity_in_stock;
+    if (quantity) data.quantity_in_stock = Number(quantity);
+
     const differences = filterDifferences(dataSnack, data, ["category"]);
     if (Object.keys(differences).length) {
       fetchData({
