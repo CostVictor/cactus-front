@@ -2,9 +2,7 @@ import { Icon } from "@iconify/react";
 import { useState } from "react";
 import clsx from "clsx";
 
-import useAuthState from "@/hooks/context/useAuth";
 import Button from "@/components/form/Button";
-
 import CartCategory from "./subcomponents/CartCategory";
 import CartItem from "./subcomponents/CartItem";
 
@@ -15,22 +13,20 @@ import style from "./cart.module.scss";
 
 const Cart = ({ cartRef, stock, buttons }: PropsCart) => {
   const [isOpen, setIsOpen] = useState(false);
-  const { user } = useAuthState();
-
   const { cartLunch, cartSnack, actions } = useCart;
 
   const { setSnack, getTotalPrice, getQuantity } = actions();
-  const { lunch, snack } = cartRef === "cartLunch" ? cartLunch() : cartSnack();
+  const { lunch, snacks } = cartRef === "cartLunch" ? cartLunch() : cartSnack();
 
   const stockIsArray = Array.isArray(stock);
   const applyCategory =
-    !stockIsArray || (stockIsArray && Object.keys(snack ?? {}).length > 1);
+    !stockIsArray || (stockIsArray && Object.keys(snacks ?? {}).length > 1);
 
   return (
     <section className={clsx(style.container_main, { [style.open]: isOpen })}>
       <div className={style.container_menu}>
         <div className={style.icon_cart}>
-          {!isOpen && ((!!lunch && !stockIsArray) || !!snack) && (
+          {!isOpen && ((!!lunch && !stockIsArray) || !!snacks) && (
             <p>{getQuantity(cartRef)}</p>
           )}
           <Icon icon="material-symbols:shopping-cart-rounded" />
@@ -47,16 +43,6 @@ const Cart = ({ cartRef, stock, buttons }: PropsCart) => {
           }
         />
       </div>
-
-      {user?.role === "employee" && (
-        <span className={style.span_select_user}>
-          <div>
-            <p>Registrar compra para:</p>
-            <p className={style.text_user}>Func. Victor Gabriel</p>
-          </div>
-          <Icon icon="majesticons:pencil-alt-line" />
-        </span>
-      )}
 
       <div className={style.cart}>
         {!stockIsArray && (
@@ -77,7 +63,7 @@ const Cart = ({ cartRef, stock, buttons }: PropsCart) => {
           </CartCategory>
         )}
 
-        {Object.entries(snack ?? {}).map(([nameCategory, category], index) => {
+        {Object.entries(snacks ?? {}).map(([nameCategory, category], index) => {
           const listRef = stockIsArray ? stock : stock.products;
           const items = category.items.map((item) => {
             const itemStockRef = listRef

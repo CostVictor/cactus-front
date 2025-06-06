@@ -7,7 +7,8 @@ import useRequest from "@/hooks/network/useRequest";
 import Modal from "@/components/display/Modal";
 import useModalActions from "@/hooks/context/useModal";
 
-import Cart from "@/components/layout/Cart";
+import Cart from "../_subcomponents/Cart";
+import useCart from "@/hooks/context/useCart";
 
 import { apiHTTP } from "@api/endpoints";
 

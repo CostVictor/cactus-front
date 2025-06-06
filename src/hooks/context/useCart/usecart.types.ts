@@ -9,7 +9,8 @@ interface PropsStorageCartSubmitSnack {
 
 export interface PropsStorageCartSubmit {
   lunch: PropsStorageCartSubmitItem[];
-  snack: PropsStorageCartSubmitSnack;
+  snacks: PropsStorageCartSubmitSnack;
+  description?: string;
 }
 
 interface PropsStorageCartItem {
@@ -30,11 +31,11 @@ interface PropsStorageCartSnacks {
 export interface PropsStorageCart {
   cartLunch: {
     lunch: PropsStorageCartCategory | null;
-    snack: PropsStorageCartSnacks | null;
+    snacks: PropsStorageCartSnacks | null;
   },
   cartSnack: {
     lunch: null;
-    snack: PropsStorageCartSnacks | null;
+    snacks: PropsStorageCartSnacks | null;
   }
   actions: {
     getTotalPrice: (ref: "cartLunch" | "cartSnack") => string;

@@ -26,7 +26,7 @@ cactusAPI.interceptors.response.use(
       }
     }
 
-    if (err.response?.status === 403 && !config.url.includes("register")) {
+    if (err.response?.status === 403 && !config.url.includes("login") && !config.url.includes("register")) {
       StorageAuth.getState().actions.logoutInState();
       await cactusAPI.post(session.logout);
       window.location.href = "/";

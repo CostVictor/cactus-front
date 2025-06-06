@@ -4,16 +4,16 @@ import { create } from "zustand";
 const StorageCart = create<PropsStorageCart>((set, get) => ({
   cartLunch: {
     lunch: null,
-    snack: null,
+    snacks: null,
   },
   cartSnack: {
     lunch: null,
-    snack: null,
+    snacks: null,
   },
   actions: {
     getTotalPrice: (ref) => {
       const { cartLunch, cartSnack } = get();
-      const { lunch, snack } = ref === "cartLunch" ? cartLunch : cartSnack;
+      const { lunch, snacks } = ref === "cartLunch" ? cartLunch : cartSnack;
 
       // Obtem o valor total referente a compra do almoço.
       const lunchPrice =
@@ -36,7 +36,7 @@ const StorageCart = create<PropsStorageCart>((set, get) => ({
         );
 
       // Obtem o valor total referente a compra dos lanches.
-      const snackPrice = Object.values(snack || {}).reduce(
+      const snackPrice = Object.values(snacks || {}).reduce(
         (total, category) => {
           return (
             total +
@@ -58,21 +58,21 @@ const StorageCart = create<PropsStorageCart>((set, get) => ({
     },
     getQuantity: (ref) => {
       const { cartLunch, cartSnack } = get();
-      const { lunch, snack } = ref === "cartLunch" ? cartLunch : cartSnack;
+      const { lunch, snacks } = ref === "cartLunch" ? cartLunch : cartSnack;
       return (
         (lunch?.items.length || 0) +
-        Object.values(snack || {}).reduce((total, category) => {
+        Object.values(snacks || {}).reduce((total, category) => {
           return total + category.items.length;
         }, 0)
       );
     },
     getCart: (ref) => {
       const { cartLunch, cartSnack } = get();
-      const { lunch, snack } = ref === "cartLunch" ? cartLunch : cartSnack;
+      const { lunch, snacks } = ref === "cartLunch" ? cartLunch : cartSnack;
 
       const cart = {
         lunch: [],
-        snack: {},
+        snacks: {},
       } as PropsStorageCartSubmit;
 
       if (ref === "cartLunch") {
@@ -81,15 +81,15 @@ const StorageCart = create<PropsStorageCart>((set, get) => ({
         }
       }
 
-      for (let obj of Object.entries(snack || {})) {
+      for (let obj of Object.entries(snacks || {})) {
         const [nameCategory, category] = obj;
 
         for (let item of category.items) {
-          if (!cart.snack.hasOwnProperty(nameCategory)) {
-            cart.snack[nameCategory] = [];
+          if (!cart.snacks.hasOwnProperty(nameCategory)) {
+            cart.snacks[nameCategory] = [];
           }
 
-          cart.snack[nameCategory].push({
+          cart.snacks[nameCategory].push({
             name: item.name,
             quantity: item.quantity,
           });
@@ -129,17 +129,17 @@ const StorageCart = create<PropsStorageCart>((set, get) => ({
       }),
     setSnack: (ref, category, name, price, quantity) =>
       set((storage) => {
-        const snack = storage[ref].snack || {};
-        var snackItems = snack?.[category]?.items || [];
+        const snacks = storage[ref].snacks || {};
+        var snackItems = snacks?.[category]?.items || [];
 
         if (quantity <= 0) {
           // Remove o item e verifica se a categoria ainda deve ser mantida.
           const newListItems = snackItems.filter((item) => item.name !== name);
 
           if (newListItems.length) {
-            snack[category].items = newListItems;
+            snacks[category].items = newListItems;
           } else {
-            delete snack[category];
+            delete snacks[category];
           }
         } else {
           // Atualiza ou cria um novo item.
@@ -150,14 +150,14 @@ const StorageCart = create<PropsStorageCart>((set, get) => ({
           } else {
             snackItems.push({ name, price, quantity });
           }
-          snack[category] = { ...snack[category], items: snackItems };
+          snacks[category] = { ...snacks[category], items: snackItems };
         }
 
         return {
           ...storage,
           [ref]: {
             ...storage[ref],
-            snack: Object.keys(snack) ? snack : null,
+            snacks: Object.keys(snacks) ? snacks : null,
           },
         };
       }),
@@ -166,7 +166,7 @@ const StorageCart = create<PropsStorageCart>((set, get) => ({
         ...storage,
         [ref]: {
           lunch: null,
-          snack: null,
+          snacks: null,
         },
       })),
   },

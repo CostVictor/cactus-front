@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import { useAuthActions } from "@/hooks/context/useAuth";
 import useModalActions from "@/hooks/context/useModal";
@@ -12,7 +13,7 @@ import Button from "@/components/form/Button";
 import { useSearchParams } from "next/navigation";
 import style from "./formlogin.module.scss";
 
-const FormLogin = () => {
+const FormLoginContent = () => {
   const {
     network: { isLoading },
     actions: { login },
@@ -50,7 +51,7 @@ const FormLogin = () => {
         <div className={style.container_options}>
           <NavLink
             text="Esqueci minha senha"
-            link=""
+            link="#"
             onClick={() =>
               addNewModal(
                 <Modal
@@ -69,6 +70,14 @@ const FormLogin = () => {
         />
       </Form>
     </FormProvider>
+  );
+};
+
+const FormLogin = () => {
+  return (
+    <Suspense>
+      <FormLoginContent />
+    </Suspense>
   );
 };
 

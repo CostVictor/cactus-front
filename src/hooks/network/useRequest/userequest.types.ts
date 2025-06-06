@@ -12,7 +12,7 @@ export interface PropsConfigRequest {
 interface PropsRequest {
   url: string;
   method: "GET" | "POST" | "PATCH" | "DELETE";
-  data?: { [key: string]: string | string[] }
+  data?: { [key: string]: any }
   config?: AxiosRequestConfig;
 }
 

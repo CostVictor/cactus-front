@@ -6,23 +6,25 @@ import { useEffect, Suspense } from "react";
 import useRequest from "@/hooks/network/useRequest";
 
 import useModalActions from "@/hooks/context/useModal";
+import Modal from "@/components/display/Modal";
+
 import BuySection from "../_subcomponents/BuySection";
 import BuyPanel from "../_subcomponents/BuyPanel";
 import BuyModal from "../_subcomponents/BuyModal";
+import ConfirmModal from "../_subcomponents/ConfirmModal";
 
-import Cart from "@/components/layout/Cart";
+import Cart from "../_subcomponents/Cart";
 import useCart from "@/hooks/context/useCart";
 
 import { BaseCategory } from "@api/types/snack";
 import { apiHTTP } from "@api/endpoints";
 
 function BuyContent() {
-  const { getCart, clearCart } = useCart.actions();
+  const { clearCart, getQuantity } = useCart.actions();
   const { snack } = apiHTTP;
 
   const {
     info: { data, isLoading },
-    actions: { fetchData },
   } = useRequest<BaseCategory[]>({
     initFetchData: {
       request: { url: snack.baseUrl, method: "GET" },
@@ -71,7 +73,19 @@ function BuyContent() {
           {
             text: "Prosseguir",
             appearance: "principal",
-            onClick: () => console.log(getCart("cartSnack")),
+            onClick: () => {
+              if (getQuantity("cartSnack")) {
+                addNewModal(<ConfirmModal cartRef="cartSnack" />);
+                return;
+              }
+
+              addNewModal(
+                <Modal
+                  title="Carrinho Vazio"
+                  message="O carrinho não possui nenhum item"
+                />
+              );
+            },
           },
         ]}
       />

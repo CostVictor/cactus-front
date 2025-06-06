@@ -26,6 +26,14 @@ export const apiHTTP = {
     dish: (name: string) => `lunch/${name}/`,
     composition: (nameDish: string, nameIngredient: string) => `lunch/${nameDish}/${nameIngredient}/`,
     ingredient: (name: string) => `lunch/ingredients/${name}/`
+  },
+
+  order: {
+    baseUrl: "order/",
+
+    record: (publicId: string) => `order/${publicId}/`,
+    recordAsPaid: (publicId: string) => `order/${publicId}/paid`,
+    recordAsFulfilled: (publicId: string) => `order/${publicId}/fulfilled`
   }
 }
 
@@ -39,5 +47,9 @@ export const apiWS = {
 
   lunch: {
     baseUrl: "lunch/",
+  },
+
+  order: {
+    baseUrl: "order/",
   }
 }
