@@ -42,14 +42,15 @@ export const apiWS = {
   baseUrl: process.env.NEXT_PUBLIC_API_URL_WS,
 
   snack: {
-    baseUrl: "snack/",
+    baseUrl: "ws/snack/",
   },
 
   lunch: {
-    baseUrl: "lunch/",
+    baseUrl: "ws/lunch/",
   },
 
   order: {
-    baseUrl: "order/",
+    baseUrlSnack: "ws/order/snack/",
+    baseUrlLunch: "ws/order/lunch/"
   }
 }
