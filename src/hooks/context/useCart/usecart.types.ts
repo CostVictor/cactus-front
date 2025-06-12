@@ -11,6 +11,8 @@ export interface PropsStorageCartSubmit {
   lunch: PropsStorageCartSubmitItem[];
   snacks: PropsStorageCartSubmitSnack;
   description?: string;
+  username?: string;
+  wasPaid?: boolean;
 }
 
 interface PropsStorageCartItem {

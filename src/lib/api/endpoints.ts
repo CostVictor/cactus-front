@@ -9,7 +9,10 @@ export const apiHTTP = {
 
   user: {
     baseUrl: "user/",
-    register: "user/register/"
+    register: "user/register/",
+    allUsers: "user/all/",
+
+    user: (username: string) => `user/${username}/`
   },
 
   snack: {

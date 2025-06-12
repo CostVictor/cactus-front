@@ -1,6 +1,5 @@
 import { useForm, FormProvider } from "react-hook-form";
 import { Icon } from "@iconify/react";
-import { useState } from "react";
 
 import Modal from "@/components/display/Modal";
 import useModalActions from "@/hooks/context/useModal";
@@ -12,6 +11,8 @@ import Form from "@/components/form/Form";
 import AreaField from "@/components/form/AreaField";
 
 import Shop from "./subcomponents/Shop";
+import UserPanel from "./subcomponents/UserPanel";
+
 import { apiHTTP } from "@api/endpoints";
 import { PropsConfirmModal } from "./confirmmodal.types";
 import style from "./confirmmodal.module.scss";
@@ -19,15 +20,14 @@ import style from "./confirmmodal.module.scss";
 const ConfirmModal = ({ cartRef }: PropsConfirmModal) => {
   const { order } = apiHTTP;
 
-  const [isRead, setIsRead] = useState(false);
   const { addNewModal, removeModal } = useModalActions();
   const { getCart, getTotalPrice, clearCart } = useCart.actions();
   const { user } = useAuthState();
 
   const {
-    info: { data, isLoading },
+    info: { isLoading },
     actions: { fetchData },
-  } = useRequest();
+  } = useRequest<null>();
 
   const formId = "form-confirm-modal";
   const form = useForm();
@@ -56,21 +56,12 @@ const ConfirmModal = ({ cartRef }: PropsConfirmModal) => {
         <p>Por favor, verifique se os dados abaixo estão corretos.</p>
       </span>
 
-      <p className="marker">Informações do pedido</p>
-      <Shop cartRef={cartRef} />
-
-      <div className={style.total_value}>
-        <span>Preço total:</span>
-        <p>{getTotalPrice(cartRef)}</p>
-      </div>
-
       <FormProvider {...form}>
         <Form
           id={formId}
           className={style.container_form}
           onSubmit={(dataForm) => {
-            const dataOrder = getCart(cartRef);
-            dataOrder.description = dataForm.description;
+            const dataOrder = { ...getCart(cartRef), ...dataForm };
 
             fetchData({
               request: {
@@ -107,6 +98,23 @@ const ConfirmModal = ({ cartRef }: PropsConfirmModal) => {
             });
           }}
         >
+          {user?.role === "employee" && (
+            <>
+              <p className="marker">
+                Selecione para quem o pedido será registrado
+              </p>
+              <UserPanel />
+            </>
+          )}
+
+          <p className="marker">Informações do pedido</p>
+          <Shop cartRef={cartRef} />
+
+          <div className={style.total_value}>
+            <span>Preço total:</span>
+            <p>{getTotalPrice(cartRef)}</p>
+          </div>
+
           <p className="marker">
             Deixe um comentário sobre como deseja o pedido (Opcional)
           </p>

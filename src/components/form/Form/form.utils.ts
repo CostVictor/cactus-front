@@ -13,14 +13,14 @@ export const trimmerData = (data: BaseData) => {
   Object.entries(data).forEach(([key, value]) => {
     if (Array.isArray(value)) {
       // Percorre o array e remove os espaços em branco.
-      formattedObj[key] = value.map((name) => name.trim())
+      formattedObj[key] = value.map((name) => typeof name === "string" ? name.trim() : name)
 
     } else if (typeof value === "object") {
       // Aplica a recursividade se for `object` e não for `array`.
       formattedObj[key] = trimmerData(value)
 
     } else {
-      formattedObj[key] = value.trim()
+      formattedObj[key] = typeof value === "string" ? value.trim() : value
     }
   })
 

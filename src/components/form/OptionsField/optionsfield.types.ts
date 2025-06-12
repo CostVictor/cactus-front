@@ -1,10 +1,10 @@
 export interface PropsOptions {
   name: string;
-  value?: string;
+  value?: any;
 }
 
 interface PropsConfigOptionsField {
-  initChecked?: string | string[]
+  initChecked?: any
   messageWhenNotOptions?: string
 }
 

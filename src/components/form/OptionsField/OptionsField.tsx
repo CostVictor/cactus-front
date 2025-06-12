@@ -133,9 +133,9 @@ const OptionsField = ({
           >
             <input
               {...register(name, { validate: validationRules })}
-              defaultChecked={config?.initChecked?.includes(
-                option.value ?? option.name
-              )}
+              defaultChecked={
+                config?.initChecked === (option.value ?? option.name)
+              }
               value={option.value ?? option.name}
               type={type}
             />

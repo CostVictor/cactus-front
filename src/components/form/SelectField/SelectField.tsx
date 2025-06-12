@@ -30,7 +30,9 @@ const SelectField = (props: PropsSelectField) => {
         ...props.config?.valueRules,
         custom: {
           ...props.config?.valueRules?.custom,
-          checkOptions: genericValidations.checkOption(props.options),
+          checkOptions: props.required
+            ? genericValidations.checkOption(props.options)
+            : () => undefined,
         },
       },
     },
