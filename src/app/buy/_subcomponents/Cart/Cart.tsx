@@ -19,8 +19,10 @@ const Cart = ({ cartRef, stock, buttons }: PropsCart) => {
   const { lunch, snacks } = cartRef === "cartLunch" ? cartLunch() : cartSnack();
 
   const stockIsArray = Array.isArray(stock);
+  const lengthCategories = Object.keys(snacks ?? {}).length;
+
   const applyCategory =
-    !stockIsArray || (stockIsArray && Object.keys(snacks ?? {}).length > 1);
+    lengthCategories > 1 || (!stockIsArray && !!lunch && lengthCategories > 0);
 
   return (
     <section className={clsx(style.container_main, { [style.open]: isOpen })}>
@@ -45,12 +47,12 @@ const Cart = ({ cartRef, stock, buttons }: PropsCart) => {
       </div>
 
       <div className={style.cart}>
-        {!stockIsArray && (
+        {!!lunch && (
           <CartCategory
-            basePrice={lunch?.basePrice || undefined}
+            basePrice={lunch.basePrice || undefined}
             title="Almoço"
           >
-            {lunch?.items.map((item, index) => (
+            {lunch.items.map((item, index) => (
               <CartItem
                 key={index}
                 cartRef="cartLunch"

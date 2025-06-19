@@ -10,7 +10,7 @@ import Modal from "@/components/display/Modal";
 
 import BuySection from "../_subcomponents/BuySection";
 import BuyPanel from "../_subcomponents/BuyPanel";
-import BuyModal from "../_subcomponents/BuyModal";
+import BuySnackModal from "../_subcomponents/BuySnackModal";
 import ConfirmModal from "../_subcomponents/ConfirmModal";
 
 import Cart from "../_subcomponents/Cart";
@@ -49,7 +49,11 @@ function BuyContent() {
 
       if (snack) {
         addNewModal(
-          <BuyModal categoryName={categoryName} snack={snack} setQuantity />
+          <BuySnackModal
+            cartRef="cartSnack"
+            categoryName={categoryName}
+            snack={snack}
+          />
         );
       }
 

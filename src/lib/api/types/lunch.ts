@@ -1,4 +1,5 @@
 import { daysWeek } from "@api/variables"
+import { BaseCategory } from "./snack"
 
 export interface BaseIngredient {
   name: string
@@ -27,4 +28,9 @@ export interface BaseDish {
 
 export interface BaseComposition {
   config_choice_number: number
+}
+
+export interface TodayLunchWithProducts {
+  dish: BaseDish,
+  products: BaseCategory[]
 }

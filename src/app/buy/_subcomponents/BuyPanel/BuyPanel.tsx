@@ -8,12 +8,12 @@ import Panel from "@/components/layout/Panel";
 import CardInfo from "@/components/display/CardInfo";
 import Button from "@/components/form/Button";
 
-import BuyModal from "../BuyModal";
+import BuySnackModal from "../BuySnackModal";
 
 import { PropsBuyPanel } from "./buypanel.types";
 import style from "./buypanel.module.scss";
 
-const BuyPanel = ({ products, dishes }: PropsBuyPanel) => {
+const BuyPanel = ({ dish, products }: PropsBuyPanel) => {
   const { addNewModal } = useModalActions();
 
   const categories = products.map((category) => category.name);
@@ -21,6 +21,12 @@ const BuyPanel = ({ products, dishes }: PropsBuyPanel) => {
 
   return (
     <>
+      {!!dish && (
+        <Panel title="Almoço de Hoje">
+          <Grid>Ok</Grid>
+        </Panel>
+      )}
+
       <Panel title="Categorias de Itens">
         <Grid sizeItem={180} className={style.grid_butons}>
           {categories.map((categoryName, index) => (
@@ -49,10 +55,10 @@ const BuyPanel = ({ products, dishes }: PropsBuyPanel) => {
               text={snack.price}
               onClick={() =>
                 addNewModal(
-                  <BuyModal
+                  <BuySnackModal
+                    cartRef={!!dish ? "cartLunch" : "cartSnack"}
                     categoryName={currentCategory}
                     snack={snack}
-                    setQuantity
                   />
                 )
               }

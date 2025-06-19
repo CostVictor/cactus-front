@@ -1,6 +1,3 @@
-import { BaseCategory } from "@api/types/snack";
+import { TodayLunchWithProducts } from "@api/types/lunch";
 
-export interface PropsBuyPanel {
-  products: BaseCategory[];
-  dishes?: null;
-}
+export type PropsBuyPanel = Omit<TodayLunchWithProducts, "dish"> & Partial<Pick<TodayLunchWithProducts, "dish">>;

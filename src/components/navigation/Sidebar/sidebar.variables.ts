@@ -27,7 +27,7 @@ import { PropsListSidebarItems } from "./sidebar.types";
 export const listSidebarItems: PropsListSidebarItems = [
   {
     items: [
-      { name: "Perfil", icon: "lucide:user-round", url: "/profile" },
+      // { name: "Perfil", icon: "lucide:user-round", url: "/profile" },
       { name: "Histórico", icon: "majesticons:clipboard-list-line", url: "/history", requiresAuth: true }
     ]
   },
@@ -40,7 +40,6 @@ export const listSidebarItems: PropsListSidebarItems = [
   {
     items: [
       { name: "Pedidos", icon: "ep:dish-dot", url: "/orders" },
-      { name: "Estatística", icon: "mage:chart-b", url: "/statistic" },
     ], requiresAuth: true, access: "employee"
   },
   { items: [{ name: "Estoque", icon: "tabler:folder", url: "/stock/snack", urlAlias: "/stock" }], requiresAuth: true, access: "employee" },
