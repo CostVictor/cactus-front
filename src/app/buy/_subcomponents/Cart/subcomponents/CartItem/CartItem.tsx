@@ -14,6 +14,7 @@ const CartItem = ({
   quantity,
   maxQuantity,
   borderDashed,
+  choiceNumber,
 }: PropsCartItem) => {
   const { setLunch, setSnack } = useCart.actions();
 
@@ -24,7 +25,7 @@ const CartItem = ({
     if (maxQuantity && quantity >= maxQuantity) return;
 
     if (category === "Almoço") {
-      setLunch(name, price, quantity + 1);
+      setLunch(name, price, quantity + 1, choiceNumber ?? 0);
       return;
     }
 
@@ -36,7 +37,7 @@ const CartItem = ({
    */
   const handdleRemove = () => {
     if (category === "Almoço") {
-      setLunch(name, price, quantity - 1);
+      setLunch(name, price, quantity - 1, choiceNumber ?? 0);
       return;
     }
 
