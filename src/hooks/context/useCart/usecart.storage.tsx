@@ -98,7 +98,7 @@ const StorageCart = create<PropsStorageCart>((set, get) => ({
 
       return cart;
     },
-    setLunch: (name, price, quantity) =>
+    setLunch: (name, price, quantity, choiceNumber) =>
       set((storage) => {
         const lunch = storage.cartLunch.lunch;
         var lunchItems = lunch?.items || [];
@@ -113,7 +113,20 @@ const StorageCart = create<PropsStorageCart>((set, get) => ({
           if (item) {
             item.quantity = quantity;
           } else {
-            lunchItems.push({ name, price, quantity });
+            if (choiceNumber) {
+              // Busca e remove o item com o mesmo choiceNumber.
+              const checkItemWithChoiceNumber = lunchItems.find(
+                (item) => item.choiceNumber === choiceNumber
+              );
+
+              if (!!checkItemWithChoiceNumber) {
+                lunchItems = lunchItems.filter(
+                  (item) => item !== checkItemWithChoiceNumber
+                );
+              }
+            }
+
+            lunchItems.push({ name, price, quantity, choiceNumber });
           }
         }
 

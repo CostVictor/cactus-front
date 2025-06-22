@@ -32,7 +32,7 @@ interface PropsStorageCartSnacks {
 
 export interface PropsStorageCart {
   cartLunch: {
-    lunch: PropsStorageCartCategory | null;
+    lunch: Omit<PropsStorageCartCategory, "items"> & { items: (PropsStorageCartItem & { choiceNumber: number })[] } | null;
     snacks: PropsStorageCartSnacks | null;
   },
   cartSnack: {
@@ -43,7 +43,7 @@ export interface PropsStorageCart {
     getTotalPrice: (ref: "cartLunch" | "cartSnack") => string;
     getQuantity: (ref: "cartLunch" | "cartSnack") => number;
     getCart: (ref: "cartLunch" | "cartSnack") => PropsStorageCartSubmit;
-    setLunch: (name: string, price: string, quantity: number) => void;
+    setLunch: (name: string, price: string, quantity: number, choiceNumber: number) => void;
     setSnack: (ref: "cartLunch" | "cartSnack", category: string, name: string, price: string, quantity: number) => void;
     clearCart: (ref: "cartLunch" | "cartSnack") => void;
   }
