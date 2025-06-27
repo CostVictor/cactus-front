@@ -20,17 +20,61 @@ const BuySnackPage = () => {
   const { clearCart, getQuantity } = useCart.actions();
   const { lunch } = apiHTTP;
 
+  const router = useRouter();
+  const { addNewModal, removeModal } = useModalActions();
+
   const {
     info: { data },
   } = useRequest<TodayLunchWithProducts>({
+    config: { showErrorModal: false },
     initFetchData: {
       request: { url: lunch.today(true), method: "GET" },
-      modalTitleWhenError: "Erro ao Carregar os Dados",
+      onError: (err) => {
+        if (err.status === 404) {
+          addNewModal(
+            <Modal
+              title="Almoço Indisponível"
+              message="Não é possível comprar almoço nos finais de semana."
+              buttons={[
+                {
+                  text: "Voltar para a Home",
+                  appearance: "principal",
+                  onClick: () => {
+                    removeModal();
+                    router.push("/");
+                  },
+                },
+              ]}
+            />
+          );
+        } else {
+          addNewModal(
+            <Modal
+              title="Erro ao Carregar os Dados"
+              message="Ocorreu um erro ao carregar o almoço."
+              buttons={[
+                {
+                  text: "Voltar para a Home",
+                  onClick: () => {
+                    removeModal();
+                    router.push("/");
+                  },
+                },
+                {
+                  text: "Recarregar a Página",
+                  appearance: "principal",
+                  onClick: () => {
+                    removeModal();
+                    router.refresh();
+                  },
+                },
+              ]}
+            />
+          );
+        }
+      },
     },
   });
-
-  const router = useRouter();
-  const { addNewModal } = useModalActions();
 
   return (
     <>

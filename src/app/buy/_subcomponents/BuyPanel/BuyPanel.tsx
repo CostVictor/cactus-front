@@ -10,6 +10,8 @@ import Button from "@/components/form/Button";
 
 import BuySnackModal from "../BuySnackModal";
 
+import LunchArea from "./subcomponents/LunchArea";
+
 import { PropsBuyPanel } from "./buypanel.types";
 import style from "./buypanel.module.scss";
 
@@ -21,11 +23,7 @@ const BuyPanel = ({ dish, products }: PropsBuyPanel) => {
 
   return (
     <>
-      {!!dish && (
-        <Panel title="Almoço de Hoje">
-          <Grid>Ok</Grid>
-        </Panel>
-      )}
+      {!!dish && <LunchArea dish={dish} />}
 
       <Panel title="Categorias de Itens">
         <Grid sizeItem={180} className={style.grid_butons}>

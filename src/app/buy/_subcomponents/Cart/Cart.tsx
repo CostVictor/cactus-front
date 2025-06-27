@@ -48,10 +48,7 @@ const Cart = ({ cartRef, stock, buttons }: PropsCart) => {
 
       <div className={style.cart}>
         {!!lunch && (
-          <CartCategory
-            basePrice={lunch.basePrice || undefined}
-            title="Almoço"
-          >
+          <CartCategory basePrice={lunch.basePrice || undefined} title="Almoço">
             {lunch.items.map((item, index) => (
               <CartItem
                 key={index}
@@ -60,6 +57,13 @@ const Cart = ({ cartRef, stock, buttons }: PropsCart) => {
                 maxQuantity={item.price === "--" ? 1 : 100}
                 borderDashed
                 {...item}
+                price={
+                  item.price !== "--"
+                    ? item.quantity > 1
+                      ? item.price
+                      : "R$ 0,00"
+                    : item.price
+                }
               />
             ))}
           </CartCategory>
