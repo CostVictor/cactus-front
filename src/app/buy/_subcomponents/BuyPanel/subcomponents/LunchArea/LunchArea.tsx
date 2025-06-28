@@ -32,7 +32,8 @@ const LunchArea = ({ dish }: PropsLunchArea) => {
                   ingredient.name,
                   ingredient.additional_charge || "--",
                   1,
-                  0
+                  0,
+                  dish.price
                 )
               }
             />
@@ -64,7 +65,8 @@ const LunchArea = ({ dish }: PropsLunchArea) => {
                         ingredient.name,
                         ingredient.additional_charge || "--",
                         1,
-                        Number(key)
+                        Number(key),
+                        dish.price
                       )
                     }
                   />

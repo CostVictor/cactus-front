@@ -64,6 +64,7 @@ const Cart = ({ cartRef, stock, buttons }: PropsCart) => {
                       : "R$ 0,00"
                     : item.price
                 }
+                dishPrice={lunch.basePrice || ""}
               />
             ))}
           </CartCategory>

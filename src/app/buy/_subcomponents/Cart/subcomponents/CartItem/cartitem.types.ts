@@ -7,4 +7,5 @@ export interface PropsCartItem {
   maxQuantity?: number;
   borderDashed?: boolean;
   choiceNumber?: number;
+  dishPrice?: string;
 }

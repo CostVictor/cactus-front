@@ -98,7 +98,7 @@ const StorageCart = create<PropsStorageCart>((set, get) => ({
 
       return cart;
     },
-    setLunch: (name, price, quantity, choiceNumber) =>
+    setLunch: (name, price, quantity, choiceNumber, dishPrice) =>
       set((storage) => {
         const lunch = storage.cartLunch.lunch;
         var lunchItems = lunch?.items || [];
@@ -135,7 +135,7 @@ const StorageCart = create<PropsStorageCart>((set, get) => ({
           cartLunch: {
             ...storage.cartLunch,
             lunch: lunchItems.length
-              ? { basePrice: lunch?.basePrice || null, items: lunchItems }
+              ? { basePrice: dishPrice, items: lunchItems }
               : null,
           },
         };
