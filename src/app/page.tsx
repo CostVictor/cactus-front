@@ -16,7 +16,7 @@ import useRequest from "@/hooks/network/useRequest";
 import { BaseCategory } from "@api/types/snack";
 import { apiHTTP } from "@api/endpoints";
 
-export default function Home() {
+export default function HomePage() {
   const { addNewModal } = useModalActions();
   const router = useRouter();
 

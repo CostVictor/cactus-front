@@ -26,7 +26,7 @@ const BuyPanel = ({ dish, products }: PropsBuyPanel) => {
       {!!dish && <LunchArea dish={dish} />}
 
       <Panel title="Categorias de Itens">
-        <Grid sizeItem={180} className={style.grid_butons}>
+        <Grid sizeItem={180} className={style.grid_buttons}>
           {categories.map((categoryName, index) => (
             <Button
               key={index}

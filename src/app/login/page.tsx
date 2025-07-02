@@ -1,6 +1,6 @@
 import AuthPanel from "@/components/auth/AuthPanel";
 
-export default function Login() {
+export default function LoginPage() {
   return (
     <main>
       <AuthPanel type="login" />
