@@ -1,0 +1,19 @@
+.container_data {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  font-size: 1.2rem;
+
+  p {
+    color: var(--gray-primary);
+
+    &.value {
+      color: var(--black-primary);
+    }
+  }
+
+  h3 {
+    color: var(--red-secondary);
+  }
+}

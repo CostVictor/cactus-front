@@ -6,8 +6,8 @@ import useRequest from "@/hooks/network/useRequest";
 import useModalActions from "@/hooks/context/useModal";
 import Modal from "@/components/display/Modal";
 
-import BuySection from "../_subcomponents/BuySection";
-import BuyPanel from "../_subcomponents/BuyPanel";
+import Section from "../_subcomponents/Section";
+import LunchPanel from "../_subcomponents/LunchPanel";
 import ConfirmModal from "../_subcomponents/ConfirmModal";
 
 import Cart from "../_subcomponents/Cart";
@@ -16,7 +16,7 @@ import useCart from "@/hooks/context/useCart";
 import { TodayLunchWithProducts } from "@api/types/lunch";
 import { apiHTTP } from "@api/endpoints";
 
-const BuySnackPage = () => {
+const BuyLunchPage = () => {
   const { clearCart, getQuantity } = useCart.actions();
   const { lunch } = apiHTTP;
 
@@ -109,10 +109,10 @@ const BuySnackPage = () => {
         ]}
       />
       <main>
-        <BuySection>{!!data && <BuyPanel {...data} />}</BuySection>
+        <Section>{!!data && <LunchPanel {...data} />}</Section>
       </main>
     </>
   );
 };
 
-export default BuySnackPage;
+export default BuyLunchPage;

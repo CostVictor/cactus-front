@@ -5,12 +5,12 @@
 
   font-size: 1.2rem;
 
-  span {
-    color: var(--black-primary);
-  }
-
   p {
-    color: var(--black-secondary);
+    color: var(--gray-primary);
+
+    &.value {
+      color: var(--black-primary);
+    }
   }
 
   h3 {

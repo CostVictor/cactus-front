@@ -48,7 +48,7 @@ const CardInfo = ({
       {isSoldOut && <span className={style.span}>Esgotado</span>}
       {markerColor && (
         <Icon
-          icon="fluent:tap-single-24-regular"
+          icon="line-md:confirm"
           className={`${style.icon} ${style.marker}`}
         />
       )}

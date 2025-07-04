@@ -8,18 +8,14 @@ import TextField from "@/components/form/TextField";
 import Modal from "@/components/display/Modal";
 import useModalActions from "@/hooks/context/useModal";
 
-import { PropsBuySnackModal } from "./buysnackmodal.types";
-import style from "./buysnackmodal.module.scss";
+import { PropsBuyModal } from "./buymodal.types";
+import style from "./buymodal.module.scss";
 
-const BuySnackModal = ({
-  cartRef,
-  categoryName,
-  snack,
-}: PropsBuySnackModal) => {
+const BuyModal = ({ cartRef, categoryName, snack }: PropsBuyModal) => {
   const { removeModal } = useModalActions();
   const { setSnack } = useCart.actions();
 
-  const formId = "form-buy-modal";
+  const formId = "form-snack-buy-modal";
   const form = useForm();
 
   return (
@@ -31,20 +27,20 @@ const BuySnackModal = ({
       ]}
       formMode
     >
-      <div className={style.container_data}>
-        <span>Nome do produto:</span>
+      <span className={style.container_data}>
+        <p>Nome do produto:</p>
         <h3>{snack.name}</h3>
-      </div>
+      </span>
 
-      <div className={style.container_data}>
-        <span>Preço da unidade:</span>
-        <p>{snack.price}</p>
-      </div>
+      <span className={style.container_data}>
+        <p>Preço da unidade:</p>
+        <p className={style.value}>{snack.price}</p>
+      </span>
 
-      <div className={style.container_data}>
-        <span>Disponível no estoque:</span>
-        <p>{snack.quantity_in_stock}</p>
-      </div>
+      <span className={style.container_data}>
+        <p>Disponível no estoque:</p>
+        <p className={style.value}>{snack.quantity_in_stock}</p>
+      </span>
 
       <p className="marker">Seleção de Quantidade</p>
 
@@ -90,4 +86,4 @@ const BuySnackModal = ({
   );
 };
 
-export default BuySnackModal;
+export default BuyModal;

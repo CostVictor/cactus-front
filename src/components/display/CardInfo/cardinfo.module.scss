@@ -30,12 +30,12 @@
   .icon {
     position: absolute;
     color: var(--red-secondary);
-    font-size: 2rem;
+    font-size: 1.5rem;
     left: 5%;
 
     &.marker {
       color: var(--white-primary);
-      right: -2.2rem;
+      right: -26px;
       left: auto;
     }
   }

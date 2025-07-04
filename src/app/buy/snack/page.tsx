@@ -8,9 +8,9 @@ import useRequest from "@/hooks/network/useRequest";
 import useModalActions from "@/hooks/context/useModal";
 import Modal from "@/components/display/Modal";
 
-import BuySection from "../_subcomponents/BuySection";
-import BuyPanel from "../_subcomponents/BuyPanel";
-import BuySnackModal from "../_subcomponents/BuySnackModal";
+import Section from "../_subcomponents/Section";
+import SnackPanel from "../_subcomponents/SnackPanel";
+import BuyModal from "../_subcomponents/SnackPanel/subcomponents/BuyModal";
 import ConfirmModal from "../_subcomponents/ConfirmModal";
 
 import Cart from "../_subcomponents/Cart";
@@ -49,7 +49,7 @@ function BuyContent() {
 
       if (snack) {
         addNewModal(
-          <BuySnackModal
+          <BuyModal
             cartRef="cartSnack"
             categoryName={categoryName}
             snack={snack}
@@ -94,9 +94,11 @@ function BuyContent() {
         ]}
       />
       <main>
-        <BuySection>
-          {Array.isArray(data) && <BuyPanel products={data} />}
-        </BuySection>
+        <Section>
+          {Array.isArray(data) && (
+            <SnackPanel products={data} cartRef="cartSnack" />
+          )}
+        </Section>
       </main>
     </>
   );

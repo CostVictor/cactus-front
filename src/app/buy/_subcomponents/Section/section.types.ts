@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
 
-export interface PropsBuySection {
+export interface PropsSection {
   children: ReactNode;
 }

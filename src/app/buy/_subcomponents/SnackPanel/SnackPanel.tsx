@@ -8,14 +8,12 @@ import Panel from "@/components/layout/Panel";
 import CardInfo from "@/components/display/CardInfo";
 import Button from "@/components/form/Button";
 
-import BuySnackModal from "../BuySnackModal";
+import BuyModal from "./subcomponents/BuyModal";
 
-import LunchArea from "./subcomponents/LunchArea";
+import { PropsSnackPanel } from "./snackpanel.types";
+import style from "./snackpanel.module.scss";
 
-import { PropsBuyPanel } from "./buypanel.types";
-import style from "./buypanel.module.scss";
-
-const BuyPanel = ({ dish, products }: PropsBuyPanel) => {
+const SnackPanel = ({ cartRef, products, bgPanelDark }: PropsSnackPanel) => {
   const { addNewModal } = useModalActions();
 
   const categories = products.map((category) => category.name);
@@ -23,9 +21,7 @@ const BuyPanel = ({ dish, products }: PropsBuyPanel) => {
 
   return (
     <>
-      {!!dish && <LunchArea dish={dish} />}
-
-      <Panel title="Categorias de Itens">
+      <Panel title="Categorias de Itens" bgDark={bgPanelDark}>
         <Grid sizeItem={180} className={style.grid_buttons}>
           {categories.map((categoryName, index) => (
             <Button
@@ -51,14 +47,18 @@ const BuyPanel = ({ dish, products }: PropsBuyPanel) => {
               key={index}
               title={snack.name}
               text={snack.price}
-              onClick={() =>
-                addNewModal(
-                  <BuySnackModal
-                    cartRef={!!dish ? "cartLunch" : "cartSnack"}
-                    categoryName={currentCategory}
-                    snack={snack}
-                  />
-                )
+              isSoldOut={snack.quantity_in_stock === 0}
+              onClick={
+                snack.quantity_in_stock > 0
+                  ? () =>
+                      addNewModal(
+                        <BuyModal
+                          cartRef={cartRef}
+                          categoryName={currentCategory}
+                          snack={snack}
+                        />
+                      )
+                  : undefined
               }
             />
           ))}
@@ -67,4 +67,4 @@ const BuyPanel = ({ dish, products }: PropsBuyPanel) => {
   );
 };
 
-export default BuyPanel;
+export default SnackPanel;
