@@ -4,18 +4,24 @@ import { Icon } from "@iconify/react";
 import Grid from "@/components/layout/Grid";
 import Folder from "@/components/interface/Folder";
 import CardInfo from "@/components/display/CardInfo";
+import Button from "@/components/form/Button";
 
+import useModalActions from "@/hooks/context/useModal";
 import FilterField from "@/components/form/FilterField";
 import { filterOption } from "@/components/form/_shared/utils";
 
 import { BaseOrder } from "@api/types/order";
 import { PropsLabelFolder } from "@/components/interface/Folder/folder.types";
 
+import CancelModal from "./subcomponents/CancelModal";
+import ConfirmModal from "./subcomponents/ConfirmModal";
+
 import { PropsOrdersPanel } from "./orderspanel.types";
 import style from "./orderspanel.module.scss";
 
 const OrdersPanel = ({ data }: PropsOrdersPanel) => {
   const [filteredName, setFilteredName] = useState("");
+  const { addNewModal } = useModalActions();
 
   const ordersFiltered = useMemo(() => {
     const filteredOptions = filterOption(
@@ -28,16 +34,13 @@ const OrdersPanel = ({ data }: PropsOrdersPanel) => {
 
   /**
    * Retorna uma lista de labels para o pedido.
-   * As labels incluem informações sobre o tipo de pedido,
-   * o valor devido e o status do pagamento.
+   * As labels incluem o valor devido e o status do pagamento.
 
    * @param order Pedido a ser verificado.
    * @returns Lista de labels para o pedido.
    */
   const getLabels = (order: BaseOrder) => {
     const labels = [] as PropsLabelFolder[];
-
-    if (order.lunch.length) labels.push({ text: "Pedido de Almoço" });
 
     labels.push({ text: order.amount_due.formatted_amount });
 
@@ -78,7 +81,7 @@ const OrdersPanel = ({ data }: PropsOrdersPanel) => {
           >
             {!!order.lunch.length && (
               <>
-                <Grid>
+                <Grid sizeItem={300}>
                   {order.lunch.map((composition, compositionIndex) => (
                     <CardInfo
                       key={compositionIndex}
@@ -99,7 +102,7 @@ const OrdersPanel = ({ data }: PropsOrdersPanel) => {
             )}
 
             {!!order.snacks.length && (
-              <Grid>
+              <Grid sizeItem={300}>
                 {order.snacks.map((snack, snackIndex) => (
                   <CardInfo
                     key={snackIndex}
@@ -109,6 +112,29 @@ const OrdersPanel = ({ data }: PropsOrdersPanel) => {
                 ))}
               </Grid>
             )}
+
+            <div className={style.container_actions}>
+              {!order.final_payment_date && (
+                <Button
+                  text="Cancelar pedido"
+                  onClick={() =>
+                    addNewModal(<CancelModal orderId={order.public_id} />)
+                  }
+                />
+              )}
+              <Button
+                text="Confirmar atendimento"
+                appearance="principal"
+                onClick={() =>
+                  addNewModal(
+                    <ConfirmModal
+                      orderId={order.public_id}
+                      isPaid={!!order.final_payment_date}
+                    />
+                  )
+                }
+              />
+            </div>
           </Folder>
         ))
       ) : (

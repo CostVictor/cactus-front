@@ -55,7 +55,7 @@
 
     @media (max-width: 460px) {
       .label {
-        white-space: nowrap; 
+        white-space: nowrap;
         text-overflow: ellipsis;
         overflow: hidden;
       }
@@ -63,6 +63,7 @@
   }
 
   @media (max-width: 950px) {
+    align-items: start;
     flex-direction: column;
     gap: 0.5rem;
   }
