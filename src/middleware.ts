@@ -1,10 +1,10 @@
-import { NextResponse, NextRequest } from 'next/server';
-import { PropsStorageAuth } from './hooks/context/useAuth/useauth.types';
+import { NextResponse, NextRequest } from "next/server";
+import { PropsStorageAuth } from "./hooks/context/useAuth/useauth.types";
 
-export const routesRequiredEmployee = ["/stock"];
+export const routesRequiredEmployee = ["/stock", "/orders"];
 
 export function middleware(request: NextRequest) {
-  const cookieAuth = request.cookies.get('cookie_auth');
+  const cookieAuth = request.cookies.get("cookie_auth");
   const urlCurrent = request.nextUrl.clone().pathname;
 
   if (!cookieAuth) {
@@ -23,4 +23,6 @@ export function middleware(request: NextRequest) {
   return NextResponse.next();
 }
 
-export const config = { matcher: ["/buy/:path*", "/stock/:path*"] };
+export const config = {
+  matcher: ["/buy/:path*", "/stock/:path*", "/orders/:path*"],
+};

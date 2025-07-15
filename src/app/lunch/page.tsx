@@ -53,7 +53,7 @@ export default function LunchPage() {
               >
                 <Icon icon="material-symbols:warning-rounded" />
                 <p>
-                  Pedidos de almoço estão disponíveis apenas durante a semana.
+                  Pedidos de almoço só estarão disponíveis durante a semana.
                 </p>
               </span>
             )}

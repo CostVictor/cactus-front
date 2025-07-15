@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { apiHTTP, apiWS } from "@api/endpoints";
+import { StorageAuth } from "@/hooks/context/useAuth";
 
 import useRequest from "../useRequest";
 import useModalActions from "@/hooks/context/useModal";
@@ -40,6 +41,7 @@ const useWebSocket = <T,>(relativeUrl: string) => {
           break;
 
         case 4003:
+          StorageAuth.getState().actions.logoutInState();
           window.location.href = "/";
           break;
 

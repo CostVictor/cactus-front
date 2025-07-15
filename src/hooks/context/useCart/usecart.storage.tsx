@@ -71,13 +71,13 @@ const StorageCart = create<PropsStorageCart>((set, get) => ({
       const { lunch, snacks } = ref === "cartLunch" ? cartLunch : cartSnack;
 
       const cart = {
-        lunch: [],
-        snacks: {},
+        input_lunch: [],
+        input_snacks: {},
       } as PropsStorageCartSubmit;
 
       if (ref === "cartLunch") {
         for (let item of lunch?.items || []) {
-          cart.lunch.push({ name: item.name, quantity: item.quantity });
+          cart.input_lunch.push({ name: item.name, quantity: item.quantity });
         }
       }
 
@@ -85,11 +85,11 @@ const StorageCart = create<PropsStorageCart>((set, get) => ({
         const [nameCategory, category] = obj;
 
         for (let item of category.items) {
-          if (!cart.snacks.hasOwnProperty(nameCategory)) {
-            cart.snacks[nameCategory] = [];
+          if (!cart.input_snacks.hasOwnProperty(nameCategory)) {
+            cart.input_snacks[nameCategory] = [];
           }
 
-          cart.snacks[nameCategory].push({
+          cart.input_snacks[nameCategory].push({
             name: item.name,
             quantity: item.quantity,
           });

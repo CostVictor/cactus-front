@@ -4,12 +4,12 @@ interface PropsStorageCartSubmitItem {
 }
 
 interface PropsStorageCartSubmitSnack {
-  [category: string]: PropsStorageCartSubmitItem[]
+  [category: string]: PropsStorageCartSubmitItem[];
 }
 
 export interface PropsStorageCartSubmit {
-  lunch: PropsStorageCartSubmitItem[];
-  snacks: PropsStorageCartSubmitSnack;
+  input_lunch: PropsStorageCartSubmitItem[];
+  input_snacks: PropsStorageCartSubmitSnack;
   description?: string;
   username?: string;
   wasPaid?: boolean;
@@ -23,28 +23,44 @@ interface PropsStorageCartItem {
 
 interface PropsStorageCartCategory {
   basePrice: string | null;
-  items: PropsStorageCartItem[]
+  items: PropsStorageCartItem[];
 }
 
 interface PropsStorageCartSnacks {
-  [category: string]: PropsStorageCartCategory
+  [category: string]: PropsStorageCartCategory;
 }
 
 export interface PropsStorageCart {
   cartLunch: {
-    lunch: Omit<PropsStorageCartCategory, "items"> & { items: (PropsStorageCartItem & { choiceNumber: number })[] } | null;
+    lunch:
+      | (Omit<PropsStorageCartCategory, "items"> & {
+          items: (PropsStorageCartItem & { choiceNumber: number })[];
+        })
+      | null;
     snacks: PropsStorageCartSnacks | null;
-  },
+  };
   cartSnack: {
     lunch: null;
     snacks: PropsStorageCartSnacks | null;
-  }
+  };
   actions: {
     getTotalPrice: (ref: "cartLunch" | "cartSnack") => string;
     getQuantity: (ref: "cartLunch" | "cartSnack") => number;
     getCart: (ref: "cartLunch" | "cartSnack") => PropsStorageCartSubmit;
-    setLunch: (name: string, price: string, quantity: number, choiceNumber: number, dishPrice: string) => void;
-    setSnack: (ref: "cartLunch" | "cartSnack", category: string, name: string, price: string, quantity: number) => void;
+    setLunch: (
+      name: string,
+      price: string,
+      quantity: number,
+      choiceNumber: number,
+      dishPrice: string
+    ) => void;
+    setSnack: (
+      ref: "cartLunch" | "cartSnack",
+      category: string,
+      name: string,
+      price: string,
+      quantity: number
+    ) => void;
     clearCart: (ref: "cartLunch" | "cartSnack") => void;
-  }
+  };
 }
