@@ -27,7 +27,7 @@ const DataDish = ({ dish, canRedirect }: PropsDataDish) => {
         </p>
       </span>
 
-      <Grid>
+      <Grid sizeItem={300}>
         {dish.ingredients.multiple_choice.map((ingredient) => (
           <CardInfo
             key={ingredient.name}
@@ -46,7 +46,7 @@ const DataDish = ({ dish, canRedirect }: PropsDataDish) => {
           <Fragment key={key}>
             <p className="marker">Escolha única</p>
 
-            <Grid>
+            <Grid sizeItem={300}>
               {value.map((ingredient: BaseIngredient) => (
                 <CardInfo
                   key={ingredient.name}

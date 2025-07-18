@@ -1,7 +1,7 @@
 .container_main {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 1rem;
 
   span {
     display: flex;
@@ -25,5 +25,9 @@
     padding: 1rem;
     width: 50%;
     gap: 0.5rem;
+
+    @media (max-width: 800px) {
+      width: 100%;
+    }
   }
 }
