@@ -8,7 +8,7 @@ import Form from "@/components/form/Form";
 import TextField from "@/components/form/TextField";
 import FormattedField from "@/components/form/FormattedField";
 
-import { apiHTTP } from "@api/endpoints";
+import { http } from "@api/endpoints";
 import { PropsAddItem } from "./additem.types";
 import style from "./additem.module.scss";
 
@@ -22,7 +22,7 @@ const AddItem = ({ nameCategory }: PropsAddItem) => {
   const formId = "form-create-item";
   const form = useForm();
 
-  const { snack } = apiHTTP;
+  const { snack } = http;
 
   return (
     <Modal

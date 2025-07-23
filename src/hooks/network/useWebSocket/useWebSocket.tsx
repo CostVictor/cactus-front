@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { apiHTTP, apiWS } from "@api/endpoints";
+import { http, ws } from "@api/endpoints";
 import { StorageAuth } from "@/hooks/context/useAuth";
 
 import useRequest from "../useRequest";
@@ -13,7 +13,7 @@ const useWebSocket = <T,>(relativeUrl: string) => {
   const [isLoading, setIsLoading] = useState(true);
   const [quantityReset, setQuantityReset] = useState(0);
 
-  const { session } = apiHTTP;
+  const { session } = http;
 
   const {
     actions: { fetchData },
@@ -22,7 +22,7 @@ const useWebSocket = <T,>(relativeUrl: string) => {
   const { addNewModal } = useModalActions();
 
   useEffect(() => {
-    const ws = new WebSocket(apiWS.baseUrl + relativeUrl);
+    const ws = new WebSocket(ws.baseUrl + relativeUrl);
 
     ws.onmessage = (event) => {
       const data = JSON.parse(event.data) as T;

@@ -12,7 +12,7 @@ import Button from "@/components/form/Button";
 import OptionsField from "@/components/form/OptionsField";
 import { PropsOptions } from "@/components/form/OptionsField";
 
-import { apiHTTP } from "@api/endpoints";
+import { http } from "@api/endpoints";
 
 import RemoveComposition from "./subcomponents/RemoveComposition";
 import { PropsEditComposition } from "./editcomposition.types";
@@ -24,7 +24,7 @@ const EditComposition = ({
   quantityFieldSingleChoice,
 }: PropsEditComposition) => {
   const { addNewModal, removeModal } = useModalActions();
-  const { lunch } = apiHTTP;
+  const { lunch } = http;
 
   const {
     info: { isLoading },

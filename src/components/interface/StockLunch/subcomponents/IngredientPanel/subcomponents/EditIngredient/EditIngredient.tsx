@@ -14,13 +14,13 @@ import RemoveIngredient from "./subcomponents/RemoveIngredient";
 import { FieldValues } from "react-hook-form";
 import { filterDifferences } from "@/utils/filters";
 import { EditIngredientProps } from "./editingredient.types";
-import { apiHTTP } from "@api/endpoints";
+import { http } from "@api/endpoints";
 
 import style from "./editingredient.module.scss";
 
 const EditIngredient = ({ ingredient }: EditIngredientProps) => {
   const { addNewModal, removeModal } = useModalActions();
-  const { lunch } = apiHTTP;
+  const { lunch } = http;
 
   const {
     info: { isLoading },

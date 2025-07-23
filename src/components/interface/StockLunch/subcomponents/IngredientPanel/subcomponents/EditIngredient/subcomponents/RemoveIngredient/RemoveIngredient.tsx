@@ -3,7 +3,7 @@ import Modal from "@/components/display/Modal";
 import useRequest from "@/hooks/network/useRequest";
 import useModalActions from "@/hooks/context/useModal";
 
-import { apiHTTP } from "@api/endpoints";
+import { http } from "@api/endpoints";
 import { PropsRemoveIngredient } from "./removeingredient.types";
 
 const RemoveIngredient = ({ ingredientName }: PropsRemoveIngredient) => {
@@ -13,7 +13,7 @@ const RemoveIngredient = ({ ingredientName }: PropsRemoveIngredient) => {
   } = useRequest();
 
   const { removeModal } = useModalActions();
-  const { lunch } = apiHTTP;
+  const { lunch } = http;
 
   return (
     <Modal

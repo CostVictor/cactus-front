@@ -4,13 +4,13 @@ import Modal from "@/components/display/Modal";
 import useModalActions from "@/hooks/context/useModal";
 
 import useRequest from "@/hooks/network/useRequest";
-import { apiHTTP } from "@api/endpoints";
+import { http } from "@api/endpoints";
 
 import { PropsCancelModal } from "./cancelmodal.types";
 
 const CancelModal = ({ orderId }: PropsCancelModal) => {
   const { removeModal } = useModalActions();
-  const { record } = apiHTTP.order;
+  const { record } = http.order;
 
   const {
     info: { isLoading },

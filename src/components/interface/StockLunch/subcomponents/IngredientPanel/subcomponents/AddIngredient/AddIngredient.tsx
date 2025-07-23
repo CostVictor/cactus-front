@@ -8,7 +8,7 @@ import Form from "@/components/form/Form";
 import TextField from "@/components/form/TextField";
 import FormattedField from "@/components/form/FormattedField";
 
-import { apiHTTP } from "@api/endpoints";
+import { http } from "@api/endpoints";
 import style from "./addingredient.module.scss";
 
 const AddIngredient = () => {
@@ -18,7 +18,7 @@ const AddIngredient = () => {
   } = useRequest<null>();
 
   const { removeModal } = useModalActions();
-  const { lunch } = apiHTTP;
+  const { lunch } = http;
 
   const formId = "form-create-ingredient";
   const form = useForm();

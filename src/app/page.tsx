@@ -14,14 +14,14 @@ import CardInfo from "@/components/display/CardInfo";
 import useRequest from "@/hooks/network/useRequest";
 
 import { BaseCategory } from "@api/types/snack";
-import { apiHTTP } from "@api/endpoints";
+import { http } from "@api/endpoints";
 
 export default function HomePage() {
   const { addNewModal } = useModalActions();
   const router = useRouter();
 
   const targets = [{ text: "Início", link: "#inicio" }];
-  const { snack } = apiHTTP;
+  const { snack } = http;
 
   const {
     info: { data },

@@ -10,14 +10,14 @@ import IngredientPanel from "./subcomponents/IngredientPanel";
 import DishPanel from "./subcomponents/DishPanel";
 import { StockLunchProps } from "./stocklunch.types";
 
-import { apiWS } from "@api/endpoints";
+import { ws } from "@api/endpoints";
 import EditDish from "./subcomponents/EditDish";
 import style from "./stocklunch.module.scss";
 
 const StockLunch = () => {
   const { addNewModal } = useModalActions();
 
-  const { lunch } = apiWS;
+  const { lunch } = ws;
   const { data, isLoading } = useWebSocket<StockLunchProps>(lunch.baseUrl);
 
   const allIngredientsName = useMemo(

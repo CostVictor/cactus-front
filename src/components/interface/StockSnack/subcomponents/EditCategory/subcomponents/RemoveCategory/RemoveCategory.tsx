@@ -3,7 +3,7 @@ import useRequest from "@/hooks/network/useRequest";
 
 import Modal from "@/components/display/Modal";
 import { PropsRemoveCategory } from "./removecategory.types";
-import { apiHTTP } from "@api/endpoints";
+import { http } from "@api/endpoints";
 
 const RemoveCategory = ({ categoryName }: PropsRemoveCategory) => {
   const { removeModal } = useModalActions();
@@ -12,7 +12,7 @@ const RemoveCategory = ({ categoryName }: PropsRemoveCategory) => {
     actions: { fetchData },
   } = useRequest<null>();
 
-  const { snack } = apiHTTP;
+  const { snack } = http;
 
   return (
     <Modal

@@ -9,12 +9,12 @@ import useRequest from "@/hooks/network/useRequest";
 import { BaseDish } from "@api/types/lunch";
 
 import { Icon } from "@iconify/react";
-import { apiHTTP } from "@api/endpoints";
+import { http } from "@api/endpoints";
 
 import DataDish from "./_subcomponents/DataDish";
 
 export default function LunchPage() {
-  const { lunch } = apiHTTP;
+  const { lunch } = http;
 
   const {
     info: { data },

@@ -15,13 +15,13 @@ import Button from "@/components/form/Button";
 
 import { averiaSansLibre } from "@/styles/fonts";
 
-import { apiWS } from "@api/endpoints";
+import { ws } from "@api/endpoints";
 import { BaseCategory } from "@api/types/snack";
 
 import style from "./stocksnack.module.scss";
 
 const StockSnack = () => {
-  const { snack } = apiWS;
+  const { snack } = ws;
   const { data, isLoading } = useWebSocket<BaseCategory[]>(snack.baseUrl);
   const { addNewModal } = useModalActions();
 

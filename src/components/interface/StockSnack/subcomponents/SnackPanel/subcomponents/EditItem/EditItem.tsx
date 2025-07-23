@@ -12,7 +12,7 @@ import AreaField from "@/components/form/AreaField";
 import Button from "@/components/form/Button";
 
 import { filterDifferences } from "@/utils/filters";
-import { apiHTTP } from "@api/endpoints";
+import { http } from "@api/endpoints";
 
 import RemoveItem from "./subcomponents/RemoveItem";
 import { EditItemProps } from "./edititem.types";
@@ -25,7 +25,7 @@ const EditItem = ({ dataSnack, nameCategory }: EditItemProps) => {
     actions: { fetchData },
   } = useRequest<null>();
 
-  const { snack } = apiHTTP;
+  const { snack } = http;
 
   const formId = "form-edit-item";
   const form = useForm();

@@ -4,12 +4,12 @@ import useRequest from "@/hooks/network/useRequest";
 import SelectField from "@/components/form/SelectField";
 import OptionsField from "@/components/form/OptionsField";
 
-import { apiHTTP } from "@api/endpoints";
+import { http } from "@api/endpoints";
 import { PropsUserPanel } from "./usepanel.types";
 
 const UserPanel = () => {
   const { watch } = useFormContext();
-  const { user } = apiHTTP;
+  const { user } = http;
 
   const {
     info: { data },

@@ -6,7 +6,7 @@ import useRequest from "@/hooks/network/useRequest";
 import useModalActions from "@/hooks/context/useModal";
 import Modal from "@/components/display/Modal";
 
-import { apiHTTP } from "@api/endpoints";
+import { http } from "@api/endpoints";
 import { EditOrderCategoryProps } from "./editordercategory.types";
 import style from "./editordercategory.module.scss";
 
@@ -18,7 +18,7 @@ const EditOrderCategory = ({ listCategories }: EditOrderCategoryProps) => {
     actions: { fetchData },
   } = useRequest<null>();
 
-  const { snack } = apiHTTP;
+  const { snack } = http;
 
   return (
     <Modal

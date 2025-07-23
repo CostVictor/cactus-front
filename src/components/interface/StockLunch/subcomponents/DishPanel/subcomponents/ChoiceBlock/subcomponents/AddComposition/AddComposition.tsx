@@ -7,7 +7,7 @@ import Modal from "@/components/display/Modal";
 import Form from "@/components/form/Form";
 import OptionsField from "@/components/form/OptionsField";
 
-import { apiHTTP } from "@api/endpoints";
+import { http } from "@api/endpoints";
 import { PropsAddComposition } from "./addcomposition.types";
 
 const AddComposition = ({
@@ -16,7 +16,7 @@ const AddComposition = ({
   choiceNumber = 0,
 }: PropsAddComposition) => {
   const { removeModal } = useModalActions();
-  const { lunch } = apiHTTP;
+  const { lunch } = http;
 
   const {
     info: { isLoading },

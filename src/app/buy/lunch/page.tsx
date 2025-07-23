@@ -14,11 +14,11 @@ import Cart from "../_subcomponents/Cart";
 import useCart from "@/hooks/context/useCart";
 
 import { TodayLunchWithProducts } from "@api/types/lunch";
-import { apiHTTP } from "@api/endpoints";
+import { http } from "@api/endpoints";
 
 const BuyLunchPage = () => {
   const { clearCart, getQuantity } = useCart.actions();
-  const { lunch } = apiHTTP;
+  const { lunch } = http;
 
   const router = useRouter();
   const { addNewModal, removeModal } = useModalActions();

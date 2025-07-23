@@ -9,7 +9,7 @@ import Modal from "@/components/display/Modal";
 import Form from "@/components/form/Form";
 import TextField from "@/components/form/TextField";
 
-import { apiHTTP } from "@api/endpoints";
+import { http } from "@api/endpoints";
 
 const AddCategory = () => {
   const { removeModal } = useModalActions();
@@ -18,7 +18,7 @@ const AddCategory = () => {
     actions: { fetchData },
   } = useRequest<null>();
 
-  const { snack } = apiHTTP;
+  const { snack } = http;
   const formId = "form-create-category";
   const form = useForm();
 

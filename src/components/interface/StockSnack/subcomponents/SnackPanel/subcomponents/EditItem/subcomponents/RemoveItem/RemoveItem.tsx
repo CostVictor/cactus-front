@@ -2,7 +2,7 @@ import useModalActions from "@/hooks/context/useModal";
 import useRequest from "@/hooks/network/useRequest";
 
 import Modal from "@/components/display/Modal";
-import { apiHTTP } from "@api/endpoints";
+import { http } from "@api/endpoints";
 
 import { PropsRemoveItem } from "./removeitem.types";
 
@@ -13,7 +13,7 @@ const RemoveItem = ({ nameCategory, nameItem }: PropsRemoveItem) => {
   } = useRequest<null>();
 
   const { removeModal } = useModalActions();
-  const { snack } = apiHTTP;
+  const { snack } = http;
 
   return (
     <Modal

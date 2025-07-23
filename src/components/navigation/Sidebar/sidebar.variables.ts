@@ -29,9 +29,9 @@ export const listSidebarItems: PropsListSidebarItems = [
     items: [
       // { name: "Perfil", icon: "lucide:user-round", url: "/profile" },
       {
-        name: "Histórico",
+        name: "Ficha",
         icon: "majesticons:clipboard-list-line",
-        url: "/history",
+        url: "/record",
         requiresAuth: true,
       },
     ],

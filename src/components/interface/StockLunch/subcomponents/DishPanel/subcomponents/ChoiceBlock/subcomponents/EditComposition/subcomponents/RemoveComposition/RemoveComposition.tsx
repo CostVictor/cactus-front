@@ -3,7 +3,7 @@ import useRequest from "@/hooks/network/useRequest";
 
 import Modal from "@/components/display/Modal";
 import { PropsRemoveComposition } from "./removecomposition.types";
-import { apiHTTP } from "@api/endpoints";
+import { http } from "@api/endpoints";
 
 const RemoveComposition = ({
   dayName,
@@ -15,7 +15,7 @@ const RemoveComposition = ({
     actions: { fetchData },
   } = useRequest<null>();
 
-  const { lunch } = apiHTTP;
+  const { lunch } = http;
 
   return (
     <Modal

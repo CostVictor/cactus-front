@@ -4,7 +4,7 @@ import useRequest from "@/hooks/network/useRequest";
 import useModalActions from "@/hooks/context/useModal";
 
 import { filterDifferences } from "@/utils/filters";
-import { apiHTTP } from "@api/endpoints";
+import { http } from "@api/endpoints";
 
 import Form from "@/components/form/Form";
 import AreaField from "@/components/form/AreaField";
@@ -22,7 +22,7 @@ const EditDish = ({ dish }: PropsEditDish) => {
   } = useRequest();
 
   const { removeModal } = useModalActions();
-  const { lunch } = apiHTTP;
+  const { lunch } = http;
 
   const formId = "form-edit-dish";
   const form = useForm();

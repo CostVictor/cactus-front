@@ -1,13 +1,13 @@
 import { StorageAuth } from "@/hooks/context/useAuth";
 
-import { apiHTTP } from "./endpoints";
+import { http } from "./endpoints";
 import { redirectToLogin } from "./utils";
 import cactusAPI from "./client";
 
 cactusAPI.interceptors.response.use(
   (response) => response,
   async (err) => {
-    const { session } = apiHTTP;
+    const { session } = http;
     const config = err.config;
 
     if (

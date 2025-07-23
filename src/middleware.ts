@@ -1,7 +1,7 @@
 import { NextResponse, NextRequest } from "next/server";
 import { PropsStorageAuth } from "./hooks/context/useAuth/useauth.types";
 
-export const routesRequiredEmployee = ["/stock", "/orders"];
+export const routesRequiredEmployee = ["/stock", "/orders", "/record/"];
 
 export function middleware(request: NextRequest) {
   const cookieAuth = request.cookies.get("cookie_auth");
@@ -24,5 +24,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/buy/:path*", "/stock/:path*", "/orders/:path*"],
+  matcher: ["/buy/:path*", "/stock/:path*", "/orders/:path*", "/record/:path*"],
 };

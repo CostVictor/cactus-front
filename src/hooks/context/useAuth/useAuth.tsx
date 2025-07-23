@@ -1,8 +1,10 @@
+"use client";
+
 import { useRouter } from "next/navigation";
 import useRequest from "@/hooks/network/useRequest";
 import StorageAuth from "./useauth.storage";
 
-import { apiHTTP } from "@api/endpoints";
+import { http } from "@api/endpoints";
 
 export const useAuthState = () => StorageAuth((storage) => storage.state);
 
@@ -17,7 +19,7 @@ export const useAuthActions = () => {
     actions: { fetchData },
   } = useRequest<null>();
 
-  const { session } = apiHTTP;
+  const { session } = http;
 
   const login = (email: string, password: string, redirectTo: string): void => {
     fetchData({

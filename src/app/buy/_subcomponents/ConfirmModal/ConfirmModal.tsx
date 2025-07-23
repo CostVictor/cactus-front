@@ -13,12 +13,12 @@ import AreaField from "@/components/form/AreaField";
 import Shop from "./subcomponents/Shop";
 import UserPanel from "./subcomponents/UserPanel";
 
-import { apiHTTP } from "@api/endpoints";
+import { http } from "@api/endpoints";
 import { PropsConfirmModal } from "./confirmmodal.types";
 import style from "./confirmmodal.module.scss";
 
 const ConfirmModal = ({ cartRef }: PropsConfirmModal) => {
-  const { order } = apiHTTP;
+  const { order } = http;
 
   const { addNewModal, removeModal } = useModalActions();
   const { getCart, getTotalPrice, clearCart } = useCart.actions();

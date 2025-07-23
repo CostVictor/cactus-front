@@ -9,14 +9,14 @@ import Form from "@/components/form/Form";
 import OptionsField from "@/components/form/OptionsField";
 
 import useRequest from "@/hooks/network/useRequest";
-import { apiHTTP } from "@api/endpoints";
+import { http } from "@api/endpoints";
 
 import { PropsConfirmModal } from "./confirmmodal.types";
 import style from "./confirmmodal.module.scss";
 
 const ConfirmModal = ({ orderId, isPaid }: PropsConfirmModal) => {
   const { removeModal } = useModalActions();
-  const { order } = apiHTTP;
+  const { order } = http;
 
   const {
     info: { isLoading },

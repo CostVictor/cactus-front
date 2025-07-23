@@ -11,7 +11,7 @@ import Button from "@/components/form/Button";
 import RemoveCategory from "./subcomponents/RemoveCategory";
 import { filterDifferences } from "@/utils/filters";
 import { EditCategoryProps } from "./editcategory.types";
-import { apiHTTP } from "@api/endpoints";
+import { http } from "@api/endpoints";
 import style from "./editcategory.module.scss";
 
 const EditCategory = ({ category }: EditCategoryProps) => {
@@ -21,7 +21,7 @@ const EditCategory = ({ category }: EditCategoryProps) => {
     actions: { fetchData },
   } = useRequest<null>();
 
-  const { snack } = apiHTTP;
+  const { snack } = http;
   const formId = "form-edit-category";
   const form = useForm();
 
