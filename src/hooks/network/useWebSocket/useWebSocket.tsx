@@ -22,15 +22,15 @@ const useWebSocket = <T,>(relativeUrl: string) => {
   const { addNewModal } = useModalActions();
 
   useEffect(() => {
-    const ws = new WebSocket(ws.baseUrl + relativeUrl);
+    const cws = new WebSocket(ws.baseUrl + relativeUrl);
 
-    ws.onmessage = (event) => {
+    cws.onmessage = (event) => {
       const data = JSON.parse(event.data) as T;
       setIsLoading(false);
       setData(data);
     };
 
-    ws.onclose = (event: CloseEvent) => {
+    cws.onclose = (event: CloseEvent) => {
       switch (event.code) {
         case 4001:
           fetchData({
@@ -61,7 +61,7 @@ const useWebSocket = <T,>(relativeUrl: string) => {
       }
     };
 
-    return () => ws.close();
+    return () => cws.close();
   }, [relativeUrl, addNewModal, fetchData, quantityReset, session.refresh]);
 
   return { data, isLoading };
